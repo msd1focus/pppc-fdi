@@ -1,0 +1,164 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<table xmlns="http://xmlns.oracle.com/jdeveloper/1111/offlinedb">
+  <ID class="oracle.javatools.db.IdentifierBasedID">
+    <identifier class="java.lang.String">b94e3fc3-84e4-412b-96e9-3e740707787e</identifier>
+  </ID>
+  <name>APP_USER_PRODUK_CLASS</name>
+  <columns>
+    <column>
+      <ID class="oracle.javatools.db.IdentifierBasedID">
+        <identifier class="java.lang.String">38328e4c-8701-4200-b75f-f572c3850808</identifier>
+      </ID>
+      <name>USER_NAME</name>
+      <dataTypeUsage class="oracle.javatools.db.datatypes.PredefinedDataTypeUsage">
+        <ID class="oracle.javatools.db.IdentifierBasedID">
+          <identifier class="java.lang.String">8b4cc291-dede-4ceb-9507-a537ce28d66b</identifier>
+        </ID>
+        <attributeValues>
+          <entry>
+            <key>size</key>
+            <value class="java.lang.Long">30</value>
+          </entry>
+          <entry>
+            <key>unit</key>
+            <value class="java.lang.String">BYTE</value>
+          </entry>
+        </attributeValues>
+        <dataTypeID class="oracle.javatools.db.datatypes.DataTypeID">
+          <providerClass>oracle.javatools.db.ora.Oracle9i</providerClass>
+          <typeName>VARCHAR2</typeName>
+        </dataTypeID>
+      </dataTypeUsage>
+      <notNull>true</notNull>
+    </column>
+    <column>
+      <ID class="oracle.javatools.db.IdentifierBasedID">
+        <identifier class="java.lang.String">0662f1ef-518e-4127-a338-4bec5374d0d8</identifier>
+      </ID>
+      <name>PROD_CLASS</name>
+      <dataTypeUsage class="oracle.javatools.db.datatypes.PredefinedDataTypeUsage">
+        <ID class="oracle.javatools.db.IdentifierBasedID">
+          <identifier class="java.lang.String">5ebf9948-690f-44b5-bc8a-05d230f8f215</identifier>
+        </ID>
+        <attributeValues>
+          <entry>
+            <key>size</key>
+            <value class="java.lang.Long">40</value>
+          </entry>
+          <entry>
+            <key>unit</key>
+            <value class="java.lang.String">BYTE</value>
+          </entry>
+        </attributeValues>
+        <dataTypeID class="oracle.javatools.db.datatypes.DataTypeID">
+          <providerClass>oracle.javatools.db.ora.Oracle9i</providerClass>
+          <typeName>VARCHAR2</typeName>
+        </dataTypeID>
+      </dataTypeUsage>
+      <notNull>true</notNull>
+    </column>
+    <column>
+      <ID class="oracle.javatools.db.IdentifierBasedID">
+        <identifier class="java.lang.String">c47e5233-7c80-4c71-9809-6053f197e783</identifier>
+      </ID>
+      <name>CLASS_DESC</name>
+      <dataTypeUsage class="oracle.javatools.db.datatypes.PredefinedDataTypeUsage">
+        <ID class="oracle.javatools.db.IdentifierBasedID">
+          <identifier class="java.lang.String">f99682fb-f834-473e-b3cc-5ce2719505b1</identifier>
+        </ID>
+        <attributeValues>
+          <entry>
+            <key>size</key>
+            <value class="java.lang.Long">255</value>
+          </entry>
+          <entry>
+            <key>unit</key>
+            <value class="java.lang.String">BYTE</value>
+          </entry>
+        </attributeValues>
+        <dataTypeID class="oracle.javatools.db.datatypes.DataTypeID">
+          <providerClass>oracle.javatools.db.ora.Oracle9i</providerClass>
+          <typeName>VARCHAR2</typeName>
+        </dataTypeID>
+      </dataTypeUsage>
+      <notNull>false</notNull>
+    </column>
+  </columns>
+  <constraints>
+    <constraint class="oracle.javatools.db.FKConstraint">
+      <ID class="oracle.javatools.db.IdentifierBasedID">
+        <identifier class="java.lang.String">81d22574-0a6c-4957-8118-be3a5e48fdab</identifier>
+      </ID>
+      <name>APP_USER_PRODUK_CLASS_APP_FK1</name>
+      <columnIDs>
+        <columnID class="oracle.javatools.db.IdentifierBasedID">
+          <name>USER_NAME</name>
+          <identifier class="java.lang.String">38328e4c-8701-4200-b75f-f572c3850808</identifier>
+          <parent class="oracle.javatools.db.IdentifierBasedID">
+            <name>APP_USER_PRODUK_CLASS</name>
+            <identifier class="java.lang.String">b94e3fc3-84e4-412b-96e9-3e740707787e</identifier>
+            <schemaName>FOCUSPP</schemaName>
+            <type>TABLE</type>
+          </parent>
+          <schemaName>FOCUSPP</schemaName>
+          <type>COLUMN</type>
+        </columnID>
+      </columnIDs>
+      <deleteMode>1</deleteMode>
+      <enabled>true</enabled>
+      <referenceID class="oracle.javatools.db.IdentifierBasedID">
+        <name>APP_USER_ACCESS_UK1</name>
+        <identifier class="java.lang.String">0ea864e0-f313-446c-b79d-7eb96a7537ce</identifier>
+        <parent class="oracle.javatools.db.IdentifierBasedID">
+          <name>APP_USER_ACCESS</name>
+          <identifier class="java.lang.String">265ed33c-4d38-4649-b1f1-aca8671145ac</identifier>
+          <schemaName>FOCUSPP</schemaName>
+          <type>TABLE</type>
+        </parent>
+        <type>CONSTRAINT</type>
+      </referenceID>
+    </constraint>
+    <constraint class="oracle.javatools.db.PKConstraint">
+      <ID class="oracle.javatools.db.IdentifierBasedID">
+        <identifier class="java.lang.String">6d137ec9-39c3-4b2c-a245-273889bb02af</identifier>
+      </ID>
+      <name>APP_USER_PRODUK_CLASS_PK</name>
+      <columnIDs>
+        <columnID class="oracle.javatools.db.IdentifierBasedID">
+          <name>USER_NAME</name>
+          <identifier class="java.lang.String">38328e4c-8701-4200-b75f-f572c3850808</identifier>
+          <parent class="oracle.javatools.db.IdentifierBasedID">
+            <name>APP_USER_PRODUK_CLASS</name>
+            <identifier class="java.lang.String">b94e3fc3-84e4-412b-96e9-3e740707787e</identifier>
+            <schemaName>FOCUSPP</schemaName>
+            <type>TABLE</type>
+          </parent>
+          <schemaName>FOCUSPP</schemaName>
+          <type>COLUMN</type>
+        </columnID>
+        <columnID class="oracle.javatools.db.IdentifierBasedID">
+          <name>PROD_CLASS</name>
+          <identifier class="java.lang.String">0662f1ef-518e-4127-a338-4bec5374d0d8</identifier>
+          <parent class="oracle.javatools.db.IdentifierBasedID">
+            <name>APP_USER_PRODUK_CLASS</name>
+            <identifier class="java.lang.String">b94e3fc3-84e4-412b-96e9-3e740707787e</identifier>
+            <schemaName>FOCUSPP</schemaName>
+            <type>TABLE</type>
+          </parent>
+          <schemaName>FOCUSPP</schemaName>
+          <type>COLUMN</type>
+        </columnID>
+      </columnIDs>
+      <enabled>true</enabled>
+    </constraint>
+  </constraints>
+  <properties>
+    <entry>
+      <key>TableType</key>
+      <value class="oracle.javatools.db.Table$TableType">NORMAL</value>
+    </entry>
+  </properties>
+  <schema>
+    <name>FOCUSPP</name>
+  </schema>
+</table>

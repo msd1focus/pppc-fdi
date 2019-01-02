@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="manageUserPageDef"
+                Package="Pages.UserAccess">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="AppUserAccessView1" RangeSize="25"
+              DataControl="UserAccessAMDataControl"
+              id="AppUserAccessView1Iterator"/>
+    <searchRegion Binds="AppUserAccessView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="AppUserAccessView1Query"/>
+    <iterator Binds="AppUserAccessRolesView1" RangeSize="25"
+              DataControl="UserAccessAMDataControl"
+              id="AppUserAccessRolesView1Iterator"/>
+    <iterator Binds="AppUserRegionView1" RangeSize="-1"
+              DataControl="UserAccessAMDataControl"
+              id="AppUserRegionView1Iterator"/>
+    <iterator Binds="AppUserAreaView1" RangeSize="-1"
+              DataControl="UserAccessAMDataControl"
+              id="AppUserAreaView1Iterator"/>
+    <iterator Binds="AppUserLocView1" RangeSize="-1"
+              DataControl="UserAccessAMDataControl"
+              id="AppUserLocView1Iterator"/>
+    <iterator Binds="AppUserCustView1" RangeSize="-1"
+              DataControl="UserAccessAMDataControl"
+              id="AppUserCustView1Iterator"/>
+    <iterator Binds="AppUserCustGroupView1" RangeSize="-1"
+              DataControl="UserAccessAMDataControl"
+              id="AppUserCustGroupView1Iterator"/>
+    <iterator Binds="AppUserCustTypeView1" RangeSize="25"
+              DataControl="UserAccessAMDataControl"
+              id="AppUserCustTypeView1Iterator"/>
+    <searchRegion Criteria="AppUserAccessViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="AppUserAccessView1Iterator"
+                  id="AppUserAccessViewCriteriaQuery"/>
+    <iterator Binds="AppUserProdukCategoryView1" RangeSize="25"
+              DataControl="UserAccessAMDataControl"
+              id="AppUserProdukCategoryView1Iterator"/>
+    <iterator Binds="AppUserProdukClassView1" RangeSize="25"
+              DataControl="UserAccessAMDataControl"
+              id="AppUserProdukClassView1Iterator"/>
+    <iterator Binds="AppUserProdukBrandView1" RangeSize="25"
+              DataControl="UserAccessAMDataControl"
+              id="AppUserProdukBrandView1Iterator"/>
+    <iterator Binds="AppUserProdukExtView1" RangeSize="25"
+              DataControl="UserAccessAMDataControl"
+              id="AppUserProdukExtView1Iterator"/>
+    <iterator Binds="AppUserProdukPackView1" RangeSize="25"
+              DataControl="UserAccessAMDataControl"
+              id="AppUserProdukPackView1Iterator"/>
+    <iterator Binds="AppUserProdukVariantView1" RangeSize="25"
+              DataControl="UserAccessAMDataControl"
+              id="AppUserProdukVariantView1Iterator"/>
+    <iterator Binds="AppUserProdukItemView1" RangeSize="25"
+              DataControl="UserAccessAMDataControl"
+              id="AppUserProdukItemView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AppUserAccessView1Iterator" id="AppUserAccessView1">
+      <nodeDefinition DefName="app.fpp.model.views.useraccess.AppUserAccessView"
+                      Name="AppUserAccessView10">
+        <AttrNames>
+          <Item Value="FullName"/>
+          <Item Value="UserName"/>
+          <Item Value="CompanyId"/>
+          <Item Value="ActivePeriodTo"/>
+          <Item Value="SessionStatus"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="AppUserAccessView1Iterator" id="UserName">
+      <AttrNames>
+        <Item Value="UserName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AppUserAccessView1Iterator" id="FullName">
+      <AttrNames>
+        <Item Value="FullName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AppUserAccessView1Iterator" id="Descr">
+      <AttrNames>
+        <Item Value="Descr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AppUserAccessView1Iterator" id="ContactNo">
+      <AttrNames>
+        <Item Value="ContactNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AppUserAccessView1Iterator"
+                     id="ActivePeriodFrom">
+      <AttrNames>
+        <Item Value="ActivePeriodFrom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AppUserAccessView1Iterator"
+                     id="ActivePeriodTo">
+      <AttrNames>
+        <Item Value="ActivePeriodTo"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AppUserAccessView1Iterator" StaticList="false"
+          Uses="LOV_Title" id="Title" DTSupportsMRU="true"/>
+    <list IterBinding="AppUserAccessView1Iterator" StaticList="false"
+          Uses="LOV_CompanyId" id="CompanyId" DTSupportsMRU="false"/>
+    <action IterBinding="AppUserAccessView1Iterator" id="Execute"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="UserAccessAMDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="UserAccessAMDataControl"/>
+    <attributeValues IterBinding="AppUserAccessView1Iterator" id="Password">
+      <AttrNames>
+        <Item Value="Password"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="AppUserAccessView1Iterator" id="CreateInsert"
+            InstanceName="UserAccessAMDataControl.AppUserAccessView1"
+            DataControl="UserAccessAMDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action IterBinding="AppUserAccessView1Iterator" id="Delete"
+            InstanceName="UserAccessAMDataControl.AppUserAccessView1"
+            DataControl="UserAccessAMDataControl" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <tree IterBinding="AppUserAccessRolesView1Iterator"
+          id="AppUserAccessRolesView1">
+      <nodeDefinition DefName="app.fpp.model.views.useraccess.AppUserAccessRolesView"
+                      Name="AppUserAccessRolesView10">
+        <AttrNames>
+          <Item Value="Label"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="AppUserRegionView1Iterator" id="AppUserRegionView1">
+      <nodeDefinition DefName="app.fpp.model.views.useraccess.AppUserRegionView"
+                      Name="AppUserRegionView10">
+        <AttrNames>
+          <Item Value="RegionCode"/>
+          <Item Value="RegionLabel"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="AppUserAreaView1Iterator" id="AppUserAreaView1">
+      <nodeDefinition DefName="app.fpp.model.views.useraccess.AppUserAreaView"
+                      Name="AppUserAreaView10">
+        <AttrNames>
+          <Item Value="AreaCode"/>
+          <Item Value="Description"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="AppUserLocView1Iterator" id="AppUserLocView1">
+      <nodeDefinition DefName="app.fpp.model.views.useraccess.AppUserLocView"
+                      Name="AppUserLocView10">
+        <AttrNames>
+          <Item Value="LocationCode"/>
+          <Item Value="Description"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="AppUserAccessRolesView1Iterator" id="ExecuteRoles"
+            InstanceName="UserAccessAMDataControl.AppUserAccessRolesView1"
+            DataControl="UserAccessAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="AppUserRegionView1Iterator" id="ExecuteRegion"
+            InstanceName="UserAccessAMDataControl.AppUserRegionView1"
+            DataControl="UserAccessAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="AppUserAreaView1Iterator" id="ExecuteArea"
+            InstanceName="UserAccessAMDataControl.AppUserAreaView1"
+            DataControl="UserAccessAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="AppUserLocView1Iterator" id="ExecuteLoc"
+            InstanceName="UserAccessAMDataControl.AppUserLocView1"
+            DataControl="UserAccessAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="AppUserCustView1Iterator" id="ExecuteCust"
+            InstanceName="UserAccessAMDataControl.AppUserCustView1"
+            DataControl="UserAccessAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="AppUserCustGroupView1Iterator" id="ExecuteCustGroup"
+            InstanceName="UserAccessAMDataControl.AppUserCustGroupView1"
+            DataControl="UserAccessAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="AppUserCustTypeView1Iterator" id="ExecuteCustType"
+            InstanceName="UserAccessAMDataControl.AppUserCustTypeView1"
+            DataControl="UserAccessAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues IterBinding="AppUserAccessView1Iterator" id="UserInitial">
+      <AttrNames>
+        <Item Value="UserInitial"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AppUserAccessView1Iterator" StaticList="false"
+          Uses="LOV_UserType" id="UserType" DTSupportsMRU="true"/>
+    <attributeValues IterBinding="AppUserAccessView1Iterator" id="UserType1">
+      <AttrNames>
+        <Item Value="UserType"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AppUserAccessView1Iterator" StaticList="false"
+          Uses="LOV_UserDivision" id="UserDivision" DTSupportsMRU="true"/>
+    <tree IterBinding="AppUserCustView1Iterator" id="AppUserCustView1">
+      <nodeDefinition DefName="app.fpp.model.views.useraccess.AppUserCustView"
+                      Name="AppUserCustView10">
+        <AttrNames>
+          <Item Value="CustomerName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="AppUserCustGroupView1Iterator"
+          id="AppUserCustGroupView1">
+      <nodeDefinition DefName="app.fpp.model.views.useraccess.AppUserCustGroupView"
+                      Name="AppUserCustGroupView10">
+        <AttrNames>
+          <Item Value="CustGroup"/>
+          <Item Value="Description"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <listOfValues StaticList="false" IterBinding="AppUserAccessView1Iterator"
+                  Uses="LOV_DirectSpv" id="DirectSpv"/>
+    <attributeValues IterBinding="AppUserAccessView1Iterator"
+                     id="DirectSpvDesc">
+      <AttrNames>
+        <Item Value="DirectSpvDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AppUserAccessView1Iterator"
+                     id="SessionStatus">
+      <AttrNames>
+        <Item Value="SessionStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="AppUserCustTypeView1Iterator" id="AppUserCustTypeView1">
+      <nodeDefinition DefName="app.fpp.model.views.useraccess.AppUserCustTypeView"
+                      Name="AppUserCustTypeView10">
+        <AttrNames>
+          <Item Value="CustType"/>
+          <Item Value="Description"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="AppUserAccessView1Iterator" id="CustAuthFlag">
+      <AttrNames>
+        <Item Value="CustAuthFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="AppUserProdukCategoryView1Iterator"
+          id="AppUserProdukCategoryView1">
+      <nodeDefinition DefName="app.fpp.model.views.useraccess.AppUserProdukCategoryView"
+                      Name="AppUserProdukCategoryView10">
+        <AttrNames>
+          <Item Value="ProdCategory"/>
+          <Item Value="CategoryDesc"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="AppUserProdukClassView1Iterator"
+          id="AppUserProdukClassView1">
+      <nodeDefinition DefName="app.fpp.model.views.useraccess.AppUserProdukClassView"
+                      Name="AppUserProdukClassView10">
+        <AttrNames>
+          <Item Value="ProdClass"/>
+          <Item Value="ClassDesc"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="AppUserProdukBrandView1Iterator"
+          id="AppUserProdukBrandView1">
+      <nodeDefinition DefName="app.fpp.model.views.useraccess.AppUserProdukBrandView"
+                      Name="AppUserProdukBrandView10">
+        <AttrNames>
+          <Item Value="ProdBrand"/>
+          <Item Value="BrandDesc"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="AppUserProdukExtView1Iterator"
+          id="AppUserProdukExtView1">
+      <nodeDefinition DefName="app.fpp.model.views.useraccess.AppUserProdukExtView"
+                      Name="AppUserProdukExtView10">
+        <AttrNames>
+          <Item Value="ProdExt"/>
+          <Item Value="ExtDesc"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="AppUserProdukPackView1Iterator"
+          id="AppUserProdukPackView1">
+      <nodeDefinition DefName="app.fpp.model.views.useraccess.AppUserProdukPackView"
+                      Name="AppUserProdukPackView10">
+        <AttrNames>
+          <Item Value="ProdPack"/>
+          <Item Value="PackDesc"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="AppUserProdukVariantView1Iterator"
+          id="AppUserProdukVariantView1">
+      <nodeDefinition DefName="app.fpp.model.views.useraccess.AppUserProdukVariantView"
+                      Name="AppUserProdukVariantView10">
+        <AttrNames>
+          <Item Value="ProdVariant"/>
+          <Item Value="VariantDesc"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="AppUserProdukItemView1Iterator"
+          id="AppUserProdukItemView1">
+      <nodeDefinition DefName="app.fpp.model.views.useraccess.AppUserProdukItemView"
+                      Name="AppUserProdukItemView10">
+        <AttrNames>
+          <Item Value="ProdItem"/>
+          <Item Value="ItemDesc"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="AppUserProdukCategoryView1Iterator"
+            id="ExecuteProdCategory"
+            InstanceName="UserAccessAMDataControl.AppUserProdukCategoryView1"
+            DataControl="UserAccessAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="AppUserProdukClassView1Iterator" id="ExecuteProdClass"
+            InstanceName="UserAccessAMDataControl.AppUserProdukClassView1"
+            DataControl="UserAccessAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="AppUserProdukBrandView1Iterator" id="ExecuteProdBrand"
+            InstanceName="UserAccessAMDataControl.AppUserProdukBrandView1"
+            DataControl="UserAccessAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="AppUserProdukExtView1Iterator" id="ExecuteProdExt"
+            InstanceName="UserAccessAMDataControl.AppUserProdukExtView1"
+            DataControl="UserAccessAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="AppUserProdukPackView1Iterator" id="ExecuteProdPack"
+            InstanceName="UserAccessAMDataControl.AppUserProdukPackView1"
+            DataControl="UserAccessAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="AppUserProdukVariantView1Iterator"
+            id="ExecuteProdVariant"
+            InstanceName="UserAccessAMDataControl.AppUserProdukVariantView1"
+            DataControl="UserAccessAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="AppUserProdukItemView1Iterator" id="ExecuteProdItem"
+            InstanceName="UserAccessAMDataControl.AppUserProdukItemView1"
+            DataControl="UserAccessAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues IterBinding="AppUserProdukVariantView1Iterator"
+                     id="ItemCanAdd">
+      <AttrNames>
+        <Item Value="ItemCanAdd"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

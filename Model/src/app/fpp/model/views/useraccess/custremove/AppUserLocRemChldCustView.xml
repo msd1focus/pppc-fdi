@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="AppUserLocRemChldCustView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="AppUserCust.CUSTOMER_ID, 
+       AppUserCust.USER_NAME"
+  FromList="APP_USER_CUST AppUserCust, APPS.AR_CUSTOMERS ArCustomers"
+  Where="AppUserCust.CUSTOMER_ID = ArCustomers.CUSTOMER_ID
+AND ArCustomers.ATTRIBUTE5 NOT IN (SELECT AUL.LOCATION_CODE FROM APP_USER_LOC AUL WHERE AUL.USER_NAME = :userName)
+AND AppUserCust.USER_NAME = :userName
+GROUP BY AppUserCust.CUSTOMER_ID, AppUserCust.USER_NAME"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  RowClass="app.fpp.model.views.useraccess.custremove.AppUserLocRemChldCustViewRowImpl"
+  ComponentClass="app.fpp.model.views.useraccess.custremove.AppUserLocRemChldCustViewImpl"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.useraccess.custremove.AppUserLocRemChldCustView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="userName"
+    Kind="where"
+    Type="java.lang.String"/>
+  <EntityUsage
+    Name="AppUserCust"
+    Entity="app.fpp.model.entities.useraccess.AppUserCust"/>
+  <EntityUsage
+    Name="ArCustomers"
+    Entity="app.fpp.model.entities.masterdata.ebs.ArCustomers"
+    SourceUsage="app.fpp.model.views.useraccess.custremove.AppUserLocRemChldCustView.AppUserCust"
+    ReadOnly="true"
+    Reference="true"
+    DeleteParticipant="false"/>
+  <ViewAttribute
+    Name="CustomerId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CustomerId"
+    EntityUsage="AppUserCust"
+    AliasName="CUSTOMER_ID"/>
+  <ViewAttribute
+    Name="UserName"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="UserName"
+    EntityUsage="AppUserCust"
+    AliasName="USER_NAME"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

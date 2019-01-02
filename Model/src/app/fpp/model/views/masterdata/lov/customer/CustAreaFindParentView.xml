@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="CustAreaFindParentView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  RowClass="app.fpp.model.views.masterdata.lov.customer.CustAreaFindParentViewRowImpl"
+  ComponentClass="app.fpp.model.views.masterdata.lov.customer.CustAreaFindParentViewImpl"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.masterdata.lov.customer.CustAreaFindParentView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="areaCode"
+    Kind="where"
+    Type="java.lang.String"/>
+  <SQLQuery>
+    <![CDATA[SELECT DISTINCT 
+AC.ATTRIBUTE3 AS REGION_CODE,
+(SELECT DISTINCT 
+FFVV.DESCRIPTION AS LOC_LABEL
+FROM APPS.FND_FLEX_VALUE_SETS FFV,
+     APPS.FND_FLEX_VALUES_VL FFVV
+WHERE FFV.FLEX_VALUE_SET_ID = FFVV.FLEX_VALUE_SET_ID
+AND FFVV.FLEX_VALUE = AC.ATTRIBUTE3
+AND FFV.FLEX_VALUE_SET_NAME = 'FCSAR_TERRITORY_REGION') AS REGION_DESC,
+AC.ATTRIBUTE4 AS AREA_CODE
+FROM APPS.AR_CUSTOMERS AC
+WHERE AC.ATTRIBUTE4 = :areaCode]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="RegionCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="REGION_CODE"
+    Expression="REGION_CODE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RegionDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="240"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="REGION_DESC"
+    Expression="REGION_DESC"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AreaCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="150"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="AREA_CODE"
+    Expression="AREA_CODE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </ViewAttribute>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="AreaCode"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

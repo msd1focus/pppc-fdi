@@ -1,0 +1,12 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<sequence xmlns="http://xmlns.oracle.com/jdeveloper/1111/offlinedb">
+  <ID class="oracle.javatools.db.IdentifierBasedID">
+    <identifier class="java.lang.String">4ad34899-cb1f-4228-be97-d429b0829459</identifier>
+  </ID>
+  <name>AUDIT_PROMO_PRODUK_SEQ</name>
+  <cycleFlag>false</cycleFlag>
+  <orderFlag>false</orderFlag>
+  <schema>
+    <name>FOCUSPP</name>
+  </schema>
+</sequence>

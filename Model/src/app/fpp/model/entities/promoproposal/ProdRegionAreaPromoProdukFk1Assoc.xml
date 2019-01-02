@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Association SYSTEM "jbo_03_01.dtd">
+<!---->
+<Association
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ProdRegionAreaPromoProdukFk1Assoc"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true">
+  <DesignTime>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <AssociationEnd
+    Name="PromoProduk"
+    Cardinality="1"
+    Source="true"
+    Owner="app.fpp.model.entities.promoproposal.PromoProduk"
+    LockLevel="NONE"
+    CascadeDelete="true"
+    DeleteContainee="true">
+    <DesignTime>
+      <Attr Name="_aggregation" Value="0"/>
+      <Attr Name="_finderName" Value="PromoProduk"/>
+      <Attr Name="_foreignKey"
+        Value="app.fpp.model.entities.promoproposal.PromoProduk.PromoProdukPk"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+      <Attr Name="_minCardinality" Value="1"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.promoproposal.PromoProduk.PromoProdukId"/>
+    </AttrArray>
+  </AssociationEnd>
+  <AssociationEnd
+    Name="ProdRegionArea"
+    Cardinality="-1"
+    Owner="app.fpp.model.entities.promoproposal.ProdRegionArea"
+    HasOwner="true">
+    <DesignTime>
+      <Attr Name="_aggregation" Value="0"/>
+      <Attr Name="_finderName" Value="ProdRegionArea"/>
+      <Attr Name="_foreignKey"
+        Value="app.fpp.model.entities.promoproposal.ProdRegionArea.ProdRegionAreaPromoPrFk1"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.promoproposal.ProdRegionArea.PromoProdukId"/>
+    </AttrArray>
+  </AssociationEnd>
+</Association>

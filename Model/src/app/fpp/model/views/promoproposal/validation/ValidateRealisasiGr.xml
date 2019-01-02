@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ValidateRealisasiGr"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="PromoProduk.PROMO_PRODUK_ID, 
+       TO_CHAR(PromoProduk.PROMO_PRODUK_ID) AS PPID_CHAR, 
+       PromoProduk.PROPOSAL_ID, 
+       PromoProduk.DISC_MF, 
+       PromoProduk.BRG_BONUS_MF, 
+       PromoProduk.BIA_MF, 
+       (SELECT PP.DISCOUNT_TYPE FROM PROPOSAL PP WHERE PP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID) AS PROPOSAL_TYPE, 
+       NVL ((SELECT NVL (rgr.total, 0)  FROM apps.fcs_view_realisasi_gr rgr,                                      proposal prop                                WHERE prop.confirm_no|| DECODE (prop.addendum_ke,NULL, '','-' || prop.addendum_ke) = RGR.NO_KONFIRMASI                                  AND prop.proposal_id = promoproduk.proposal_id                                  AND rgr.line_no = TO_CHAR (promoproduk.produk_row_num)),                              0  ) AS REALISASI_GR_BY_LINE, 
+       (SELECT SUM (NVL (rgr.total, 0))         FROM (SELECT ROW_NUMBER () OVER (PARTITION BY pp.proposal_id ORDER BY pp.promo_produk_id)                                                        row_no,                    pp.*               FROM promo_produk pp) prod_real,            apps.fcs_view_realisasi_gr rgr,            proposal prop         WHERE prod_real.promo_produk_id = PromoProduk.promo_produk_id         AND prod_real.proposal_id = prop.proposal_id         AND prop.confirm_no IS NOT NULL         AND prop.CONFIRM_NO = rgr.no_konfirmasi_ori         AND TO_CHAR (rgr.line_no) = TO_CHAR (NVL (prod_real.produk_row_num, prod_real.row_no))        ) AS REALISASI_GR_TOTAL_BY_LINE, 
+       (SELECT CASE  WHEN (PPL.DISCOUNT_TYPE = 'POTONGAN' AND PPL.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND (SELECT COUNT(PRDCV.NO_PP) FROM APPS.FCS_VIEW_REALISASI_DCV PRDCV WHERE PRDCV.NO_PP = PPL.PROPOSAL_NO) = 0) THEN  (select  (case when pp.discount_type = 'POTONGAN' and pd.ppid_ref &lt;> 0 then pd.disc_mf-(select ppr.disc_mf from promo_produk ppr where ppr.promo_produk_id = pd.ppid_ref) when pp.discount_type = 'PROMOBARANG' and pd.ppid_ref &lt;> 0  then pd.brg_bonus_mf-(select ppr.brg_bonus_mf from promo_produk ppr where ppr.promo_produk_id = pd.ppid_ref) when pp.discount_type = 'BIAYA' and pd.ppid_ref &lt;> 0  then pd.bia_mf-(select ppr.bia_mf from promo_produk ppr where ppr.promo_produk_id = pd.ppid_ref) else 0 end) as selisih from promo_produk pd, proposal pp where pp.proposal_id = pd.proposal_id and pd.promo_produk_id = PromoProduk.PROMO_PRODUK_ID) WHEN (PPL.DISCOUNT_TYPE = 'PROMOBARANG' AND PPL.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND (SELECT COUNT(PRDCV.NO_PP) FROM APPS.FCS_VIEW_REALISASI_DCV PRDCV WHERE PRDCV.NO_PP = PPL.PROPOSAL_NO) = 0) THEN  (select  (case when pp.discount_type = 'POTONGAN' and pd.ppid_ref &lt;> 0 then pd.disc_mf-(select ppr.disc_mf from promo_produk ppr where ppr.promo_produk_id = pd.ppid_ref) when pp.discount_type = 'PROMOBARANG' and pd.ppid_ref &lt;> 0  then pd.brg_bonus_mf-(select ppr.brg_bonus_mf from promo_produk ppr where ppr.promo_produk_id = pd.ppid_ref) when pp.discount_type = 'BIAYA' and pd.ppid_ref &lt;> 0  then pd.bia_mf-(select ppr.bia_mf from promo_produk ppr where ppr.promo_produk_id = pd.ppid_ref) else 0 end) as selisih from promo_produk pd, proposal pp where pp.proposal_id = pd.proposal_id and pd.promo_produk_id = PromoProduk.PROMO_PRODUK_ID) WHEN PPL.DISCOUNT_TYPE = 'BIAYA' THEN (select  (case when pp.discount_type = 'POTONGAN' and pd.ppid_ref &lt;> 0 then pd.disc_mf-(select ppr.disc_mf from promo_produk ppr where ppr.promo_produk_id = pd.ppid_ref) when pp.discount_type = 'PROMOBARANG' and pd.ppid_ref &lt;> 0  then pd.brg_bonus_mf-(select ppr.brg_bonus_mf from promo_produk ppr where ppr.promo_produk_id = pd.ppid_ref) when pp.discount_type = 'BIAYA' and pd.ppid_ref &lt;> 0  then pd.bia_mf-(select ppr.bia_mf from promo_produk ppr where ppr.promo_produk_id = pd.ppid_ref) else 0 end) as selisih from promo_produk pd, proposal pp where pp.proposal_id = pd.proposal_id and pd.promo_produk_id = PromoProduk.PROMO_PRODUK_ID) ELSE  0 END AS REAL_GR_SELISIH_BY_LINE FROM PROPOSAL PPL WHERE PPL.PROPOSAL_ID = PromoProduk.PROPOSAL_ID) AS REALISASI_GR_SELISIH_BY_LINE, 
+       (SELECT CASE  WHEN (PPL.DISCOUNT_TYPE = 'POTONGAN' AND PPL.MEKANISME_PENAGIHAN = 'ONINVOICE') THEN  (NVL((SELECT SUM(NVL(RMOD.AMOUNT,0))                    FROM APPS.FCS_VIEW_REALISASI_MODIFIER RMOD,                              PROPOSAL PP                    WHERE PP.CONFIRM_NO = RMOD.CONFIRM_NO_ORIG                    AND PP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID                    AND RMOD.LINE_NO = PromoProduk.PRODUK_ROW_NUM                    AND RMOD.KET = 'MF'),0)) ELSE  0 END AS REAL_MOD_MF FROM PROPOSAL PPL WHERE PPL.PROPOSAL_ID = PromoProduk.PROPOSAL_ID) AS REALISASI_MOD_MF, 
+       (SELECT CASE  WHEN (PPL.DISCOUNT_TYPE = 'POTONGAN' AND PPL.MEKANISME_PENAGIHAN = 'ONINVOICE') THEN  (NVL((SELECT SUM(NVL(RMOD.AMOUNT,0))                   FROM APPS.FCS_VIEW_REALISASI_MODIFIER RMOD,                             PROPOSAL PP                   WHERE PP.CONFIRM_NO = RMOD.CONFIRM_NO_ORIG                   AND PP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID                   AND RMOD.LINE_NO = PromoProduk.PRODUK_ROW_NUM                   AND RMOD.KET = 'OT'),0)) ELSE  0 END AS REAL_MOD_OT FROM PROPOSAL PPL WHERE PPL.PROPOSAL_ID = PromoProduk.PROPOSAL_ID) AS REALISASI_MOD_ON_TOP, 
+       (CASE WHEN (SELECT COUNT(1) FROM APPS.FCS_VIEW_REALISASI_DCV RDCV WHERE RDCV.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID) > 0 THEN NVL((SELECT SUM(NVL(RDCV.AMOUNT_CM,0)) FROM APPS.FCS_VIEW_REALISASI_DCV RDCV WHERE RDCV.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID),0) ELSE 0 END) AS REALISASI_DCV, 
+       (SELECT PP.MEKANISME_PENAGIHAN FROM PROPOSAL PP WHERE PP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID) AS MEKANISME_PENAGIHAN, 
+       (SELECT CASE WHEN COUNT(PRDCV.NO_PP) > 0 THEN 'Y' ELSE 'N' END FROM APPS.FCS_VIEW_REALISASI_DCV PRDCV WHERE PRDCV.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID) AS DCV_FLAG, 
+       PromoProduk.PRODUK_ROW_NUM, 
+       PromoProduk.PPID_REF, 
+       (SELECT CASE WHEN PP.ADDENDUM_KE IS NOT NULL THEN 'Y' ELSE 'N' END FROM PROPOSAL PP WHERE PP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID) AS PROPOSAL_ADDENDUM, 
+       PromoProduk.CLOSE_FLAG, 
+       (NVL((SELECT SUM(NVL(BB.PERCENTAGE,0)) FROM PROD_BUDGET_BY BB WHERE BB.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID),0)) AS BUDGET_PERCENT_TOTAL, 
+       (SELECT CASE  WHEN (PPL.DISCOUNT_TYPE = 'POTONGAN' AND PPL.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND (SELECT COUNT(PRDCV.NO_PP) FROM APPS.FCS_VIEW_REALISASI_DCV PRDCV WHERE PRDCV.NO_PP = PPL.PROPOSAL_NO) = 0) THEN   (SELECT (NVL((SELECT SUM (NVL (rgr.total, 0)) FROM apps.fcs_view_realisasi_gr rgr WHERE rgr.no_konfirmasi_ori IN (SELECT confirm_no FROM proposal prop WHERE prop.proposal_id = prod_real.proposal_id AND prop.confirm_no IS NOT NULL) AND to_char(rgr.line_no) = to_char(nvl(prod_real.produk_row_num,prod_real.row_no))), 0)) AS realisasi_gr_total_by_line  FROM (select row_number() over (partition by pp.PROPOSAL_ID order by pp.promo_produk_id) row_no, pp.* from promo_produk pp ) prod_real WHERE prod_real.promo_produk_id = PromoProduk.PPID_REF)  WHEN (PPL.DISCOUNT_TYPE = 'PROMOBARANG' AND PPL.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND (SELECT COUNT(PRDCV.NO_PP) FROM APPS.FCS_VIEW_REALISASI_DCV PRDCV WHERE PRDCV.NO_PP = PPL.PROPOSAL_NO) = 0) THEN   (SELECT (NVL((SELECT SUM (NVL (rgr.total, 0)) FROM apps.fcs_view_realisasi_gr rgr WHERE rgr.no_konfirmasi_ori IN (SELECT confirm_no FROM proposal prop WHERE prop.proposal_id = prod_real.proposal_id AND prop.confirm_no IS NOT NULL) AND to_char(rgr.line_no) = to_char(nvl(prod_real.produk_row_num,prod_real.row_no))), 0)) AS realisasi_gr_total_by_line  FROM (select row_number() over (partition by pp.PROPOSAL_ID order by pp.promo_produk_id) row_no, pp.* from promo_produk pp ) prod_real WHERE prod_real.promo_produk_id = PromoProduk.PPID_REF)  WHEN PPL.DISCOUNT_TYPE = 'BIAYA' THEN (SELECT (NVL((SELECT SUM (NVL (rgr.total, 0)) FROM apps.fcs_view_realisasi_gr rgr WHERE rgr.no_konfirmasi_ori IN (SELECT confirm_no FROM proposal prop WHERE prop.proposal_id = prod_real.proposal_id AND prop.confirm_no IS NOT NULL) AND to_char(rgr.line_no) = to_char(nvl(prod_real.produk_row_num,prod_real.row_no))), 0)) AS realisasi_gr_total_by_line  FROM (select row_number() over (partition by pp.PROPOSAL_ID order by pp.promo_produk_id) row_no, pp.* from promo_produk pp ) prod_real WHERE prod_real.promo_produk_id = PromoProduk.PPID_REF)  ELSE  0 END AS REAL_GR_TOT_BY_LINE FROM PROPOSAL PPL WHERE PPL.PROPOSAL_ID = PromoProduk.PROPOSAL_ID) AS VAL_REAL_GR_TOT_BY_LINE"
+  FromList="PROMO_PRODUK PromoProduk"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  OrderBy="PromoProduk.PROMO_PRODUK_ID ASC"
+  FetchMode="FETCH_AS_NEEDED"
+  Where="PromoProduk.PROMO_PRODUK_ID = :ppid"
+  RowClass="app.fpp.model.views.promoproposal.validation.ValidateRealisasiGrRowImpl"
+  ComponentClass="app.fpp.model.views.promoproposal.validation.ValidateRealisasiGrImpl">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Variable
+    Name="ppid"
+    Kind="where"
+    Type="oracle.jbo.domain.Number"/>
+  <EntityUsage
+    Name="PromoProduk"
+    Entity="app.fpp.model.entities.promoproposal.PromoProduk"
+    ReadOnly="true"
+    DeleteParticipant="false"/>
+  <ViewAttribute
+    Name="PromoProdukId"
+    IsUpdateable="while_insert"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PromoProdukId"
+    EntityUsage="PromoProduk"
+    AliasName="PROMO_PRODUK_ID"/>
+  <ViewAttribute
+    Name="PpidChar"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PPID_CHAR"
+    SQLType="VARCHAR"
+    Precision="255"
+    Expression="TO_CHAR(PromoProduk.PROMO_PRODUK_ID)"/>
+  <ViewAttribute
+    Name="ProposalId"
+    PrecisionRule="true"
+    EntityAttrName="ProposalId"
+    EntityUsage="PromoProduk"
+    AliasName="PROPOSAL_ID"/>
+  <ViewAttribute
+    Name="DiscMf"
+    PrecisionRule="true"
+    EntityAttrName="DiscMf"
+    EntityUsage="PromoProduk"
+    AliasName="DISC_MF">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.DiscMf_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.DiscMf_FMT_FORMAT"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BrgBonusMf"
+    PrecisionRule="true"
+    EntityAttrName="BrgBonusMf"
+    EntityUsage="PromoProduk"
+    AliasName="BRG_BONUS_MF">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusMf_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusMf_FMT_FORMAT"/>
+        <LABEL
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusMf_LABEL"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BiaMf"
+    PrecisionRule="true"
+    EntityAttrName="BiaMf"
+    EntityUsage="PromoProduk"
+    AliasName="BIA_MF">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BiaMf_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BiaMf_FMT_FORMAT"/>
+        <LABEL
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusMf_LABEL"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProposalType"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PROPOSAL_TYPE"
+    SQLType="VARCHAR"
+    Precision="20"
+    Expression="SELECT PP.DISCOUNT_TYPE FROM PROPOSAL PP WHERE PP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID"/>
+  <ViewAttribute
+    Name="RealisasiGrByLine"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_GR_BY_LINE"
+    SQLType="NUMERIC"
+    Expression="NVL ((SELECT NVL (rgr.total, 0)  FROM apps.fcs_view_realisasi_gr rgr,                                      proposal prop                                WHERE prop.confirm_no|| DECODE (prop.addendum_ke,NULL, '','-' || prop.addendum_ke) = RGR.NO_KONFIRMASI                                  AND prop.proposal_id = promoproduk.proposal_id                                  AND rgr.line_no = TO_CHAR (promoproduk.produk_row_num)),                              0  )">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrByLine_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrByLine_FMT_FORMAT"/>
+        <LABEL
+          ResId="AMOUNT_REALISASI"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiGrTotalByLine"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_GR_TOTAL_BY_LINE"
+    SQLType="NUMERIC"
+    Expression="(SELECT SUM (NVL (rgr.total, 0))         FROM (SELECT ROW_NUMBER () OVER (PARTITION BY pp.proposal_id ORDER BY pp.promo_produk_id)                                                        row_no,                    pp.*               FROM promo_produk pp) prod_real,            apps.fcs_view_realisasi_gr rgr,            proposal prop         WHERE prod_real.promo_produk_id = PromoProduk.promo_produk_id         AND prod_real.proposal_id = prop.proposal_id         AND prop.confirm_no IS NOT NULL         AND prop.CONFIRM_NO = rgr.no_konfirmasi_ori         AND TO_CHAR (rgr.line_no) = TO_CHAR (NVL (prod_real.produk_row_num, prod_real.row_no))        )"/>
+  <ViewAttribute
+    Name="RealisasiGrSelisihByLine"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_GR_SELISIH_BY_LINE"
+    SQLType="NUMERIC"
+    Expression="SELECT CASE  WHEN (PPL.DISCOUNT_TYPE = 'POTONGAN' AND PPL.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND (SELECT COUNT(PRDCV.NO_PP) FROM APPS.FCS_VIEW_REALISASI_DCV PRDCV WHERE PRDCV.NO_PP = PPL.PROPOSAL_NO) = 0) THEN  (select  (case when pp.discount_type = 'POTONGAN' and pd.ppid_ref &lt;> 0 then pd.disc_mf-(select ppr.disc_mf from promo_produk ppr where ppr.promo_produk_id = pd.ppid_ref) when pp.discount_type = 'PROMOBARANG' and pd.ppid_ref &lt;> 0  then pd.brg_bonus_mf-(select ppr.brg_bonus_mf from promo_produk ppr where ppr.promo_produk_id = pd.ppid_ref) when pp.discount_type = 'BIAYA' and pd.ppid_ref &lt;> 0  then pd.bia_mf-(select ppr.bia_mf from promo_produk ppr where ppr.promo_produk_id = pd.ppid_ref) else 0 end) as selisih from promo_produk pd, proposal pp where pp.proposal_id = pd.proposal_id and pd.promo_produk_id = PromoProduk.PROMO_PRODUK_ID) WHEN (PPL.DISCOUNT_TYPE = 'PROMOBARANG' AND PPL.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND (SELECT COUNT(PRDCV.NO_PP) FROM APPS.FCS_VIEW_REALISASI_DCV PRDCV WHERE PRDCV.NO_PP = PPL.PROPOSAL_NO) = 0) THEN  (select  (case when pp.discount_type = 'POTONGAN' and pd.ppid_ref &lt;> 0 then pd.disc_mf-(select ppr.disc_mf from promo_produk ppr where ppr.promo_produk_id = pd.ppid_ref) when pp.discount_type = 'PROMOBARANG' and pd.ppid_ref &lt;> 0  then pd.brg_bonus_mf-(select ppr.brg_bonus_mf from promo_produk ppr where ppr.promo_produk_id = pd.ppid_ref) when pp.discount_type = 'BIAYA' and pd.ppid_ref &lt;> 0  then pd.bia_mf-(select ppr.bia_mf from promo_produk ppr where ppr.promo_produk_id = pd.ppid_ref) else 0 end) as selisih from promo_produk pd, proposal pp where pp.proposal_id = pd.proposal_id and pd.promo_produk_id = PromoProduk.PROMO_PRODUK_ID) WHEN PPL.DISCOUNT_TYPE = 'BIAYA' THEN (select  (case when pp.discount_type = 'POTONGAN' and pd.ppid_ref &lt;> 0 then pd.disc_mf-(select ppr.disc_mf from promo_produk ppr where ppr.promo_produk_id = pd.ppid_ref) when pp.discount_type = 'PROMOBARANG' and pd.ppid_ref &lt;> 0  then pd.brg_bonus_mf-(select ppr.brg_bonus_mf from promo_produk ppr where ppr.promo_produk_id = pd.ppid_ref) when pp.discount_type = 'BIAYA' and pd.ppid_ref &lt;> 0  then pd.bia_mf-(select ppr.bia_mf from promo_produk ppr where ppr.promo_produk_id = pd.ppid_ref) else 0 end) as selisih from promo_produk pd, proposal pp where pp.proposal_id = pd.proposal_id and pd.promo_produk_id = PromoProduk.PROMO_PRODUK_ID) ELSE  0 END AS REAL_GR_SELISIH_BY_LINE FROM PROPOSAL PPL WHERE PPL.PROPOSAL_ID = PromoProduk.PROPOSAL_ID"/>
+  <ViewAttribute
+    Name="RealisasiGrMfByLine"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_GR_MF_BY_LINE"
+    SQLType="NUMERIC"
+    IsSelected="false">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (ProposalAddendum == 'Y') {
+	if (PpidRef == 0) {
+		if (ProposalType == 'POTONGAN') {
+			if (RealisasiGrByLine > DiscMf) {
+				return DiscMf;
+			} else {
+				return RealisasiGrByLine;
+			} 
+		} else if (ProposalType == 'BIAYA') {
+			if (RealisasiGrByLine > BiaMf) {
+				return BiaMf;
+			} else {
+				return RealisasiGrByLine;
+			}
+		} else if (ProposalType == 'PROMOBARANG') {
+			if (RealisasiGrByLine > BrgBonusMf) {
+			return BrgBonusMf;
+			} else {
+			return RealisasiGrByLine;
+			}
+		} else {
+			return 0;
+		}
+	} else {
+		if (RealisasiGrByLine > RealisasiGrSelisihByLine) {
+			return RealisasiGrSelisihByLine;
+		} else {
+			return RealisasiGrByLine;
+		} 
+	}
+} else {
+	if (ProposalType == 'POTONGAN') {
+		if (RealisasiGrByLine > DiscMf) {
+			return DiscMf;
+		} else {
+			return RealisasiGrByLine;
+		} 
+	} else if (ProposalType == 'BIAYA') {
+		if (RealisasiGrByLine > BiaMf) {
+			return BiaMf;
+		} else {
+			return RealisasiGrByLine;
+		}
+	} else if (ProposalType == 'PROMOBARANG') {
+		if (RealisasiGrByLine > BrgBonusMf) {
+		return BrgBonusMf;
+		} else {
+		return RealisasiGrByLine;
+		}
+	} else {
+		return 0;
+	}
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="BiaMf"/>
+      <Item
+        Value="BrgBonusMf"/>
+      <Item
+        Value="DiscMf"/>
+      <Item
+        Value="PpidRef"/>
+      <Item
+        Value="ProposalAddendum"/>
+      <Item
+        Value="ProposalType"/>
+      <Item
+        Value="RealisasiGrByLine"/>
+      <Item
+        Value="RealisasiGrSelisihByLine"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrMfByLine_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrMfByLine_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiGrOnTopByLine"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_GR_ON_TOP_BY_LINE"
+    SQLType="NUMERIC">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (RealisasiGrByLine > RealisasiGrMfByLine) {
+return RealisasiGrByLine - RealisasiGrMfByLine;
+} else {
+return 0;
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="RealisasiGrByLine"/>
+      <Item
+        Value="RealisasiGrMfByLine"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrOnTopByLine_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrOnTopByLine_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiModMf"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_MOD_MF"
+    SQLType="NUMERIC"
+    Expression="SELECT CASE  WHEN (PPL.DISCOUNT_TYPE = 'POTONGAN' AND PPL.MEKANISME_PENAGIHAN = 'ONINVOICE') THEN  (NVL((SELECT SUM(NVL(RMOD.AMOUNT,0))                    FROM APPS.FCS_VIEW_REALISASI_MODIFIER RMOD,                              PROPOSAL PP                    WHERE PP.CONFIRM_NO = RMOD.CONFIRM_NO_ORIG                    AND PP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID                    AND RMOD.LINE_NO = PromoProduk.PRODUK_ROW_NUM                    AND RMOD.KET = 'MF'),0)) ELSE  0 END AS REAL_MOD_MF FROM PROPOSAL PPL WHERE PPL.PROPOSAL_ID = PromoProduk.PROPOSAL_ID">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiModMf_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiModMf_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiModOnTop"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_MOD_ON_TOP"
+    SQLType="NUMERIC"
+    Expression="SELECT CASE  WHEN (PPL.DISCOUNT_TYPE = 'POTONGAN' AND PPL.MEKANISME_PENAGIHAN = 'ONINVOICE') THEN  (NVL((SELECT SUM(NVL(RMOD.AMOUNT,0))                   FROM APPS.FCS_VIEW_REALISASI_MODIFIER RMOD,                             PROPOSAL PP                   WHERE PP.CONFIRM_NO = RMOD.CONFIRM_NO_ORIG                   AND PP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID                   AND RMOD.LINE_NO = PromoProduk.PRODUK_ROW_NUM                   AND RMOD.KET = 'OT'),0)) ELSE  0 END AS REAL_MOD_OT FROM PROPOSAL PPL WHERE PPL.PROPOSAL_ID = PromoProduk.PROPOSAL_ID">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiModOnTop_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiModOnTop_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiDcv"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_DCV"
+    SQLType="NUMERIC"
+    Expression="CASE WHEN (SELECT COUNT(1) FROM APPS.FCS_VIEW_REALISASI_DCV RDCV WHERE RDCV.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID) > 0 THEN NVL((SELECT SUM(NVL(RDCV.AMOUNT_CM,0)) FROM APPS.FCS_VIEW_REALISASI_DCV RDCV WHERE RDCV.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID),0) ELSE 0 END">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiDcv_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiDcv_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiDcvMf"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_DCV_MF"
+    SQLType="NUMERIC">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (ProposalType == 'POTONGAN') {
+if (RealisasiDcv >= DiscMf) {
+return DiscMf;
+} else {
+return RealisasiDcv;
+}
+} else if (ProposalType == 'PROMOBARANG') {
+if (RealisasiDcv >= BrgBonusMf) {
+return BrgBonusMf;
+} else {
+return RealisasiDcv;
+}
+} else if (ProposalType == 'BIAYA') {
+if (RealisasiDcv >= BiaMf) {
+return BiaMf;
+} else {
+return RealisasiDcv;
+}
+} else {
+return 0;
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="BiaMf"/>
+      <Item
+        Value="BrgBonusMf"/>
+      <Item
+        Value="DiscMf"/>
+      <Item
+        Value="ProposalType"/>
+      <Item
+        Value="RealisasiDcv"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiDcvMf_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiDcvMf_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiDcvOnTop"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_DCV_ON_TOP"
+    SQLType="NUMERIC">
+    <TransientExpression><![CDATA[return RealisasiDcv - RealisasiDcvMf;]]></TransientExpression>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiDcvOnTop_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiDcvOnTop_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="MekanismePenagihan"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="MEKANISME_PENAGIHAN"
+    SQLType="VARCHAR"
+    Precision="20"
+    Expression="SELECT PP.MEKANISME_PENAGIHAN FROM PROPOSAL PP WHERE PP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID"/>
+  <ViewAttribute
+    Name="DcvFlag"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="DCV_FLAG"
+    SQLType="VARCHAR"
+    Precision="10"
+    Expression="SELECT CASE WHEN COUNT(PRDCV.NO_PP) > 0 THEN 'Y' ELSE 'N' END FROM APPS.FCS_VIEW_REALISASI_DCV PRDCV WHERE PRDCV.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID"/>
+  <ViewAttribute
+    Name="ProdukRowNum"
+    PrecisionRule="true"
+    EntityAttrName="ProdukRowNum"
+    EntityUsage="PromoProduk"
+    AliasName="PRODUK_ROW_NUM"/>
+  <ViewAttribute
+    Name="PpidRef"
+    PrecisionRule="true"
+    EntityAttrName="PpidRef"
+    EntityUsage="PromoProduk"
+    AliasName="PPID_REF"
+    IsUpdateable="while_insert"/>
+  <ViewAttribute
+    Name="ProposalAddendum"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PROPOSAL_ADDENDUM"
+    SQLType="VARCHAR"
+    Precision="255"
+    Expression="(SELECT CASE WHEN PP.ADDENDUM_KE IS NOT NULL THEN 'Y' ELSE 'N' END FROM PROPOSAL PP WHERE PP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID)"/>
+  <ViewAttribute
+    Name="CloseFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CloseFlag"
+    EntityUsage="PromoProduk"
+    AliasName="CLOSE_FLAG"
+    DefaultValue="N">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="CLOSE_PER_PRODUK"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BudgetPercentTotal"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="BUDGET_PERCENT_TOTAL"
+    SQLType="NUMERIC"
+    Expression="(NVL((SELECT SUM(NVL(BB.PERCENTAGE,0)) FROM PROD_BUDGET_BY BB WHERE BB.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID),0))">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BudgetPercentTotal_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BudgetPercentTotal_FMT_FORMAT"/>
+        <LABEL
+          ResId="BUDGET_PERCENT_TOTAL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ValRealGrTotByLine"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="VAL_REAL_GR_TOT_BY_LINE"
+    SQLType="NUMERIC"
+    Expression="SELECT CASE  WHEN (PPL.DISCOUNT_TYPE = 'POTONGAN' AND PPL.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND (SELECT COUNT(PRDCV.NO_PP) FROM APPS.FCS_VIEW_REALISASI_DCV PRDCV WHERE PRDCV.NO_PP = PPL.PROPOSAL_NO) = 0) THEN   (SELECT (NVL((SELECT SUM (NVL (rgr.total, 0)) FROM apps.fcs_view_realisasi_gr rgr WHERE rgr.no_konfirmasi_ori IN (SELECT confirm_no FROM proposal prop WHERE prop.proposal_id = prod_real.proposal_id AND prop.confirm_no IS NOT NULL) AND to_char(rgr.line_no) = to_char(nvl(prod_real.produk_row_num,prod_real.row_no))), 0)) AS realisasi_gr_total_by_line  FROM (select row_number() over (partition by pp.PROPOSAL_ID order by pp.promo_produk_id) row_no, pp.* from promo_produk pp ) prod_real WHERE prod_real.promo_produk_id = PromoProduk.PPID_REF)  WHEN (PPL.DISCOUNT_TYPE = 'PROMOBARANG' AND PPL.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND (SELECT COUNT(PRDCV.NO_PP) FROM APPS.FCS_VIEW_REALISASI_DCV PRDCV WHERE PRDCV.NO_PP = PPL.PROPOSAL_NO) = 0) THEN   (SELECT (NVL((SELECT SUM (NVL (rgr.total, 0)) FROM apps.fcs_view_realisasi_gr rgr WHERE rgr.no_konfirmasi_ori IN (SELECT confirm_no FROM proposal prop WHERE prop.proposal_id = prod_real.proposal_id AND prop.confirm_no IS NOT NULL) AND to_char(rgr.line_no) = to_char(nvl(prod_real.produk_row_num,prod_real.row_no))), 0)) AS realisasi_gr_total_by_line  FROM (select row_number() over (partition by pp.PROPOSAL_ID order by pp.promo_produk_id) row_no, pp.* from promo_produk pp ) prod_real WHERE prod_real.promo_produk_id = PromoProduk.PPID_REF)  WHEN PPL.DISCOUNT_TYPE = 'BIAYA' THEN (SELECT (NVL((SELECT SUM (NVL (rgr.total, 0)) FROM apps.fcs_view_realisasi_gr rgr WHERE rgr.no_konfirmasi_ori IN (SELECT confirm_no FROM proposal prop WHERE prop.proposal_id = prod_real.proposal_id AND prop.confirm_no IS NOT NULL) AND to_char(rgr.line_no) = to_char(nvl(prod_real.produk_row_num,prod_real.row_no))), 0)) AS realisasi_gr_total_by_line  FROM (select row_number() over (partition by pp.PROPOSAL_ID order by pp.promo_produk_id) row_no, pp.* from promo_produk pp ) prod_real WHERE prod_real.promo_produk_id = PromoProduk.PPID_REF)  ELSE  0 END AS REAL_GR_TOT_BY_LINE FROM PROPOSAL PPL WHERE PPL.PROPOSAL_ID = PromoProduk.PROPOSAL_ID"/>
+  <ViewLinkAccessor
+    Name="DiscountView"
+    ViewLink="app.fpp.model.views.promoproposal.DiscountPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="TargetView"
+    ViewLink="app.fpp.model.views.promoproposal.TargetPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="ProdukItemView"
+    ViewLink="app.fpp.model.views.promoproposal.ProdukItemPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="ProdukVariantView"
+    ViewLink="app.fpp.model.views.promoproposal.ProdukVariantPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="BiayaView"
+    ViewLink="app.fpp.model.views.promoproposal.BiayaPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="PromoBonusView"
+    ViewLink="app.fpp.model.views.promoproposal.PromoBonusPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="ProdBudgetByView"
+    ViewLink="app.fpp.model.views.confirmation.ProdBudgetByCustPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="ProdBudgetByPostView"
+    ViewLink="app.fpp.model.views.confirmation.ProdBudgetByPostPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="RealisasiItemPaketView"
+    ViewLink="app.fpp.model.views.confirmation.RealisasiItemPaketPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <LOVUIHints
+    ListType="105"
+    MRUCount="0"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOVUIHints_NullValueId">
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="ProductCode"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </LOVUIHints>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

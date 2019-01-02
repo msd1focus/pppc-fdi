@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="paUploadDownloadPageDef"
+                Package="Pages.Approval">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator id="LookupCodeCRUDView1Iterator" Binds="LookupCodeCRUDView1"
+              DataControl="MasterDataAMDataControl" RangeSize="25"/>
+    <iterator id="UploadDownloadView1Iterator" Binds="UploadDownloadView1"
+              DataControl="ApprovalAMDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="UploadDownloadView1Iterator" id="UploadDownloadView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.UploadDownloadView"
+                      Name="UploadDownloadView10">
+        <AttrNames>
+          <Item Value="ProposalId"/>
+          <Item Value="Path"/>
+          <Item Value="FileName"/>
+          <Item Value="ContentType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="UploadDownloadView1Iterator" id="Delete"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+  </bindings>
+</pageDefinition>

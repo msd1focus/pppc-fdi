@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="pp-add-buy-variant">
+    <default-activity id="__1">setKeyPromoAddBuyId</default-activity>
+    <input-parameter-definition id="__4">
+      <name id="__3">promoAddBuyId</name>
+      <value>#{pageFlowScope.promoAddBuyId}</value>
+      <class>oracle.jbo.domain.DBSequence</class>
+      <required/>
+    </input-parameter-definition>
+    <input-parameter-definition id="__6">
+      <name id="__5">prodNameAddBuy</name>
+      <value>#{pageFlowScope.prodNameAddBuy}</value>
+      <class>java.lang.String</class>
+      <required/>
+    </input-parameter-definition>
+    <input-parameter-definition id="__8">
+      <name id="__7">packCode</name>
+      <value>#{pageFlowScope.packCode}</value>
+      <class>java.lang.String</class>
+      <required/>
+    </input-parameter-definition>
+    <input-parameter-definition id="__36">
+      <name id="__37">categoryCode</name>
+      <value>#{pageFlowScope.categoryCode}</value>
+      <class>java.lang.String</class>
+      <required/>
+    </input-parameter-definition>
+    <input-parameter-definition id="__39">
+      <name id="__38">classCode</name>
+      <value>#{pageFlowScope.classCode}</value>
+      <class>java.lang.String</class>
+      <required/>
+    </input-parameter-definition>
+    <input-parameter-definition id="__40">
+      <name id="__41">brandCode</name>
+      <value>#{pageFlowScope.brandCode}</value>
+      <class>java.lang.String</class>
+      <required/>
+    </input-parameter-definition>
+    <input-parameter-definition id="__42">
+      <name id="__43">extCode</name>
+      <value>#{pageFlowScope.extCode}</value>
+      <class>java.lang.String</class>
+      <required/>
+    </input-parameter-definition>
+    <managed-bean id="__14">
+      <managed-bean-name id="__15">PpAddBuyVariantBackingBean</managed-bean-name>
+      <managed-bean-class id="__17">app.fpp.bean.promoproposal.PpAddBuyVariantBackingBean</managed-bean-class>
+      <managed-bean-scope id="__16">backingBean</managed-bean-scope>
+    </managed-bean>
+    <view id="ppAddBuyVariant">
+      <page>/Pages/PromoProposal/ppAddBuyVariant.jspx</page>
+    </view>
+    <task-flow-return id="return">
+      <outcome id="__2">
+        <name>return</name>
+      </outcome>
+    </task-flow-return>
+    <method-call id="setKeyPromoAddBuyId">
+      <method>#{bindings.setCurrentRowWithKeyValue.execute}</method>
+      <outcome id="__18">
+        <fixed-outcome>setCurrentRowWithKeyValue</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="setProdukVariant">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__30">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__9">
+      <from-activity-id id="__10">ppAddBuyVariant</from-activity-id>
+      <control-flow-case id="__11">
+        <from-outcome id="__13">close</from-outcome>
+        <to-activity-id id="__12">return</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__20">
+      <from-activity-id id="__21">setKeyPromoAddBuyId</from-activity-id>
+      <control-flow-case id="__22">
+        <from-outcome id="__24">setCurrentRowWithKeyValue</from-outcome>
+        <to-activity-id id="__23">setProdukVariant</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__31">
+      <from-activity-id id="__32">setProdukVariant</from-activity-id>
+      <control-flow-case id="__33">
+        <from-outcome id="__34">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__35">ppAddBuyVariant</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+  </task-flow-definition>
+</adfc-config>

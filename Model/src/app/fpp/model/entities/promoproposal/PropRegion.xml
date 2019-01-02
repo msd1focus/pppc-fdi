@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="PropRegion"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  DBObjectType="table"
+  DBObjectName="PROP_REGION"
+  AliasName="PropRegion"
+  BindingStyle="OracleName"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
+    <AttrArray Name="_publishEvents"/>
+  </DesignTime>
+  <Attribute
+    Name="ProposalId"
+    IsNotNull="true"
+    ColumnName="PROPOSAL_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="PROP_REGION"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="RegionCode"
+    IsNotNull="true"
+    Precision="20"
+    ColumnName="REGION_CODE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROP_REGION"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Description"
+    Precision="20"
+    ColumnName="DESCRIPTION"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROP_REGION">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <AccessorAttribute
+    Name="Proposal"
+    Association="app.fpp.model.entities.promoproposal.PropRegionProposalFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.promoproposal.PropRegionProposalFk1Assoc.Proposal"
+    AssociationOtherEnd="app.fpp.model.entities.promoproposal.PropRegionProposalFk1Assoc.PropRegion"
+    Type="app.fpp.model.entities.promoproposal.ProposalImpl"
+    IsUpdateable="true"/>
+  <Key
+    Name="PropRegionPk"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="PROP_REGION_PK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.promoproposal.PropRegion.ProposalId"/>
+      <Item Value="app.fpp.model.entities.promoproposal.PropRegion.RegionCode"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0012810">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012810"/>
+      <Attr Name="_checkCondition" Value='"PROPOSAL_ID" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.promoproposal.PropRegion.ProposalId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0012811">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012811"/>
+      <Attr Name="_checkCondition" Value='"REGION_CODE" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.promoproposal.PropRegion.RegionCode"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="PropRegionProposalFk1">
+    <DesignTime>
+      <Attr Name="_isCascadeDelete" Value="true"/>
+      <Attr Name="_referencedKey" Value="PROPOSAL_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="PROP_REGION_PROPOSAL_FK1"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.promoproposal.PropRegion.ProposalId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="fk_PropRegion">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="PROPOSAL_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_PROP_REGION"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.promoproposal.PropRegion.ProposalId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="fk_PropRegion1">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="PROPOSAL_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_PROP_REGION1"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.promoproposal.PropRegion.ProposalId"/>
+    </AttrArray>
+  </Key>
+</Entity>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="approval_pp_approval_pp_ExecuteWithParamsPageDef1"
+                Package="app.fpp.view.pageDefs" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="ApprovalReceiverApproveProposalView1" RangeSize="25"
+              DataControl="ApprovalAMDataControl"
+              id="ApprovalReceiverApproveProposalView1Iterator"
+              Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="ApprovalReceiverApproveProposalView1Iterator"
+            id="ExecuteWithParams" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="aprvlCode"
+                 NDValue="#{data.app_fpp_view_approvalProposalPageDef.AprvlCode.inputValue}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="usrRole" NDValue="#{UserData.userRole}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

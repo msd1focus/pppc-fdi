@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="uaProdAddExtPageDef"
+                Package="Pages.UserAccess">
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator id="AllUserProdukExtShuttleView1Iterator"
+              Binds="AllUserProdukExtShuttleView1"
+              DataControl="UserAccessAMDataControl" RangeSize="-1"/>
+    <iterator id="AppUserProdukExtView1Iterator"
+              Binds="AppUserProdukExtView1"
+              DataControl="UserAccessAMDataControl" RangeSize="-1"/>
+  </executables>
+  <bindings>
+    <action id="Commit" DataControl="UserAccessAMDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="UserAccessAMDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+  </bindings>
+</pageDefinition>

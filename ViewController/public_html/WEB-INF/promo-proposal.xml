@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="promo-proposal">
+    <default-activity id="__6">FilterByCompanyUser</default-activity>
+    <managed-bean id="__4">
+      <managed-bean-name id="__3">ProposalBean</managed-bean-name>
+      <managed-bean-class id="__2">app.fpp.bean.promoproposal.ProposalBean</managed-bean-class>
+      <managed-bean-scope id="__5">request</managed-bean-scope>
+    </managed-bean>
+    <view id="formProposal">
+      <page>/Pages/PromoProposal/formProposal.jsff</page>
+    </view>
+    <method-call id="FilterByCompanyUser">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__1">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <task-flow-call id="pp-prod-add-variant">
+      <task-flow-reference>
+        <document>/WEB-INF/pp-prod-add-variant.xml</document>
+        <id>pp-prod-add-variant</id>
+      </task-flow-reference>
+      <input-parameter id="__34">
+        <name>promoProdukId</name>
+        <value>#{pageFlowScope.promoProdukId}</value>
+      </input-parameter>
+      <input-parameter id="__35">
+        <name>prodName</name>
+        <value>#{pageFlowScope.prodName}</value>
+      </input-parameter>
+      <input-parameter id="__36">
+        <name>packCode</name>
+        <value>#{pageFlowScope.packCode}</value>
+      </input-parameter>
+      <input-parameter id="__120">
+        <name>extCode</name>
+        <value>#{pageFlowScope.extCode}</value>
+      </input-parameter>
+      <input-parameter id="__121">
+        <name>brandCode</name>
+        <value>#{pageFlowScope.brandCode}</value>
+      </input-parameter>
+      <input-parameter id="__122">
+        <name>classCode</name>
+        <value>#{pageFlowScope.classCode}</value>
+      </input-parameter>
+      <input-parameter id="__123">
+        <name>categoryCode</name>
+        <value>#{pageFlowScope.categoryCode}</value>
+      </input-parameter>
+      <input-parameter id="__251">
+        <name>userName</name>
+        <value>#{UserData.userNameLogin}</value>
+      </input-parameter>
+      <run-as-dialog>
+        <display-type id="__32">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="pp-prod-add-item">
+      <task-flow-reference>
+        <document>/WEB-INF/pp-prod-add-item.xml</document>
+        <id>pp-prod-add-item</id>
+      </task-flow-reference>
+      <input-parameter id="__37">
+        <name>promoProdukId</name>
+        <value>#{pageFlowScope.promoProdukId}</value>
+      </input-parameter>
+      <input-parameter id="__38">
+        <name>prodName</name>
+        <value>#{pageFlowScope.prodName}</value>
+      </input-parameter>
+      <input-parameter id="__39">
+        <name>packCode</name>
+        <value>#{pageFlowScope.packCode}</value>
+      </input-parameter>
+      <input-parameter id="__114">
+        <name>categoryCode</name>
+        <value>#{pageFlowScope.categoryCode}</value>
+      </input-parameter>
+      <input-parameter id="__115">
+        <name>classCode</name>
+        <value>#{pageFlowScope.classCode}</value>
+      </input-parameter>
+      <input-parameter id="__118">
+        <name>brandCode</name>
+        <value>#{pageFlowScope.brandCode}</value>
+      </input-parameter>
+      <input-parameter id="__119">
+        <name>extCode</name>
+        <value>#{pageFlowScope.extCode}</value>
+      </input-parameter>
+      <input-parameter id="__252">
+        <name>userName</name>
+        <value>#{UserData.userNameLogin}</value>
+      </input-parameter>
+      <run-as-dialog>
+        <display-type id="__33">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="pp-add-buy-variant">
+      <task-flow-reference>
+        <document>/WEB-INF/pp-add-buy-variant.xml</document>
+        <id>pp-add-buy-variant</id>
+      </task-flow-reference>
+      <input-parameter id="__56">
+        <name>promoAddBuyId</name>
+        <value>#{pageFlowScope.promoAddBuyId}</value>
+      </input-parameter>
+      <input-parameter id="__59">
+        <name>prodNameAddBuy</name>
+        <value>#{pageFlowScope.prodNameAddBuy}</value>
+      </input-parameter>
+      <input-parameter id="__60">
+        <name>packCode</name>
+        <value>#{pageFlowScope.packCode}</value>
+      </input-parameter>
+      <input-parameter id="__124">
+        <name>categoryCode</name>
+        <value>#{pageFlowScope.categoryCode}</value>
+      </input-parameter>
+      <input-parameter id="__125">
+        <name>classCode</name>
+        <value>#{pageFlowScope.classCode}</value>
+      </input-parameter>
+      <input-parameter id="__126">
+        <name>brandCode</name>
+        <value>#{pageFlowScope.brandCode}</value>
+      </input-parameter>
+      <input-parameter id="__127">
+        <name>extCode</name>
+        <value>#{pageFlowScope.extCode}</value>
+      </input-parameter>
+      <run-as-dialog>
+        <display-type id="__52">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="pp-add-buy-item">
+      <task-flow-reference>
+        <document>/WEB-INF/pp-add-buy-item.xml</document>
+        <id>pp-add-buy-item</id>
+      </task-flow-reference>
+      <input-parameter id="__57">
+        <name>promoAddBuyId</name>
+        <value>#{pageFlowScope.promoAddBuyId}</value>
+      </input-parameter>
+      <input-parameter id="__58">
+        <name>prodNameAddBuy</name>
+        <value>#{pageFlowScope.prodNameAddBuy}</value>
+      </input-parameter>
+      <input-parameter id="__61">
+        <name>packCode</name>
+        <value>#{pageFlowScope.packCode}</value>
+      </input-parameter>
+      <input-parameter id="__128">
+        <name>extCode</name>
+        <value>#{pageFlowScope.extCode}</value>
+      </input-parameter>
+      <input-parameter id="__129">
+        <name>brandCode</name>
+        <value>#{pageFlowScope.brandCode}</value>
+      </input-parameter>
+      <input-parameter id="__130">
+        <name>classCode</name>
+        <value>#{pageFlowScope.classCode}</value>
+      </input-parameter>
+      <input-parameter id="__131">
+        <name>categoryCode</name>
+        <value>#{pageFlowScope.categoryCode}</value>
+      </input-parameter>
+      <run-as-dialog>
+        <display-type id="__53">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="pp-bonus-variant">
+      <task-flow-reference>
+        <document>/WEB-INF/pp-bonus-variant.xml</document>
+        <id>pp-bonus-variant</id>
+      </task-flow-reference>
+      <input-parameter id="__62">
+        <name>promoBonusId</name>
+        <value>#{pageFlowScope.promoBonusId}</value>
+      </input-parameter>
+      <input-parameter id="__64">
+        <name>prodNameBonus</name>
+        <value>#{pageFlowScope.prodNameBonus}</value>
+      </input-parameter>
+      <input-parameter id="__66">
+        <name>packCode</name>
+        <value>#{pageFlowScope.packCode}</value>
+      </input-parameter>
+      <input-parameter id="__180">
+        <name>categoryCode</name>
+        <value>#{pageFlowScope.categoryCode}</value>
+      </input-parameter>
+      <input-parameter id="__181">
+        <name>classCode</name>
+        <value>#{pageFlowScope.classCode}</value>
+      </input-parameter>
+      <input-parameter id="__182">
+        <name>brandCode</name>
+        <value>#{pageFlowScope.brandCode}</value>
+      </input-parameter>
+      <input-parameter id="__183">
+        <name>extCode</name>
+        <value>#{pageFlowScope.extCode}</value>
+      </input-parameter>
+      <run-as-dialog>
+        <display-type id="__55">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="pp-bonus-item">
+      <task-flow-reference>
+        <document>/WEB-INF/pp-bonus-item.xml</document>
+        <id>pp-bonus-item</id>
+      </task-flow-reference>
+      <input-parameter id="__63">
+        <name>promoBonusId</name>
+        <value>#{pageFlowScope.promoBonusId}</value>
+      </input-parameter>
+      <input-parameter id="__65">
+        <name>prodNameBonus</name>
+        <value>#{pageFlowScope.prodNameBonus}</value>
+      </input-parameter>
+      <input-parameter id="__67">
+        <name>packCode</name>
+        <value>#{pageFlowScope.packCode}</value>
+      </input-parameter>
+      <input-parameter id="__136">
+        <name>categoryCode</name>
+        <value>#{pageFlowScope.categoryCode}</value>
+      </input-parameter>
+      <input-parameter id="__137">
+        <name>classCode</name>
+        <value>#{pageFlowScope.classCode}</value>
+      </input-parameter>
+      <input-parameter id="__138">
+        <name>brandCode</name>
+        <value>#{pageFlowScope.brandCode}</value>
+      </input-parameter>
+      <input-parameter id="__139">
+        <name>extCode</name>
+        <value>#{pageFlowScope.extCode}</value>
+      </input-parameter>
+      <run-as-dialog>
+        <display-type id="__54">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="pp-upload-download">
+      <task-flow-reference>
+        <document>/WEB-INF/pp-upload-download.xml</document>
+        <id>pp-upload-download</id>
+      </task-flow-reference>
+      <input-parameter id="__151">
+        <name>propId</name>
+        <value>#{pageFlowScope.propId}</value>
+      </input-parameter>
+      <input-parameter id="__152">
+        <name>propNo</name>
+        <value>#{pageFlowScope.propNo}</value>
+      </input-parameter>
+      <input-parameter id="__226">
+        <name>attchStatus</name>
+        <value>#{pageFlowScope.attchStatus}</value>
+      </input-parameter>
+      <run-as-dialog>
+        <display-type id="__153">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <control-flow-rule id="__12">
+      <from-activity-id id="__13">formProposal</from-activity-id>
+      <control-flow-case id="__26">
+        <from-outcome id="__28">addvariant</from-outcome>
+        <to-activity-id id="__27">pp-prod-add-variant</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__29">
+        <from-outcome id="__31">additem</from-outcome>
+        <to-activity-id id="__30">pp-prod-add-item</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__40">
+        <from-outcome id="__42">addbuyvariant</from-outcome>
+        <to-activity-id id="__41">pp-add-buy-variant</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__43">
+        <from-outcome id="__45">bonusvariant</from-outcome>
+        <to-activity-id id="__44">pp-bonus-variant</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__47">
+        <from-outcome id="__48">addbuyitem</from-outcome>
+        <to-activity-id id="__46">pp-add-buy-item</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__49">
+        <from-outcome id="__51">bonusitem</from-outcome>
+        <to-activity-id id="__50">pp-bonus-item</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__149">
+        <from-outcome id="__150">uploaddownload</from-outcome>
+        <to-activity-id id="__148">pp-upload-download</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__7">
+      <from-activity-id id="__8">FilterByCompanyUser</from-activity-id>
+      <control-flow-case id="__10">
+        <from-outcome id="__9">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__11">formProposal</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

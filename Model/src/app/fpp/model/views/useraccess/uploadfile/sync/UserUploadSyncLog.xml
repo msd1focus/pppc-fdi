@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="UserUploadSyncLog"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  RowClass="app.fpp.model.views.useraccess.uploadfile.sync.UserUploadSyncLogRowImpl"
+  ComponentClass="app.fpp.model.views.useraccess.uploadfile.sync.UserUploadSyncLogImpl"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.useraccess.uploadfile.sync.UserUploadSyncLog_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <SQLQuery>
+    <![CDATA[SELECT UserUploadLog.SYNC_STATUS, UserUploadLog.SYNC_EXEC_DATE FROM USER_UPLOAD_LOG UserUploadLog WHERE UserUploadLog.UT_CODE = 'UTSYNC' AND ROWNUM = 1
+UNION
+SELECT ('-') AS SYNC_STATUS, SYSDATE AS SYNC_EXEC_DATE FROM DUAL WHERE (SELECT COUNT(1) FROM USER_UPLOAD_LOG UserUploadLog WHERE UserUploadLog.UT_CODE = 'UTSYNC' AND ROWNUM = 1) = 0]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="SyncStatus"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="SYNC_STATUS"
+    Expression="SYNC_STATUS"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="STATUS"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="SyncExecDate"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="SYNC_EXEC_DATE"
+    Expression="SYNC_EXEC_DATE"
+    SQLType="DATE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.useraccess.uploadfile.sync.UserUploadSyncLog.SyncExecDate_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.useraccess.uploadfile.sync.UserUploadSyncLog.SyncExecDate_FMT_FORMAT"/>
+        <LABEL
+          ResId="LAST_EXECUTED"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

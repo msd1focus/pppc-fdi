@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="pa_bonus_variant_pa_bonus_variant_SetCurrentRowWithKeyValuePageDef"
+                Package="app.fpp.view.pageDefs" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="PromoBonusVariantView1" RangeSize="25"
+              DataControl="ApprovalAMDataControl"
+              id="PromoBonusVariantView1Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="PromoBonusVariantView1Iterator"
+            id="setCurrentRowWithKeyValue" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKeyValue">
+      <NamedData NDName="rowKey" NDValue="#{pageFlowScope.promoBonusId}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

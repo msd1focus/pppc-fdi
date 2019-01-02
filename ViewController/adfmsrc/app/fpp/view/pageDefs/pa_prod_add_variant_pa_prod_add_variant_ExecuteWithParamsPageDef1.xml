@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="pa_prod_add_variant_pa_prod_add_variant_ExecuteWithParamsPageDef1"
+                Package="app.fpp.view.pageDefs" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="AllProdukVariantShuttleView1" RangeSize="25"
+              DataControl="ApprovalAMDataControl"
+              id="AllProdukVariantShuttleView1Iterator" Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="AllProdukVariantShuttleView1Iterator"
+            id="ExecuteWithParams" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="setCategory" NDValue="#{pageFlowScope.categoryCode}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="setClass" NDValue="#{pageFlowScope.classCode}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="setBrand" NDValue="#{pageFlowScope.brandCode}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="setExt" NDValue="#{pageFlowScope.extCode}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="setPack" NDValue="#{pageFlowScope.packCode}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

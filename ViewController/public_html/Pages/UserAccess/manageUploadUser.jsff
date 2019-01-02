@@ -1,0 +1,317 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelSplitter id="ps2" orientation="vertical" splitterPosition="45"
+                    disabled="true">
+    <f:facet name="first">
+      <af:panelStretchLayout id="psl1" endWidth="311px"
+                             inlineStyle="border-bottom-width:1px; border-bottom-color:rgb(231,231,231); border-bottom-style:solid;"
+                             startWidth="350px">
+        <f:facet name="start">
+          <af:panelGroupLayout id="panelGroupLayout1"
+                               inlineStyle="padding-top:12px; padding-left:5px; color:rgb(28,65,126);"
+                               layout="vertical">
+            <af:outputText value="User Access: Upload User Tools" id="outputText6"
+                           inlineStyle="font-weight:bold; font-size:18.0px;margin-left:16px;"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:panelStretchLayout>
+    </f:facet>
+    <f:facet name="second">
+      <af:panelTabbed id="pt1"
+                      inlineStyle="margin-left:10px;margin-bottom:10px;margin-right:10px;margin-top:5px;">
+        <af:showDetailItem text="Upload" id="sdi1"
+                           binding="#{backingBeanScope.UserUploadToolsBackingBean.tabUpload}">
+          <af:panelGroupLayout id="pgl1" layout="vertical">
+            <af:panelGroupLayout id="panelGroupLayout8" layout="vertical"
+                                 inlineStyle="background-color:rgb(240,240,240);">
+              <af:spacer width="10" height="5" id="spacer18"/>
+              <af:panelGroupLayout id="panelGroupLayout10" layout="horizontal"
+                                   inlineStyle="padding-left:10px;">
+                <af:image shortDesc="Still Running" source="/afr/info.png"
+                          id="ai1"/>
+                <af:spacer width="10" height="10" id="spacer47"/>
+                <af:outputText value="Informasi" id="outputText11"
+                               inlineStyle="font-size:small; width:100px; font-weight:bold;"/>
+              </af:panelGroupLayout>
+              <af:spacer width="10" height="5" id="spacer48"/>
+              <af:panelGroupLayout id="panelGroupLayout11" layout="vertical"
+                                   inlineStyle="padding-left:12px;">
+                <af:outputFormatted value="Fitur untuk melakukan upload user secara massal menggunakan data dalam format &lt;b>&quot;File CSV&quot;&lt;/b>"
+                                    id="of1" inlineStyle="font-size:11.0px;"/>
+              </af:panelGroupLayout>
+              <af:spacer width="10" height="6" id="s1"/>
+            </af:panelGroupLayout>
+            <af:spacer width="10" height="10" id="s2" />
+            <af:panelLabelAndMessage label="User File [.csv]" id="plam3"
+                                     inlineStyle="padding-left:6px;">
+              <af:panelGroupLayout id="pgl2" layout="horizontal">
+                <af:inputFile label="User File [.csv]" id="if1"
+                              value="#{backingBeanScope.UserUploadToolsBackingBean.file}"
+                              contentStyle="padding:10px;"
+                              binding="#{backingBeanScope.UserUploadToolsBackingBean.inputFileBinding}"
+                              simple="true"/>
+                <af:spacer width="10" height="10" id="spacer1"/>
+                <af:commandButton text="Upload &amp; Sync" id="cbUploadSync"
+                                  action="#{backingBeanScope.UserUploadToolsBackingBean.cbUploadSync_click}"
+                                  inlineStyle="padding:10px;"
+                                  shortDesc="WARNING: CLICK AT YOUR OWN RISK"/>
+                <af:spacer width="10" height="10" id="spacer12"
+                           rendered="false"/>
+                <af:commandButton text="Upload File" id="cbUpload"
+                                  action="#{backingBeanScope.UserUploadToolsBackingBean.btnUpload_Click}"
+                                  inlineStyle="padding:10px;" rendered="false"/>
+                <af:spacer width="10" height="10" id="s3"/>
+                <af:commandButton text="Reset" id="cbReset"
+                                  inlineStyle="padding:10px;"
+                                  disabled="#{bindings.Status.inputValue == 'INPROCESS'}"
+                                  actionListener="#{backingBeanScope.UserUploadToolsBackingBean.utUploadReset}"/>
+              </af:panelGroupLayout>
+            </af:panelLabelAndMessage>
+            <af:spacer width="10" height="10" id="s4"/>
+            <af:panelFormLayout id="pfl1" inlineStyle="font-weight:bold;"
+                                partialTriggers="cbUpload cbReset"
+                                binding="#{backingBeanScope.UserUploadToolsBackingBean.frmStatus}">
+              <af:panelLabelAndMessage label="#{bindings.Status.hints.label}"
+                                       id="plam1">
+                <af:outputText value="#{bindings.Status.inputValue}" id="ot2"/>
+              </af:panelLabelAndMessage>
+              <af:spacer width="10" height="4" id="s5"/>
+              <af:panelLabelAndMessage label="#{bindings.ExecDate.hints.label}"
+                                       id="plam2">
+                <af:outputText value="#{bindings.Status.inputValue == '-' ? '-' :  bindings.ExecDate.inputValue}" id="ot1">
+                  <af:convertDateTime pattern="#{bindings.ExecDate.format}"/>
+                </af:outputText>
+              </af:panelLabelAndMessage>
+            </af:panelFormLayout>
+          </af:panelGroupLayout>
+        </af:showDetailItem>
+        <af:showDetailItem text="Validate" id="sdi2" stretchChildren="first"
+                           disabled="#{bindings.Status.inputValue != 'FINISHED' and bindings.Status.inputValue != 'VALIDATION ERROR'}"
+                           rendered="false">
+          <af:panelSplitter id="ps1" orientation="vertical"
+                            splitterPosition="47" disabled="true">
+            <f:facet name="first">
+              <af:panelGroupLayout id="panelGroupLayout2" layout="vertical"
+                                   inlineStyle="background-color:rgb(240,240,240);">
+                <af:spacer width="10" height="5" id="spacer2"/>
+                <af:panelGroupLayout id="panelGroupLayout3" layout="horizontal"
+                                     inlineStyle="padding-left:10px;">
+                  <af:image shortDesc="Still Running" source="/afr/info.png"
+                            id="image1"/>
+                  <af:spacer width="10" height="10" id="spacer3"/>
+                  <af:outputText value="Informasi" id="outputText1"
+                                 inlineStyle="font-size:small; width:100px; font-weight:bold;"/>
+                </af:panelGroupLayout>
+                <af:spacer width="10" height="5" id="spacer4"/>
+                <af:panelGroupLayout id="panelGroupLayout4" layout="vertical"
+                                     inlineStyle="padding-left:12px;">
+                  <af:outputFormatted value='Fitur untuk melakukan validasi data user PPPC yang telah di upload sebelumnya.'
+                                      id="outputFormatted1"
+                                      inlineStyle="font-size:11.0px;"/>
+                </af:panelGroupLayout>
+                <af:spacer width="10" height="6" id="spacer5"/>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelSplitter id="ps3" splitterPosition="50"
+                                orientation="vertical" disabled="true">
+                <f:facet name="first">
+                  <af:panelGroupLayout id="panelGroupLayout5"
+                                       layout="horizontal"
+                                       inlineStyle="margin-top:5px;">
+                    <af:commandButton text="Start Validation" id="cbValidate"
+                                      inlineStyle="padding:10px;"
+                                      action="#{backingBeanScope.UserUploadToolsBackingBean.btnValidate_Click}"/>
+                    <af:spacer width="10" height="10" id="spacer6"/>
+                    <af:commandButton text="Clear Log" id="cbClearLog"
+                                      inlineStyle="padding:10px;"
+                                      disabled="#{bindings.Status.inputValue == 'INPROCESS' or bindings.Status.inputValue == '-' or bindings.UserUploadValidateLog1.estimatedRowCount == 0}"
+                                      actionListener="#{backingBeanScope.UserUploadToolsBackingBean.utValidateReset}"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="second">
+                  <af:panelCollection id="pc1"
+                                      featuresOff="viewMenu columnsMenuItem statusBar detach"
+                                      inlineStyle="background-color:rgb(248,249,252);">
+                    <f:facet name="toolbar">
+                      <af:toolbar id="t2">
+                        <af:outputText value="Number of error: #{bindings.ErrValNum.inputValue == null ? 0 : bindings.ErrValNum.inputValue}"
+                                       id="ot7" rendered="false">
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.ErrValNum.format}"/>
+                        </af:outputText>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table value="#{bindings.UserUploadValidateLog1.collectionModel}"
+                              var="row"
+                              rows="#{bindings.UserUploadValidateLog1.rangeSize}"
+                              emptyText="#{bindings.UserUploadValidateLog1.viewable ? 'Tidak ada data yang ditampilkan.' : 'Access Denied.'}"
+                              fetchSize="#{bindings.UserUploadValidateLog1.rangeSize}"
+                              rowBandingInterval="0" id="t1"
+                              columnStretching="last"
+                              disableColumnReordering="true"
+                              verticalGridVisible="false"
+                              horizontalGridVisible="false"
+                              inlineStyle="background-color:rgb(248,249,252);"
+                              partialTriggers=":::cbReset">
+                      <af:column sortProperty="#{bindings.UserUploadValidateLog1.hints.ValMsg.name}"
+                                 sortable="false"
+                                 id="c1"
+                                 inlineStyle="background-color:rgb(248,249,252);">
+                        <af:panelGroupLayout id="pgl3" layout="horizontal">
+                          <af:outputText value="[#{row.ValExecDate}]" id="ot3"
+                                         inlineStyle="margin-left:10px; font-family:'Courier New', Courier, monospace;">
+                            <af:convertDateTime pattern="#{bindings.UserUploadValidateLog1.hints.ValExecDate.format}"/>
+                          </af:outputText>
+                          <af:outputText value="#{row.ValMsg}" id="ot4"
+                                         inlineStyle="margin-left:10px; font-family:'Courier New', Courier, monospace;"/>
+                        </af:panelGroupLayout>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </f:facet>
+              </af:panelSplitter>
+            </f:facet>
+          </af:panelSplitter>
+        </af:showDetailItem>
+        <af:showDetailItem text="Sync" id="sdi3"
+                           disabled="#{(bindings.UserUploadValidateLog1Iterator.estimatedRowCount == 0) or (bindings.UserUploadValidateLog1Iterator.estimatedRowCount > 0 and bindings.ErrValNum.inputValue != 0)}"
+                           visible="true" rendered="false">
+          <af:panelGroupLayout id="panelGroupLayout6" layout="vertical">
+            <af:panelGroupLayout id="panelGroupLayout7" layout="vertical"
+                                 inlineStyle="background-color:rgb(240,240,240);">
+              <af:spacer width="10" height="5" id="spacer7"/>
+              <af:panelGroupLayout id="panelGroupLayout9" layout="horizontal"
+                                   inlineStyle="padding-left:10px;">
+                <af:image shortDesc="Still Running" source="/afr/info.png"
+                          id="image2"/>
+                <af:spacer width="10" height="10" id="spacer8"/>
+                <af:outputText value="Informasi" id="outputText2"
+                               inlineStyle="font-size:small; width:100px; font-weight:bold;"/>
+              </af:panelGroupLayout>
+              <af:spacer width="10" height="5" id="spacer9"/>
+              <af:panelGroupLayout id="panelGroupLayout12" layout="vertical"
+                                   inlineStyle="padding-left:12px;">
+                <af:outputFormatted value='Fitur untuk melakukan sinkronisasi data user terbaru yang telah diupload dan divalidasi dari staging ke table master.'
+                                    id="outputFormatted2"
+                                    inlineStyle="font-size:11.0px;"/>
+              </af:panelGroupLayout>
+              <af:spacer width="10" height="6" id="spacer10"/>
+            </af:panelGroupLayout>
+            <af:spacer width="10" height="14" id="spacer11"/>
+            <af:panelLabelAndMessage label="Synchronize" id="plam4"
+                                     inlineStyle="padding-left:22px;">
+              <af:panelGroupLayout id="panelGroupLayout13" layout="horizontal">
+                <af:commandButton text="Start" id="cbSync"
+                                  inlineStyle="padding:10px;"
+                                  action="#{backingBeanScope.UserUploadToolsBackingBean.btnSync_Click}"
+                                  partialSubmit="true"/>
+                <af:spacer width="10" height="10" id="spacer13"/>
+                <af:commandButton text="Reset" id="cbSyncReset"
+                                  inlineStyle="padding:10px;"
+                                  disabled="#{bindings.Status.inputValue == 'INPROCESS' or bindings.Status.inputValue == '-'}"
+                                  actionListener="#{backingBeanScope.UserUploadToolsBackingBean.utSyncReset}"/>
+              </af:panelGroupLayout>
+            </af:panelLabelAndMessage>
+            <af:spacer width="10" height="14" id="spacer14"/>
+            <af:panelFormLayout id="pfl2"
+                                binding="#{backingBeanScope.UserUploadToolsBackingBean.frmStatusSync}"
+                                partialTriggers="cbSync cbSyncReset cbReset">
+              <af:panelLabelAndMessage label="#{bindings.SyncStatus.hints.label}"
+                                       id="plam6">
+                <af:outputText value="#{bindings.SyncStatus.inputValue}"
+                               id="ot6" inlineStyle="font-weight:bold;"/>
+              </af:panelLabelAndMessage>
+              <af:spacer width="10" height="4" id="spacer15"/>
+              <af:panelLabelAndMessage label="#{bindings.SyncExecDate.hints.label}"
+                                       id="plam5">
+                <af:outputText value="#{bindings.SyncStatus.inputValue == '-' ? '-' :  bindings.SyncExecDate.inputValue}"
+                               id="ot5" inlineStyle="font-weight:bold;">
+                  <af:convertDateTime pattern="#{bindings.SyncExecDate.format}"/>
+                </af:outputText>
+              </af:panelLabelAndMessage>
+            </af:panelFormLayout>
+          </af:panelGroupLayout>
+        </af:showDetailItem>
+        <af:showDetailItem text="Process Log" id="sdi4"
+                           stretchChildren="first"
+                           disabled="#{bindings.Status.inputValue != 'FINISHED' and bindings.Status.inputValue != 'VALIDATION ERROR'}"
+                           binding="#{backingBeanScope.UserUploadToolsBackingBean.tabProcessLog}">
+          <af:panelSplitter id="panelSplitter1" orientation="vertical"
+                            splitterPosition="47" disabled="true">
+            <f:facet name="first">
+              <af:panelGroupLayout id="panelGroupLayout14" layout="vertical"
+                                   inlineStyle="background-color:rgb(240,240,240);">
+                <af:spacer width="10" height="5" id="spacer16"/>
+                <af:panelGroupLayout id="panelGroupLayout15" layout="horizontal"
+                                     inlineStyle="padding-left:10px;">
+                  <af:image shortDesc="Still Running" source="/afr/info.png"
+                            id="image3"/>
+                  <af:spacer width="10" height="10" id="spacer17"/>
+                  <af:outputText value="Informasi" id="outputText3"
+                                 inlineStyle="font-size:small; width:100px; font-weight:bold;"/>
+                </af:panelGroupLayout>
+                <af:spacer width="10" height="5" id="spacer19"/>
+                <af:panelGroupLayout id="panelGroupLayout16" layout="vertical"
+                                     inlineStyle="padding-left:12px;">
+                  <af:outputFormatted value="Fitur untuk melakukan validasi data user PPPC yang telah di upload sebelumnya."
+                                      id="outputFormatted3"
+                                      inlineStyle="font-size:11.0px;"/>
+                </af:panelGroupLayout>
+                <af:spacer width="10" height="6" id="spacer20"/>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="second">
+                <af:panelCollection id="pcl1"
+                                    featuresOff="viewMenu columnsMenuItem statusBar detach"
+                                    inlineStyle="background-color:rgb(248,249,252);"
+                                    styleClass="AFStretchWidth">
+                  <f:facet name="toolbar">
+                    <af:toolbar id="toolbar1">
+                      <af:outputText value="Number of error: #{bindings.ErrValNum.inputValue == null ? 0 : bindings.ErrValNum.inputValue}"
+                                     id="outputText4" rendered="false">
+                        <af:convertNumber groupingUsed="false"
+                                          pattern="#{bindings.ErrValNum.format}"/>
+                      </af:outputText>
+                      <af:commandToolbarButton text="Clear Log" id="commandButton2"
+                                        disabled="#{bindings.Status.inputValue == 'INPROCESS' or bindings.Status.inputValue == '-' or bindings.UserUploadValidateLog1.estimatedRowCount == 0}"
+                                        actionListener="#{backingBeanScope.UserUploadToolsBackingBean.utValidateReset}"/>
+                    </af:toolbar>
+                  </f:facet>
+                  <af:table value="#{bindings.UserUploadValidateLog1.collectionModel}"
+                            var="row"
+                            rows="#{bindings.UserUploadValidateLog1.rangeSize}"
+                            emptyText="#{bindings.UserUploadValidateLog1.viewable ? 'Tidak ada data yang ditampilkan.' : 'Access Denied.'}"
+                            fetchSize="#{bindings.UserUploadValidateLog1.rangeSize}"
+                            rowBandingInterval="0" id="table1"
+                            columnStretching="last"
+                            disableColumnReordering="true"
+                            verticalGridVisible="false"
+                            horizontalGridVisible="false"
+                            inlineStyle="background-color:rgb(248,249,252);"
+                            partialTriggers=":::cbReset">
+                    <af:column sortProperty="#{bindings.UserUploadValidateLog1.hints.ValMsg.name}"
+                               sortable="false" id="column1"
+                               inlineStyle="background-color:rgb(248,249,252);">
+                      <af:panelGroupLayout id="panelGroupLayout18"
+                                           layout="horizontal">
+                        <af:outputText value="[#{row.ValExecDate}]"
+                                       id="outputText5"
+                                       inlineStyle="margin-left:10px; font-family:'Courier New', Courier, monospace;">
+                          <af:convertDateTime pattern="#{bindings.UserUploadValidateLog1.hints.ValExecDate.format}"/>
+                        </af:outputText>
+                        <af:outputText value="#{row.ValMsg}" id="outputText7"
+                                       inlineStyle="margin-left:10px; font-family:'Courier New', Courier, monospace;"/>
+                      </af:panelGroupLayout>
+                    </af:column>
+                  </af:table>
+                </af:panelCollection>
+            </f:facet>
+          </af:panelSplitter>
+        </af:showDetailItem>
+      </af:panelTabbed>
+    </f:facet>
+  </af:panelSplitter>
+</jsp:root>

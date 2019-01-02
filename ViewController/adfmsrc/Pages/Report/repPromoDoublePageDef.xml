@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="repPromoDoublePageDef"
+                Package="Pages.Report">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="PromoDoubleReportForm1" RangeSize="25"
+              DataControl="DashboardAMDataControl"
+              id="PromoDoubleReportForm1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="PromoDoubleReportForm1Iterator"
+                     id="PeriodeStart">
+      <AttrNames>
+        <Item Value="PeriodeStart"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoDoubleReportForm1Iterator"
+                     id="PeriodeEnd">
+      <AttrNames>
+        <Item Value="PeriodeEnd"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false"
+                  IterBinding="PromoDoubleReportForm1Iterator"
+                  Uses="LOV_RegionCode" id="RegionCode"/>
+    <listOfValues StaticList="false"
+                  IterBinding="PromoDoubleReportForm1Iterator"
+                  Uses="LOV_AreaCode" id="AreaCode"/>
+    <listOfValues StaticList="false"
+                  IterBinding="PromoDoubleReportForm1Iterator"
+                  Uses="LOV_CustType" id="CustType"/>
+    <listOfValues StaticList="false"
+                  IterBinding="PromoDoubleReportForm1Iterator"
+                  Uses="LOV_CustGroup" id="CustGroup"/>
+    <listOfValues StaticList="false"
+                  IterBinding="PromoDoubleReportForm1Iterator"
+                  Uses="LOV_ProductClass" id="ProductClass"/>
+    <listOfValues StaticList="false"
+                  IterBinding="PromoDoubleReportForm1Iterator"
+                  Uses="LOV_ProductBrand" id="ProductBrand"/>
+    <listOfValues StaticList="false"
+                  IterBinding="PromoDoubleReportForm1Iterator"
+                  Uses="LOV_ProductExt" id="ProductExt"/>
+    <listOfValues StaticList="false"
+                  IterBinding="PromoDoubleReportForm1Iterator"
+                  Uses="LOV_ProductPack" id="ProductPack"/>
+    <listOfValues StaticList="false"
+                  IterBinding="PromoDoubleReportForm1Iterator"
+                  Uses="LOV_ProductVariant" id="ProductVariant"/>
+    <listOfValues StaticList="false"
+                  IterBinding="PromoDoubleReportForm1Iterator"
+                  Uses="LOV_ProductItem" id="ProductItem"/>
+    <listOfValues StaticList="false"
+                  IterBinding="PromoDoubleReportForm1Iterator"
+                  Uses="LOV_LocationCode" id="LocationCode"/>
+    <listOfValues StaticList="false"
+                  IterBinding="PromoDoubleReportForm1Iterator"
+                  Uses="LOV_ProductCategory" id="ProductCategory"/>
+    <listOfValues StaticList="false"
+                  IterBinding="PromoDoubleReportForm1Iterator"
+                  Uses="LOV_CustNumber" id="CustNumber"/>
+    <attributeValues IterBinding="PromoDoubleReportForm1Iterator"
+                     id="RegionDesc">
+      <AttrNames>
+        <Item Value="RegionDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoDoubleReportForm1Iterator" id="AreaDesc">
+      <AttrNames>
+        <Item Value="AreaDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoDoubleReportForm1Iterator"
+                     id="LocationDesc">
+      <AttrNames>
+        <Item Value="LocationDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoDoubleReportForm1Iterator"
+                     id="CustTypeDesc">
+      <AttrNames>
+        <Item Value="CustTypeDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoDoubleReportForm1Iterator"
+                     id="CustGroupDesc">
+      <AttrNames>
+        <Item Value="CustGroupDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoDoubleReportForm1Iterator"
+                     id="CustNameDesc">
+      <AttrNames>
+        <Item Value="CustNameDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoDoubleReportForm1Iterator"
+                     id="ProductCategoryDesc">
+      <AttrNames>
+        <Item Value="ProductCategoryDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoDoubleReportForm1Iterator"
+                     id="ProductClassDesc">
+      <AttrNames>
+        <Item Value="ProductClassDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoDoubleReportForm1Iterator"
+                     id="ProductBrandDesc">
+      <AttrNames>
+        <Item Value="ProductBrandDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoDoubleReportForm1Iterator"
+                     id="ProductExtDesc">
+      <AttrNames>
+        <Item Value="ProductExtDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoDoubleReportForm1Iterator"
+                     id="ProductPackDesc">
+      <AttrNames>
+        <Item Value="ProductPackDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoDoubleReportForm1Iterator"
+                     id="ProductVariantDesc">
+      <AttrNames>
+        <Item Value="ProductVariantDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoDoubleReportForm1Iterator"
+                     id="ProductItemDesc">
+      <AttrNames>
+        <Item Value="ProductItemDesc"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

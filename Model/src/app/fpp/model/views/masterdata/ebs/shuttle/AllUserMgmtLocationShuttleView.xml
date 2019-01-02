@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="AllUserMgmtLocationShuttleView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.masterdata.ebs.shuttle.AllUserMgmtLocationShuttleView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="userName"
+    Kind="where"
+    Type="java.lang.String"/>
+  <SQLQuery>
+    <![CDATA[SELECT AC.ATTRIBUTE3 AS REGION_CODE,
+       AC.ATTRIBUTE4 AS AREA_CODE,
+       AC.ATTRIBUTE5 AS LOC_CODE, 
+       FFV.DESCRIPTION AS LOC_LABEL
+FROM APPS.AR_CUSTOMERS AC, APPS.FCS_FLEX_VALUES_VL FFV
+WHERE 1=1
+AND FFV.FLEX_VALUE = AC.ATTRIBUTE5
+AND AC.ATTRIBUTE5 IN (
+                        SELECT  NVL(TRIM(REGEXP_SUBSTR((SELECT LISTAGG(AUA.LOC,';') WITHIN GROUP (ORDER BY AUA.LOC) 
+                                                        FROM (
+                                                                SELECT DISTINCT AC.ATTRIBUTE5 LOC
+                                                                FROM APPS.AR_CUSTOMERS AC,
+                                                                     APP_USER_REGION AUR,
+                                                                     APP_USER_AREA AUA
+                                                                WHERE AC.ATTRIBUTE3 = AUR.REGION_CODE
+                                                                AND AC.ATTRIBUTE4 = AUA.AREA_CODE(+)
+                                                                --AND AUR.USER_NAME = AUA.USER_NAME(+)
+                                                                AND AUR.USER_NAME = :userName
+                                                             ) AUA
+                                                        ),'[^;'']+',1,LEVEL)),AC.ATTRIBUTE5)
+                        FROM DUAL
+                        CONNECT BY LEVEL<=REGEXP_COUNT((SELECT LISTAGG(AUA.LOC,';') WITHIN GROUP (ORDER BY AUA.LOC) 
+                                                        FROM (
+                                                                SELECT DISTINCT AC.ATTRIBUTE5 LOC
+                                                                FROM APPS.AR_CUSTOMERS AC,
+                                                                     APP_USER_REGION AUR,
+                                                                     APP_USER_AREA AUA
+                                                                WHERE AC.ATTRIBUTE3 = AUR.REGION_CODE
+                                                                AND AC.ATTRIBUTE4 = AUA.AREA_CODE(+)
+                                                                --AND AUR.USER_NAME = AUA.USER_NAME(+)
+                                                                AND AUR.USER_NAME = :userName
+                                                             ) AUA
+                                                        ),'[^;'']+')
+                     )
+GROUP BY AC.ATTRIBUTE3, AC.ATTRIBUTE4, AC.ATTRIBUTE5, FFV.DESCRIPTION
+ORDER BY FFV.DESCRIPTION]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="RegionCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="150"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="REGION_CODE"
+    Expression="REGION_CODE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AreaCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="150"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="AREA_CODE"
+    Expression="AREA_CODE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LocCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="150"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="LOC_CODE"
+    Expression="LOC_CODE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LocLabel"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="240"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="LOC_LABEL"
+    Expression="LOC_LABEL"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+  </ViewAttribute>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="LocCode"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

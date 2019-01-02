@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="ua-assign-loc">
+    <default-activity id="__3">SetCurrentRowWithKeyValue</default-activity>
+    <input-parameter-definition id="__1">
+      <name id="__2">userName</name>
+      <value>#{pageFlowScope.userName}</value>
+      <class>java.lang.String</class>
+      <required/>
+    </input-parameter-definition>
+    <input-parameter-definition id="__5">
+      <name id="__6">fullName</name>
+      <value>#{pageFlowScope.fullName}</value>
+      <class>java.lang.String</class>
+      <required/>
+    </input-parameter-definition>
+    <return-value-definition id="__28">
+      <name id="__29">actionReturn</name>
+      <value>#{pageFlowScope.actionReturn}</value>
+      <class>java.lang.String</class>
+    </return-value-definition>
+    <managed-bean id="__20">
+      <managed-bean-name id="__18">AssignLocationUserBackingBean</managed-bean-name>
+      <managed-bean-class id="__21">app.fpp.bean.useraccess.AssignLocationUserBackingBean</managed-bean-class>
+      <managed-bean-scope id="__19">backingBean</managed-bean-scope>
+    </managed-bean>
+    <method-call id="SetCurrentRowWithKeyValue">
+      <method>#{bindings.setCurrentRowWithKeyValue.execute}</method>
+      <outcome id="__4">
+        <fixed-outcome>setCurrentRowWithKeyValue</fixed-outcome>
+      </outcome>
+    </method-call>
+    <view id="assignLocation">
+      <page>/Pages/UserAccess/assignLocation.jspx</page>
+    </view>
+    <task-flow-return id="return">
+      <outcome id="__12">
+        <name>return</name>
+      </outcome>
+    </task-flow-return>
+    <method-call id="setLocByUser">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__22">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__7">
+      <from-activity-id id="__8">SetCurrentRowWithKeyValue</from-activity-id>
+      <control-flow-case id="__9">
+        <from-outcome id="__10">setCurrentRowWithKeyValue</from-outcome>
+        <to-activity-id id="__11">setLocByUser</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__13">
+      <from-activity-id id="__14">assignLocation</from-activity-id>
+      <control-flow-case id="__15">
+        <from-outcome id="__17">close</from-outcome>
+        <to-activity-id id="__16">return</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__23">
+      <from-activity-id id="__24">setLocByUser</from-activity-id>
+      <control-flow-case id="__27">
+        <from-outcome id="__25">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__26">assignLocation</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+  </task-flow-definition>
+</adfc-config>

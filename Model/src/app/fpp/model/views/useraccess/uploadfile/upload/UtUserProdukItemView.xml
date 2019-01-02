@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="UtUserProdukItemView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="UtUserProdukItem.ITEM_DESC, 
+       UtUserProdukItem.PROD_ITEM, 
+       UtUserProdukItem.USER_NAME"
+  FromList="UT_USER_PRODUK_ITEM UtUserProdukItem"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.useraccess.uploadfile.upload.UtUserProdukItemView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <EntityUsage
+    Name="UtUserProdukItem"
+    Entity="app.fpp.model.entities.useraccess.uploadfile.UtUserProdukItem"/>
+  <ViewAttribute
+    Name="ItemDesc"
+    PrecisionRule="true"
+    EntityAttrName="ItemDesc"
+    EntityUsage="UtUserProdukItem"
+    AliasName="ITEM_DESC"/>
+  <ViewAttribute
+    Name="ProdItem"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ProdItem"
+    EntityUsage="UtUserProdukItem"
+    AliasName="PROD_ITEM"/>
+  <ViewAttribute
+    Name="UserName"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="UserName"
+    EntityUsage="UtUserProdukItem"
+    AliasName="USER_NAME"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

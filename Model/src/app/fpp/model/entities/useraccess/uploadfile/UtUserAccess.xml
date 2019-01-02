@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="UtUserAccess"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  DBObjectType="table"
+  DBObjectName="UT_USER_ACCESS"
+  AliasName="UtUserAccess"
+  BindingStyle="OracleName"
+  UseGlueCode="false"
+  RowClass="app.fpp.model.entities.useraccess.uploadfile.UtUserAccessImpl">
+  <DesignTime>
+    <AttrArray Name="_publishEvents"/>
+    <Attr Name="_codeGenFlag2" Value="Init|Access"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Attribute
+    Name="UserName"
+    Precision="30"
+    ColumnName="USER_NAME"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="UT_USER_ACCESS"
+    IsNotNull="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Password"
+    IsNotNull="true"
+    Precision="50"
+    ColumnName="PASSWORD"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="UT_USER_ACCESS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="FullName"
+    IsNotNull="true"
+    Precision="90"
+    ColumnName="FULL_NAME"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="UT_USER_ACCESS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="90"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Descr"
+    Precision="100"
+    ColumnName="DESCR"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="UT_USER_ACCESS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Title"
+    Precision="100"
+    ColumnName="TITLE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="UT_USER_ACCESS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="ContactNo"
+    Precision="20"
+    ColumnName="CONTACT_NO"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="UT_USER_ACCESS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="CompanyId"
+    IsNotNull="true"
+    Precision="1"
+    ColumnName="COMPANY_ID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="UT_USER_ACCESS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="ActivePeriodFrom"
+    IsNotNull="true"
+    ColumnName="ACTIVE_PERIOD_FROM"
+    SQLType="TIMESTAMP"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="UT_USER_ACCESS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="ActivePeriodTo"
+    IsNotNull="true"
+    ColumnName="ACTIVE_PERIOD_TO"
+    SQLType="TIMESTAMP"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="UT_USER_ACCESS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="UserInitial"
+    IsNotNull="true"
+    Precision="3"
+    ColumnName="USER_INITIAL"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="UT_USER_ACCESS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="3"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="UserType"
+    IsNotNull="true"
+    Precision="20"
+    ColumnName="USER_TYPE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="UT_USER_ACCESS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="UserDivision"
+    IsNotNull="true"
+    Precision="20"
+    ColumnName="USER_DIVISION"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="UT_USER_ACCESS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="DirectSpv"
+    Precision="30"
+    ColumnName="DIRECT_SPV"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="UT_USER_ACCESS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="UtUserAccessId"
+    ColumnName="UT_USER_ACCESS_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.DBSequence"
+    ColumnType="NUMBER"
+    TableName="UT_USER_ACCESS"
+    IsUpdateable="while_insert"
+    DefaultValue="@0"
+    Domain="oracle.jbo.domain.DBSequence"
+    PrimaryKey="true"
+    RetrievedOnInsert="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="CustAuthFlag"
+    Precision="20"
+    ColumnName="CUST_AUTH_FLAG"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="UT_USER_ACCESS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <AccessorAttribute
+    Name="UtUserRegion"
+    Association="app.fpp.model.entities.useraccess.uploadfile.UtUserRegionUtUserAcFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.useraccess.uploadfile.UtUserRegionUtUserAcFk1Assoc.UtUserRegion"
+    AssociationOtherEnd="app.fpp.model.entities.useraccess.uploadfile.UtUserRegionUtUserAcFk1Assoc.UtUserAccess"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="UtUserLoc"
+    Association="app.fpp.model.entities.useraccess.uploadfile.UtUserLocUtUserAccesFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.useraccess.uploadfile.UtUserLocUtUserAccesFk1Assoc.UtUserLoc"
+    AssociationOtherEnd="app.fpp.model.entities.useraccess.uploadfile.UtUserLocUtUserAccesFk1Assoc.UtUserAccess"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="UtUserArea"
+    Association="app.fpp.model.entities.useraccess.uploadfile.UtUserAreaUtUserAcceFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.useraccess.uploadfile.UtUserAreaUtUserAcceFk1Assoc.UtUserArea"
+    AssociationOtherEnd="app.fpp.model.entities.useraccess.uploadfile.UtUserAreaUtUserAcceFk1Assoc.UtUserAccess"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="UtUserCustType"
+    Association="app.fpp.model.entities.useraccess.uploadfile.UtUserCustTypeUtUserFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.useraccess.uploadfile.UtUserCustTypeUtUserFk1Assoc.UtUserCustType"
+    AssociationOtherEnd="app.fpp.model.entities.useraccess.uploadfile.UtUserCustTypeUtUserFk1Assoc.UtUserAccess"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="UtUserCustGroup"
+    Association="app.fpp.model.entities.useraccess.uploadfile.UtUserCustGroupUtUseFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.useraccess.uploadfile.UtUserCustGroupUtUseFk1Assoc.UtUserCustGroup"
+    AssociationOtherEnd="app.fpp.model.entities.useraccess.uploadfile.UtUserCustGroupUtUseFk1Assoc.UtUserAccess"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="UtUserCust"
+    Association="app.fpp.model.entities.useraccess.uploadfile.UtUserCustUtUserAcceFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.useraccess.uploadfile.UtUserCustUtUserAcceFk1Assoc.UtUserCust"
+    AssociationOtherEnd="app.fpp.model.entities.useraccess.uploadfile.UtUserCustUtUserAcceFk1Assoc.UtUserAccess"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="UtUserAccessRoles"
+    Association="app.fpp.model.entities.useraccess.uploadfile.UtUserAccessRolesUtUFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.useraccess.uploadfile.UtUserAccessRolesUtUFk1Assoc.UtUserAccessRoles"
+    AssociationOtherEnd="app.fpp.model.entities.useraccess.uploadfile.UtUserAccessRolesUtUFk1Assoc.UtUserAccess"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <Key
+    Name="SysC0012912">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012912"/>
+      <Attr Name="_checkCondition" Value='"USER_NAME" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes"/>
+  </Key>
+  <Key
+    Name="SysC0012913">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012913"/>
+      <Attr Name="_checkCondition" Value='"PASSWORD" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.useraccess.uploadfile.UtUserAccess.Password"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0012914">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012914"/>
+      <Attr Name="_checkCondition" Value='"FULL_NAME" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.useraccess.uploadfile.UtUserAccess.FullName"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0012915">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012915"/>
+      <Attr Name="_checkCondition" Value='"COMPANY_ID" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.useraccess.uploadfile.UtUserAccess.CompanyId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0012916">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012916"/>
+      <Attr Name="_checkCondition" Value='"ACTIVE_PERIOD_FROM" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.useraccess.uploadfile.UtUserAccess.ActivePeriodFrom"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0012917">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012917"/>
+      <Attr Name="_checkCondition" Value='"ACTIVE_PERIOD_TO" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.useraccess.uploadfile.UtUserAccess.ActivePeriodTo"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0012918">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012918"/>
+      <Attr Name="_checkCondition" Value='"USER_INITIAL" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.useraccess.uploadfile.UtUserAccess.UserInitial"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0012919">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012919"/>
+      <Attr Name="_checkCondition" Value='"USER_TYPE" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.useraccess.uploadfile.UtUserAccess.UserType"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0012920">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012920"/>
+      <Attr Name="_checkCondition" Value='"USER_DIVISION" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.useraccess.uploadfile.UtUserAccess.UserDivision"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="UtUserAccessPk"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="UT_USER_ACCESS_PK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.useraccess.uploadfile.UtUserAccess.UtUserAccessId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="UtUserAccessUserNameCheck">
+    <DesignTime>
+      <Attr Name="_isNotNull" Value="true"/>
+      <Attr Name="_DBObjectName" Value="UT_USER_ACCESS_USER_NAME_CHECK"/>
+      <Attr Name="_checkCondition" Value='"USER_NAME" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.useraccess.uploadfile.UtUserAccess.UserName"/>
+    </AttrArray>
+  </Key>
+</Entity>

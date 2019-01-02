@@ -1,0 +1,2564 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="PromoProdukView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="PromoProduk.PROMO_PRODUK_ID, 
+       TO_CHAR(PromoProduk.PROMO_PRODUK_ID) AS PPID_CHAR, 
+       PromoProduk.PROPOSAL_ID, 
+       PromoProduk.PRODUCT_CATEGORY, 
+       PromoProduk.PRODUCT_CATEGORY_DESC, 
+       PromoProduk.PRODUCT_CLASS, 
+       PromoProduk.PRODUCT_CLASS_DESC, 
+       PromoProduk.PRODUCT_BRAND, 
+       PromoProduk.PRODUCT_BRAND_DESC, 
+       PromoProduk.PRODUCT_EXT, 
+       PromoProduk.PRODUCT_EXT_DESC, 
+       PromoProduk.PRODUCT_PACK, 
+       PromoProduk.PRODUCT_PACK_DESC, 
+       PromoProduk.DESCR, 
+       PromoProduk.MEKANISME, 
+       PromoProduk.AMOUNT_PROMO, 
+       PromoProduk.EST_BUDGET_PROP, 
+       PromoProduk.REG_CUST_FLAG, 
+       (SELECT RTRIM(dbms_lob.substr(REPLACE(          REPLACE(            XMLAGG(              XMLELEMENT(&quot;A&quot;,PV.VARIANT_DESC)            ORDER BY 1).getClobVal(),          '&lt;A>',''),        '&lt;/A>',','), 1995, 1 ), ',') FROM PRODUK_VARIANT PV  WHERE PV.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID GROUP BY PV.PROMO_PRODUK_ID) AS PRODUCT_VARIANT, 
+       (SELECT RTRIM(dbms_lob.substr(REPLACE(          REPLACE(            XMLAGG(              XMLELEMENT(&quot;A&quot;,PI.ITEM_DESC)            ORDER BY 1).getClobVal(),          '&lt;A>',''),        '&lt;/A>',','), 1995, 1 ), ',') FROM PRODUK_ITEM PI  WHERE PI.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID GROUP BY PI.PROMO_PRODUK_ID) AS PRODUCT_ITEM, 
+       PromoProduk.BUDGET_BY, 
+       PromoProduk.KODE_POSTING, 
+       PromoProduk.VALID_COMB, 
+       PromoProduk.ITEM_EXPENSE, 
+       PromoProduk.KODE_POSTING_MF, 
+       (PromoProduk.PRODUCT_CATEGORY || '.' || PromoProduk.PRODUCT_CLASS || '.' || PromoProduk.PRODUCT_BRAND || '.' || PromoProduk.PRODUCT_EXT || '.' || PromoProduk.PRODUCT_PACK) AS PRODUCT_COMBINATION, 
+       PromoProduk.EXCL_CUST_BY, 
+       (SELECT   CASE                         WHEN prop.user_type_creator = 'HO'                         THEN                            'APP_CUST_EXCL_' || promoproduk.reg_cust_flag                         WHEN prop.user_type_creator = 'AREA'                         THEN                            'APP_CUST_EXCL_' || prop.cust_reg_flag                         ELSE                            ''                      END               FROM   PROPOSAL PROP              WHERE   PROP.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID) AS EXCL_CUST_LOV_PARAM, 
+       (SELECT RTRIM(dbms_lob.substr(REPLACE(          REPLACE(            XMLAGG(              XMLELEMENT(&quot;A&quot;,PV.PROD_VARIANT)            ORDER BY 1).getClobVal(),          '&lt;A>',''),        '&lt;/A>',','), 1995, 1 ), ',') FROM PRODUK_VARIANT PV  WHERE PV.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID GROUP BY PV.PROMO_PRODUK_ID) AS PRODUCT_VAR_CODE, 
+       (SELECT RTRIM(dbms_lob.substr(REPLACE(          REPLACE(            XMLAGG(              XMLELEMENT(&quot;A&quot;,PI.PROD_ITEM)            ORDER BY 1).getClobVal(),          '&lt;A>',''),        '&lt;/A>',','), 1995, 1 ), ',') FROM PRODUK_ITEM PI  WHERE PI.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID GROUP BY PI.PROMO_PRODUK_ID) AS PRODUCT_ITEM_CODE, 
+       PromoProduk.DISC_MF, 
+       PromoProduk.DISC_ON_TOP, 
+       PromoProduk.DISC_RASIO_MF, 
+       PromoProduk.DISC_RASIO_ON_TOP, 
+       PromoProduk.DISC_RASIO_TOTAL AS DISC_RASIO_TOTAL1, 
+       (SELECT UCP.USER_CUSTOMER FROM FCS_USER_CUST_PRIV UCP, PROPOSAL PROP WHERE UCP.USER_NAME = PROP.CREATED_BY AND PROP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID) AS USER_CUSTOMER, 
+       PromoProduk.BRG_BONUS_MF, 
+       PromoProduk.BRG_BONUS_ON_TOP, 
+       PromoProduk.BRG_BONUS_RASIO_MF, 
+       PromoProduk.BRG_BONUS_RASIO_ON_TOP, 
+       PromoProduk.BRG_BONUS_RASIO_TOTAL, 
+       PromoProduk.BIA_MF, 
+       PromoProduk.BIA_ONTOP, 
+       PromoProduk.BIA_RASIO_MF, 
+       PromoProduk.BIA_RASIO_TOTAL, 
+       PromoProduk.BIA_RASION_ONTOP, 
+       (SELECT COUNT(PRODBUDGETBY.PROMO_PRODUK_ID) FROM PROD_BUDGET_BY ProdBudgetBy WHERE PRODBUDGETBY.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID) AS CHECK_BUDGET_DATA, 
+       PromoProduk.PRODUCT_APPROVAL, 
+       (SELECT PP.DISCOUNT_TYPE FROM PROPOSAL PP WHERE PP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID) AS PROPOSAL_TYPE, 
+       NVL ((SELECT SUM (NVL (rgr.total, 0))                             FROM apps.fcs_view_realisasi_gr rgr WHERE rgr.promo_produk_id = promoproduk.promo_produk_id),                          0                         ) AS REALISASI_GR, 
+       NVL ((SELECT NVL (rgr.total, 0)  FROM apps.fcs_view_realisasi_gr rgr,                                      proposal prop                                 WHERE prop.confirm_no|| DECODE (prop.addendum_ke,NULL, '','-' || prop.addendum_ke) = RGR.NO_KONFIRMASI                                   AND prop.proposal_id = promoproduk.proposal_id                                  AND rgr.line_no = TO_CHAR  (promoproduk.produk_row_num) AND PROP.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID),                              0  ) AS REALISASI_GR_BY_LINE, 
+       (SELECT   SUM (NVL (rgr.total, 0))               FROM   (SELECT   ROW_NUMBER ()                                   OVER (PARTITION BY pp.proposal_id                                         ORDER BY pp.promo_produk_id)                                   row_no,                                pp.*                         FROM   promo_produk pp) prod_real,                      apps.fcs_view_realisasi_gr rgr,                      PROPOSAL PROP              WHERE   prod_real.promo_produk_id = promoproduk.promo_produk_id                      AND PROP.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID                      AND prod_real.proposal_id = promoproduk.proposal_id                      AND prop.confirm_no = rgr.no_konfirmasi_ori                      AND TO_CHAR (rgr.line_no) =                            TO_CHAR (                               NVL (prod_real.produk_row_num, prod_real.row_no)                            )) AS REALISASI_GR_TOTAL_BY_LINE, 
+       (SELECT   CASE                         WHEN (    prop.discount_type = 'POTONGAN'                               AND prop.mekanisme_penagihan = 'OFFINVOICE'                               AND (SELECT   COUNT (prdcv.no_pp)                                      FROM   apps.fcs_view_realisasi_dcv prdcv                                     WHERE   prdcv.no_pp = prop.proposal_no) = 0)                         THEN                            CASE                               WHEN promoproduk.ppid_ref &lt;> 0                               THEN                                  promoproduk.disc_mf                                  - (SELECT   ppr.disc_mf                                       FROM   promo_produk ppr                                      WHERE   ppr.promo_produk_id =                                                 promoproduk.ppid_ref)                               ELSE                                  0                            END                         WHEN (    prop.discount_type = 'PROMOBARANG'                               AND prop.mekanisme_penagihan = 'OFFINVOICE'                               AND (SELECT   COUNT (prdcv.no_pp)                                      FROM   apps.fcs_view_realisasi_dcv prdcv                                     WHERE   prdcv.no_pp = prop.proposal_no) = 0)                         THEN                            CASE                               WHEN promoproduk.ppid_ref &lt;> 0                               THEN                                  promoproduk.brg_bonus_mf                                  - (SELECT   ppr.brg_bonus_mf                                       FROM   promo_produk ppr                                      WHERE   ppr.promo_produk_id =                                                 promoproduk.ppid_ref)                               ELSE                                  0                            END                         WHEN prop.discount_type = 'BIAYA'                         THEN                            CASE                               WHEN promoproduk.ppid_ref &lt;> 0                               THEN                                  promoproduk.bia_mf                                  - (SELECT   ppr.bia_mf                                       FROM   promo_produk ppr                                      WHERE   ppr.promo_produk_id =                                                 promoproduk.ppid_ref)                               ELSE                                  0                            END                         ELSE                            0                      END               FROM   PROPOSAL PROP              WHERE   PROP.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID) AS REALISASI_GR_SELISIH_BY_LINE, 
+       NVL(        (SELECT SUM (NVL (rgr.total, 0))         FROM apps.fcs_view_realisasi_gr rgr,            proposal prop         WHERE  rgr.no_konfirmasi_ori = prop.confirm_no         and prop.proposal_id = promoproduk.proposal_id        ),0) AS REALISASI_GR_PENGURANG_MF, 
+       (SELECT CASE                     WHEN (    PPLOLD.DISCOUNT_TYPE = 'POTONGAN'                           AND PPLOLD.MEKANISME_PENAGIHAN = 'ONINVOICE'                          )                        THEN (NVL                                 ((SELECT SUM (NVL (RMOD.AMOUNT, 0))                                     FROM APPS.FCS_VIEW_REALISASI_MODIFIER RMOD                                    WHERE PPLOLD.CONFIRM_NO = RMOD.CONFIRM_NO_ORIG                                      AND RMOD.LINE_NO = PPPLOLD.LINE_NO                                      AND RMOD.KET = 'MF'),                                  0                                 )                             )                     ELSE 0                  END AS REAL_MOD_MF             FROM PROPOSAL PPLOLD,                   (SELECT ROW_NUMBER ()                     OVER (PARTITION BY PP.PROPOSAL_ID                           ORDER BY PP.PROPOSAL_ID, PP.PROMO_PRODUK_ID)                        AS LINE_NO,                     PP.PROMO_PRODUK_ID, PP.PROPOSAL_ID                  FROM PROMO_PRODUK PP) PPPLOLD            WHERE PPLOLD.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID              AND PPPLOLD.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID              AND PPPLOLD.PROMO_PRODUK_ID = PROMOPRODUK.PROMO_PRODUK_ID) AS REALISASI_MOD_MF_PREV, 
+       (SELECT CASE                     WHEN (    PPLOLD.DISCOUNT_TYPE = 'POTONGAN'                           AND PPLOLD.MEKANISME_PENAGIHAN = 'ONINVOICE'                          )                        THEN (NVL                                 ((SELECT SUM (NVL (RMOD.AMOUNT, 0))                                     FROM APPS.FCS_VIEW_REALISASI_MODIFIER RMOD                                    WHERE PPLOLD.CONFIRM_NO = RMOD.CONFIRM_NO_ORIG                                      AND RMOD.LINE_NO = PPPLOLD.LINE_NO                                      AND RMOD.KET = 'OT'),                                  0                                 )                             )                     ELSE 0                  END AS REAL_MOD_OT             FROM PROPOSAL PPLOLD,                   (SELECT ROW_NUMBER ()                     OVER (PARTITION BY PP.PROPOSAL_ID                           ORDER BY PP.PROPOSAL_ID, PP.PROMO_PRODUK_ID)                        AS LINE_NO,                     PP.PROMO_PRODUK_ID, PP.PROPOSAL_ID                  FROM PROMO_PRODUK PP) PPPLOLD            WHERE PPLOLD.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID              AND PPPLOLD.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID              AND PPPLOLD.PROMO_PRODUK_ID = PROMOPRODUK.PROMO_PRODUK_ID) AS REALISASI_MOD_ON_TOP_PREV, 
+       (SELECT CASE                     WHEN (    PROP.DISCOUNT_TYPE = 'POTONGAN'                           AND PROP.MEKANISME_PENAGIHAN = 'ONINVOICE'                          )                        THEN (NVL                                 ((SELECT SUM (NVL (RMOD.AMOUNT, 0))                                     FROM APPS.FCS_VIEW_REALISASI_MODIFIER RMOD                                    WHERE PROP.CONFIRM_NO =                                                           RMOD.CONFIRM_NO_ORIG                                      AND RMOD.LINE_NO =                                                     PROMOPRODUK.PRODUK_ROW_NUM                                      AND RMOD.KET = 'MF'),                                  0                                 )                             )                     ELSE 0                  END             FROM PROPOSAL PROP            WHERE PROP.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID) AS REALISASI_MOD_MF, 
+       (SELECT CASE                     WHEN (    PROP.DISCOUNT_TYPE = 'POTONGAN'                           AND PROP.MEKANISME_PENAGIHAN = 'ONINVOICE'                          )                        THEN (NVL                                 ((SELECT SUM (NVL (RMOD.AMOUNT, 0))                                     FROM APPS.FCS_VIEW_REALISASI_MODIFIER RMOD                                    WHERE PROP.CONFIRM_NO =                                                           RMOD.CONFIRM_NO_ORIG                                      AND RMOD.LINE_NO =                                                     PROMOPRODUK.PRODUK_ROW_NUM                                      AND RMOD.KET = 'OT'),                                  0                                 )                             )                     ELSE 0                  END             FROM PROPOSAL PROP            WHERE PROP.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID) AS REALISASI_MOD_ON_TOP, 
+       (SELECT PP.MEKANISME_PENAGIHAN FROM PROPOSAL PP WHERE PP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID) AS MEKANISME_PENAGIHAN, 
+       (SELECT CASE WHEN COUNT(PRDCV.NO_PP) > 0 THEN 'Y' ELSE 'N' END FROM APPS.FCS_VIEW_REALISASI_DCV PRDCV WHERE PRDCV.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID) AS DCV_FLAG, 
+       PromoProduk.PRODUK_ROW_NUM, 
+       PromoProduk.PPID_REF, 
+       (SELECT CASE WHEN PP.ADDENDUM_KE IS NOT NULL THEN 'Y' ELSE 'N' END FROM PROPOSAL PP WHERE PP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID) AS PROPOSAL_ADDENDUM, 
+       PromoProduk.CLOSE_FLAG, 
+       (NVL ( (SELECT   SUM (NVL (bb.percentage, 0))                      FROM   prod_budget_by bb                     WHERE   bb.promo_produk_id = promoproduk.promo_produk_id),                  0)) AS BUDGET_PERCENT_TOTAL, 
+       NVL(        (SELECT SUM (NVL (rgr.total, 0))         FROM (SELECT ROW_NUMBER () OVER (PARTITION BY pp.proposal_id ORDER BY  pp.promo_produk_id) row_no,                      pp.*               FROM promo_produk pp) prod_real,               apps.fcs_view_realisasi_gr RGR,              proposal prop         WHERE prod_real.promo_produk_id = promoproduk.ppid_ref         AND  prop.proposal_id = prod_real.proposal_id         AND prop.confirm_no IS NOT NULL         AND rgr.no_konfirmasi_ori = prop.confirm_no         ),0) AS REALISASI_PP_GR_TOT_BY_LINE, 
+       NVL ( (SELECT   SUM (NVL (rdcv.amount_cm, 0))                     FROM   apps.fcs_view_realisasi_dcv rdcv                    WHERE   rdcv.promo_produk_id = promoproduk.promo_produk_id),                 0) AS REALISASI_DCV, 
+       NVL (               (SELECT   SUM (NVL (DCV.AMOUNT_CM, 0))                  FROM   APPS.FCS_VIEW_REALISASI_DCV DCV, PROPOSAL PPL                 WHERE       PPL.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID                         AND PPL.CONFIRM_NO = DCV.NO_PC_ORI                         AND DCV.PROMO_PRODUK_ID = PROMOPRODUK.PPID_REF),               0            ) AS REALISASI_DCV_PENGURANG_MF, 
+       (SELECT   CASE                         WHEN (prop.discount_type = 'PROMOBARANG'                               AND prop.mekanisme_penagihan = 'ONINVOICE')                         THEN                            (NVL (                                (SELECT   SUM (NVL (rpb.total, 0))                                   FROM   apps.fcs_view_realisasi_promobarang rpb                                  WHERE   rpb.promo_produk_id =                                             promoproduk.promo_produk_id),                                0                             ))                         ELSE                            0                      END               FROM   PROPOSAL PROP              WHERE   PROP.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID) AS REALISASI_PRM_BRG_BY_LINE, 
+       PromoProduk.PAKET_FLAG, 
+       (SELECT PP.CREATED_BY FROM PROPOSAL PP WHERE PP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID) AS PROPOSAL_CREATOR, 
+       PromoProduk.CREATED_BY, 
+       (SELECT NVL(SUM(BIAYA_QTY),0) FROM BIAYA BIA WHERE BIA.PROMO_PRODUK_ID  = PromoProduk.PROMO_PRODUK_ID) AS BIAYA_QTY, 
+       (SELECT BIAYA_UOM FROM BIAYA BIA WHERE BIA.PROMO_PRODUK_ID  = PromoProduk.PROMO_PRODUK_ID AND ROWNUM = 1) AS BIAYA_UOM, 
+       (SELECT NVL(SUM(BIAYA_PRICE),0) FROM BIAYA BIA WHERE BIA.PROMO_PRODUK_ID  = PromoProduk.PROMO_PRODUK_ID) AS BIAYA_PRICE, 
+       (ROWNUM) AS PRODUK_LINE_NUM, 
+       PromoProduk.CLOSE_LINE_EBS_DCV, 
+       PromoProduk.CLOSE_LINE_EBS_MOD, 
+       PromoProduk.CLOSE_LINE_EBS_PB, 
+       PromoProduk.CLOSE_LINE_EBS_PR, 
+       PromoProduk.CLOSE_REASON"
+  FromList="PROMO_PRODUK PromoProduk"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  ComponentClass="app.fpp.model.views.promoproposal.PromoProdukViewImpl"
+  ComponentInterface="app.fpp.model.views.promoproposal.common.PromoProdukView"
+  ClientProxyName="app.fpp.model.views.promoproposal.client.PromoProdukViewClient"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  OrderBy="PromoProduk.PROMO_PRODUK_ID ASC"
+  RowClass="app.fpp.model.views.promoproposal.PromoProdukViewRowImpl"
+  FetchMode="FETCH_AS_NEEDED">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <ViewAccessor
+    Name="ProductByCategoryLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.ProductByCategoryLov"
+    OrderBy='"SET_CATEGORY_DESC"'
+    RangeSize="10">
+    <ViewCriteriaUsage
+      Name="ProductByCategoryLovCriteria"
+      FullName="app.fpp.model.views.masterdata.ebs.ProductByCategoryLov.ProductByCategoryLovCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="userName">
+        <TransientExpression><![CDATA[CurrentUser]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ProductByClassLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.ProductByClassLov"
+    OrderBy='"SET_CLASS_DESC"'
+    RangeSize="500">
+    <ViewCriteriaUsage
+      Name="ProductByClassLovCriteria"
+      FullName="app.fpp.model.views.masterdata.ebs.ProductByClassLov.ProductByClassLovCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="setCategory">
+        <TransientExpression><![CDATA[ProductCategory]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="userName">
+        <TransientExpression><![CDATA[CurrentUser]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ProductByBrandLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.ProductByBrandLov"
+    OrderBy='"SET_BRAND_DESC"'
+    RangeSize="500">
+    <ViewCriteriaUsage
+      Name="ProductByBrandLovCriteria"
+      FullName="app.fpp.model.views.masterdata.ebs.ProductByBrandLov.ProductByBrandLovCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="setClass">
+        <TransientExpression><![CDATA[ProductClass]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="setCategory">
+        <TransientExpression><![CDATA[ProductCategory]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="userName">
+        <TransientExpression><![CDATA[CurrentUser]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ProductByExtLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.ProductByExtLov"
+    OrderBy='"SET_EXT_DESC"'
+    RangeSize="500">
+    <ViewCriteriaUsage
+      Name="ProductByExtLovCriteria"
+      FullName="app.fpp.model.views.masterdata.ebs.ProductByExtLov.ProductByExtLovCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="setBrand">
+        <TransientExpression><![CDATA[ProductBrand]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="setCategory">
+        <TransientExpression><![CDATA[ProductCategory]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="setClass">
+        <TransientExpression><![CDATA[ProductClass]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="userName">
+        <TransientExpression><![CDATA[CurrentUser]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ProductByPackagingLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.ProductByPackagingLov"
+    OrderBy='"SET_PACKAGING_DESC"'
+    RangeSize="500">
+    <ViewCriteriaUsage
+      Name="ProductByPackagingLovCriteria"
+      FullName="app.fpp.model.views.masterdata.ebs.ProductByPackagingLov.ProductByPackagingLovCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="setExt">
+        <TransientExpression><![CDATA[ProductExt]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="setBrand">
+        <TransientExpression><![CDATA[ProductBrand]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="setCategory">
+        <TransientExpression><![CDATA[ProductCategory]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="setClass">
+        <TransientExpression><![CDATA[ProductClass]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="userName">
+        <TransientExpression><![CDATA[CurrentUser]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="BudgetByLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_BUDGET_BY']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="KodePostingLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.AllKodePostingView">
+    <ParameterMap>
+      <PIMap Variable="mekPen">
+        <TransientExpression><![CDATA[MekanismePenagihan]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="KodeItemExpenseLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.AllKodeItemExpenseView"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="AllKodeItemExpenseViewCriteria"
+      FullName="app.fpp.model.views.masterdata.ebs.AllKodeItemExpenseView.AllKodeItemExpenseViewCriteria"/>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ExcludeCustLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA[ExclCustLovParam]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="KodePostingLovMF"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.AllKodePostingViewMF">
+    <ParameterMap>
+      <PIMap Variable="mekPen">
+        <TransientExpression><![CDATA[MekanismePenagihan]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="PaketFlagLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_PAKET_FLAG']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ListBinding
+    Name="LOV_ProductCategory"
+    ListVOName="ProductByCategoryLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ProductCategory_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProductCategory"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetCategory"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetCategory"/>
+      <Item Value="SetCategoryDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="ProductByCategoryLovCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProductClass"
+    ListVOName="ProductByClassLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ProductClass_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProductClass"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetClass"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetClass"/>
+      <Item Value="SetClassDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="ProductByClassLovCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProductBrand"
+    ListVOName="ProductByBrandLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ProductBrand_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProductBrand"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetBrand"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetBrand"/>
+      <Item Value="SetBrandDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="ProductByBrandLovCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProductExt"
+    ListVOName="ProductByExtLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ProductExt_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProductExt"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetExt"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetExt"/>
+      <Item Value="SetExtDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="ProductByExtLovCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProductPack"
+    ListVOName="ProductByPackagingLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ProductPack_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProductPack"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetPackaging"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetPackaging"/>
+      <Item Value="SetPackagingDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="ProductByPackagingLovCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_BudgetBy"
+    ListVOName="BudgetByLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_BudgetBy_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="BudgetBy"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_KodePosting"
+    ListVOName="KodePostingLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_KodePosting_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="KodePosting"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Item"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Item"/>
+      <Item Value="ItemDescription"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="AllKodePostingViewCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ItemExpense"
+    ListVOName="KodeItemExpenseLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ItemExpense_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ItemExpense"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Item"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Item"/>
+      <Item Value="ItemDescription"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="AllKodeItemExpenseViewCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_KodePostingMf"
+    ListVOName="KodePostingLovMF"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="KodePostingMf"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Item"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Item"/>
+      <Item Value="ItemDescription"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="showAndExecute"
+      Name="AllKodePostingViewMFCriteria"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ExclCustBy"
+    ListVOName="ExcludeCustLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ExclCustBy_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ExclCustBy"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_PaketFlag"
+    ListVOName="PaketFlagLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_PaketFlag_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="PaketFlag"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <EntityUsage
+    Name="PromoProduk"
+    Entity="app.fpp.model.entities.promoproposal.PromoProduk"/>
+  <ViewAttribute
+    Name="PromoProdukId"
+    IsUpdateable="while_insert"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PromoProdukId"
+    EntityUsage="PromoProduk"
+    AliasName="PROMO_PRODUK_ID"/>
+  <ViewAttribute
+    Name="PpidChar"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PPID_CHAR"
+    SQLType="VARCHAR"
+    Precision="255"
+    Expression="TO_CHAR(PromoProduk.PROMO_PRODUK_ID)"/>
+  <ViewAttribute
+    Name="ProposalId"
+    PrecisionRule="true"
+    EntityAttrName="ProposalId"
+    EntityUsage="PromoProduk"
+    AliasName="PROPOSAL_ID"/>
+  <ViewAttribute
+    Name="ProductCategory"
+    LOVName="LOV_ProductCategory"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ProductCategory"
+    EntityUsage="PromoProduk"
+    AliasName="PRODUCT_CATEGORY">
+    <Properties>
+      <SchemaBasedProperties>
+        <AUTOSUBMIT
+          Value="true"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductCategoryDesc"
+    PrecisionRule="true"
+    EntityAttrName="ProductCategoryDesc"
+    EntityUsage="PromoProduk"
+    AliasName="PRODUCT_CATEGORY_DESC"/>
+  <ViewAttribute
+    Name="ProductCategoryVal"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PRODUCT_CATEGORY_VAL"
+    SQLType="VARCHAR"
+    Precision="255"/>
+  <ViewAttribute
+    Name="ProductClass"
+    LOVName="LOV_ProductClass"
+    PrecisionRule="true"
+    EntityAttrName="ProductClass"
+    EntityUsage="PromoProduk"
+    AliasName="PRODUCT_CLASS">
+    <Properties>
+      <SchemaBasedProperties>
+        <AUTOSUBMIT
+          Value="true"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductClassDesc"
+    PrecisionRule="true"
+    EntityAttrName="ProductClassDesc"
+    EntityUsage="PromoProduk"
+    AliasName="PRODUCT_CLASS_DESC"/>
+  <ViewAttribute
+    Name="ProductClassVal"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PRODUCT_CLASS_VAL"
+    SQLType="VARCHAR"
+    Precision="255"/>
+  <ViewAttribute
+    Name="ProductBrand"
+    LOVName="LOV_ProductBrand"
+    PrecisionRule="true"
+    EntityAttrName="ProductBrand"
+    EntityUsage="PromoProduk"
+    AliasName="PRODUCT_BRAND">
+    <Properties>
+      <SchemaBasedProperties>
+        <AUTOSUBMIT
+          Value="true"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductBrandDesc"
+    PrecisionRule="true"
+    EntityAttrName="ProductBrandDesc"
+    EntityUsage="PromoProduk"
+    AliasName="PRODUCT_BRAND_DESC"/>
+  <ViewAttribute
+    Name="ProductBrandVal"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PRODUCT_BRAND_VAL"
+    SQLType="VARCHAR"
+    Precision="255"/>
+  <ViewAttribute
+    Name="ProductExt"
+    LOVName="LOV_ProductExt"
+    PrecisionRule="true"
+    EntityAttrName="ProductExt"
+    EntityUsage="PromoProduk"
+    AliasName="PRODUCT_EXT">
+    <Properties>
+      <SchemaBasedProperties>
+        <AUTOSUBMIT
+          Value="true"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductExtDesc"
+    PrecisionRule="true"
+    EntityAttrName="ProductExtDesc"
+    EntityUsage="PromoProduk"
+    AliasName="PRODUCT_EXT_DESC"/>
+  <ViewAttribute
+    Name="ProductExtVal"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PRODUCT_EXT_VAL"
+    SQLType="VARCHAR"
+    Precision="255"/>
+  <ViewAttribute
+    Name="ProductPack"
+    LOVName="LOV_ProductPack"
+    PrecisionRule="true"
+    EntityAttrName="ProductPack"
+    EntityUsage="PromoProduk"
+    AliasName="PRODUCT_PACK">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+        <AUTOSUBMIT
+          Value="true"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductPackDesc"
+    PrecisionRule="true"
+    EntityAttrName="ProductPackDesc"
+    EntityUsage="PromoProduk"
+    AliasName="PRODUCT_PACK_DESC"/>
+  <ViewAttribute
+    Name="ProductPackVal"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PRODUCT_PACK_VAL"
+    SQLType="VARCHAR"
+    Precision="255"/>
+  <ViewAttribute
+    Name="Descr"
+    PrecisionRule="true"
+    EntityAttrName="Descr"
+    EntityUsage="PromoProduk"
+    AliasName="DESCR"/>
+  <ViewAttribute
+    Name="Mekanisme"
+    PrecisionRule="true"
+    EntityAttrName="Mekanisme"
+    EntityUsage="PromoProduk"
+    AliasName="MEKANISME"/>
+  <ViewAttribute
+    Name="AmountPromo"
+    PrecisionRule="true"
+    EntityAttrName="AmountPromo"
+    EntityUsage="PromoProduk"
+    AliasName="AMOUNT_PROMO"/>
+  <ViewAttribute
+    Name="EstBudgetProp"
+    PrecisionRule="true"
+    EntityAttrName="EstBudgetProp"
+    EntityUsage="PromoProduk"
+    AliasName="EST_BUDGET_PROP"/>
+  <ViewAttribute
+    Name="RegCustFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RegCustFlag"
+    EntityUsage="PromoProduk"
+    AliasName="REG_CUST_FLAG">
+    <Properties>
+      <SchemaBasedProperties>
+        <AUTOSUBMIT
+          Value="true"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PRODUCT_NAME"
+    SQLType="VARCHAR"
+    IsSelected="false">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (ProductCategoryDesc != null) {
+return ProductCategoryDesc + '.' + ProductClassDesc + '.' + ProductBrandDesc + '.' + ProductExtDesc + '.' + ProductPackDesc;
+} else {
+if (ProductCategory == 'CT001') {
+return 'Food' + '.' + ProductClassDesc + '.' + ProductBrandDesc + '.' + ProductExtDesc + '.' + ProductPackDesc;
+} else if (ProductCategory == 'CT002') {
+return 'Non Food' + '.' + ProductClassDesc + '.' + ProductBrandDesc + '.' + ProductExtDesc + '.' + ProductPackDesc;
+} else {
+return ProductClassDesc + '.' + ProductBrandDesc + '.' + ProductExtDesc + '.' + ProductPackDesc;
+}
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="ProductBrandDesc"/>
+      <Item
+        Value="ProductCategory"/>
+      <Item
+        Value="ProductCategoryDesc"/>
+      <Item
+        Value="ProductClassDesc"/>
+      <Item
+        Value="ProductExtDesc"/>
+      <Item
+        Value="ProductPackDesc"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="PRODUCT_NAME"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductVariant"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="2000"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PRODUCT_VARIANT"
+    Expression="SELECT RTRIM(dbms_lob.substr(REPLACE(          REPLACE(            XMLAGG(              XMLELEMENT(&quot;A&quot;,PV.VARIANT_DESC)            ORDER BY 1).getClobVal(),          '&lt;A>',''),        '&lt;/A>',','), 1995, 1 ), ',') FROM PRODUK_VARIANT PV  WHERE PV.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID GROUP BY PV.PROMO_PRODUK_ID"
+    SQLType="VARCHAR">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="VARIANT"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductItem"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="2000"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PRODUCT_ITEM"
+    Expression="SELECT RTRIM(dbms_lob.substr(REPLACE(          REPLACE(            XMLAGG(              XMLELEMENT(&quot;A&quot;,PI.ITEM_DESC)            ORDER BY 1).getClobVal(),          '&lt;A>',''),        '&lt;/A>',','), 1995, 1 ), ',') FROM PRODUK_ITEM PI  WHERE PI.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID GROUP BY PI.PROMO_PRODUK_ID"
+    SQLType="VARCHAR">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="PRODUCT_NAME"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BudgetBy"
+    PrecisionRule="true"
+    EntityAttrName="BudgetBy"
+    EntityUsage="PromoProduk"
+    AliasName="BUDGET_BY"
+    LOVName="LOV_BudgetBy"
+    DefaultValue="CUSTOMER">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="BUDGET_BY"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="KodePosting"
+    PrecisionRule="true"
+    EntityAttrName="KodePosting"
+    EntityUsage="PromoProduk"
+    AliasName="KODE_POSTING"
+    LOVName="LOV_KodePosting">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="KODE_POSTING_ON_TOP__TPB"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="KodePostingDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="KODE_POSTING_DESC"
+    SQLType="VARCHAR"
+    Precision="255"
+    IsSelected="false"/>
+  <ViewAttribute
+    Name="ValidComb"
+    PrecisionRule="true"
+    EntityAttrName="ValidComb"
+    EntityUsage="PromoProduk"
+    AliasName="VALID_COMB"/>
+  <ViewAttribute
+    Name="ItemExpense"
+    PrecisionRule="true"
+    EntityAttrName="ItemExpense"
+    EntityUsage="PromoProduk"
+    AliasName="ITEM_EXPENSE"
+    LOVName="LOV_ItemExpense">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ItemExpenseDesc"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ITEM_EXPENSE_DESC"
+    SQLType="VARCHAR"
+    Precision="255"/>
+  <ViewAttribute
+    Name="KodePostingMf"
+    PrecisionRule="true"
+    EntityAttrName="KodePostingMf"
+    EntityUsage="PromoProduk"
+    AliasName="KODE_POSTING_MF"
+    LOVName="LOV_KodePostingMf">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="KODE_POSTING_MF__PB"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="KodePostingMfDesc"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="KODE_POSTING_MF_DESC"
+    SQLType="VARCHAR"
+    Precision="255"/>
+  <ViewAttribute
+    Name="ProductCombination"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PRODUCT_COMBINATION"
+    SQLType="VARCHAR"
+    Precision="255"
+    Expression="PromoProduk.PRODUCT_CATEGORY || '.' || PromoProduk.PRODUCT_CLASS || '.' || PromoProduk.PRODUCT_BRAND || '.' || PromoProduk.PRODUCT_EXT || '.' || PromoProduk.PRODUCT_PACK">
+    <Dependencies>
+      <Item
+        Value="ProductBrand"/>
+      <Item
+        Value="ProductCategory"/>
+      <Item
+        Value="ProductClass"/>
+      <Item
+        Value="ProductExt"/>
+      <Item
+        Value="ProductPack"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="PRODUK_COMBINATION"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ExclCustBy"
+    PrecisionRule="true"
+    EntityAttrName="ExclCustBy"
+    EntityUsage="PromoProduk"
+    AliasName="EXCL_CUST_BY"
+    LOVName="LOV_ExclCustBy">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ExclCustLovParam"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="EXCL_CUST_LOV_PARAM"
+    SQLType="VARCHAR"
+    Precision="255"
+    Expression="(SELECT   CASE                         WHEN prop.user_type_creator = 'HO'                         THEN                            'APP_CUST_EXCL_' || promoproduk.reg_cust_flag                         WHEN prop.user_type_creator = 'AREA'                         THEN                            'APP_CUST_EXCL_' || prop.cust_reg_flag                         ELSE                            ''                      END               FROM   PROPOSAL PROP              WHERE   PROP.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID)"/>
+  <ViewAttribute
+    Name="ProductVarCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PRODUCT_VAR_CODE"
+    SQLType="VARCHAR"
+    Precision="2000"
+    Expression="SELECT RTRIM(dbms_lob.substr(REPLACE(          REPLACE(            XMLAGG(              XMLELEMENT(&quot;A&quot;,PV.PROD_VARIANT)            ORDER BY 1).getClobVal(),          '&lt;A>',''),        '&lt;/A>',','), 1995, 1 ), ',') FROM PRODUK_VARIANT PV  WHERE PV.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID GROUP BY PV.PROMO_PRODUK_ID">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="PROD_VARIANT_CODE"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductItemCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PRODUCT_ITEM_CODE"
+    SQLType="VARCHAR"
+    Precision="2000"
+    Expression="SELECT RTRIM(dbms_lob.substr(REPLACE(          REPLACE(            XMLAGG(              XMLELEMENT(&quot;A&quot;,PI.PROD_ITEM)            ORDER BY 1).getClobVal(),          '&lt;A>',''),        '&lt;/A>',','), 1995, 1 ), ',') FROM PRODUK_ITEM PI  WHERE PI.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID GROUP BY PI.PROMO_PRODUK_ID">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="PROD_ITEM_CODE"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DiscMf"
+    PrecisionRule="true"
+    EntityAttrName="DiscMf"
+    EntityUsage="PromoProduk"
+    AliasName="DISC_MF"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.DiscMf_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.DiscMf_FMT_FORMAT"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DiscOnTop"
+    PrecisionRule="true"
+    EntityAttrName="DiscOnTop"
+    EntityUsage="PromoProduk"
+    AliasName="DISC_ON_TOP"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.DiscOnTop_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.DiscOnTop_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DiscRasioMf"
+    PrecisionRule="true"
+    EntityAttrName="DiscRasioMf"
+    EntityUsage="PromoProduk"
+    AliasName="DISC_RASIO_MF"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.DiscRasioMf_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.DiscRasioMf_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DiscRasioOnTop"
+    PrecisionRule="true"
+    EntityAttrName="DiscRasioOnTop"
+    EntityUsage="PromoProduk"
+    AliasName="DISC_RASIO_ON_TOP"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.DiscRasioOnTop_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.DiscRasioOnTop_FMT_FORMAT"/>
+        <LABEL
+          ResId="RASIO_TDK_POTONG_BUDGET__ON_TO"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DiscRasioTotal1"
+    PrecisionRule="true"
+    EntityAttrName="DiscRasioTotal"
+    EntityUsage="PromoProduk"
+    AliasName="DISC_RASIO_TOTAL1"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.DiscRasioTotal1_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.DiscRasioTotal1_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="UserCustomer"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="USER_CUSTOMER"
+    SQLType="VARCHAR"
+    Precision="255"
+    Expression="SELECT UCP.USER_CUSTOMER FROM FCS_USER_CUST_PRIV UCP, PROPOSAL PROP WHERE UCP.USER_NAME = PROP.CREATED_BY AND PROP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID"/>
+  <ViewAttribute
+    Name="BrgBonusMf"
+    PrecisionRule="true"
+    EntityAttrName="BrgBonusMf"
+    EntityUsage="PromoProduk"
+    AliasName="BRG_BONUS_MF"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusMf_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusMf_FMT_FORMAT"/>
+        <LABEL
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusMf_LABEL"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BrgBonusOnTop"
+    PrecisionRule="true"
+    EntityAttrName="BrgBonusOnTop"
+    EntityUsage="PromoProduk"
+    AliasName="BRG_BONUS_ON_TOP"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusOnTop_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusOnTop_FMT_FORMAT"/>
+        <LABEL
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusOnTop_LABEL"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BrgBonusRasioMf"
+    PrecisionRule="true"
+    EntityAttrName="BrgBonusRasioMf"
+    EntityUsage="PromoProduk"
+    AliasName="BRG_BONUS_RASIO_MF"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusRasioMf_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusRasioMf_FMT_FORMAT"/>
+        <LABEL
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusRasioMf_LABEL"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BrgBonusRasioOnTop"
+    PrecisionRule="true"
+    EntityAttrName="BrgBonusRasioOnTop"
+    EntityUsage="PromoProduk"
+    AliasName="BRG_BONUS_RASIO_ON_TOP"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusRasioOnTop_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusRasioOnTop_FMT_FORMAT"/>
+        <LABEL
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusRasioOnTop_LABEL"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BrgBonusRasioTotal"
+    PrecisionRule="true"
+    EntityAttrName="BrgBonusRasioTotal"
+    EntityUsage="PromoProduk"
+    AliasName="BRG_BONUS_RASIO_TOTAL"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusRasioTotal_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusRasioTotal_FMT_FORMAT"/>
+        <LABEL
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusRasioTotal_LABEL"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BiaMf"
+    PrecisionRule="true"
+    EntityAttrName="BiaMf"
+    EntityUsage="PromoProduk"
+    AliasName="BIA_MF"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BiaMf_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BiaMf_FMT_FORMAT"/>
+        <LABEL
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BrgBonusMf_LABEL"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BiaOntop"
+    PrecisionRule="true"
+    EntityAttrName="BiaOntop"
+    EntityUsage="PromoProduk"
+    AliasName="BIA_ONTOP"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BiaOntop_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BiaOntop_FMT_FORMAT"/>
+        <LABEL
+          ResId="TOTAL_NON_YEARLY_BUDGET__ON_TO"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BiaRasioMf"
+    PrecisionRule="true"
+    EntityAttrName="BiaRasioMf"
+    EntityUsage="PromoProduk"
+    AliasName="BIA_RASIO_MF"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BiaRasioMf_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BiaRasioMf_FMT_FORMAT"/>
+        <LABEL
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BiaRasioMf_LABEL"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BiaRasioTotal"
+    PrecisionRule="true"
+    EntityAttrName="BiaRasioTotal"
+    EntityUsage="PromoProduk"
+    AliasName="BIA_RASIO_TOTAL"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BiaRasioTotal_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BiaRasioTotal_FMT_FORMAT"/>
+        <LABEL
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BiaRasioTotal_LABEL"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BiaRasionOntop"
+    PrecisionRule="true"
+    EntityAttrName="BiaRasionOntop"
+    EntityUsage="PromoProduk"
+    AliasName="BIA_RASION_ONTOP"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BiaRasionOntop_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BiaRasionOntop_FMT_FORMAT"/>
+        <LABEL
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BiaRasionOntop_LABEL"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CheckRowStatus"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    AliasName="VIEW_ATTR"
+    SQLType="NUMERIC"/>
+  <ViewAttribute
+    Name="CheckBudgetData"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    AliasName="CHECK_BUDGET_DATA"
+    SQLType="NUMERIC"
+    Expression="SELECT COUNT(PRODBUDGETBY.PROMO_PRODUK_ID) FROM PROD_BUDGET_BY ProdBudgetBy WHERE PRODBUDGETBY.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID"/>
+  <ViewAttribute
+    Name="ProductApproval"
+    PrecisionRule="true"
+    EntityAttrName="ProductApproval"
+    EntityUsage="PromoProduk"
+    AliasName="PRODUCT_APPROVAL">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.ProductApproval_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProposalType"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PROPOSAL_TYPE"
+    SQLType="VARCHAR"
+    Precision="20"
+    Expression="SELECT PP.DISCOUNT_TYPE FROM PROPOSAL PP WHERE PP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID"/>
+  <ViewAttribute
+    Name="RealisasiGr"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_GR"
+    SQLType="NUMERIC"
+    Expression="NVL ((SELECT SUM (NVL (rgr.total, 0))                             FROM apps.fcs_view_realisasi_gr rgr WHERE rgr.promo_produk_id = promoproduk.promo_produk_id),                          0                         )">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGr_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGr_FMT_FORMAT"/>
+        <LABEL
+          ResId="AMOUNT_REALISASI"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiGrMf"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_GR_MF"
+    SQLType="NUMERIC"
+    IsSelected="false">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (ProposalType == 'POTONGAN') {
+if (RealisasiGr >= DiscMf) {
+return DiscMf;
+} else {
+return RealisasiGr;
+}
+} else if (ProposalType == 'PROMOBARANG') {
+if (RealisasiGr >= BrgBonusMf) {
+return BrgBonusMf;
+} else {
+return RealisasiGr;
+}
+} else if (ProposalType == 'BIAYA') {
+if (RealisasiGr >= BiaMf) {
+return BiaMf;
+} else {
+return RealisasiGr;
+}
+} else {
+return 0;
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="BiaMf"/>
+      <Item
+        Value="BrgBonusMf"/>
+      <Item
+        Value="DiscMf"/>
+      <Item
+        Value="ProposalType"/>
+      <Item
+        Value="RealisasiGr"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrMf_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrMf_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiGrOnTop"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_GR_ON_TOP"
+    SQLType="NUMERIC">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[return RealisasiGr - RealisasiGrMf;]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="RealisasiGr"/>
+      <Item
+        Value="RealisasiGrMf"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrOnTop_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrOnTop_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiGrByLine"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_GR_BY_LINE"
+    SQLType="NUMERIC"
+    Expression="NVL ((SELECT NVL (rgr.total, 0)  FROM apps.fcs_view_realisasi_gr rgr,                                      proposal prop                                 WHERE prop.confirm_no|| DECODE (prop.addendum_ke,NULL, '','-' || prop.addendum_ke) = RGR.NO_KONFIRMASI                                   AND prop.proposal_id = promoproduk.proposal_id                                  AND rgr.line_no = TO_CHAR  (promoproduk.produk_row_num) AND PROP.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID),                              0  )">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrByLine_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrByLine_FMT_FORMAT"/>
+        <LABEL
+          ResId="AMOUNT_REALISASI"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiGrTotalByLine"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_GR_TOTAL_BY_LINE"
+    SQLType="NUMERIC"
+    Expression="(SELECT   SUM (NVL (rgr.total, 0))               FROM   (SELECT   ROW_NUMBER ()                                   OVER (PARTITION BY pp.proposal_id                                         ORDER BY pp.promo_produk_id)                                   row_no,                                pp.*                         FROM   promo_produk pp) prod_real,                      apps.fcs_view_realisasi_gr rgr,                      PROPOSAL PROP              WHERE   prod_real.promo_produk_id = promoproduk.promo_produk_id                      AND PROP.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID                      AND prod_real.proposal_id = promoproduk.proposal_id                      AND prop.confirm_no = rgr.no_konfirmasi_ori                      AND TO_CHAR (rgr.line_no) =                            TO_CHAR (                               NVL (prod_real.produk_row_num, prod_real.row_no)                            ))"/>
+  <ViewAttribute
+    Name="RealisasiGrSelisihByLine"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_GR_SELISIH_BY_LINE"
+    SQLType="NUMERIC"
+    Expression="(SELECT   CASE                         WHEN (    prop.discount_type = 'POTONGAN'                               AND prop.mekanisme_penagihan = 'OFFINVOICE'                               AND (SELECT   COUNT (prdcv.no_pp)                                      FROM   apps.fcs_view_realisasi_dcv prdcv                                     WHERE   prdcv.no_pp = prop.proposal_no) = 0)                         THEN                            CASE                               WHEN promoproduk.ppid_ref &lt;> 0                               THEN                                  promoproduk.disc_mf                                  - (SELECT   ppr.disc_mf                                       FROM   promo_produk ppr                                      WHERE   ppr.promo_produk_id =                                                 promoproduk.ppid_ref)                               ELSE                                  0                            END                         WHEN (    prop.discount_type = 'PROMOBARANG'                               AND prop.mekanisme_penagihan = 'OFFINVOICE'                               AND (SELECT   COUNT (prdcv.no_pp)                                      FROM   apps.fcs_view_realisasi_dcv prdcv                                     WHERE   prdcv.no_pp = prop.proposal_no) = 0)                         THEN                            CASE                               WHEN promoproduk.ppid_ref &lt;> 0                               THEN                                  promoproduk.brg_bonus_mf                                  - (SELECT   ppr.brg_bonus_mf                                       FROM   promo_produk ppr                                      WHERE   ppr.promo_produk_id =                                                 promoproduk.ppid_ref)                               ELSE                                  0                            END                         WHEN prop.discount_type = 'BIAYA'                         THEN                            CASE                               WHEN promoproduk.ppid_ref &lt;> 0                               THEN                                  promoproduk.bia_mf                                  - (SELECT   ppr.bia_mf                                       FROM   promo_produk ppr                                      WHERE   ppr.promo_produk_id =                                                 promoproduk.ppid_ref)                               ELSE                                  0                            END                         ELSE                            0                      END               FROM   PROPOSAL PROP              WHERE   PROP.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID)"/>
+  <ViewAttribute
+    Name="RealisasiGrMfByLine"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_GR_MF_BY_LINE"
+    SQLType="NUMERIC"
+    IsSelected="false">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (ProposalAddendum == 'Y') {
+	if (PpidRef == 0) {
+		if (ProposalType == 'POTONGAN') {
+			if (RealisasiGrByLine > DiscMf) {
+				return DiscMf;
+			} else {
+				return RealisasiGrByLine;
+			} 
+		} else if (ProposalType == 'BIAYA') {
+			if (RealisasiGrByLine > BiaMf) {
+				return BiaMf;
+			} else {
+				return RealisasiGrByLine;
+			}
+		} else if (ProposalType == 'PROMOBARANG') {
+			if (RealisasiGrByLine > BrgBonusMf) {
+			return BrgBonusMf;
+			} else {
+			return RealisasiGrByLine;
+			}
+		} else {
+			return 0;
+		}
+	} else {
+		if (RealisasiGrByLine > RealisasiGrSelisihByLine) {
+			return RealisasiGrSelisihByLine;
+		} else {
+			return RealisasiGrByLine;
+		} 
+	}
+} else {
+	if (ProposalType == 'POTONGAN') {
+		if (RealisasiGrByLine > DiscMf) {
+			return DiscMf;
+		} else {
+			return RealisasiGrByLine;
+		} 
+	} else if (ProposalType == 'BIAYA') {
+		if (RealisasiGrByLine > BiaMf) {
+			return BiaMf;
+		} else {
+			return RealisasiGrByLine;
+		}
+	} else if (ProposalType == 'PROMOBARANG') {
+		if (RealisasiGrByLine > BrgBonusMf) {
+		return BrgBonusMf;
+		} else {
+		return RealisasiGrByLine;
+		}
+	} else {
+		return 0;
+	}
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="BiaMf"/>
+      <Item
+        Value="BrgBonusMf"/>
+      <Item
+        Value="DiscMf"/>
+      <Item
+        Value="PpidRef"/>
+      <Item
+        Value="ProposalAddendum"/>
+      <Item
+        Value="ProposalType"/>
+      <Item
+        Value="RealisasiGrByLine"/>
+      <Item
+        Value="RealisasiGrSelisihByLine"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrMfByLine_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrMfByLine_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiGrOnTopByLine"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_GR_ON_TOP_BY_LINE"
+    SQLType="NUMERIC">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (RealisasiGrByLine > RealisasiGrMfByLine) {
+	if(RealisasiGrByLine - RealisasiGrMfByLine < 1){
+	return 0;
+	}else{
+	return RealisasiGrByLine - RealisasiGrMfByLine;
+	}
+} else {
+return 0;
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="RealisasiGrByLine"/>
+      <Item
+        Value="RealisasiGrMfByLine"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrOnTopByLine_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrOnTopByLine_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiGrPengurangMf"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_GR_PENGURANG_MF"
+    SQLType="NUMERIC"
+    Expression="NVL(        (SELECT SUM (NVL (rgr.total, 0))         FROM apps.fcs_view_realisasi_gr rgr,            proposal prop         WHERE  rgr.no_konfirmasi_ori = prop.confirm_no         and prop.proposal_id = promoproduk.proposal_id        ),0)">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrPengurangMf_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrPengurangMf_FMT_FORMAT"/>
+        <LABEL
+          ResId="PENGURANG_MF"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiGrSelisihMfByLine"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_GR_SELISIH_MF_BY_LINE"
+    SQLType="NUMERIC"
+    IsSelected="false">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (ProposalAddendum == 'Y') {
+	if (ProposalType == 'POTONGAN') {
+		if (RealisasiGrPengurangMf < DiscMf) {
+			return DiscMf - RealisasiGrPengurangMf;
+		} else {
+			return 0;
+		} 
+	} else if (ProposalType == 'BIAYA') {
+		if (RealisasiGrPengurangMf < BiaMf) {
+			return BiaMf - RealisasiGrPengurangMf;
+		} else {
+			return 0;
+		}
+	} else if (ProposalType == 'PROMOBARANG') {
+		if (RealisasiGrPengurangMf < BrgBonusMf) {
+			return BrgBonusMf - RealisasiGrPengurangMf;
+		} else {
+			return 0;
+		}
+	} else {
+		return 0;
+	}
+} else {
+	return 0;
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="BiaMf"/>
+      <Item
+        Value="BrgBonusMf"/>
+      <Item
+        Value="DiscMf"/>
+      <Item
+        Value="ProposalAddendum"/>
+      <Item
+        Value="ProposalType"/>
+      <Item
+        Value="RealisasiGrPengurangMf"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrSelisihMfByLine_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiGrSelisihMfByLine_FMT_FORMAT"/>
+        <LABEL
+          ResId="LIMIT_POTONG_BUDGET__MF"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiModMfPrev"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_MOD_MF_PREV"
+    SQLType="NUMERIC"
+    Expression="(SELECT CASE                     WHEN (    PPLOLD.DISCOUNT_TYPE = 'POTONGAN'                           AND PPLOLD.MEKANISME_PENAGIHAN = 'ONINVOICE'                          )                        THEN (NVL                                 ((SELECT SUM (NVL (RMOD.AMOUNT, 0))                                     FROM APPS.FCS_VIEW_REALISASI_MODIFIER RMOD                                    WHERE PPLOLD.CONFIRM_NO = RMOD.CONFIRM_NO_ORIG                                      AND RMOD.LINE_NO = PPPLOLD.LINE_NO                                      AND RMOD.KET = 'MF'),                                  0                                 )                             )                     ELSE 0                  END AS REAL_MOD_MF             FROM PROPOSAL PPLOLD,                   (SELECT ROW_NUMBER ()                     OVER (PARTITION BY PP.PROPOSAL_ID                           ORDER BY PP.PROPOSAL_ID, PP.PROMO_PRODUK_ID)                        AS LINE_NO,                     PP.PROMO_PRODUK_ID, PP.PROPOSAL_ID                  FROM PROMO_PRODUK PP) PPPLOLD            WHERE PPLOLD.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID              AND PPPLOLD.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID              AND PPPLOLD.PROMO_PRODUK_ID = PROMOPRODUK.PROMO_PRODUK_ID)">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiModMfPrev_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiModMfPrev_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiModOnTopPrev"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_MOD_ON_TOP_PREV"
+    SQLType="NUMERIC"
+    Expression="(SELECT CASE                     WHEN (    PPLOLD.DISCOUNT_TYPE = 'POTONGAN'                           AND PPLOLD.MEKANISME_PENAGIHAN = 'ONINVOICE'                          )                        THEN (NVL                                 ((SELECT SUM (NVL (RMOD.AMOUNT, 0))                                     FROM APPS.FCS_VIEW_REALISASI_MODIFIER RMOD                                    WHERE PPLOLD.CONFIRM_NO = RMOD.CONFIRM_NO_ORIG                                      AND RMOD.LINE_NO = PPPLOLD.LINE_NO                                      AND RMOD.KET = 'OT'),                                  0                                 )                             )                     ELSE 0                  END AS REAL_MOD_OT             FROM PROPOSAL PPLOLD,                   (SELECT ROW_NUMBER ()                     OVER (PARTITION BY PP.PROPOSAL_ID                           ORDER BY PP.PROPOSAL_ID, PP.PROMO_PRODUK_ID)                        AS LINE_NO,                     PP.PROMO_PRODUK_ID, PP.PROPOSAL_ID                  FROM PROMO_PRODUK PP) PPPLOLD            WHERE PPLOLD.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID              AND PPPLOLD.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID              AND PPPLOLD.PROMO_PRODUK_ID = PROMOPRODUK.PROMO_PRODUK_ID)">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiModOnTopPrev_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiModOnTopPrev_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiModMf"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_MOD_MF"
+    SQLType="NUMERIC"
+    Expression="(SELECT CASE                     WHEN (    PROP.DISCOUNT_TYPE = 'POTONGAN'                           AND PROP.MEKANISME_PENAGIHAN = 'ONINVOICE'                          )                        THEN (NVL                                 ((SELECT SUM (NVL (RMOD.AMOUNT, 0))                                     FROM APPS.FCS_VIEW_REALISASI_MODIFIER RMOD                                    WHERE PROP.CONFIRM_NO =                                                           RMOD.CONFIRM_NO_ORIG                                      AND RMOD.LINE_NO =                                                     PROMOPRODUK.PRODUK_ROW_NUM                                      AND RMOD.KET = 'MF'),                                  0                                 )                             )                     ELSE 0                  END             FROM PROPOSAL PROP            WHERE PROP.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID)">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiModMf_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiModMf_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiModOnTop"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_MOD_ON_TOP"
+    SQLType="NUMERIC"
+    Expression="(SELECT CASE                     WHEN (    PROP.DISCOUNT_TYPE = 'POTONGAN'                           AND PROP.MEKANISME_PENAGIHAN = 'ONINVOICE'                          )                        THEN (NVL                                 ((SELECT SUM (NVL (RMOD.AMOUNT, 0))                                     FROM APPS.FCS_VIEW_REALISASI_MODIFIER RMOD                                    WHERE PROP.CONFIRM_NO =                                                           RMOD.CONFIRM_NO_ORIG                                      AND RMOD.LINE_NO =                                                     PROMOPRODUK.PRODUK_ROW_NUM                                      AND RMOD.KET = 'OT'),                                  0                                 )                             )                     ELSE 0                  END             FROM PROPOSAL PROP            WHERE PROP.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID)">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiModOnTop_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiModOnTop_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="MekanismePenagihan"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="MEKANISME_PENAGIHAN"
+    SQLType="VARCHAR"
+    Precision="20"
+    Expression="SELECT PP.MEKANISME_PENAGIHAN FROM PROPOSAL PP WHERE PP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID"/>
+  <ViewAttribute
+    Name="DcvFlag"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="DCV_FLAG"
+    SQLType="VARCHAR"
+    Precision="10"
+    Expression="SELECT CASE WHEN COUNT(PRDCV.NO_PP) > 0 THEN 'Y' ELSE 'N' END FROM APPS.FCS_VIEW_REALISASI_DCV PRDCV WHERE PRDCV.PROMO_PRODUK_ID = PromoProduk.PROMO_PRODUK_ID"/>
+  <ViewAttribute
+    Name="ProdukRowNum"
+    PrecisionRule="true"
+    EntityAttrName="ProdukRowNum"
+    EntityUsage="PromoProduk"
+    AliasName="PRODUK_ROW_NUM"/>
+  <ViewAttribute
+    Name="PpidRef"
+    PrecisionRule="true"
+    EntityAttrName="PpidRef"
+    EntityUsage="PromoProduk"
+    AliasName="PPID_REF"
+    IsUpdateable="while_insert"/>
+  <ViewAttribute
+    Name="ProposalAddendum"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PROPOSAL_ADDENDUM"
+    SQLType="VARCHAR"
+    Precision="255"
+    Expression="(SELECT CASE WHEN PP.ADDENDUM_KE IS NOT NULL THEN 'Y' ELSE 'N' END FROM PROPOSAL PP WHERE PP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID)"/>
+  <ViewAttribute
+    Name="CloseFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CloseFlag"
+    EntityUsage="PromoProduk"
+    AliasName="CLOSE_FLAG"
+    DefaultValue="N">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="CLOSE_PER_PRODUK"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BudgetPercentTotal"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="BUDGET_PERCENT_TOTAL"
+    SQLType="NUMERIC"
+    Expression="(NVL ( (SELECT   SUM (NVL (bb.percentage, 0))                      FROM   prod_budget_by bb                     WHERE   bb.promo_produk_id = promoproduk.promo_produk_id),                  0))">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BudgetPercentTotal_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.BudgetPercentTotal_FMT_FORMAT"/>
+        <LABEL
+          ResId="BUDGET_PERCENT_TOTAL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiPpGrTotByLine"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_PP_GR_TOT_BY_LINE"
+    SQLType="NUMERIC"
+    Expression="NVL(        (SELECT SUM (NVL (rgr.total, 0))         FROM (SELECT ROW_NUMBER () OVER (PARTITION BY pp.proposal_id ORDER BY  pp.promo_produk_id) row_no,                      pp.*               FROM promo_produk pp) prod_real,               apps.fcs_view_realisasi_gr RGR,              proposal prop         WHERE prod_real.promo_produk_id = promoproduk.ppid_ref         AND  prop.proposal_id = prod_real.proposal_id         AND prop.confirm_no IS NOT NULL         AND rgr.no_konfirmasi_ori = prop.confirm_no         ),0)"/>
+  <ViewAttribute
+    Name="RealisasiDcv"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_DCV"
+    SQLType="NUMERIC"
+    Expression="NVL ( (SELECT   SUM (NVL (rdcv.amount_cm, 0))                     FROM   apps.fcs_view_realisasi_dcv rdcv                    WHERE   rdcv.promo_produk_id = promoproduk.promo_produk_id),                 0)">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiDcv_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiDcv_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiDcvMf"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_DCV_MF"
+    SQLType="NUMERIC">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (ProposalType == 'POTONGAN') {
+if (RealisasiDcv >= DiscMf) {
+return DiscMf;
+} else {
+return RealisasiDcv;
+}
+} else if (ProposalType == 'PROMOBARANG') {
+if (RealisasiDcv >= BrgBonusMf) {
+return BrgBonusMf;
+} else {
+return RealisasiDcv;
+}
+} else if (ProposalType == 'BIAYA') {
+if (RealisasiDcv >= BiaMf) {
+return BiaMf;
+} else {
+return RealisasiDcv;
+}
+} else {
+return 0;
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="BiaMf"/>
+      <Item
+        Value="BrgBonusMf"/>
+      <Item
+        Value="DiscMf"/>
+      <Item
+        Value="ProposalType"/>
+      <Item
+        Value="RealisasiDcv"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiDcvMf_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiDcvMf_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiDcvOnTop"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_DCV_ON_TOP"
+    SQLType="NUMERIC">
+    <TransientExpression><![CDATA[return RealisasiDcv - RealisasiDcvMf;]]></TransientExpression>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiDcvOnTop_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiDcvOnTop_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiDcvPengurangMf"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_DCV_PENGURANG_MF"
+    SQLType="NUMERIC"
+    Expression="NVL (               (SELECT   SUM (NVL (DCV.AMOUNT_CM, 0))                  FROM   APPS.FCS_VIEW_REALISASI_DCV DCV, PROPOSAL PPL                 WHERE       PPL.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID                         AND PPL.CONFIRM_NO = DCV.NO_PC_ORI                         AND DCV.PROMO_PRODUK_ID = PROMOPRODUK.PPID_REF),               0            )"/>
+  <ViewAttribute
+    Name="RealisasiDcvSelisihMfByLine"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_DCV_SELISIH_MF_BY_LINE"
+    SQLType="NUMERIC">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (ProposalAddendum == 'Y') {
+	if (ProposalType == 'POTONGAN') {
+		if (RealisasiDcvPengurangMf < DiscMf) {
+			return DiscMf - RealisasiDcvPengurangMf;
+		} else {
+			return 0;
+		} 
+	} else if (ProposalType == 'BIAYA') {
+		if (RealisasiDcvPengurangMf < BiaMf) {
+			return BiaMf - RealisasiDcvPengurangMf;
+		} else {
+			return 0;
+		}
+	} else if (ProposalType == 'PROMOBARANG') {
+		if (RealisasiDcvPengurangMf < BrgBonusMf) {
+			return BrgBonusMf - RealisasiDcvPengurangMf;
+		} else {
+			return 0;
+		}
+	} else {
+		return 0;
+	}
+} else {
+	return 0;
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="BiaMf"/>
+      <Item
+        Value="BrgBonusMf"/>
+      <Item
+        Value="DiscMf"/>
+      <Item
+        Value="ProposalAddendum"/>
+      <Item
+        Value="ProposalType"/>
+      <Item
+        Value="RealisasiDcvPengurangMf"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiDcvSelisihMfByLine_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiDcvSelisihMfByLine_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiPrmBrgByLine"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_PRM_BRG_BY_LINE"
+    SQLType="NUMERIC"
+    Expression="(SELECT   CASE                         WHEN (prop.discount_type = 'PROMOBARANG'                               AND prop.mekanisme_penagihan = 'ONINVOICE')                         THEN                            (NVL (                                (SELECT   SUM (NVL (rpb.total, 0))                                   FROM   apps.fcs_view_realisasi_promobarang rpb                                  WHERE   rpb.promo_produk_id =                                             promoproduk.promo_produk_id),                                0                             ))                         ELSE                            0                      END               FROM   PROPOSAL PROP              WHERE   PROP.PROPOSAL_ID = PROMOPRODUK.PROPOSAL_ID)">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiPrmBrgByLine_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiPrmBrgByLine_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiPrmBrgMfByLine"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_PRM_BRG_MF_BY_LINE"
+    SQLType="NUMERIC"
+    IsSelected="false">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (ProposalType == 'PROMOBARANG') {    
+   return (BrgBonusMf * RealisasiPrmBrgByLine) / (BrgBonusMf+BrgBonusOnTop);
+} else {
+   return 0;  
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="BrgBonusMf"/>
+      <Item
+        Value="BrgBonusOnTop"/>
+      <Item
+        Value="RealisasiPrmBrgByLine"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiPrmBrgMfByLine_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiPrmBrgMfByLine_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RealisasiPrmBrgOnTopByLine"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_PRM_BRG_ON_TOP_BY_LINE"
+    SQLType="NUMERIC"
+    IsSelected="false">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (ProposalType == 'PROMOBARANG') {    
+   return (BrgBonusOnTop * RealisasiPrmBrgByLine) /(BrgBonusMf+BrgBonusOnTop);
+} else {
+   return 0;  
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="BrgBonusMf"/>
+      <Item
+        Value="BrgBonusOnTop"/>
+      <Item
+        Value="RealisasiPrmBrgByLine"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiPrmBrgOnTopByLine_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoProdukView.RealisasiPrmBrgOnTopByLine_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PaketFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PaketFlag"
+    EntityUsage="PromoProduk"
+    AliasName="PAKET_FLAG"
+    LOVName="LOV_PaketFlag"
+    DefaultValue="NON PAKET">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PaketFlagDesc"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PAKET_FLAG_DESC"
+    SQLType="VARCHAR"
+    Precision="255"/>
+  <ViewAttribute
+    Name="ProposalCreator"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PROPOSAL_CREATOR"
+    SQLType="VARCHAR"
+    Precision="30"
+    Expression="SELECT PP.CREATED_BY FROM PROPOSAL PP WHERE PP.PROPOSAL_ID = PromoProduk.PROPOSAL_ID"/>
+  <ViewAttribute
+    Name="AddedRow"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ADDED_ROW"
+    SQLType="VARCHAR"
+    Precision="1">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (ProposalCreator == CreatedBy) {
+return 'N';
+} else {
+return 'Y';
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="CreatedBy"/>
+      <Item
+        Value="ProposalCreator"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CreatedBy"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="PromoProduk"
+    AliasName="CREATED_BY"/>
+  <ViewAttribute
+    Name="BiayaQty"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="BIAYA_QTY"
+    SQLType="NUMERIC"
+    Expression="SELECT NVL(SUM(BIAYA_QTY),0) FROM BIAYA BIA WHERE BIA.PROMO_PRODUK_ID  = PromoProduk.PROMO_PRODUK_ID"/>
+  <ViewAttribute
+    Name="BiayaUom"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="BIAYA_UOM"
+    SQLType="VARCHAR"
+    Precision="20"
+    Expression="SELECT BIAYA_UOM FROM BIAYA BIA WHERE BIA.PROMO_PRODUK_ID  = PromoProduk.PROMO_PRODUK_ID AND ROWNUM = 1"/>
+  <ViewAttribute
+    Name="BiayaPrice"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="BIAYA_PRICE"
+    SQLType="NUMERIC"
+    Expression="SELECT NVL(SUM(BIAYA_PRICE),0) FROM BIAYA BIA WHERE BIA.PROMO_PRODUK_ID  = PromoProduk.PROMO_PRODUK_ID"/>
+  <ViewAttribute
+    Name="ProdukLineNum"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="PRODUK_LINE_NUM"
+    SQLType="NUMERIC"
+    Expression="ROWNUM"/>
+  <ViewAttribute
+    Name="CurrentUser"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CURRENT_USER"
+    SQLType="VARCHAR"
+    Precision="30">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[adf.context.securityContext.userName]]></TransientExpression>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CloseLineEbsDcv"
+    PrecisionRule="true"
+    EntityAttrName="CloseLineEbsDcv"
+    EntityUsage="PromoProduk"
+    AliasName="CLOSE_LINE_EBS_DCV"/>
+  <ViewAttribute
+    Name="CloseLineEbsMod"
+    PrecisionRule="true"
+    EntityAttrName="CloseLineEbsMod"
+    EntityUsage="PromoProduk"
+    AliasName="CLOSE_LINE_EBS_MOD"/>
+  <ViewAttribute
+    Name="CloseLineEbsPb"
+    PrecisionRule="true"
+    EntityAttrName="CloseLineEbsPb"
+    EntityUsage="PromoProduk"
+    AliasName="CLOSE_LINE_EBS_PB"/>
+  <ViewAttribute
+    Name="CloseLineEbsPr"
+    PrecisionRule="true"
+    EntityAttrName="CloseLineEbsPr"
+    EntityUsage="PromoProduk"
+    AliasName="CLOSE_LINE_EBS_PR"/>
+  <ViewAttribute
+    Name="CloseReason"
+    PrecisionRule="true"
+    EntityAttrName="CloseReason"
+    EntityUsage="PromoProduk"
+    AliasName="CLOSE_REASON"/>
+  <ViewLinkAccessor
+    Name="DiscountView"
+    ViewLink="app.fpp.model.views.promoproposal.DiscountPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="TargetView"
+    ViewLink="app.fpp.model.views.promoproposal.TargetPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="ProdukItemView"
+    ViewLink="app.fpp.model.views.promoproposal.ProdukItemPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="ProdukVariantView"
+    ViewLink="app.fpp.model.views.promoproposal.ProdukVariantPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="BiayaView"
+    ViewLink="app.fpp.model.views.promoproposal.BiayaPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="PromoBonusView"
+    ViewLink="app.fpp.model.views.promoproposal.PromoBonusPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="ProdBudgetByView"
+    ViewLink="app.fpp.model.views.confirmation.ProdBudgetByCustPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="ProdBudgetByPostView"
+    ViewLink="app.fpp.model.views.confirmation.ProdBudgetByPostPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="RealisasiItemPaketView"
+    ViewLink="app.fpp.model.views.confirmation.RealisasiItemPaketPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="AuditPpBiayaView"
+    ViewLink="app.fpp.model.views.auditdata.AuditPpBiayaPromoProdukViewLink"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="AuditPpPotonganView"
+    ViewLink="app.fpp.model.views.auditdata.AuditPpPotonganPromoProdukViewLink"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="AuditPpPromoBarangView"
+    ViewLink="app.fpp.model.views.auditdata.AuditPpPromoBarangPromoProdukViewLink"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="PromoCustomerHoView"
+    ViewLink="app.fpp.model.views.promoproposal.PromoCustomerHoPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="PromoCustxAreaView"
+    ViewLink="app.fpp.model.views.promoproposal.PromoCustxAreaPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="PromoCustxHoView"
+    ViewLink="app.fpp.model.views.promoproposal.PromoCustxHoPromoProdukFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <LOVUIHints
+    ListType="105"
+    MRUCount="0"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOVUIHints_NullValueId">
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="ProductCode"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </LOVUIHints>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ClientInterface>
+    <Method
+      Name="removeCanceledRow">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+</ViewObject>

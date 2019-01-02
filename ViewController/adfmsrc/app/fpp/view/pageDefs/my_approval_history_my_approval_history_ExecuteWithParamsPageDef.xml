@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="my_approval_history_my_approval_history_ExecuteWithParamsPageDef"
+                Package="app.fpp.view.pageDefs" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="HistoryApprovalView1" RangeSize="25"
+              DataControl="HistoryApprovalAMDataControl"
+              id="HistoryApprovalView1Iterator" Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="HistoryApprovalView1Iterator" id="ExecuteWithParams"
+            RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="usrName" NDValue="#{UserData.userNameLogin}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

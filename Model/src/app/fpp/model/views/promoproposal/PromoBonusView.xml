@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="PromoBonusView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="PromoBonus.PROMO_BONUS_ID, 
+       PromoBonus.PROMO_PRODUK_ID, 
+       PromoBonus.PRODUCT_CATEGORY, 
+       PromoBonus.PRODUCT_CATEGORY_DESC, 
+       PromoBonus.PRODUCT_CLASS, 
+       PromoBonus.PRODUCT_CLASS_DESC, 
+       PromoBonus.PRODUCT_BRAND, 
+       PromoBonus.PRODUCT_BRAND_DESC, 
+       PromoBonus.PRODUCT_EXT, 
+       PromoBonus.PRODUCT_EXT_DESC, 
+       PromoBonus.PRODUCT_PACK, 
+       PromoBonus.PRODUCT_PACK_DESC, 
+       PromoBonus.UOM, 
+       PromoBonus.QTY_FROM, 
+       PromoBonus.TIPE_POTONGAN, 
+       PromoBonus.VALUE_POTONGAN, 
+       (SELECT LISTAGG(PVAR.SET_VARIANT_DESC, ', ') WITHIN GROUP (ORDER BY PVAR.SET_VARIANT_DESC)   FROM (SELECT PV.PROMO_BONUS_ID, IMC.SET_VARIANT_DESC FROM PROMO_BONUS_VARIANT PV, APPS.FCS_VIEW_ITEM_MASTER_CATEGORY IMC  WHERE IMC.SET_VARIANT = PV.PROD_VARIANT GROUP BY PV.PROMO_BONUS_ID, IMC.SET_VARIANT_DESC) PVAR  WHERE PVAR.PROMO_BONUS_ID = PromoBonus.PROMO_BONUS_ID  GROUP BY PVAR.PROMO_BONUS_ID) AS PRODUCT_VARIANT_BONUS, 
+       (SELECT LISTAGG(PITEM.ITEM_DESCRIPTION, ', ') WITHIN GROUP (ORDER BY PITEM.ITEM_DESCRIPTION)    FROM (SELECT PI.PROMO_BONUS_ID, IMC.ITEM_DESCRIPTION FROM PROMO_BONUS_PROD_ITEM PI, APPS.FCS_VIEW_ITEM_MASTER_CATEGORY IMC  WHERE IMC.ITEM = PI.PROD_ITEM GROUP BY PI.PROMO_BONUS_ID, IMC.ITEM_DESCRIPTION) PITEM   WHERE PITEM.PROMO_BONUS_ID = PromoBonus.PROMO_BONUS_ID  GROUP BY PITEM.PROMO_BONUS_ID) AS PRODUCT_ITEM_BONUS, 
+       PromoBonus.DISC_YEARLY, 
+       PromoBonus.DISC_NON_YEARLY, 
+       PromoBonus.INPUT_PRICE_BY, 
+       PromoBonus.PRICE_VAL, 
+       PromoBonus.QTY_MUL_PRICE"
+  FromList="PROMO_BONUS PromoBonus"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  RowClass="app.fpp.model.views.promoproposal.PromoBonusViewRowImpl"
+  ComponentClass="app.fpp.model.views.promoproposal.PromoBonusViewImpl"
+  OrderBy="PromoBonus.PROMO_BONUS_ID">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.promoproposal.PromoBonusView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <ViewAccessor
+    Name="LovTipePotongan"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_TIPE_POTONGAN']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ProductByCategoryLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.ProductByCategoryLov"
+    RowLevelBinds="true"
+    OrderBy='"SET_CATEGORY_DESC"'>
+    <ViewCriteriaUsage
+      Name="ProductByCategoryLovCriteria"
+      FullName="app.fpp.model.views.masterdata.ebs.ProductByCategoryLov.ProductByCategoryLovCriteria"/>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ProductByClassLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.ProductByClassLov"
+    OrderBy='"SET_CLASS_DESC"'>
+    <ViewCriteriaUsage
+      Name="ProductByClassLovCriteria"
+      FullName="app.fpp.model.views.masterdata.ebs.ProductByClassLov.ProductByClassLovCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="setCategory">
+        <TransientExpression><![CDATA[ProductCategory]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ProductByBrandLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.ProductByBrandLov"
+    OrderBy='"SET_BRAND_DESC"'>
+    <ViewCriteriaUsage
+      Name="ProductByBrandLovCriteria"
+      FullName="app.fpp.model.views.masterdata.ebs.ProductByBrandLov.ProductByBrandLovCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="setClass">
+        <TransientExpression><![CDATA[ProductClass]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="setCategory">
+        <TransientExpression><![CDATA[ProductCategory]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ProductByExtLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.ProductByExtLov"
+    OrderBy='"SET_EXT_DESC"'>
+    <ViewCriteriaUsage
+      Name="ProductByExtLovCriteria"
+      FullName="app.fpp.model.views.masterdata.ebs.ProductByExtLov.ProductByExtLovCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="setBrand">
+        <TransientExpression><![CDATA[ProductBrand]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="setCategory">
+        <TransientExpression><![CDATA[ProductCategory]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="setClass">
+        <TransientExpression><![CDATA[ProductClass]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ProductByPackagingLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.ProductByPackagingLov"
+    OrderBy='"SET_PACKAGING_DESC"'>
+    <ViewCriteriaUsage
+      Name="ProductByPackagingLovCriteria"
+      FullName="app.fpp.model.views.masterdata.ebs.ProductByPackagingLov.ProductByPackagingLovCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="setExt">
+        <TransientExpression><![CDATA[ProductExt]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="setBrand">
+        <TransientExpression><![CDATA[ProductBrand]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="setCategory">
+        <TransientExpression><![CDATA[ProductCategory]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="setClass">
+        <TransientExpression><![CDATA[ProductClass]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ProductUomLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.ProductUomLov"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="LovPriceBased"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_INPUT_PRICE_BASED']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ListBinding
+    Name="LOV_TipePotongan"
+    ListVOName="LovTipePotongan"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_TipePotongan_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="TipePotongan"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProductCategory"
+    ListVOName="ProductByCategoryLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ProductCategory_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProductCategory"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetCategory"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetCategory"/>
+      <Item Value="SetCategoryDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="ProductByCategoryLovCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProductBrand"
+    ListVOName="ProductByBrandLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ProductBrand_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProductBrand"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetBrand"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetBrand"/>
+      <Item Value="SetBrandDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="ProductByBrandLovCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProductClass"
+    ListVOName="ProductByClassLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ProductClass_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProductClass"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetClass"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetClass"/>
+      <Item Value="SetClassDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="ProductByClassLovCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProductExt"
+    ListVOName="ProductByExtLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ProductExt_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProductExt"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetExt"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetExt"/>
+      <Item Value="SetExtDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="ProductByExtLovCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProductPack"
+    ListVOName="ProductByPackagingLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ProductPack_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProductPack"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetPackaging"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetPackaging"/>
+      <Item Value="SetPackagingDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="ProductByPackagingLovCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_Uom"
+    ListVOName="ProductUomLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_Uom_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Uom"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="UomCode"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="UnitOfMeasure"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_InputPriceBy"
+    ListVOName="LovPriceBased"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="InputPriceBy"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <EntityUsage
+    Name="PromoBonus"
+    Entity="app.fpp.model.entities.promoproposal.PromoBonus"/>
+  <ViewAttribute
+    Name="PromoBonusId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PromoBonusId"
+    EntityUsage="PromoBonus"
+    AliasName="PROMO_BONUS_ID"
+    IsUpdateable="while_insert"/>
+  <ViewAttribute
+    Name="PromoProdukId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PromoProdukId"
+    EntityUsage="PromoBonus"
+    AliasName="PROMO_PRODUK_ID"/>
+  <ViewAttribute
+    Name="ProductCategory"
+    PrecisionRule="true"
+    EntityAttrName="ProductCategory"
+    EntityUsage="PromoBonus"
+    AliasName="PRODUCT_CATEGORY"
+    LOVName="LOV_ProductCategory">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+        <AUTOSUBMIT
+          Value="true"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductCategoryDesc"
+    PrecisionRule="true"
+    EntityAttrName="ProductCategoryDesc"
+    EntityUsage="PromoBonus"
+    AliasName="PRODUCT_CATEGORY_DESC"/>
+  <ViewAttribute
+    Name="ProductClass"
+    PrecisionRule="true"
+    EntityAttrName="ProductClass"
+    EntityUsage="PromoBonus"
+    AliasName="PRODUCT_CLASS"
+    LOVName="LOV_ProductClass">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+        <AUTOSUBMIT
+          Value="true"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductClassDesc"
+    PrecisionRule="true"
+    EntityAttrName="ProductClassDesc"
+    EntityUsage="PromoBonus"
+    AliasName="PRODUCT_CLASS_DESC"/>
+  <ViewAttribute
+    Name="ProductBrand"
+    PrecisionRule="true"
+    EntityAttrName="ProductBrand"
+    EntityUsage="PromoBonus"
+    AliasName="PRODUCT_BRAND"
+    LOVName="LOV_ProductBrand">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+        <AUTOSUBMIT
+          Value="true"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductBrandDesc"
+    PrecisionRule="true"
+    EntityAttrName="ProductBrandDesc"
+    EntityUsage="PromoBonus"
+    AliasName="PRODUCT_BRAND_DESC"/>
+  <ViewAttribute
+    Name="ProductExt"
+    PrecisionRule="true"
+    EntityAttrName="ProductExt"
+    EntityUsage="PromoBonus"
+    AliasName="PRODUCT_EXT"
+    LOVName="LOV_ProductExt">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+        <AUTOSUBMIT
+          Value="true"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductExtDesc"
+    PrecisionRule="true"
+    EntityAttrName="ProductExtDesc"
+    EntityUsage="PromoBonus"
+    AliasName="PRODUCT_EXT_DESC"/>
+  <ViewAttribute
+    Name="ProductPack"
+    PrecisionRule="true"
+    EntityAttrName="ProductPack"
+    EntityUsage="PromoBonus"
+    AliasName="PRODUCT_PACK"
+    LOVName="LOV_ProductPack">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+        <AUTOSUBMIT
+          Value="true"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductPackDesc"
+    PrecisionRule="true"
+    EntityAttrName="ProductPackDesc"
+    EntityUsage="PromoBonus"
+    AliasName="PRODUCT_PACK_DESC"/>
+  <ViewAttribute
+    Name="Uom"
+    PrecisionRule="true"
+    EntityAttrName="Uom"
+    EntityUsage="PromoBonus"
+    AliasName="UOM"
+    LOVName="LOV_Uom"
+    DefaultValue="Pcs">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="QtyFrom"
+    PrecisionRule="true"
+    EntityAttrName="QtyFrom"
+    EntityUsage="PromoBonus"
+    AliasName="QTY_FROM"
+    DefaultValue="1">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="TOTAL_QTY_BONUS"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TipePotongan"
+    PrecisionRule="true"
+    EntityAttrName="TipePotongan"
+    EntityUsage="PromoBonus"
+    AliasName="TIPE_POTONGAN"
+    LOVName="LOV_TipePotongan"
+    DefaultValue="VALUE">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ValuePotongan"
+    PrecisionRule="true"
+    EntityAttrName="ValuePotongan"
+    EntityUsage="PromoBonus"
+    AliasName="VALUE_POTONGAN"/>
+  <ViewAttribute
+    Name="ProductNameBonus"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PRODUCT_NAME_BONUS"
+    SQLType="VARCHAR"
+    Precision="255"
+    IsSelected="false">
+    <TransientExpression><![CDATA[ProductCategoryDesc + ' ' + ProductClassDesc + ' ' + ProductBrandDesc + ' ' + ProductExtDesc + ' ' + ProductPackDesc]]></TransientExpression>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductVariantBonus"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PRODUCT_VARIANT_BONUS"
+    SQLType="VARCHAR"
+    Precision="255"
+    Expression="SELECT LISTAGG(PVAR.SET_VARIANT_DESC, ', ') WITHIN GROUP (ORDER BY PVAR.SET_VARIANT_DESC)   FROM (SELECT PV.PROMO_BONUS_ID, IMC.SET_VARIANT_DESC FROM PROMO_BONUS_VARIANT PV, APPS.FCS_VIEW_ITEM_MASTER_CATEGORY IMC  WHERE IMC.SET_VARIANT = PV.PROD_VARIANT GROUP BY PV.PROMO_BONUS_ID, IMC.SET_VARIANT_DESC) PVAR  WHERE PVAR.PROMO_BONUS_ID = PromoBonus.PROMO_BONUS_ID  GROUP BY PVAR.PROMO_BONUS_ID"/>
+  <ViewAttribute
+    Name="ProductItemBonus"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PRODUCT_ITEM_BONUS"
+    SQLType="VARCHAR"
+    Precision="255"
+    Expression="SELECT LISTAGG(PITEM.ITEM_DESCRIPTION, ', ') WITHIN GROUP (ORDER BY PITEM.ITEM_DESCRIPTION)    FROM (SELECT PI.PROMO_BONUS_ID, IMC.ITEM_DESCRIPTION FROM PROMO_BONUS_PROD_ITEM PI, APPS.FCS_VIEW_ITEM_MASTER_CATEGORY IMC  WHERE IMC.ITEM = PI.PROD_ITEM GROUP BY PI.PROMO_BONUS_ID, IMC.ITEM_DESCRIPTION) PITEM   WHERE PITEM.PROMO_BONUS_ID = PromoBonus.PROMO_BONUS_ID  GROUP BY PITEM.PROMO_BONUS_ID">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="PRODUCT_NAME"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DiscYearly"
+    PrecisionRule="true"
+    EntityAttrName="DiscYearly"
+    EntityUsage="PromoBonus"
+    AliasName="DISC_YEARLY">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoBonusView.DiscYearly_FMT_FORMAT"/>
+        <LABEL
+          ResId="POTONGAN_YEARLY_BUDGET__MF"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DiscNonYearly"
+    PrecisionRule="true"
+    EntityAttrName="DiscNonYearly"
+    EntityUsage="PromoBonus"
+    AliasName="DISC_NON_YEARLY">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.PromoBonusView.DiscNonYearly_FMT_FORMAT"/>
+        <LABEL
+          ResId="POTONGAN_NON_YEARLY_BUDGET__ON"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="UomDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="UOM_DESC"
+    SQLType="VARCHAR"
+    Precision="255"
+    IsSelected="false">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SATUAN_BONUS_BARANG"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TipePotonganDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="TIPE_POTONGAN_DESC"
+    SQLType="VARCHAR"
+    Precision="255"
+    IsSelected="false">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="TIPE_POTONGAN"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="InputPriceBy"
+    PrecisionRule="true"
+    EntityAttrName="InputPriceBy"
+    EntityUsage="PromoBonus"
+    AliasName="INPUT_PRICE_BY"
+    LOVName="LOV_InputPriceBy"
+    DefaultValue="MANUAL">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PriceVal"
+    PrecisionRule="true"
+    EntityAttrName="PriceVal"
+    EntityUsage="PromoBonus"
+    AliasName="PRICE_VAL"/>
+  <ViewAttribute
+    Name="QtyMulPrice"
+    PrecisionRule="true"
+    EntityAttrName="QtyMulPrice"
+    EntityUsage="PromoBonus"
+    AliasName="QTY_MUL_PRICE"/>
+  <ViewLinkAccessor
+    Name="PromoBonusProdItemView"
+    ViewLink="app.fpp.model.views.promoproposal.PromoBonusProdItemPromoBonusFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="PromoBonusVariantView"
+    ViewLink="app.fpp.model.views.promoproposal.PromoBonusVariantPromoBonusFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

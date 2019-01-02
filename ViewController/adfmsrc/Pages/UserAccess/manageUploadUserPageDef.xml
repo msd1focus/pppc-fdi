@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="manageUploadUserPageDef"
+                Package="Pages.UserAccess">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="UserUploadLog1" RangeSize="25"
+              DataControl="UserAccessAMDataControl"
+              id="UserUploadLog1Iterator"/>
+    <iterator Binds="UserUploadValidateLog1" RangeSize="25"
+              DataControl="UserAccessAMDataControl"
+              id="UserUploadValidateLog1Iterator"/>
+    <iterator Binds="UserUploadSyncLog1" RangeSize="25"
+              DataControl="UserAccessAMDataControl"
+              id="UserUploadSyncLog1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="UserUploadLog1Iterator" id="Status">
+      <AttrNames>
+        <Item Value="Status"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserUploadLog1Iterator" id="ExecDate">
+      <AttrNames>
+        <Item Value="ExecDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="UserUploadValidateLog1Iterator"
+          id="UserUploadValidateLog1">
+      <nodeDefinition DefName="app.fpp.model.views.useraccess.uploadfile.validate.UserUploadValidateLog"
+                      Name="UserUploadValidateLog10">
+        <AttrNames>
+          <Item Value="ValMsg"/>
+          <Item Value="ValExecDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="UserUploadSyncLog1Iterator" id="SyncStatus">
+      <AttrNames>
+        <Item Value="SyncStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserUploadSyncLog1Iterator" id="SyncExecDate">
+      <AttrNames>
+        <Item Value="SyncExecDate"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" DataControl="UserAccessAMDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action IterBinding="UserUploadSyncLog1Iterator" id="ExecuteSyncLog"
+            InstanceName="UserAccessAMDataControl.UserUploadSyncLog1"
+            DataControl="UserAccessAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="UserUploadValidateLog1Iterator" id="ExecuteValidateLog"
+            InstanceName="UserAccessAMDataControl.UserUploadValidateLog1"
+            DataControl="UserAccessAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues IterBinding="UserUploadValidateLog1Iterator"
+                     id="ErrValNum">
+      <AttrNames>
+        <Item Value="ErrValNum"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

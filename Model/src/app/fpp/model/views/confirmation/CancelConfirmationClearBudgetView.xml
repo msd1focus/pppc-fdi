@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="CancelConfirmationClearBudgetView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  RowClass="app.fpp.model.views.confirmation.CancelConfirmationClearBudgetViewRowImpl"
+  ComponentClass="app.fpp.model.views.confirmation.CancelConfirmationClearBudgetViewImpl"
+  SelectList="Proposal.PROPOSAL_NO, 
+       Proposal.PROPOSAL_ID, 
+       Proposal.CONFIRM_NO, 
+       PromoProduk.PROMO_PRODUK_ID, 
+       ProdBudgetBy.BUDGET_POSTING_ID, 
+       ProdBudgetBy.KOMBINASI_BUDGET, 
+       ProdBudgetBy.BUDGET_CUST_ID, 
+       ProdBudgetBy.AMOUNT, 
+       ProdBudgetBy.BUDGET_BY_ID, 
+       ProdBudgetBy.STATUS, 
+       ProdBudgetBy.PROMO_PRODUK_ID AS PROMO_PRODUK_ID1"
+  FromList="PROPOSAL Proposal, PROMO_PRODUK PromoProduk, PROD_BUDGET_BY ProdBudgetBy"
+  Where="Proposal.PROPOSAL_ID = PromoProduk.PROPOSAL_ID
+AND PromoProduk.PROMO_PRODUK_ID=ProdBudgetBy.PROMO_PRODUK_ID
+AND ProdBudgetBy.STATUS = 'N'
+AND Proposal.PROPOSAL_NO = :propNo">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.confirmation.CancelConfirmationClearBudgetView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="propNo"
+    Kind="where"
+    Type="java.lang.String"/>
+  <EntityUsage
+    Name="Proposal"
+    Entity="app.fpp.model.entities.promoproposal.Proposal"/>
+  <EntityUsage
+    Name="PromoProduk"
+    Entity="app.fpp.model.entities.promoproposal.PromoProduk"
+    Association="app.fpp.model.entities.promoproposal.PromoProdukProposalFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.promoproposal.PromoProdukProposalFk1Assoc.PromoProduk"
+    SourceUsage="app.fpp.model.views.confirmation.CancelConfirmationClearBudgetView.Proposal"
+    ReadOnly="true"
+    Reference="true"
+    DeleteParticipant="false"
+    JoinType="LEFT OUTER JOIN">
+    <DesignTime>
+      <AttrArray Name="_srcAttributes">
+        <Item Value="app.fpp.model.entities.promoproposal.Proposal.ProposalId"/>
+      </AttrArray>
+      <AttrArray Name="_dstAttributes">
+        <Item
+          Value="app.fpp.model.entities.promoproposal.PromoProduk.ProposalId"/>
+      </AttrArray>
+    </DesignTime>
+  </EntityUsage>
+  <EntityUsage
+    Name="ProdBudgetBy"
+    Entity="app.fpp.model.entities.confirmation.ProdBudgetBy"
+    Association="app.fpp.model.entities.confirmation.ProdBudgetByPromoProdukFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.confirmation.ProdBudgetByPromoProdukFk1Assoc.ProdBudgetBy"
+    SourceUsage="app.fpp.model.views.confirmation.CancelConfirmationClearBudgetView.PromoProduk"
+    ReadOnly="true"
+    Reference="true"
+    DeleteParticipant="false"
+    JoinType="INNER JOIN">
+    <DesignTime>
+      <AttrArray Name="_srcAttributes">
+        <Item
+          Value="app.fpp.model.entities.promoproposal.PromoProduk.PromoProdukId"/>
+      </AttrArray>
+      <AttrArray Name="_dstAttributes">
+        <Item
+          Value="app.fpp.model.entities.confirmation.ProdBudgetBy.PromoProdukId"/>
+      </AttrArray>
+    </DesignTime>
+  </EntityUsage>
+  <ViewAttribute
+    Name="ProposalNo"
+    IsNotNull="true"
+    PrecisionRule="true"
+    AliasName="PROPOSAL_NO"
+    IsUnique="true"
+    EntityAttrName="ProposalNo"
+    EntityUsage="Proposal"/>
+  <ViewAttribute
+    Name="ProposalId"
+    IsUpdateable="while_insert"
+    PrecisionRule="true"
+    EntityAttrName="ProposalId"
+    EntityUsage="Proposal"
+    AliasName="PROPOSAL_ID"/>
+  <ViewAttribute
+    Name="ConfirmNo"
+    PrecisionRule="true"
+    AliasName="CONFIRM_NO"
+    EntityAttrName="ConfirmNo"
+    EntityUsage="Proposal"/>
+  <ViewAttribute
+    Name="PromoProdukId"
+    IsUpdateable="while_insert"
+    PrecisionRule="true"
+    AliasName="PROMO_PRODUK_ID"
+    EntityAttrName="PromoProdukId"
+    EntityUsage="PromoProduk"/>
+  <ViewAttribute
+    Name="BudgetPostingId"
+    PrecisionRule="true"
+    AliasName="BUDGET_POSTING_ID"
+    EntityAttrName="BudgetPostingId"
+    EntityUsage="ProdBudgetBy"/>
+  <ViewAttribute
+    Name="KombinasiBudget"
+    PrecisionRule="true"
+    AliasName="KOMBINASI_BUDGET"
+    EntityAttrName="KombinasiBudget"
+    EntityUsage="ProdBudgetBy"/>
+  <ViewAttribute
+    Name="BudgetCustId"
+    PrecisionRule="true"
+    AliasName="BUDGET_CUST_ID"
+    EntityAttrName="BudgetCustId"
+    EntityUsage="ProdBudgetBy"/>
+  <ViewAttribute
+    Name="Amount"
+    IsNotNull="true"
+    PrecisionRule="true"
+    AliasName="AMOUNT"
+    EntityAttrName="Amount"
+    EntityUsage="ProdBudgetBy"/>
+  <ViewAttribute
+    Name="BudgetById"
+    IsUpdateable="while_insert"
+    PrecisionRule="true"
+    AliasName="BUDGET_BY_ID"
+    EntityAttrName="BudgetById"
+    EntityUsage="ProdBudgetBy"/>
+  <ViewAttribute
+    Name="Status"
+    PrecisionRule="true"
+    AliasName="STATUS"
+    EntityAttrName="Status"
+    EntityUsage="ProdBudgetBy"/>
+  <ViewAttribute
+    Name="PromoProdukId1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PromoProdukId"
+    EntityUsage="ProdBudgetBy"
+    AliasName="PROMO_PRODUK_ID1"/>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="ProposalId"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

@@ -1,0 +1,12 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<sequence xmlns="http://xmlns.oracle.com/jdeveloper/1111/offlinedb">
+  <ID class="oracle.javatools.db.IdentifierBasedID">
+    <identifier class="java.lang.String">d14e1d5a-79a5-4e94-9a8f-5339f5153612</identifier>
+  </ID>
+  <name>EMAIL_NOTIF_RECEIVER_SEQ</name>
+  <cycleFlag>false</cycleFlag>
+  <orderFlag>false</orderFlag>
+  <schema>
+    <name>FOCUSPP</name>
+  </schema>
+</sequence>

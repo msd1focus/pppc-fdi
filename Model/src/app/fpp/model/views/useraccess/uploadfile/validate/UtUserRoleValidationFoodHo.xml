@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="UtUserRoleValidationFoodHo"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  ComponentClass="app.fpp.model.views.useraccess.uploadfile.validate.UtUserRoleValidationFoodHoImpl">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_codeGenFlag2" Value="Coll|Prog|VarAccess"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.useraccess.uploadfile.validate.UtUserRoleValidationFoodHo_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="compId"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="spvUsrNm"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="usrName"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="usrRole"
+    Kind="where"
+    Type="java.lang.String"/>
+  <SQLQuery>
+    <![CDATA[SELECT ApprovalFlow.APRVL_FLOW_NM, 
+:usrName AS CUR_USER, 
+(SELECT AST.STEP_SEQUENCE FROM APPROVAL_STEPS AST WHERE AST.ID_APRVL_FLOW = ApprovalFlow.ID_APRVL_FLOW AND AST.ROLE_NAME = :usrRole) AS CUR_SEQ,
+AppUserAccess.USER_NAME AS SPV_USR_NM,
+(SELECT AST.STEP_SEQUENCE FROM APPROVAL_STEPS AST, FCS_UN_USER_ACCESS_ROLES UAR WHERE AST.ID_APRVL_FLOW = ApprovalFlow.ID_APRVL_FLOW AND AST.ROLE_NAME = UAR.ROLE AND UAR.USER_NAME = AppUserAccess.USER_NAME) AS SPV_USR_SEQ,
+(SELECT MAX(AST.STEP_SEQUENCE) FROM APPROVAL_STEPS AST WHERE AST.ID_APRVL_FLOW = ApprovalFlow.ID_APRVL_FLOW) AS LAST_SEQ
+FROM FCS_UN_USER_ACCESS AppUserAccess, FCS_UN_USER_ACCESS_ROLES AppUserAccessRoles, APPROVAL_FLOW ApprovalFlow, APPROVAL_STEPS ApprovalSteps, APP_ROLES AppRoles
+WHERE AppUserAccess.COMPANY_ID = :compId
+AND AppUserAccessRoles.USER_NAME = AppUserAccess.USER_NAME
+AND ApprovalFlow.APRVL_FLOW_NM = 'PROPOSAL FOOD HO'
+AND ApprovalSteps.ID_APRVL_FLOW = ApprovalFlow.ID_APRVL_FLOW
+AND AppUserAccessRoles.ROLE = ApprovalSteps.ROLE_NAME
+AND AppRoles.NAME = AppUserAccessRoles.ROLE
+AND AppUserAccess.USER_NAME = :spvUsrNm
+AND ApprovalSteps.STEP_SEQUENCE > (SELECT ASTEP.STEP_SEQUENCE
+FROM APPROVAL_FLOW AFLOW, APPROVAL_STEPS ASTEP, FCS_UN_USER_ACCESS_ROLES UAR
+WHERE AFLOW.APRVL_FLOW_NM = ApprovalFlow.APRVL_FLOW_NM
+AND ASTEP.ID_APRVL_FLOW = AFLOW.ID_APRVL_FLOW
+AND ASTEP.ROLE_NAME = UAR.ROLE
+AND UAR.USER_NAME = :usrName)
+UNION ALL
+SELECT ApprovalFlow.APRVL_FLOW_NM, 
+:usrName AS CUR_USER, 
+(SELECT AST.STEP_SEQUENCE FROM APPROVAL_STEPS AST WHERE AST.ID_APRVL_FLOW = ApprovalFlow.ID_APRVL_FLOW AND AST.ROLE_NAME = :usrRole) AS CUR_SEQ,
+AppUserAccess.USER_NAME AS SPV_USR_NM,
+(SELECT AST.STEP_SEQUENCE FROM APPROVAL_STEPS AST, FCS_UN_USER_ACCESS_ROLES UAR WHERE AST.ID_APRVL_FLOW = ApprovalFlow.ID_APRVL_FLOW AND AST.ROLE_NAME = UAR.ROLE AND UAR.USER_NAME = AppUserAccess.USER_NAME) AS SPV_USR_SEQ,
+(SELECT MAX(AST.STEP_SEQUENCE) FROM APPROVAL_STEPS AST WHERE AST.ID_APRVL_FLOW = ApprovalFlow.ID_APRVL_FLOW) AS LAST_SEQ
+FROM FCS_UN_USER_ACCESS AppUserAccess, FCS_UN_USER_ACCESS_ROLES AppUserAccessRoles, APPROVAL_FLOW ApprovalFlow, APPROVAL_STEPS ApprovalSteps, APP_ROLES AppRoles
+WHERE AppUserAccess.COMPANY_ID = :compId
+AND AppUserAccessRoles.USER_NAME = AppUserAccess.USER_NAME
+AND ApprovalFlow.APRVL_FLOW_NM = 'PROPOSAL FOOD HO'
+AND ApprovalSteps.ID_APRVL_FLOW = ApprovalFlow.ID_APRVL_FLOW
+AND AppUserAccessRoles.ROLE = ApprovalSteps.ROLE_NAME
+AND AppRoles.NAME = AppUserAccessRoles.ROLE
+AND AppUserAccess.USER_NAME = :usrName
+AND (SELECT COUNT(1)
+FROM FCS_UN_USER_ACCESS AppUserAccess, FCS_UN_USER_ACCESS_ROLES AppUserAccessRoles, APPROVAL_FLOW ApprovalFlow, APPROVAL_STEPS ApprovalSteps, APP_ROLES AppRoles
+WHERE AppUserAccess.COMPANY_ID = :compId
+AND AppUserAccessRoles.USER_NAME = AppUserAccess.USER_NAME
+AND ApprovalFlow.APRVL_FLOW_NM = 'PROPOSAL FOOD HO'
+AND ApprovalSteps.ID_APRVL_FLOW = ApprovalFlow.ID_APRVL_FLOW
+AND AppUserAccessRoles.ROLE = ApprovalSteps.ROLE_NAME
+AND AppRoles.NAME = AppUserAccessRoles.ROLE
+AND AppUserAccess.USER_NAME = :spvUsrNm
+AND ApprovalSteps.STEP_SEQUENCE > (SELECT ASTEP.STEP_SEQUENCE
+FROM APPROVAL_FLOW AFLOW, APPROVAL_STEPS ASTEP, FCS_UN_USER_ACCESS_ROLES UAR
+WHERE AFLOW.APRVL_FLOW_NM = ApprovalFlow.APRVL_FLOW_NM
+AND ASTEP.ID_APRVL_FLOW = AFLOW.ID_APRVL_FLOW
+AND ASTEP.ROLE_NAME = UAR.ROLE
+AND UAR.USER_NAME = :usrName)) = 0]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="AprvlFlowNm"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="APRVL_FLOW_NM"
+    Expression="APRVL_FLOW_NM"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CurUser"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="32"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CUR_USER"
+    Expression="CUR_USER"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="32"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CurSeq"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="CUR_SEQ"
+    Expression="CUR_SEQ"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="SpvUsrNm"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="30"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="SPV_USR_NM"
+    Expression="SPV_USR_NM"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="SpvUsrSeq"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="SPV_USR_SEQ"
+    Expression="SPV_USR_SEQ"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LastSeq"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="LAST_SEQ"
+    Expression="LAST_SEQ"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

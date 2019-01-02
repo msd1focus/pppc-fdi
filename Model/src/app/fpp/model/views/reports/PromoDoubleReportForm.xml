@@ -1,0 +1,959 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="PromoDoubleReportForm"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="RepFrmPpDouble.REP_FRM_PP_DOUBLE_ID, 
+       RepFrmPpDouble.PERIODE_START, 
+       RepFrmPpDouble.PERIODE_END, 
+       RepFrmPpDouble.REGION_CODE, 
+       RepFrmPpDouble.REGION_DESC, 
+       RepFrmPpDouble.AREA_CODE, 
+       RepFrmPpDouble.AREA_DESC, 
+       RepFrmPpDouble.LOCATION_CODE, 
+       RepFrmPpDouble.LOCATION_DESC, 
+       RepFrmPpDouble.CUST_TYPE, 
+       RepFrmPpDouble.CUST_TYPE_DESC, 
+       RepFrmPpDouble.CUST_GROUP, 
+       RepFrmPpDouble.CUST_GROUP_DESC, 
+       RepFrmPpDouble.CUST_NUMBER, 
+       RepFrmPpDouble.CUST_NAME_DESC, 
+       RepFrmPpDouble.PRODUCT_CATEGORY, 
+       RepFrmPpDouble.PRODUCT_CATEGORY_DESC, 
+       RepFrmPpDouble.PRODUCT_CLASS, 
+       RepFrmPpDouble.PRODUCT_CLASS_DESC, 
+       RepFrmPpDouble.PRODUCT_BRAND, 
+       RepFrmPpDouble.PRODUCT_BRAND_DESC, 
+       RepFrmPpDouble.PRODUCT_EXT, 
+       RepFrmPpDouble.PRODUCT_EXT_DESC, 
+       RepFrmPpDouble.PRODUCT_PACK, 
+       RepFrmPpDouble.PRODUCT_PACK_DESC, 
+       RepFrmPpDouble.PRODUCT_VARIANT, 
+       RepFrmPpDouble.PRODUCT_VARIANT_DESC, 
+       RepFrmPpDouble.PRODUCT_ITEM, 
+       RepFrmPpDouble.PRODUCT_ITEM_DESC, 
+       RepFrmPpDouble.CREATED_BY, 
+       RepFrmPpDouble.CREATED_ON, 
+       RepFrmPpDouble.MODIFIED_BY, 
+       RepFrmPpDouble.MODIFIED_ON"
+  FromList="REP_FRM_PP_DOUBLE RepFrmPpDouble"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  RowClass="app.fpp.model.views.reports.PromoDoubleReportFormRowImpl"
+  ComponentClass="app.fpp.model.views.reports.PromoDoubleReportFormImpl">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <ViewAccessor
+    Name="ReportCustAreaLov1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.report.ReportCustAreaLov">
+    <ParameterMap>
+      <PIMap Variable="pCust">
+        <TransientExpression><![CDATA[CustNumber]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pGroup">
+        <TransientExpression><![CDATA[CustGroup]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pRegion">
+        <TransientExpression><![CDATA[RegionCode]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pLoc">
+        <TransientExpression><![CDATA[LocationCode]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pType">
+        <TransientExpression><![CDATA[CustType]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ReportCustDetailLov1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.report.ReportCustDetailLov">
+    <ParameterMap>
+      <PIMap Variable="pArea">
+        <TransientExpression><![CDATA[AreaCode]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pGroup">
+        <TransientExpression><![CDATA[CustGroup]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pLoc">
+        <TransientExpression><![CDATA[LocationCode]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pRegion">
+        <TransientExpression><![CDATA[RegionCode]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pType">
+        <TransientExpression><![CDATA[CustType]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ReportCustGroupLov1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.report.ReportCustGroupLov">
+    <ParameterMap>
+      <PIMap Variable="pArea">
+        <TransientExpression><![CDATA[AreaCode]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pCust">
+        <TransientExpression><![CDATA[CustNumber]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pLoc">
+        <TransientExpression><![CDATA[LocationCode]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pRegion">
+        <TransientExpression><![CDATA[RegionCode]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pType">
+        <TransientExpression><![CDATA[CustType]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ReportCustLocationLov1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.report.ReportCustLocationLov">
+    <ParameterMap>
+      <PIMap Variable="pArea">
+        <TransientExpression><![CDATA[AreaCode]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pCust">
+        <TransientExpression><![CDATA[CustNumber]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pGroup">
+        <TransientExpression><![CDATA[CustGroup]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pRegion">
+        <TransientExpression><![CDATA[RegionCode]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pType">
+        <TransientExpression><![CDATA[CustType]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ReportCustRegionLov1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.report.ReportCustRegionLov">
+    <ParameterMap>
+      <PIMap Variable="pArea">
+        <TransientExpression><![CDATA[AreaCode]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pCust">
+        <TransientExpression><![CDATA[CustNumber]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pGroup">
+        <TransientExpression><![CDATA[CustGroup]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pLoc">
+        <TransientExpression><![CDATA[LocationCode]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pType">
+        <TransientExpression><![CDATA[CustType]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ReportCustTypeLov1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.report.ReportCustTypeLov">
+    <ParameterMap>
+      <PIMap Variable="pArea">
+        <TransientExpression><![CDATA[AreaCode]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pCust">
+        <TransientExpression><![CDATA[CustNumber]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pGroup">
+        <TransientExpression><![CDATA[CustGroup]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pLoc">
+        <TransientExpression><![CDATA[LocationCode]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="pRegion">
+        <TransientExpression><![CDATA[RegionCode]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ReportAllYesNoLov1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.report.ReportAllYesNoLov"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="ReportProdCategoryLov1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.report.ReportProdCategoryLov">
+    <ParameterMap>
+      <PIMap Variable="P_PRODUK_ITEM">
+        <TransientExpression><![CDATA[ProductItem]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_BRAND">
+        <TransientExpression><![CDATA[ProductBrand]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_CLASS">
+        <TransientExpression><![CDATA[ProductClass]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_EXTENTION">
+        <TransientExpression><![CDATA[ProductExt]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_PACKAGING">
+        <TransientExpression><![CDATA[ProductPack]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_VARIANT">
+        <TransientExpression><![CDATA[ProductVariant]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_CATEGORY">
+        <TransientExpression><![CDATA[ProductCategory]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ReportProdClassLov1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.report.ReportProdClassLov">
+    <ParameterMap>
+      <PIMap Variable="P_PRODUK_ITEM">
+        <TransientExpression><![CDATA[ProductItem]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_BRAND">
+        <TransientExpression><![CDATA[ProductBrand]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_CATEGORY">
+        <TransientExpression><![CDATA[ProductCategory]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_EXTENTION">
+        <TransientExpression><![CDATA[ProductExt]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_PACKAGING">
+        <TransientExpression><![CDATA[ProductPack]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_VARIANT">
+        <TransientExpression><![CDATA[ProductVariant]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_CLASS">
+        <TransientExpression><![CDATA[ProductPack]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ReportProdBrandLov1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.report.ReportProdBrandLov">
+    <ParameterMap>
+      <PIMap Variable="P_PRODUK_ITEM">
+        <TransientExpression><![CDATA[ProductItem]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_CATEGORY">
+        <TransientExpression><![CDATA[ProductCategory]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_CLASS">
+        <TransientExpression><![CDATA[ProductClass]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_EXTENTION">
+        <TransientExpression><![CDATA[ProductExt]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_PACKAGING">
+        <TransientExpression><![CDATA[ProductPack]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_VARIANT">
+        <TransientExpression><![CDATA[ProductVariant]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_BRAND">
+        <TransientExpression><![CDATA[ProductBrand]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ReportProdExtLov1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.report.ReportProdExtLov">
+    <ParameterMap>
+      <PIMap Variable="P_PRODUK_ITEM">
+        <TransientExpression><![CDATA[ProductItem]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_BRAND">
+        <TransientExpression><![CDATA[ProductBrand]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_CATEGORY">
+        <TransientExpression><![CDATA[ProductCategory]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_CLASS">
+        <TransientExpression><![CDATA[ProductClass]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_PACKAGING">
+        <TransientExpression><![CDATA[ProductPack]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_VARIANT">
+        <TransientExpression><![CDATA[ProductVariant]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_EXTENTION">
+        <TransientExpression><![CDATA[ProductExt]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ReportProdPackagingLov1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.report.ReportProdPackagingLov">
+    <ParameterMap>
+      <PIMap Variable="P_PRODUK_ITEM">
+        <TransientExpression><![CDATA[ProductItem]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_BRAND">
+        <TransientExpression><![CDATA[ProductBrand]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_CATEGORY">
+        <TransientExpression><![CDATA[ProductCategory]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_CLASS">
+        <TransientExpression><![CDATA[ProductClass]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_EXTENTION">
+        <TransientExpression><![CDATA[ProductExt]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_VARIANT">
+        <TransientExpression><![CDATA[ProductVariant]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_PACKAGING">
+        <TransientExpression><![CDATA[ProductPack]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ReportProdVariantLov1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.report.ReportProdVariantLov">
+    <ParameterMap>
+      <PIMap Variable="P_PRODUK_ITEM">
+        <TransientExpression><![CDATA[ProductItem]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_BRAND">
+        <TransientExpression><![CDATA[ProductBrand]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_CATEGORY">
+        <TransientExpression><![CDATA[ProductCategory]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_CLASS">
+        <TransientExpression><![CDATA[ProductClass]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_EXTENTION">
+        <TransientExpression><![CDATA[ProductExt]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_PACKAGING">
+        <TransientExpression><![CDATA[ProductPack]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_VARIANT">
+        <TransientExpression><![CDATA[ProductVariant]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ReportProdItemLov1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.report.ReportProdItemLov">
+    <ParameterMap>
+      <PIMap Variable="P_SET_BRAND">
+        <TransientExpression><![CDATA[ProductBrand]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_CATEGORY">
+        <TransientExpression><![CDATA[ProductCategory]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_CLASS">
+        <TransientExpression><![CDATA[ProductClass]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_EXTENTION">
+        <TransientExpression><![CDATA[ProductExt]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_PACKAGING">
+        <TransientExpression><![CDATA[ProductPack]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_SET_VARIANT">
+        <TransientExpression><![CDATA[ProductVariant]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="P_PRODUK_ITEM">
+        <TransientExpression><![CDATA[ProductItem]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ListBinding
+    Name="LOV_RegionCode"
+    ListVOName="ReportCustRegionLov1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_RegionCode_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="RegionCode"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="RegionCode"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="RegionLabel"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_AreaCode"
+    ListVOName="ReportCustAreaLov1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_AreaCode_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="AreaCode"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="AreaCode"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="AreaLabel"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_LocationCode"
+    ListVOName="ReportCustLocationLov1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_LocationCode_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="LocationCode"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="LocCode"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="LocLabel"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CustType"
+    ListVOName="ReportCustTypeLov1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_CustType_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CustType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="CustType"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Description"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CustGroup"
+    ListVOName="ReportCustGroupLov1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_CustGroup_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CustGroup"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="CustGroup"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Description"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="showAndExecute"
+      Name="ReportCustGroupLovCriteria"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProductCategory"
+    ListVOName="ReportProdCategoryLov1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ProductCategory_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProductCategory"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetCategory"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetCategoryDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProductClass"
+    ListVOName="ReportProdClassLov1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ProductClass_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProductClass"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetClass"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetClassDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProductBrand"
+    ListVOName="ReportProdBrandLov1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ProductBrand_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProductBrand"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetBrand"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetBrandDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProductExt"
+    ListVOName="ReportProdExtLov1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ProductExt_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProductExt"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetExt"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetExtDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProductPack"
+    ListVOName="ReportProdPackagingLov1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ProductPack_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProductPack"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetPackaging"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetPackagingDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProductVariant"
+    ListVOName="ReportProdVariantLov1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ProductVariant_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProductVariant"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetVariant"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetVariantDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProductItem"
+    ListVOName="ReportProdItemLov1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ProductItem_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProductItem"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Item"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="ItemDescription"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="showAndExecute"
+      Name="ReportProdItemLovCriteria"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CustNumber"
+    ListVOName="ReportCustDetailLov1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_CustNumber_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CustNumber"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="CustomerNumber"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="CustomerFullName"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="showAndExecute"
+      Name="ReportCustDetailLovCriteria"/>
+  </ListBinding>
+  <EntityUsage
+    Name="RepFrmPpDouble"
+    Entity="app.fpp.model.entities.reportform.PromoDoubleReportForm"/>
+  <ViewAttribute
+    Name="RepFrmPpDoubleId"
+    IsUpdateable="while_insert"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RepFrmPpDoubleId"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="REP_FRM_PP_DOUBLE_ID"/>
+  <ViewAttribute
+    Name="PeriodeStart"
+    PrecisionRule="true"
+    EntityAttrName="PeriodeStart"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="PERIODE_START">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.reports.PromoDoubleReportForm.PeriodeStart_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.reports.PromoDoubleReportForm.PeriodeStart_FMT_FORMAT"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PeriodeEnd"
+    PrecisionRule="true"
+    EntityAttrName="PeriodeEnd"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="PERIODE_END">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.reports.PromoDoubleReportForm.PeriodeEnd_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.reports.PromoDoubleReportForm.PeriodeEnd_FMT_FORMAT"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RegionCode"
+    LOVName="LOV_RegionCode"
+    PrecisionRule="true"
+    EntityAttrName="RegionCode"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="REGION_CODE">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RegionDesc"
+    PrecisionRule="true"
+    EntityAttrName="RegionDesc"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="REGION_DESC"/>
+  <ViewAttribute
+    Name="AreaCode"
+    LOVName="LOV_AreaCode"
+    PrecisionRule="true"
+    EntityAttrName="AreaCode"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="AREA_CODE">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AreaDesc"
+    PrecisionRule="true"
+    EntityAttrName="AreaDesc"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="AREA_DESC"/>
+  <ViewAttribute
+    Name="LocationCode"
+    LOVName="LOV_LocationCode"
+    PrecisionRule="true"
+    EntityAttrName="LocationCode"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="LOCATION_CODE">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LocationDesc"
+    PrecisionRule="true"
+    EntityAttrName="LocationDesc"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="LOCATION_DESC"/>
+  <ViewAttribute
+    Name="CustType"
+    LOVName="LOV_CustType"
+    PrecisionRule="true"
+    EntityAttrName="CustType"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="CUST_TYPE">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CustTypeDesc"
+    PrecisionRule="true"
+    EntityAttrName="CustTypeDesc"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="CUST_TYPE_DESC"/>
+  <ViewAttribute
+    Name="CustGroup"
+    LOVName="LOV_CustGroup"
+    PrecisionRule="true"
+    EntityAttrName="CustGroup"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="CUST_GROUP">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CustGroupDesc"
+    PrecisionRule="true"
+    EntityAttrName="CustGroupDesc"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="CUST_GROUP_DESC"/>
+  <ViewAttribute
+    Name="CustNumber"
+    PrecisionRule="true"
+    EntityAttrName="CustNumber"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="CUST_NUMBER"
+    LOVName="LOV_CustNumber">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CustNameDesc"
+    PrecisionRule="true"
+    EntityAttrName="CustNameDesc"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="CUST_NAME_DESC"/>
+  <ViewAttribute
+    Name="ProductCategory"
+    LOVName="LOV_ProductCategory"
+    PrecisionRule="true"
+    EntityAttrName="ProductCategory"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="PRODUCT_CATEGORY">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductCategoryDesc"
+    PrecisionRule="true"
+    EntityAttrName="ProductCategoryDesc"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="PRODUCT_CATEGORY_DESC"/>
+  <ViewAttribute
+    Name="ProductClass"
+    LOVName="LOV_ProductClass"
+    PrecisionRule="true"
+    EntityAttrName="ProductClass"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="PRODUCT_CLASS">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductClassDesc"
+    PrecisionRule="true"
+    EntityAttrName="ProductClassDesc"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="PRODUCT_CLASS_DESC"/>
+  <ViewAttribute
+    Name="ProductBrand"
+    LOVName="LOV_ProductBrand"
+    PrecisionRule="true"
+    EntityAttrName="ProductBrand"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="PRODUCT_BRAND">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductBrandDesc"
+    PrecisionRule="true"
+    EntityAttrName="ProductBrandDesc"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="PRODUCT_BRAND_DESC"/>
+  <ViewAttribute
+    Name="ProductExt"
+    LOVName="LOV_ProductExt"
+    PrecisionRule="true"
+    EntityAttrName="ProductExt"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="PRODUCT_EXT">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductExtDesc"
+    PrecisionRule="true"
+    EntityAttrName="ProductExtDesc"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="PRODUCT_EXT_DESC"/>
+  <ViewAttribute
+    Name="ProductPack"
+    LOVName="LOV_ProductPack"
+    PrecisionRule="true"
+    EntityAttrName="ProductPack"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="PRODUCT_PACK">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+        <DISPLAYWIDTH
+          Value="80"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductPackDesc"
+    PrecisionRule="true"
+    EntityAttrName="ProductPackDesc"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="PRODUCT_PACK_DESC"/>
+  <ViewAttribute
+    Name="ProductVariant"
+    LOVName="LOV_ProductVariant"
+    PrecisionRule="true"
+    EntityAttrName="ProductVariant"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="PRODUCT_VARIANT">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+        <DISPLAYWIDTH
+          Value="80"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductVariantDesc"
+    PrecisionRule="true"
+    EntityAttrName="ProductVariantDesc"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="PRODUCT_VARIANT_DESC"/>
+  <ViewAttribute
+    Name="ProductItem"
+    LOVName="LOV_ProductItem"
+    PrecisionRule="true"
+    EntityAttrName="ProductItem"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="PRODUCT_ITEM">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductItemDesc"
+    PrecisionRule="true"
+    EntityAttrName="ProductItemDesc"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="PRODUCT_ITEM_DESC"/>
+  <ViewAttribute
+    Name="CreatedBy"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="CREATED_BY"/>
+  <ViewAttribute
+    Name="CreatedOn"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="CreatedOn"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="CREATED_ON"/>
+  <ViewAttribute
+    Name="ModifiedBy"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="ModifiedBy"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="MODIFIED_BY"/>
+  <ViewAttribute
+    Name="ModifiedOn"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="ModifiedOn"
+    EntityUsage="RepFrmPpDouble"
+    AliasName="MODIFIED_ON"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelSplitter id="ps2" orientation="vertical" splitterPosition="45"
+                    disabled="true">
+    <f:facet name="first">
+      <af:panelStretchLayout id="psl1" endWidth="311px"
+                             inlineStyle="border-bottom-width:1px; border-bottom-color:rgb(231,231,231); border-bottom-style:solid;"
+                             startWidth="350px">
+        <f:facet name="start">
+          <af:panelGroupLayout id="panelGroupLayout1"
+                               inlineStyle="padding-top:12px; padding-left:5px; color:rgb(28,65,126);"
+                               layout="vertical">
+            <af:outputText value="Master Data: Running Number" id="outputText6"
+                           inlineStyle="font-weight:bold; font-size:18.0px;margin-left:16px;"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="end"/>
+      </af:panelStretchLayout>
+    </f:facet>
+    <f:facet name="second">
+      <af:panelCollection id="pc2" styleClass="AFStretchWidth"
+                          featuresOff="detach viewMenu columnsMenuItem">
+        <f:facet name="toolbar"/>
+        <af:table value="#{bindings.RunNumberView1.collectionModel}" var="row"
+                  rows="#{bindings.RunNumberView1.rangeSize}"
+                  emptyText="#{bindings.RunNumberView1.viewable ? 'Tidak ada data yang ditampilkan.' : 'Access Denied.'}"
+                  fetchSize="#{bindings.RunNumberView1.rangeSize}"
+                  rowBandingInterval="0" id="t1" columnStretching="last">
+          <af:column sortProperty="#{bindings.RunNumberView1.hints.RunNumType.name}"
+                     sortable="true"
+                     headerText="#{bindings.RunNumberView1.hints.RunNumType.label}"
+                     id="c5" width="150">
+            <af:selectOneChoice value="#{row.bindings.RunNumType.inputValue}"
+                                label="#{row.bindings.RunNumType.label}"
+                                required="#{bindings.RunNumberView1.hints.RunNumType.mandatory}"
+                                shortDesc="#{bindings.RunNumberView1.hints.RunNumType.tooltip}"
+                                id="soc1" readOnly="true">
+              <f:selectItems value="#{row.bindings.RunNumType.items}" id="si1"/>
+            </af:selectOneChoice>
+          </af:column>
+          <af:column headerText="#{bindings.RunNumberView1.hints.UserName.label}"
+                     id="c4" align="center">
+            <af:outputText value="#{row.UserName}" id="ot4"/>
+          </af:column>
+          <af:column headerText="#{bindings.RunNumberView1.hints.UserInitial.label}"
+                     id="c6" width="70" align="center">
+            <af:outputText value="#{row.UserInitial}" id="ot5"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.RunNumberView1.hints.YearStr.name}"
+                     sortable="true"
+                     headerText="#{bindings.RunNumberView1.hints.YearStr.label}"
+                     id="c3" align="center">
+            <af:outputText value="#{row.YearStr}" id="ot2"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.RunNumberView1.hints.RunMonthStr.name}"
+                     sortable="true"
+                     headerText="#{bindings.RunNumberView1.hints.RunMonthStr.label}"
+                     id="c1" align="center">
+            <af:outputText value="#{row.RunMonthStr}" id="ot3"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.RunNumberView1.hints.Value.name}"
+                     sortable="true"
+                     headerText="#{bindings.RunNumberView1.hints.Value.label}"
+                     id="c2" align="center">
+            <af:outputText value="#{row.Value}" id="ot1">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.RunNumberView1.hints.Value.format}"/>
+            </af:outputText>
+          </af:column>
+        </af:table>
+      </af:panelCollection>
+    </f:facet>
+  </af:panelSplitter>
+</jsp:root>

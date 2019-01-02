@@ -1,0 +1,133 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<BC4JConfig version="11.1" xmlns="http://xmlns.oracle.com/bc4j/configuration">
+   <AppModuleConfigBag ApplicationName="app.fpp.model.am.SecurityAM">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="SecurityAMLocal" ApplicationName="app.fpp.model.am.SecurityAM">
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.SecurityAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="SecurityAMShared" ApplicationName="app.fpp.model.am.SecurityAM">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.SecurityAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="app.fpp.model.am.PromoProposalAM">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="PromoProposalAMLocal" ApplicationName="app.fpp.model.am.PromoProposalAM">
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.PromoProposalAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="PromoProposalAMShared" ApplicationName="app.fpp.model.am.PromoProposalAM">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.PromoProposalAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="app.fpp.model.am.ConfirmationAM">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="ConfirmationAMLocal" ApplicationName="app.fpp.model.am.ConfirmationAM">
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.ConfirmationAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="ConfirmationAMShared" ApplicationName="app.fpp.model.am.ConfirmationAM">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.ConfirmationAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="app.fpp.model.am.ApprovalAM">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="ApprovalAMLocal" ApplicationName="app.fpp.model.am.ApprovalAM">
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.ApprovalAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="ApprovalAMShared" ApplicationName="app.fpp.model.am.ApprovalAM">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.ApprovalAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="app.fpp.model.am.ApprovalSettingAM">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="ApprovalSettingAMLocal" ApplicationName="app.fpp.model.am.ApprovalSettingAM">
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.ApprovalSettingAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="ApprovalSettingAMShared" ApplicationName="app.fpp.model.am.ApprovalSettingAM">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.ApprovalSettingAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="app.fpp.model.am.UserAccessAM">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="UserAccessAMLocal" ApplicationName="app.fpp.model.am.UserAccessAM">
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.UserAccessAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="UserAccessAMShared" ApplicationName="app.fpp.model.am.UserAccessAM">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.UserAccessAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="app.fpp.model.am.MasterDataAM">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="MasterDataAMLocal" ApplicationName="app.fpp.model.am.MasterDataAM">
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.MasterDataAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="MasterDataAMShared" ApplicationName="app.fpp.model.am.MasterDataAM">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.MasterDataAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="app.fpp.model.am.BudgetSettingAM">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="BudgetSettingAMLocal" ApplicationName="app.fpp.model.am.BudgetSettingAM">
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.BudgetSettingAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="BudgetSettingAMShared" ApplicationName="app.fpp.model.am.BudgetSettingAM">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.BudgetSettingAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="app.fpp.model.am.DashboardAM">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="DashboardAMLocal" ApplicationName="app.fpp.model.am.DashboardAM">
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.DashboardAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="DashboardAMShared" ApplicationName="app.fpp.model.am.DashboardAM">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.DashboardAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="app.fpp.model.am.HistoryApprovalAM">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="HistoryApprovalAMLocal" ApplicationName="app.fpp.model.am.HistoryApprovalAM">
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.HistoryApprovalAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="app.fpp.model.Model" name="HistoryApprovalAMShared" ApplicationName="app.fpp.model.am.HistoryApprovalAM">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="app.fpp.model.am.HistoryApprovalAM"/>
+         <Custom JDBCDataSource="jdbc/focusppDS"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+</BC4JConfig>

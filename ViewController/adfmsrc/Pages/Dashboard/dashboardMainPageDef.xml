@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="dashboardMainPageDef"
+                Package="Pages.Dashboard">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator id="ConfirmationDashView1Iterator" Binds="ConfirmationDashView1"
+              DataControl="DashboardAMDataControl" RangeSize="25"/>
+    <iterator id="ProposalDashView1Iterator" Binds="ProposalDashView1"
+              DataControl="DashboardAMDataControl" RangeSize="25"/>
+    <iterator id="UserDashPrivView1Iterator" Binds="UserDashPrivView1"
+              DataControl="DashboardAMDataControl" RangeSize="25"/>
+    <iterator Binds="ApprovalDashView1" RangeSize="25"
+              DataControl="DashboardAMDataControl"
+              id="ApprovalDashView1Iterator"/>
+    <iterator Binds="PpWaitingPcView1" RangeSize="25"
+              DataControl="DashboardAMDataControl"
+              id="PpWaitingPcView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="ProposalDashView1Iterator" id="PdraftNum">
+      <AttrNames>
+        <Item Value="PdraftNum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalDashView1Iterator" id="PactiveNum">
+      <AttrNames>
+        <Item Value="PactiveNum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalDashView1Iterator" id="PinprocessNum">
+      <AttrNames>
+        <Item Value="PinprocessNum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalDashView1Iterator" id="PrejectedNum">
+      <AttrNames>
+        <Item Value="PrejectedNum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalDashView1Iterator" id="Pall">
+      <AttrNames>
+        <Item Value="Pall"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDashPrivView1Iterator" id="IsProp">
+      <AttrNames>
+        <Item Value="IsProp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDashPrivView1Iterator" id="IsApvr">
+      <AttrNames>
+        <Item Value="IsApvr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDashPrivView1Iterator" id="IsConf">
+      <AttrNames>
+        <Item Value="IsConf"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ApprovalDashView1Iterator" id="ApprovalNum">
+      <AttrNames>
+        <Item Value="ApprovalNum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ConfirmationDashView1Iterator"
+                     id="ConfirmNum">
+      <AttrNames>
+        <Item Value="ConfirmNum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PpWaitingPcView1Iterator" id="WaitPcNum">
+      <AttrNames>
+        <Item Value="WaitPcNum"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

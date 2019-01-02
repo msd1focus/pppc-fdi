@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="approval-setting">
+    <default-activity id="__1">approvalSetting</default-activity>
+    <managed-bean id="__2">
+      <managed-bean-name id="__5">ApprovalSettingBean</managed-bean-name>
+      <managed-bean-class id="__4">app.fpp.bean.approvalsetting.ApprovalSettingBean</managed-bean-class>
+      <managed-bean-scope id="__3">request</managed-bean-scope>
+    </managed-bean>
+    <view id="approvalSetting">
+      <page>/Pages/ApprovalSetting/approvalSetting.jsff</page>
+    </view>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

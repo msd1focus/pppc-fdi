@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="ua_prod_add_item_task_flow_definition_setProdukItemPageDef"
+                Package="app.fpp.view.pageDefs" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="AllUserProdukItemShuttleView1" RangeSize="25"
+              DataControl="UserAccessAMDataControl"
+              id="AllUserProdukItemShuttleView1Iterator" Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="AllUserProdukItemShuttleView1Iterator"
+            id="ExecuteWithParams" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="setCategory" NDValue="#{pageFlowScope.categoryCode}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="setClass" NDValue="#{pageFlowScope.classCode}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="setBrand" NDValue="#{pageFlowScope.brandCode}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="setExt" NDValue="#{pageFlowScope.extCode}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="setPack" NDValue="#{pageFlowScope.packCode}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

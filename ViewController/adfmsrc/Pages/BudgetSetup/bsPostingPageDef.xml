@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="bsPostingPageDef"
+                Package="Pages.BudgetSetup">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="BudgetPostingView1" RangeSize="25"
+              DataControl="BudgetSettingAMDataControl"
+              id="BudgetPostingView1Iterator"/>
+    <iterator Binds="BudgetPostTranView1" RangeSize="25"
+              DataControl="BudgetSettingAMDataControl"
+              id="BudgetPostTranView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="BudgetPostingView1Iterator" id="BudgetPostingView1">
+      <nodeDefinition DefName="app.fpp.model.views.budgetsetting.BudgetPostingView"
+                      Name="BudgetPostingView10">
+        <AttrNames>
+          <Item Value="KodePosting"/>
+          <Item Value="BudgetYear"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="BudgetPostingView1Iterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="BudgetPostingView1Iterator" id="Delete"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action IterBinding="BudgetPostingView1Iterator" id="Execute"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <listOfValues StaticList="false" IterBinding="BudgetPostingView1Iterator"
+                  Uses="LOV_KodePosting" id="KodePosting"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction"
+            DataControl="BudgetSettingAMDataControl"/>
+    <attributeValues IterBinding="BudgetPostingView1Iterator"
+                     id="YearlyBudgetAmount">
+      <AttrNames>
+        <Item Value="YearlyBudgetAmount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="BudgetPostingView1Iterator"
+                     id="KodePostingDesc">
+      <AttrNames>
+        <Item Value="KodePostingDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="BudgetPostTranView1Iterator" id="BudgetPostTranView1">
+      <nodeDefinition DefName="app.fpp.model.views.budgetsetting.BudgetPostTranView"
+                      Name="BudgetPostTranView10">
+        <AttrNames>
+          <Item Value="BudgetType"/>
+          <Item Value="BudgetDate"/>
+          <Item Value="Amount"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <list IterBinding="BudgetPostTranView1Iterator" StaticList="false"
+          Uses="LOV_BudgetType" id="BudgetType" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="BudgetPostTranView1Iterator" id="BudgetDate">
+      <AttrNames>
+        <Item Value="BudgetDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="BudgetPostTranView1Iterator" id="Amount">
+      <AttrNames>
+        <Item Value="Amount"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="BudgetPostTranView1Iterator"
+            id="CreateInsertBudPostTran"
+            InstanceName="BudgetSettingAMDataControl.BudgetPostTranView1"
+            DataControl="BudgetSettingAMDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <attributeValues IterBinding="BudgetPostingView1Iterator"
+                     id="YearlyBudgetRemaining">
+      <AttrNames>
+        <Item Value="YearlyBudgetRemaining"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="BudgetPostTranView1Iterator"
+                     id="BudgetAsToDate">
+      <AttrNames>
+        <Item Value="BudgetAsToDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="BudgetPostingView1Iterator"
+                     id="YearlyBudgetUsed">
+      <AttrNames>
+        <Item Value="YearlyBudgetUsed"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="BudgetPostingView1Iterator"
+                  Uses="LOV_BudgetYear" id="BudgetYear"/>
+    <attributeValues IterBinding="BudgetPostingView1Iterator"
+                     id="YearlyBudgetAmountSum">
+      <AttrNames>
+        <Item Value="YearlyBudgetAmountSum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="BudgetPostingView1Iterator"
+                     id="YearlyBudgetCalc">
+      <AttrNames>
+        <Item Value="YearlyBudgetCalc"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="BudgetSettingAMDataControl"/>
+  </bindings>
+</pageDefinition>

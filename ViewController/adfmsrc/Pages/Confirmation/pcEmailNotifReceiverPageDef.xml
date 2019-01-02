@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="pcEmailNotifReceiverPageDef"
+                Package="Pages.Confirmation">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="EmailNotifReceiverView1" RangeSize="25"
+              DataControl="ConfirmationAMDataControl"
+              id="EmailNotifReceiverView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="EmailNotifReceiverView1Iterator"
+          id="EmailNotifReceiverView1">
+      <nodeDefinition DefName="app.fpp.model.views.confirmation.notifikasi.EmailNotifReceiverView"
+                      Name="EmailNotifReceiverView10">
+        <AttrNames>
+          <Item Value="EmailAddress"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="Commit" DataControl="ConfirmationAMDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action IterBinding="EmailNotifReceiverView1Iterator" id="Delete"
+            InstanceName="ConfirmationAMDataControl.EmailNotifReceiverView1"
+            DataControl="ConfirmationAMDataControl" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+  </bindings>
+</pageDefinition>

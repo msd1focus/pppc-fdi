@@ -1,0 +1,487 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelSplitter id="ps2" orientation="vertical" splitterPosition="45"
+                    disabled="true">
+    <f:facet name="first">
+      <af:panelStretchLayout id="psl1" endWidth="311px"
+                             inlineStyle="border-bottom-width:1px; border-bottom-color:rgb(231,231,231); border-bottom-style:solid;"
+                             startWidth="380px">
+        <f:facet name="start">
+          <af:panelGroupLayout id="panelGroupLayout1"
+                               inlineStyle="padding-top:12px; padding-left:5px; color:rgb(28,65,126);"
+                               layout="vertical">
+            <af:outputText value="Report: Promo Double"
+                           id="outputText6"
+                           inlineStyle="font-weight:bold; font-size:18.0px;margin-left:16px;"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:panelStretchLayout>
+    </f:facet>
+    <f:facet name="second">
+      <af:panelTabbed id="pt1"
+                      inlineStyle="margin-left:10px;margin-bottom:10px;margin-right:10px;margin-top:5px;">
+        <af:showDetailItem text="Action" id="sdi1">
+          <af:panelGroupLayout id="pgl1" layout="vertical">
+            <af:panelGroupLayout id="panelGroupLayout8" layout="vertical"
+                                 inlineStyle="background-color:rgb(240,240,240);">
+              <af:spacer width="10" height="5" id="spacer18"/>
+              <af:panelGroupLayout id="panelGroupLayout10" layout="horizontal"
+                                   inlineStyle="padding-left:10px;">
+                <af:image shortDesc="Still Running" source="/afr/info.png"
+                          id="ai1"/>
+                <af:spacer width="10" height="10" id="spacer47"/>
+                <af:outputText value="Informasi" id="outputText11"
+                               inlineStyle="font-size:small; width:100px; font-weight:bold;"/>
+              </af:panelGroupLayout>
+              <af:spacer width="10" height="5" id="spacer48"/>
+              <af:panelGroupLayout id="panelGroupLayout11" layout="vertical"
+                                   inlineStyle="padding-left:12px;">
+                <af:outputFormatted value="Halaman generator untuk report promo-promo yang double atau duplikat pada aplikasi PPPC"
+                                    id="of1" inlineStyle="font-size:11.0px;"/>
+              </af:panelGroupLayout>
+              <af:spacer width="10" height="6" id="s1"/>
+            </af:panelGroupLayout>
+            <af:spacer width="10" height="10" id="spacer1"/>
+            <af:panelFormLayout id="pfl1" maxColumns="2" rows="7"
+                                partialTriggers="cb1" labelWidth="120">
+              <af:panelLabelAndMessage label="Periode Promo" id="plam1">
+                <af:panelGroupLayout id="pgl3" layout="horizontal">
+                  <af:inputDate value="#{bindings.PeriodeStart.inputValue}"
+                                label="#{bindings.PeriodeStart.hints.label}"
+                                required="#{bindings.PeriodeStart.hints.mandatory}"
+                                shortDesc="#{bindings.PeriodeStart.hints.tooltip}"
+                                id="id2" simple="true"
+                                contentStyle="width:80px;"
+                                binding="#{GenerateReportBean.valPpFromDt}"
+                                autoSubmit="true"
+                                inlineStyle="margin-left:12px;"
+                                placeholder="Awal">
+                    <f:validator binding="#{bindings.PeriodeStart.validator}"/>
+                    <af:convertDateTime pattern="#{bindings.PeriodeStart.format}"/>
+                  </af:inputDate>
+                  <af:outputText value="s.d." id="ot1"
+                                 inlineStyle="margin-left:10px;margin-right:10px;"/>
+                  <af:inputDate value="#{bindings.PeriodeEnd.inputValue}"
+                                label="#{bindings.PeriodeEnd.hints.label}"
+                                required="#{bindings.PeriodeEnd.hints.mandatory}"
+                                shortDesc="#{bindings.PeriodeEnd.hints.tooltip}"
+                                id="id1" simple="true"
+                                contentStyle="width:80px;"
+                                binding="#{GenerateReportBean.valPpToDt}"
+                                autoSubmit="true" placeholder="Akhir">
+                    <f:validator binding="#{bindings.PeriodeEnd.validator}"/>
+                    <af:convertDateTime pattern="#{bindings.PeriodeEnd.format}"/>
+                  </af:inputDate>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.RegionCode.hints.label}" id="plam2">
+                <af:panelGroupLayout id="pgl4" layout="horizontal">
+                    <af:inputListOfValues id="regionCodeId"
+                                          popupTitle="Report Parameter: #{bindings.RegionCode.hints.label}"
+                                          value="#{bindings.RegionCode.inputValue}"
+                                          model="#{bindings.RegionCode.listOfValuesModel}"
+                                          required="#{bindings.RegionCode.hints.mandatory}"
+                                          columns="#{bindings.RegionCode.hints.displayWidth}"
+                                          shortDesc="#{bindings.RegionCode.hints.tooltip}"
+                                          autoSubmit="true"
+                                          partialTriggers="areaCodeId locationCodeId custTypeId custGroupId custNumberId resetRegion resetArea resetLoc resetCustType resetCustGroup resetCustName"
+                                          editMode="select"
+                                          contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:80px;"
+                                          binding="#{GenerateReportBean.valUserRegionLOV}"
+                                          returnPopupListener="#{GenerateReportBean.regionReturnListener}">
+                      <f:validator binding="#{bindings.RegionCode.validator}"/>
+                    </af:inputListOfValues>
+                  <af:spacer width="10" height="10" id="s5"/>
+                  <af:commandImageLink id="resetRegion"
+                                    actionListener="#{GenerateReportBean.regionClear}"
+                                       icon="/Images/arrow_refresh.png"
+                                       shortDesc="Reset Region"/>
+                  <af:spacer height="10" id="spacer15" width="20"/>
+                  <af:outputText value="#{bindings.RegionDesc.inputValue}"
+                                 id="otRegionDesc" partialTriggers="regionCodeId"
+                                 binding="#{GenerateReportBean.otRegionDesc}"
+                                 inlineStyle="padding-top:2px;font-size:11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 200px; display: inline-block;"/>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.AreaCode.hints.label}" id="plam3">
+                <af:panelGroupLayout id="pgl5" layout="horizontal">
+                    <af:inputListOfValues id="areaCodeId"
+                                          popupTitle="Report Parameter: #{bindings.AreaCode.hints.label}"
+                                          value="#{bindings.AreaCode.inputValue}"
+                                          model="#{bindings.AreaCode.listOfValuesModel}"
+                                          required="#{bindings.AreaCode.hints.mandatory}"
+                                          columns="#{bindings.AreaCode.hints.displayWidth}"
+                                          shortDesc="#{bindings.AreaCode.hints.tooltip}"
+                                          autoSubmit="true"
+                                          partialTriggers="regionCodeId locationCodeId custTypeId custGroupId custNumberId resetRegion resetArea resetLoc resetCustType resetCustGroup resetCustName"
+                                          editMode="select"
+                                          contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:80px;"
+                                          binding="#{GenerateReportBean.valUserAreaLOV}"
+                                          returnPopupListener="#{GenerateReportBean.areaReturnListener}">
+                      <f:validator binding="#{bindings.AreaCode.validator}"/>
+                    </af:inputListOfValues>
+                  <af:spacer width="10" height="10" id="spacer3"/>
+                  <af:commandImageLink id="resetArea"
+                                    actionListener="#{GenerateReportBean.clearArea}"
+                                       icon="/Images/arrow_refresh.png"
+                                       shortDesc="Reset Area"/>
+                  <af:spacer height="10" id="spacer16" width="20"/>
+                  <af:outputText value="#{bindings.AreaDesc.inputValue}"
+                                 id="otAreaDesc"
+                                 inlineStyle="padding-top:2px;font-size:11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 200px; display: inline-block;"
+                                 binding="#{GenerateReportBean.otAreaDesc}"
+                                 partialTriggers="areaCodeId"/>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.LocationCode.hints.label}" id="plam4">
+                <af:panelGroupLayout id="pgl6" layout="horizontal">
+                    <af:inputListOfValues id="locationCodeId"
+                                          popupTitle="Report Parameter: #{bindings.LocationCode.hints.label}"
+                                          value="#{bindings.LocationCode.inputValue}"
+                                          model="#{bindings.LocationCode.listOfValuesModel}"
+                                          required="#{bindings.LocationCode.hints.mandatory}"
+                                          columns="#{bindings.LocationCode.hints.displayWidth}"
+                                          shortDesc="#{bindings.LocationCode.hints.tooltip}"
+                                          autoSubmit="true"
+                                          partialTriggers="regionCodeId areaCodeId custTypeId custGroupId custNumberId resetRegion resetArea resetLoc resetCustType resetCustGroup resetCustName"
+                                          editMode="select"
+                                          contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:80px;"
+                                          binding="#{GenerateReportBean.valUserLocLOV}"
+                                          returnPopupListener="#{GenerateReportBean.locationReturnListener}">
+                      <f:validator binding="#{bindings.LocationCode.validator}"/>
+                    </af:inputListOfValues>
+                  <af:spacer width="10" height="10" id="spacer4"/>
+                  <af:commandImageLink id="resetLoc"
+                                    actionListener="#{GenerateReportBean.clearLoc}"
+                                       icon="/Images/arrow_refresh.png"
+                                       shortDesc="Reset Location"/>
+                  <af:spacer width="20" height="10" id="spacer17"/>
+                  <af:outputText value="#{bindings.LocationDesc.inputValue}"
+                                 id="otLocDesc"
+                                 inlineStyle="padding-top:2px;font-size:11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 200px; display: inline-block;"
+                                 binding="#{GenerateReportBean.otLocDesc}"
+                                 partialTriggers="locationCodeId"/>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.CustType.hints.label}" id="plam5">
+                <af:panelGroupLayout id="pgl7" layout="horizontal">
+                    <af:inputListOfValues id="custTypeId"
+                                          popupTitle="Report Parameter: #{bindings.CustType.hints.label}"
+                                          value="#{bindings.CustType.inputValue}"
+                                          model="#{bindings.CustType.listOfValuesModel}"
+                                          required="#{bindings.CustType.hints.mandatory}"
+                                          columns="#{bindings.CustType.hints.displayWidth}"
+                                          shortDesc="#{bindings.CustType.hints.tooltip}"
+                                          autoSubmit="true"
+                                          partialTriggers="custNumberId custGroupId locationCodeId areaCodeId regionCodeId resetRegion resetArea resetLoc resetCustType resetCustGroup resetCustName"
+                                          editMode="select"
+                                          contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:80px;"
+                                          binding="#{GenerateReportBean.valUserCustTypeLOV}"
+                                          returnPopupListener="#{GenerateReportBean.custTypeReturnListener}">
+                      <f:validator binding="#{bindings.CustType.validator}"/>
+                    </af:inputListOfValues>
+                  <af:spacer width="10" height="10" id="spacer5"/>
+                  <af:commandImageLink id="resetCustType"
+                                    actionListener="#{GenerateReportBean.clearCustype}"
+                                       icon="/Images/arrow_refresh.png"
+                                       shortDesc="Reset Customer Type"/>
+                  <af:spacer height="10" id="spacer27" width="20"/>
+                  <af:outputText value="#{bindings.CustTypeDesc.inputValue}"
+                                 id="otCustTypeDesc"
+                                 inlineStyle="padding-top:2px;font-size:11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 200px; display: inline-block;"
+                                 binding="#{GenerateReportBean.otCustTypeDesc}"
+                                 partialTriggers="custTypeId"/>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.CustGroup.hints.label}" id="plam6">
+                <af:panelGroupLayout id="pgl8" layout="horizontal">
+                    <af:inputListOfValues id="custGroupId"
+                                          popupTitle="Report Parameter: #{bindings.CustGroup.hints.label}"
+                                          value="#{bindings.CustGroup.inputValue}"
+                                          model="#{bindings.CustGroup.listOfValuesModel}"
+                                          required="#{bindings.CustGroup.hints.mandatory}"
+                                          columns="#{bindings.CustGroup.hints.displayWidth}"
+                                          shortDesc="#{bindings.CustGroup.hints.tooltip}"
+                                          autoSubmit="true"
+                                          partialTriggers="custNumberId custTypeId locationCodeId areaCodeId regionCodeId resetRegion resetArea resetLoc resetCustType resetCustGroup resetCustName"
+                                          editMode="select"
+                                          contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:80px;"
+                                          binding="#{GenerateReportBean.valUserCustGroupLOV}"
+                                          returnPopupListener="#{GenerateReportBean.custGroupReturnListener}">
+                      <f:validator binding="#{bindings.CustGroup.validator}"/>
+                    </af:inputListOfValues>
+                  <af:spacer width="10" height="10" id="spacer6"/>
+                  <af:commandImageLink id="resetCustGroup"
+                                    actionListener="#{GenerateReportBean.clearCusGroup}"
+                                       icon="/Images/arrow_refresh.png"
+                                       shortDesc="Reset Customer Group"/>
+                  <af:spacer height="10" id="spacer19" width="20"/>
+                  <af:outputText value="#{bindings.CustGroupDesc.inputValue}"
+                                 id="otCustGrpDesc"
+                                 inlineStyle="padding-top:2px;font-size:11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 200px; display: inline-block;"
+                                 binding="#{GenerateReportBean.otCustGrpDesc}"
+                                 partialTriggers="custGroupId"/>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.CustNumber.hints.label}" id="plam7">
+                <af:panelGroupLayout id="pgl9" layout="horizontal">
+                    <af:inputListOfValues id="custNumberId"
+                                          popupTitle="Report Parameter: #{bindings.CustNumber.hints.label}"
+                                          value="#{bindings.CustNumber.inputValue}"
+                                          model="#{bindings.CustNumber.listOfValuesModel}"
+                                          required="#{bindings.CustNumber.hints.mandatory}"
+                                          columns="#{bindings.CustNumber.hints.displayWidth}"
+                                          shortDesc="#{bindings.CustNumber.hints.tooltip}"
+                                          partialTriggers="regionCodeId areaCodeId locationCodeId custTypeId custGroupId resetRegion resetArea resetLoc resetCustType resetCustGroup resetCustName"
+                                          autoSubmit="true" editMode="select"
+                                          contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:80px;"
+                                          binding="#{GenerateReportBean.valUserCustDetailLOV}"
+                                          returnPopupListener="#{GenerateReportBean.custNameReturnListener}">
+                      <f:validator binding="#{bindings.CustNumber.validator}"/>
+                    </af:inputListOfValues>
+                  <af:spacer width="10" height="10" id="spacer7"/>
+                  <af:commandImageLink id="resetCustName"
+                                    actionListener="#{GenerateReportBean.clearCusName}"
+                                       icon="/Images/arrow_refresh.png"
+                                       shortDesc="Reset Customer Name"/>
+                  <af:spacer width="20" height="10" id="spacer20"/>
+                  <af:outputText value="#{bindings.CustNameDesc.inputValue}"
+                                 id="otCustNameDesc"
+                                 inlineStyle="padding-top:2px;font-size:11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 200px; display: inline-block;"
+                                 binding="#{GenerateReportBean.otCustNameDesc}"
+                                 partialTriggers="custNumberId"/>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.ProductCategory.hints.label}" id="plam8">
+                <af:panelGroupLayout id="pgl10" layout="horizontal">
+                    <af:inputListOfValues id="productCategoryId"
+                                          popupTitle="Report Parameter: #{bindings.ProductCategory.hints.label}"
+                                          value="#{bindings.ProductCategory.inputValue}"
+                                          model="#{bindings.ProductCategory.listOfValuesModel}"
+                                          required="#{bindings.ProductCategory.hints.mandatory}"
+                                          columns="#{bindings.ProductCategory.hints.displayWidth}"
+                                          shortDesc="#{bindings.ProductCategory.hints.tooltip}"
+                                          contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:80px;"
+                                          binding="#{GenerateReportBean.valProdCategoryLOV}"
+                                          editMode="select" autoSubmit="true"
+                                          partialTriggers="productClassId productBrandId productExtId productPackId productVariantId productItemId resetCategory resetClass resetBrand resetExt resetPack resetVariant resetProdDetail"
+                                          returnPopupListener="#{GenerateReportBean.categoryReturnListener}">
+                      <f:validator binding="#{bindings.ProductCategory.validator}"/>
+                    </af:inputListOfValues>
+                  <af:spacer width="10" height="10" id="spacer8"/>
+                  <af:commandImageLink id="resetCategory"
+                                    actionListener="#{GenerateReportBean.categoryClear}"
+                                       icon="/Images/arrow_refresh.png"
+                                       shortDesc="Reset Produk Category"/>
+                  <af:spacer width="20" height="10" id="spacer21"/>
+                  <af:outputText value="#{bindings.ProductCategoryDesc.inputValue}"
+                                 id="otCategory"
+                                 binding="#{GenerateReportBean.otCategory}"
+                                 partialTriggers="productCategoryId"
+                                 inlineStyle="padding-top:2px;font-size:11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 200px; display: inline-block;"/>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.ProductClass.hints.label}" id="plam9">
+                <af:panelGroupLayout id="pgl11" layout="horizontal">
+                    <af:inputListOfValues id="productClassId"
+                                          popupTitle="Report Parameter: #{bindings.ProductClass.hints.label}"
+                                          value="#{bindings.ProductClass.inputValue}"
+                                          model="#{bindings.ProductClass.listOfValuesModel}"
+                                          required="#{bindings.ProductClass.hints.mandatory}"
+                                          columns="#{bindings.ProductClass.hints.displayWidth}"
+                                          shortDesc="#{bindings.ProductClass.hints.tooltip}"
+                                          contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:80px;"
+                                          binding="#{GenerateReportBean.valProdClassLOV}"
+                                          editMode="select" autoSubmit="true"
+                                          partialTriggers="productCategoryId productBrandId productExtId productPackId productVariantId productItemId resetCategory resetClass resetBrand resetExt resetPack resetVariant resetProdDetail"
+                                          returnPopupListener="#{GenerateReportBean.classReturnListener}">
+                      <f:validator binding="#{bindings.ProductClass.validator}"/>
+                    </af:inputListOfValues>
+                  <af:spacer width="10" height="10" id="spacer14"/>
+                  <af:commandImageLink id="resetClass"
+                                    actionListener="#{GenerateReportBean.clearClass}"
+                                       icon="/Images/arrow_refresh.png"
+                                       shortDesc="Reset Produk Class"/>
+                  <af:spacer width="20" height="10" id="spacer22"/>
+                  <af:outputText value="#{bindings.ProductClassDesc.inputValue}"
+                                 id="otClass"
+                                 binding="#{GenerateReportBean.otClass}"
+                                 partialTriggers="productClassId"
+                                 inlineStyle="padding-top:2px;font-size:11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 200px; display: inline-block;"/>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.ProductBrand.hints.label}" id="plam10">
+                <af:panelGroupLayout id="pgl12" layout="horizontal">
+                    <af:inputListOfValues id="productBrandId"
+                                          popupTitle="Report Parameter: #{bindings.ProductBrand.hints.label}"
+                                          value="#{bindings.ProductBrand.inputValue}"
+                                          model="#{bindings.ProductBrand.listOfValuesModel}"
+                                          required="#{bindings.ProductBrand.hints.mandatory}"
+                                          columns="#{bindings.ProductBrand.hints.displayWidth}"
+                                          shortDesc="#{bindings.ProductBrand.hints.tooltip}"
+                                          contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:80px;"
+                                          binding="#{GenerateReportBean.valProdBrandLOV}"
+                                          editMode="select" autoSubmit="true"
+                                          partialTriggers="productCategoryId productClassId productExtId productPackId productVariantId productItemId resetCategory resetClass resetBrand resetExt resetPack resetVariant resetProdDetail"
+                                          returnPopupListener="#{GenerateReportBean.brandReturnListener}">
+                      <f:validator binding="#{bindings.ProductBrand.validator}"/>
+                    </af:inputListOfValues>
+                  <af:spacer width="10" height="10" id="spacer13"/>
+                  <af:commandImageLink id="resetBrand"
+                                    actionListener="#{GenerateReportBean.clearBrand}"
+                                       icon="/Images/arrow_refresh.png"
+                                       shortDesc="Reset Produk Brand"/>
+                  <af:spacer height="10" id="spacer28" width="20"/>
+                  <af:outputText value="#{bindings.ProductBrandDesc.inputValue}"
+                                 id="otBrand"
+                                 binding="#{GenerateReportBean.otBrand}"
+                                 partialTriggers="productBrandId"
+                                 inlineStyle="padding-top:2px;font-size:11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 200px; display: inline-block;"/>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.ProductExt.hints.label}" id="plam11">
+                <af:panelGroupLayout id="pgl13" layout="horizontal">
+                    <af:inputListOfValues id="productExtId"
+                                          popupTitle="Report Parameter: #{bindings.ProductExt.hints.label}"
+                                          value="#{bindings.ProductExt.inputValue}"
+                                          model="#{bindings.ProductExt.listOfValuesModel}"
+                                          required="#{bindings.ProductExt.hints.mandatory}"
+                                          columns="#{bindings.ProductExt.hints.displayWidth}"
+                                          shortDesc="#{bindings.ProductExt.hints.tooltip}"
+                                          contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:80px;"
+                                          binding="#{GenerateReportBean.valProdExtentionLOV}"
+                                          autoSubmit="true" editMode="select"
+                                          partialTriggers="productCategoryId productClassId productBrandId productPackId productVariantId productItemId resetCategory resetClass resetBrand resetExt resetPack resetVariant resetProdDetail"
+                                          returnPopupListener="#{GenerateReportBean.extReturnListener}">
+                      <f:validator binding="#{bindings.ProductExt.validator}"/>
+                    </af:inputListOfValues>
+                  <af:spacer width="10" height="10" id="spacer12"/>
+                  <af:commandImageLink id="resetExt"
+                                    actionListener="#{GenerateReportBean.clearExtention}"
+                                       icon="/Images/arrow_refresh.png"
+                                       shortDesc="Reset Produk Extention"/>
+                  <af:spacer height="10" id="spacer23" width="20"/>
+                  <af:outputText value="#{bindings.ProductExtDesc.inputValue}"
+                                 id="otExt"
+                                 binding="#{GenerateReportBean.otExt}"
+                                 partialTriggers="productExtId"
+                                 inlineStyle="padding-top:2px;font-size:11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 200px; display: inline-block;"/>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.ProductPack.hints.label}" id="plam12">
+                <af:panelGroupLayout id="pgl15" layout="horizontal">
+                    <af:inputListOfValues id="productPackId"
+                                          popupTitle="Report Parameter: #{bindings.ProductPack.hints.label}"
+                                          value="#{bindings.ProductPack.inputValue}"
+                                          model="#{bindings.ProductPack.listOfValuesModel}"
+                                          required="#{bindings.ProductPack.hints.mandatory}"
+                                          columns="#{bindings.ProductPack.hints.displayWidth}"
+                                          shortDesc="#{bindings.ProductPack.hints.tooltip}"
+                                          contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:80px;"
+                                          binding="#{GenerateReportBean.valProdPackagingLOV}"
+                                          editMode="select" autoSubmit="true"
+                                          partialTriggers="productCategoryId productClassId productBrandId productExtId productVariantId productItemId resetCategory resetClass resetBrand resetExt resetPack resetVariant resetProdDetail"
+                                          returnPopupListener="#{GenerateReportBean.packReturnListener}">
+                      <f:validator binding="#{bindings.ProductPack.validator}"/>
+                    </af:inputListOfValues>
+                  <af:spacer width="10" height="10" id="spacer11"/>
+                  <af:commandImageLink id="resetPack"
+                                    actionListener="#{GenerateReportBean.clearPackaging}"
+                                       icon="/Images/arrow_refresh.png"
+                                       shortDesc="Reset Produk Packaging"/>
+                  <af:spacer height="10" id="spacer24" width="20"/>
+                  <af:outputText value="#{bindings.ProductPackDesc.inputValue}"
+                                 id="otPack"
+                                 binding="#{GenerateReportBean.otPack}"
+                                 partialTriggers="productPackId"
+                                 inlineStyle="padding-top:2px;font-size:11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 200px; display: inline-block;"/>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.ProductVariant.hints.label}" id="plam13">
+                <af:panelGroupLayout id="pgl16" layout="horizontal">
+                    <af:inputListOfValues id="productVariantId"
+                                          popupTitle="Report Parameter: #{bindings.ProductVariant.hints.label}"
+                                          value="#{bindings.ProductVariant.inputValue}"
+                                          model="#{bindings.ProductVariant.listOfValuesModel}"
+                                          required="#{bindings.ProductVariant.hints.mandatory}"
+                                          columns="#{bindings.ProductVariant.hints.displayWidth}"
+                                          shortDesc="#{bindings.ProductVariant.hints.tooltip}"
+                                          contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:80px;"
+                                          binding="#{GenerateReportBean.valProdVariantLOV}"
+                                          editMode="select" autoSubmit="true"
+                                          partialTriggers="productCategoryId productClassId productBrandId productExtId productPackId productItemId resetCategory resetClass resetBrand resetExt resetPack resetVariant resetProdDetail"
+                                          returnPopupListener="#{GenerateReportBean.variantReturnListener}">
+                      <f:validator binding="#{bindings.ProductVariant.validator}"/>
+                    </af:inputListOfValues>
+                  <af:spacer width="10" height="10" id="spacer9"/>
+                  <af:commandImageLink id="resetVariant"
+                                    actionListener="#{GenerateReportBean.clearVariant}"
+                                       icon="/Images/arrow_refresh.png"
+                                       shortDesc="Reset Produk Variant"/>
+                  <af:spacer height="10" id="spacer25" width="20"/>
+                  <af:outputText value="#{bindings.ProductVariantDesc.inputValue}"
+                                 id="otVariant"
+                                 binding="#{GenerateReportBean.otVariant}"
+                                 partialTriggers="productVariantId"
+                                 inlineStyle="padding-top:2px;font-size:11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 200px; display: inline-block;"/>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.ProductItem.hints.label}" id="plam14">
+                <af:panelGroupLayout id="pgl14" layout="horizontal">
+                    <af:inputListOfValues id="productItemId"
+                                          popupTitle="Report Parameter: #{bindings.ProductItem.hints.label}"
+                                          value="#{bindings.ProductItem.inputValue}"
+                                          model="#{bindings.ProductItem.listOfValuesModel}"
+                                          required="#{bindings.ProductItem.hints.mandatory}"
+                                          columns="#{bindings.ProductItem.hints.displayWidth}"
+                                          shortDesc="#{bindings.ProductItem.hints.tooltip}"
+                                          contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:80px;"
+                                          binding="#{GenerateReportBean.valProdDetailLOV}"
+                                          editMode="select" autoSubmit="true"
+                                          partialTriggers="productCategoryId productClassId productBrandId productExtId productPackId productVariantId resetCategory resetClass resetBrand resetExt resetPack resetVariant resetProdDetail"
+                                          returnPopupListener="#{GenerateReportBean.itemReturnListener}">
+                      <f:validator binding="#{bindings.ProductItem.validator}"/>
+                    </af:inputListOfValues>
+                  <af:spacer width="10" height="10" id="spacer10"/>
+                  <af:commandImageLink id="resetProdDetail"
+                                    actionListener="#{GenerateReportBean.clearItems}"
+                                       icon="/Images/arrow_refresh.png"
+                                       shortDesc="Reset Produk Detail"/>
+                  <af:spacer height="10" id="spacer26" width="20"/>
+                  <af:outputText value="#{bindings.ProductItemDesc.inputValue}"
+                                 id="otItemDesc"
+                                 binding="#{GenerateReportBean.otItemDesc}"
+                                 partialTriggers="productItemId"
+                                 inlineStyle="padding-top:2px;font-size:11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 200px; display: inline-block;"/>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+            </af:panelFormLayout>
+            <af:spacer width="10" height="20" id="spacer2"/>
+            <af:panelGroupLayout id="pgl2" layout="horizontal">
+              <af:spacer width="135" height="10" id="s3"/>
+              <af:commandButton text="Reset Param" id="cb1"
+                                inlineStyle="padding:10px;"
+                                actionListener="#{GenerateReportBean.clearParams}"/>
+              <af:spacer width="10" height="10" id="s2"/>
+              <af:commandButton text="Generate Report" id="cb4"
+                                actionListener="#{GenerateReportBean.openUrlEvent}"
+                                inlineStyle="padding:10px;"/>
+              <af:commandButton text="Generate Report" id="cb3"
+                                inlineStyle="padding:10px;"
+                                partialSubmit="true"
+                                visible="false"/>
+              <af:goButton text="Generate Report" id="cbGenReport"
+                           inlineStyle="padding:10px;"
+                           targetFrame="_blank"
+                           binding="#{GenerateReportBean.generateReportBtn}"
+                           visible="false"/>
+            </af:panelGroupLayout>
+            <af:spacer width="10" height="10" id="s4"/>
+          </af:panelGroupLayout>
+        </af:showDetailItem>
+      </af:panelTabbed>
+    </f:facet>
+  </af:panelSplitter>
+</jsp:root>

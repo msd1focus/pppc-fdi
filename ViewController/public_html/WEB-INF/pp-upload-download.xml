@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="pp-upload-download">
+    <default-activity id="__5">setKeyProposalId</default-activity>
+    <data-control-scope id="__16">
+      <shared/>
+    </data-control-scope>
+    <input-parameter-definition id="__24">
+      <name id="__23">propId</name>
+      <value>#{pageFlowScope.propId}</value>
+      <class>oracle.jbo.domain.DBSequence</class>
+      <required/>
+    </input-parameter-definition>
+    <input-parameter-definition id="__25">
+      <name id="__26">propNo</name>
+      <value>#{pageFlowScope.propNo}</value>
+      <class>java.lang.String</class>
+      <required/>
+    </input-parameter-definition>
+    <input-parameter-definition id="__14">
+      <name id="__15">attchStatus</name>
+      <value>#{pageFlowScope.attchStatus}</value>
+      <class>java.lang.String</class>
+      <required/>
+    </input-parameter-definition>
+    <managed-bean id="__11">
+      <managed-bean-name id="__12">PpUploadDownloadBackingBean</managed-bean-name>
+      <managed-bean-class id="__1">app.fpp.bean.promoproposal.PpUploadDownloadBackingBean</managed-bean-class>
+      <managed-bean-scope id="__2">backingBean</managed-bean-scope>
+    </managed-bean>
+    <task-flow-return id="Return">
+      <outcome id="__3">
+        <name>Return</name>
+      </outcome>
+    </task-flow-return>
+    <view id="ppUploadDownload">
+      <page>/Pages/PromoProposal/ppUploadDownload.jspx</page>
+    </view>
+    <method-call id="setKeyProposalId">
+      <method>#{bindings.setCurrentRowWithKeyValue.execute}</method>
+      <outcome id="__4">
+        <fixed-outcome>setCurrentRowWithKeyValue</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__19">
+      <from-activity-id id="__20">ppUploadDownload</from-activity-id>
+      <control-flow-case id="__22">
+        <from-outcome id="__13">close</from-outcome>
+        <to-activity-id id="__21">Return</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__6">
+      <from-activity-id id="__7">setKeyProposalId</from-activity-id>
+      <control-flow-case id="__9">
+        <from-outcome id="__10">setCurrentRowWithKeyValue</from-outcome>
+        <to-activity-id id="__8">ppUploadDownload</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+  </task-flow-definition>
+</adfc-config>

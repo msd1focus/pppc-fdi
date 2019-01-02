@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="CustProdLookup"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  RowClass="app.fpp.model.views.useraccess.uploadfile.validate.CustProdLookupRowImpl"
+  ComponentClass="app.fpp.model.views.useraccess.uploadfile.validate.CustProdLookupImpl">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.useraccess.uploadfile.validate.CustProdLookup_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="pCategory"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="pClass"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="pBrand"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="pExt"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="pPack"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="pVariant"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="pItem"
+    Kind="where"
+    Type="java.lang.String"/>
+  <SQLQuery>
+    <![CDATA[SELECT DISTINCT
+    CASE WHEN (:pCategory IS NOT NULL OR :pClass IS NOT NULL OR :pBrand IS NOT NULL OR :pExt IS NOT NULL OR :pPack IS NOT NULL OR :pVariant IS NOT NULL OR :pItem IS NOT NULL) THEN CPL.SET_CATEGORY ELSE NULL END AS PROD_CATEGORY,
+    CASE WHEN (:pCategory IS NOT NULL OR :pClass IS NOT NULL OR :pBrand IS NOT NULL OR :pExt IS NOT NULL OR :pPack IS NOT NULL OR :pVariant IS NOT NULL OR :pItem IS NOT NULL) THEN CPL.SET_CATEGORY_DESC ELSE NULL END AS CATEGORY_DESC,
+    CASE WHEN (:pClass IS NOT NULL OR :pBrand IS NOT NULL OR :pExt IS NOT NULL OR :pPack IS NOT NULL OR :pVariant IS NOT NULL OR :pItem IS NOT NULL) THEN CPL.SET_CLASS ELSE NULL END AS PROD_CLASS,
+    CASE WHEN (:pClass IS NOT NULL OR :pBrand IS NOT NULL OR :pExt IS NOT NULL OR :pPack IS NOT NULL OR :pVariant IS NOT NULL OR :pItem IS NOT NULL) THEN CPL.SET_CLASS_DESC ELSE NULL END AS CLASS_DESC,
+    CASE WHEN (:pBrand IS NOT NULL OR :pExt IS NOT NULL OR :pPack IS NOT NULL OR :pVariant IS NOT NULL OR :pItem IS NOT NULL) THEN CPL.SET_BRAND ELSE NULL END AS PROD_BRAND,
+    CASE WHEN (:pBrand IS NOT NULL OR :pExt IS NOT NULL OR :pPack IS NOT NULL OR :pVariant IS NOT NULL OR :pItem IS NOT NULL) THEN CPL.SET_BRAND_DESC ELSE NULL END AS BRAND_DESC,
+    CASE WHEN (:pExt IS NOT NULL OR :pPack IS NOT NULL OR :pVariant IS NOT NULL OR :pItem IS NOT NULL) THEN CPL.SET_EXT ELSE NULL END AS PROD_EXT,
+    CASE WHEN (:pExt IS NOT NULL OR :pPack IS NOT NULL OR :pVariant IS NOT NULL OR :pItem IS NOT NULL) THEN CPL.SET_EXT_DESC ELSE NULL END AS EXT_DESC,
+    CASE WHEN (:pPack IS NOT NULL OR :pVariant IS NOT NULL OR :pItem IS NOT NULL) THEN CPL.SET_PACKAGING ELSE NULL END AS PROD_PACK,
+    CASE WHEN (:pPack IS NOT NULL OR :pVariant IS NOT NULL OR :pItem IS NOT NULL) THEN CPL.SET_PACKAGING_DESC ELSE NULL END AS PACK_DESC,
+    CASE WHEN (:pVariant IS NOT NULL OR :pItem IS NOT NULL) THEN CPL.SET_VARIANT ELSE NULL END AS PROD_VARIANT,
+    CASE WHEN (:pVariant IS NOT NULL OR :pItem IS NOT NULL) THEN CPL.SET_VARIANT_DESC ELSE NULL END AS VARIANT_DESC,
+    CASE WHEN (:pItem IS NOT NULL) THEN CPL.ITEM ELSE NULL END AS PROD_ITEM,
+    CASE WHEN (:pItem IS NOT NULL) THEN CPL.ITEM_DESCRIPTION ELSE NULL END AS ITEM_DESC
+FROM APPS.FCS_VIEW_ITEM_MASTER_CATEGORY CPL
+WHERE
+    CPL.SET_CATEGORY = :pCategory
+    OR CPL.SET_CLASS = :pClass
+    OR CPL.SET_BRAND = :pBrand
+    OR CPL.SET_EXT = :pExt
+    OR CPL.SET_PACKAGING = :pPack
+    OR CPL.SET_VARIANT = :pVariant
+    OR CPL.ITEM = :pItem
+ORDER BY PROD_CATEGORY ASC, PROD_CLASS ASC, PROD_BRAND ASC, PROD_EXT ASC, PROD_PACK ASC, PROD_VARIANT ASC, PROD_ITEM ASC]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="ProdCategory"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PROD_CATEGORY"
+    Expression="PROD_CATEGORY"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CategoryDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="240"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CATEGORY_DESC"
+    Expression="CATEGORY_DESC"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProdClass"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PROD_CLASS"
+    Expression="PROD_CLASS"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ClassDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="240"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CLASS_DESC"
+    Expression="CLASS_DESC"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProdBrand"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PROD_BRAND"
+    Expression="PROD_BRAND"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BrandDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="240"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="BRAND_DESC"
+    Expression="BRAND_DESC"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProdExt"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PROD_EXT"
+    Expression="PROD_EXT"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ExtDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="240"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="EXT_DESC"
+    Expression="EXT_DESC"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProdPack"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PROD_PACK"
+    Expression="PROD_PACK"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PackDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="240"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PACK_DESC"
+    Expression="PACK_DESC"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProdVariant"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PROD_VARIANT"
+    Expression="PROD_VARIANT"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="VariantDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="240"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VARIANT_DESC"
+    Expression="VARIANT_DESC"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProdItem"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PROD_ITEM"
+    Expression="PROD_ITEM"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ItemDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="240"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ITEM_DESC"
+    Expression="ITEM_DESC"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

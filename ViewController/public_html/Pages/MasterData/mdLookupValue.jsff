@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelSplitter id="ps2" orientation="vertical" splitterPosition="45"
+                    disabled="true">
+    <f:facet name="first">
+      <af:panelStretchLayout id="psl1" endWidth="311px"
+                             inlineStyle="border-bottom-width:1px; border-bottom-color:rgb(231,231,231); border-bottom-style:solid;"
+                             startWidth="350px">
+        <f:facet name="start">
+          <af:panelGroupLayout id="panelGroupLayout1"
+                               inlineStyle="padding-top:12px; padding-left:5px; color:rgb(28,65,126);"
+                               layout="vertical">
+            <af:outputText value="Master Data: Lookup Value" id="outputText6"
+                           inlineStyle="font-weight:bold; font-size:18.0px;margin-left:16px;"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="end"/>
+      </af:panelStretchLayout>
+    </f:facet>
+    <f:facet name="second">
+      <af:panelCollection id="pc2" styleClass="AFStretchWidth"
+                          featuresOff="detach viewMenu columnsMenuItem">
+        <f:facet name="toolbar">
+          <af:toolbar id="t2">
+            <af:commandToolbarButton actionListener="#{bindings.Execute.execute}"
+                                     text="Refresh"
+                                     disabled="#{!bindings.Execute.enabled}"
+                                     id="ctb1"/>
+            <af:image source="/Images/v_spacer_toolbar.png" id="i1"/>
+            <af:commandToolbarButton text="Add" id="ctb2">
+              <af:showPopupBehavior popupId="p1" triggerType="action"/>
+            </af:commandToolbarButton>
+            <af:popup id="p1" autoCancel="disabled" childCreation="deferred"
+                      contentDelivery="lazyUncached"
+                      popupFetchListener="#{MasterDataBean.addLookupValuePopupFetchListener}"
+                      popupCanceledListener="#{MasterDataBean.addLookupValuePopupCanceledListener}">
+              <af:dialog id="d1" title="Add Lookup Value"
+                         dialogListener="#{MasterDataBean.addLookupValueDialogListener}">
+                <af:panelFormLayout id="pfl1">
+                  <af:inputText value="#{bindings.Title.inputValue}"
+                                label="#{bindings.Title.hints.label}"
+                                required="#{bindings.Title.hints.mandatory}"
+                                columns="#{bindings.Title.hints.displayWidth}"
+                                maximumLength="#{bindings.Title.hints.precision}"
+                                shortDesc="#{bindings.Title.hints.tooltip}"
+                                id="it3">
+                    <f:validator binding="#{bindings.Title.validator}"/>
+                  </af:inputText>
+                  <af:inputText value="#{bindings.Value.inputValue}"
+                                label="#{bindings.Value.hints.label}"
+                                required="#{bindings.Value.hints.mandatory}"
+                                columns="#{bindings.Value.hints.displayWidth}"
+                                maximumLength="#{bindings.Value.hints.precision}"
+                                shortDesc="#{bindings.Value.hints.tooltip}"
+                                id="it2">
+                    <f:validator binding="#{bindings.Value.validator}"/>
+                  </af:inputText>
+                  <af:inputText value="#{bindings.Descr.inputValue}"
+                                label="#{bindings.Descr.hints.label}"
+                                required="#{bindings.Descr.hints.mandatory}"
+                                columns="#{bindings.Descr.hints.displayWidth}"
+                                maximumLength="#{bindings.Descr.hints.precision}"
+                                shortDesc="#{bindings.Descr.hints.tooltip}"
+                                id="it1">
+                    <f:validator binding="#{bindings.Descr.validator}"/>
+                  </af:inputText>
+                </af:panelFormLayout>
+              </af:dialog>
+            </af:popup>
+            <af:commandToolbarButton text="Edit" id="ctb3">
+              <af:showPopupBehavior popupId="p2" triggerType="action"/>
+            </af:commandToolbarButton>
+            <af:popup id="p2" contentDelivery="lazyUncached">
+              <af:dialog id="d2" title="Edit Lookup Value"
+                         dialogListener="#{MasterDataBean.editLookupValueDialogListener}">
+                <af:panelFormLayout id="pfl2">
+                  <af:inputText value="#{bindings.Title.inputValue}"
+                                label="#{bindings.Title.hints.label}"
+                                required="#{bindings.Title.hints.mandatory}"
+                                columns="#{bindings.Title.hints.displayWidth}"
+                                maximumLength="#{bindings.Title.hints.precision}"
+                                shortDesc="#{bindings.Title.hints.tooltip}"
+                                id="it5">
+                    <f:validator binding="#{bindings.Title.validator}"/>
+                  </af:inputText>
+                  <af:inputText value="#{bindings.Value.inputValue}"
+                                label="#{bindings.Value.hints.label}"
+                                required="#{bindings.Value.hints.mandatory}"
+                                columns="#{bindings.Value.hints.displayWidth}"
+                                maximumLength="#{bindings.Value.hints.precision}"
+                                shortDesc="#{bindings.Value.hints.tooltip}"
+                                id="it6">
+                    <f:validator binding="#{bindings.Value.validator}"/>
+                  </af:inputText>
+                  <af:inputText value="#{bindings.Descr.inputValue}"
+                                label="#{bindings.Descr.hints.label}"
+                                required="#{bindings.Descr.hints.mandatory}"
+                                columns="#{bindings.Descr.hints.displayWidth}"
+                                maximumLength="#{bindings.Descr.hints.precision}"
+                                shortDesc="#{bindings.Descr.hints.tooltip}"
+                                id="it4">
+                    <f:validator binding="#{bindings.Descr.validator}"/>
+                  </af:inputText>
+                </af:panelFormLayout>
+              </af:dialog>
+            </af:popup>
+            <af:commandToolbarButton text="Remove" id="ctb4">
+              <af:showPopupBehavior popupId="p3" triggerType="action"/>
+            </af:commandToolbarButton>
+            <af:popup id="p3" contentDelivery="lazyUncached">
+              <af:dialog id="d3" title="Remove Lookup Value"
+                         closeIconVisible="false" resize="off"
+                         dialogListener="#{MasterDataBean.removeLookupValueDialogListener}">
+                <af:panelGroupLayout id="pgl1" layout="horizontal">
+                  <af:outputText value="Yakin akan menghapus" id="ot4"/>
+                  <af:spacer width="5" height="10" id="s1"/>
+                  <af:outputText value="&quot;#{bindings.Title.inputValue}:" id="ot6"/>
+                  <af:spacer width="5" height="10" id="spacer1"/>
+                  <af:outputText value="#{bindings.Descr.inputValue}&quot; ?" id="ot5"/>
+                </af:panelGroupLayout>
+              </af:dialog>
+            </af:popup>
+          </af:toolbar>
+        </f:facet>
+        <af:table value="#{bindings.LookupCodeCRUDView1.collectionModel}"
+                  var="row" rows="#{bindings.LookupCodeCRUDView1.rangeSize}"
+                  emptyText="#{bindings.LookupCodeCRUDView1.viewable ? 'Tidak ada data yang ditampilkan.' : 'Access Denied.'}"
+                  fetchSize="#{bindings.LookupCodeCRUDView1.rangeSize}"
+                  rowBandingInterval="0"
+                  filterModel="#{bindings.LookupCodeCRUDView1Query.queryDescriptor}"
+                  queryListener="#{bindings.LookupCodeCRUDView1Query.processQuery}"
+                  filterVisible="true" varStatus="vs"
+                  selectedRowKeys="#{bindings.LookupCodeCRUDView1.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.LookupCodeCRUDView1.collectionModel.makeCurrent}"
+                  rowSelection="single" id="t1" columnStretching="last"
+                  partialTriggers="::ctb1 ::d1 ::d2 ::d3"
+                  binding="#{MasterDataBean.tblLookupValueList}">
+          <af:column sortProperty="#{bindings.LookupCodeCRUDView1.hints.Title.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.LookupCodeCRUDView1.hints.Title.label}"
+                     id="c2" width="200">
+            <af:outputText value="#{row.Title}" id="ot3"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.LookupCodeCRUDView1.hints.Value.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.LookupCodeCRUDView1.hints.Value.label}"
+                     id="c1" width="150">
+            <af:outputText value="#{row.Value}" id="ot1"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.LookupCodeCRUDView1.hints.Descr.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.LookupCodeCRUDView1.hints.Descr.label}"
+                     id="c3">
+            <af:outputText value="#{row.Descr}" id="ot2"/>
+          </af:column>
+        </af:table>
+      </af:panelCollection>
+    </f:facet>
+  </af:panelSplitter>
+</jsp:root>

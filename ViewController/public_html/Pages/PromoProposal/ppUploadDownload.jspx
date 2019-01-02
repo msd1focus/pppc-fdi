@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1" title="Proposal Attachment"
+                 inlineStyle="background-color:#f9f9f9;">
+      <af:form id="f1" usesUpload="true" inlineStyle="height:120px;">
+        <af:panelStretchLayout id="psl1"
+                               inlineStyle="height:100px;"
+                               dimensionsFrom="children" topHeight="200px">
+          <f:facet name="top">
+            <af:panelGroupLayout id="pgl1" halign="center" layout="vertical">
+              <af:messages id="m2"/>
+              <af:spacer width="10" height="20" id="s1"/>
+              <af:table value="#{bindings.UploadDownloadView1.collectionModel}"
+                        var="row"
+                        rows="#{bindings.UploadDownloadView1.rangeSize}"
+                        emptyText="#{bindings.UploadDownloadView1.viewable ? '                                               Belum ada dokumen yang diupload.' : 'Access Denied.'}"
+                        fetchSize="#{bindings.UploadDownloadView1.rangeSize}"
+                        rowBandingInterval="0"
+                        selectedRowKeys="#{bindings.UploadDownloadView1.collectionModel.selectedRow}"
+                        selectionListener="#{bindings.UploadDownloadView1.collectionModel.makeCurrent}"
+                        rowSelection="single" id="t1"
+                        inlineStyle="height:170px;"
+                        width="350" horizontalGridVisible="false"
+                        verticalGridVisible="false"
+                        columnStretching="column:c1">
+                <af:column sortProperty="#{bindings.UploadDownloadView1.hints.ProposalId.name}"
+                           sortable="false"
+                           headerText="#{bindings.UploadDownloadView1.hints.ProposalId.label}"
+                           id="c2" visible="false">
+                  <af:outputText value="#{row.ProposalId}" id="ot1">
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.UploadDownloadView1.hints.ProposalId.format}"/>
+                  </af:outputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.UploadDownloadView1.hints.ContentType.name}"
+                           sortable="false" id="c1" align="center" width="140"
+                           minimumWidth="140">
+                  <af:commandLink text="#{row.FileName}" id="cl1"
+                                  inlineStyle="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 335px; display: inline-block;">
+                    <af:fileDownloadActionListener filename="#{row.bindings.FileName.inputValue}"
+                                                   method="#{backingBeanScope.PpUploadDownloadBackingBean.downloadAction}"/>
+                  </af:commandLink>
+                  <af:outputText value="#{row.Path}" id="ot2"
+                                 binding="#{backingBeanScope.PpUploadDownloadBackingBean.pathBind}"
+                                 visible="false"/>
+                </af:column>
+                <af:column id="c3" width="20" minimumWidth="20"
+                           visible="#{pageFlowScope.attchStatus == 'enabled'}">
+                  <af:commandImageLink actionListener="#{bindings.Delete1.execute}"
+                                       id="cil1" icon="/Images/delete_doc.png"
+                                       shortDesc="Delete"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+          </f:facet>
+          <f:facet name="center">
+            <af:panelGroupLayout id="pgl2" layout="vertical" halign="end">
+              <af:panelGroupLayout id="pgl3" valign="middle" halign="center"
+                                   layout="horizontal"
+                                   inlineStyle="margin-top:10px;">
+                <af:inputFile id="if1" autoHeightRows="0"
+                              binding="#{backingBeanScope.PpUploadDownloadBackingBean.itUpload}"
+                              contentStyle="width:210px;"
+                              inlineStyle="margin-top:3px;"
+                              visible="#{pageFlowScope.attchStatus == 'enabled'}"
+                              disabled="#{bindings.UploadDownloadView1Iterator.estimatedRowCount > 4}"
+                              partialTriggers="t1"/>
+                <af:spacer width="#{pageFlowScope.attchStatus == 'enabled' ? '17' : '300'}" height="10" id="spacer1"/>
+                <af:commandButton text="Upload" id="cb2"
+                                  actionListener="#{backingBeanScope.PpUploadDownloadBackingBean.uploadDocEvent}"
+                                  partialTriggers="t1"
+                                  inlineStyle="padding-right:8px;padding-left:8px;padding-top:3px;padding-bottom:3px;"
+                                  visible="#{pageFlowScope.attchStatus == 'enabled'}"
+                                  disabled="#{bindings.UploadDownloadView1Iterator.estimatedRowCount > 4}"/>
+                <af:spacer width="3" height="30" id="s4"/>
+                <af:commandButton text="Close" id="cb1"
+                                  inlineStyle="padding-right:8px;padding-left:8px;padding-top:3px;padding-bottom:3px;"
+                                  action="close"/>
+                <af:spacer width="10" height="10" id="s3"/>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </f:facet>
+        </af:panelStretchLayout>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

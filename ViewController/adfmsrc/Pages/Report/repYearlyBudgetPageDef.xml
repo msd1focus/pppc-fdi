@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="repYearlyBudgetPageDef"
+                Package="Pages.Report">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="YearlyBudgetReportForm1" RangeSize="25"
+              DataControl="DashboardAMDataControl"
+              id="YearlyBudgetReportForm1Iterator"/>
+  </executables>
+  <bindings>
+    <listOfValues StaticList="false"
+                  IterBinding="YearlyBudgetReportForm1Iterator"
+                  Uses="LOV_BudgetType" id="BudgetType"/>
+    <listOfValues StaticList="false"
+                  IterBinding="YearlyBudgetReportForm1Iterator"
+                  Uses="LOV_BudgetYear" id="BudgetYear"/>
+    <attributeValues IterBinding="YearlyBudgetReportForm1Iterator"
+                     id="BudgetName">
+      <AttrNames>
+        <Item Value="BudgetName"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false"
+                  IterBinding="YearlyBudgetReportForm1Iterator"
+                  Uses="LOV_Detail" id="Detail"/>
+    <button IterBinding="YearlyBudgetReportForm1Iterator" StaticList="false"
+            Uses="LOV_BudgetNameAll" id="BudgetNameAll" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="BudgetNameAll"/>
+      </AttrNames>
+    </button>
+    <listOfValues StaticList="false"
+                  IterBinding="YearlyBudgetReportForm1Iterator"
+                  Uses="LOV_BudgetName" id="BudgetName1"/>
+    <listOfValues StaticList="false" Uses="LOV_Status"
+                  IterBinding="YearlyBudgetReportForm1Iterator" id="Status"/>
+  </bindings>
+</pageDefinition>

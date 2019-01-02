@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="aslogin">
+    <page>/aslogin.jspx</page>
+  </view>
+  <view id="dashboard">
+    <page>/dashboard.jspx</page>
+  </view>
+  <method-call id="logout">
+    <method>#{Login.doLogout}</method>
+    <outcome id="__28">
+      <fixed-outcome>home</fixed-outcome>
+    </outcome>
+  </method-call>
+  <view id="promoProposal">
+    <page>/promoProposal.jspx</page>
+  </view>
+  <view id="confirmation">
+    <page>/confirmation.jspx</page>
+  </view>
+  <view id="approval">
+    <page>/approval.jspx</page>
+  </view>
+  <view id="userAccess">
+    <page>/userAccess.jspx</page>
+  </view>
+  <view id="approvalSetting">
+    <page>/approvalSetting.jspx</page>
+  </view>
+  <view id="masterData">
+    <page>/masterData.jspx</page>
+  </view>
+  <task-flow-call id="ua-change-password">
+    <task-flow-reference>
+      <document>/WEB-INF/ua-change-password.xml</document>
+      <id>ua-change-password</id>
+    </task-flow-reference>
+    <return-value id="__63">
+      <name>usrPassChanged</name>
+      <value>#{pageFlowScope.usrPassChanged}</value>
+    </return-value>
+    <after-listener>#{backingBeanScope.ChangePasswordBackingBean.changePasswordReturnListener}</after-listener>
+    <run-as-dialog>
+      <display-type id="__58">
+        <inline-popup/>
+      </display-type>
+    </run-as-dialog>
+  </task-flow-call>
+  <view id="customerBudgetSetup">
+    <page>/customerBudgetSetup.jspx</page>
+  </view>
+  <view id="postingBudgetSetup">
+    <page>/postingBudgetSetup.jspx</page>
+  </view>
+  <view id="login">
+    <page>/login.jspx</page>
+  </view>
+  <view id="batchAdmin">
+    <page>/batchAdmin.jspx</page>
+  </view>
+  <view id="reportYearlyBudget">
+    <page>/reportYearlyBudget.jspx</page>
+  </view>
+  <view id="reportPromoDouble">
+    <page>/reportPromoDouble.jspx</page>
+  </view>
+  <view id="historyApproval">
+    <page>/historyApproval.jspx</page>
+  </view>
+  <view id="userAccessUpload">
+    <page>/userAccessUpload.jspx</page>
+  </view>
+  <control-flow-rule id="__1">
+    <from-activity-id id="__2">aslogin</from-activity-id>
+    <control-flow-case id="__4">
+      <from-outcome id="__17">success</from-outcome>
+      <to-activity-id id="__3">dashboard</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__18">
+    <from-activity-id id="__19">logout</from-activity-id>
+    <control-flow-case id="__21">
+      <from-outcome id="__22">home</from-outcome>
+      <to-activity-id id="__20">dashboard</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__23">
+    <from-activity-id id="__24">*</from-activity-id>
+    <control-flow-case id="__25">
+      <from-outcome id="__27">logout</from-outcome>
+      <to-activity-id id="__26">logout</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__30">
+      <from-outcome id="__31">proposal</from-outcome>
+      <to-activity-id id="__29">promoProposal</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__32">
+      <from-outcome id="__34">approval</from-outcome>
+      <to-activity-id id="__33">approval</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__36">
+      <from-outcome id="__37">confirmation</from-outcome>
+      <to-activity-id id="__35">confirmation</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__39">
+      <from-outcome id="__40">useraccess</from-outcome>
+      <to-activity-id id="__38">userAccess</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__41">
+      <from-outcome id="__43">approvalsetting</from-outcome>
+      <to-activity-id id="__42">approvalSetting</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__44">
+      <from-outcome id="__46">masterdata</from-outcome>
+      <to-activity-id id="__45">masterData</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__56">
+      <from-outcome id="__57">changepassword</from-outcome>
+      <to-activity-id id="__55">ua-change-password</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__64">
+      <from-outcome id="__66">custbudgetsetup</from-outcome>
+      <to-activity-id id="__65">customerBudgetSetup</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__68">
+      <from-outcome id="__69">postbudgetsetup</from-outcome>
+      <to-activity-id id="__67">postingBudgetSetup</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__71">
+      <from-outcome id="__72">dashhome</from-outcome>
+      <to-activity-id id="__70">dashboard</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__86">
+      <from-outcome id="__88">batchadmin</from-outcome>
+      <to-activity-id id="__87">batchAdmin</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__93">
+      <from-outcome id="__95">reportyearlybudget</from-outcome>
+      <to-activity-id id="__94">reportYearlyBudget</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__97">
+      <from-outcome id="__98">reportpromodouble</from-outcome>
+      <to-activity-id id="__96">reportPromoDouble</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__100">
+      <from-outcome id="__101">historyapproval</from-outcome>
+      <to-activity-id id="__99">historyApproval</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__103">
+      <from-outcome id="__104">useraccessupload</from-outcome>
+      <to-activity-id id="__102">userAccessUpload</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__77">
+    <from-activity-id id="__78">login</from-activity-id>
+    <control-flow-case id="__79">
+      <from-outcome id="__81">success</from-outcome>
+      <to-activity-id id="__80">dashboard</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__8">
+    <managed-bean-name id="__7">Login</managed-bean-name>
+    <managed-bean-class id="__5">app.fpp.bean.LoginBean</managed-bean-class>
+    <managed-bean-scope id="__6">request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__10">
+    <managed-bean-name id="__9">UserData</managed-bean-name>
+    <managed-bean-class id="__12">app.fpp.bean.useraccessmenu.UserData</managed-bean-class>
+    <managed-bean-scope id="__11">session</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__15">
+    <managed-bean-name id="__13">Menu</managed-bean-name>
+    <managed-bean-class id="__14">app.fpp.bean.useraccessmenu.MenuBean</managed-bean-class>
+    <managed-bean-scope id="__16">session</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__49">
+    <managed-bean-name id="__48">MasterDataMenuLeftManagedBean</managed-bean-name>
+    <managed-bean-class id="__47">app.fpp.bean.masterdata.MasterDataMenuLeftManagedBean</managed-bean-class>
+    <managed-bean-scope id="__50">view</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__54">
+    <managed-bean-name id="__53">UserAccessMenuLeftManagedBean</managed-bean-name>
+    <managed-bean-class id="__51">app.fpp.bean.useraccess.UserAccessMenuLeftManagedBean</managed-bean-class>
+    <managed-bean-scope id="__52">view</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__62">
+    <managed-bean-name id="__59">ChangePasswordBackingBean</managed-bean-name>
+    <managed-bean-class id="__61">app.fpp.bean.useraccess.ChangePasswordBackingBean</managed-bean-class>
+    <managed-bean-scope id="__60">backingBean</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__76">
+    <managed-bean-name id="__73">SLoginbean</managed-bean-name>
+    <managed-bean-class id="__75">app.fpp.bean.shiro.SecurityHandlerBean</managed-bean-class>
+    <managed-bean-scope id="__74">request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__84">
+    <managed-bean-name id="__82">LoggedUserHeartBeat</managed-bean-name>
+    <managed-bean-class id="__83">app.fpp.bean.useraccess.LoggedUserHeartBeat</managed-bean-class>
+    <managed-bean-scope id="__85">request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__92">
+    <managed-bean-name id="__91">BatchAdminMenuLeftManagedBean</managed-bean-name>
+    <managed-bean-class id="__89">app.fpp.bean.batchadmin.BatchAdminMenuLeftManagedBean</managed-bean-class>
+    <managed-bean-scope id="__90">view</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

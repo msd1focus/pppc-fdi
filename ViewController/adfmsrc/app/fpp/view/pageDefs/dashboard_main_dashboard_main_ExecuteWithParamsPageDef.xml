@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="dashboard_main_dashboard_main_ExecuteWithParamsPageDef"
+                Package="app.fpp.view.pageDefs" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="ApprovalDashView1" RangeSize="25"
+              DataControl="DashboardAMDataControl"
+              id="ApprovalDashView1Iterator" Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="ApprovalDashView1Iterator" id="ExecuteWithParams"
+            RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="compId" NDValue="#{UserData.companyId}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="userName" NDValue="#{UserData.userNameLogin}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="roleName" NDValue="#{UserData.userRole}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ApprovalFlow"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  DBObjectType="table"
+  DBObjectName="APPROVAL_FLOW"
+  AliasName="ApprovalFlow"
+  BindingStyle="OracleName"
+  UseGlueCode="false"
+  RowClass="app.fpp.model.entities.approvalsetting.ApprovalFlowImpl">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Init|Access"/>
+    <AttrArray Name="_publishEvents"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Attribute
+    Name="IdAprvlFlow"
+    ColumnName="ID_APRVL_FLOW"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.DBSequence"
+    ColumnType="NUMBER"
+    TableName="APPROVAL_FLOW"
+    PrimaryKey="true"
+    IsUpdateable="while_insert"
+    DefaultValue="@0"
+    Domain="oracle.jbo.domain.DBSequence"
+    RetrievedOnInsert="true"
+    IsNotNull="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="AprvlFlowNm"
+    IsUnique="true"
+    IsNotNull="true"
+    Precision="20"
+    ColumnName="APRVL_FLOW_NM"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="APPROVAL_FLOW">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="APPROVAL_FLOW_NAME"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="AprvlCode"
+    IsNotNull="true"
+    Precision="15"
+    ColumnName="APRVL_CODE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="APPROVAL_FLOW">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="10"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="APPROVAL_CODE"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="Version"
+    IsUnique="true"
+    IsNotNull="true"
+    Precision="5"
+    ColumnName="VERSION"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="APPROVAL_FLOW">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="5"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="VERSION"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="AprvlDescr"
+    Precision="255"
+    ColumnName="APRVL_DESCR"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="APPROVAL_FLOW">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="255"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="DESCRIPTION"/>
+        <DISPLAYWIDTH
+          Value="60"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="Status"
+    IsNotNull="true"
+    Precision="1"
+    ColumnName="STATUS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="APPROVAL_FLOW">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="STATUS"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <AccessorAttribute
+    Name="ApprovalSteps"
+    Association="app.fpp.model.entities.approvalsetting.ApprovalStepsApprovalFFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.approvalsetting.ApprovalStepsApprovalFFk1Assoc.ApprovalSteps"
+    AssociationOtherEnd="app.fpp.model.entities.approvalsetting.ApprovalStepsApprovalFFk1Assoc.ApprovalFlow"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <Key
+    Name="ApprovalFlowPk"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="APPROVAL_FLOW_PK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.approvalsetting.ApprovalFlow.IdAprvlFlow"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="ApprovalFlowUk1">
+    <DesignTime>
+      <Attr Name="_isUnique" Value="true"/>
+      <Attr Name="_DBObjectName" Value="APPROVAL_FLOW_UK1"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.approvalsetting.ApprovalFlow.AprvlFlowNm"/>
+      <Item
+        Value="app.fpp.model.entities.approvalsetting.ApprovalFlow.Version"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0012631">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012631"/>
+      <Attr Name="_checkCondition" Value='"ID_APRVL_FLOW" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.approvalsetting.ApprovalFlow.IdAprvlFlow"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0012632">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012632"/>
+      <Attr Name="_checkCondition" Value='"APRVL_FLOW_NM" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.approvalsetting.ApprovalFlow.AprvlFlowNm"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0012633">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012633"/>
+      <Attr Name="_checkCondition" Value='"APRVL_CODE" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.approvalsetting.ApprovalFlow.AprvlCode"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0012634">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012634"/>
+      <Attr Name="_checkCondition" Value='"VERSION" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.approvalsetting.ApprovalFlow.Version"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0012635">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012635"/>
+      <Attr Name="_checkCondition" Value='"STATUS" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.approvalsetting.ApprovalFlow.Status"/>
+    </AttrArray>
+  </Key>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</Entity>

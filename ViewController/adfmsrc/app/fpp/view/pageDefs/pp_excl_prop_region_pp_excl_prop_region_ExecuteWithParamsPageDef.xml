@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="pp_excl_prop_region_pp_excl_prop_region_ExecuteWithParamsPageDef"
+                Package="app.fpp.view.pageDefs" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="AllExclProposalRegionShuttleView1" RangeSize="25"
+              DataControl="PromoProposalAMDataControl"
+              id="AllExclProposalRegionShuttleView1Iterator" Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="AllExclProposalRegionShuttleView1Iterator"
+            id="ExecuteWithParams" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="userName" NDValue="#{UserData.userNameLogin}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="proposalId" NDValue="#{pageFlowScope.propId}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

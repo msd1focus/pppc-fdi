@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="approvalSettingPageDef"
+                Package="Pages.ApprovalSetting">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="ApprovalFlowView1" RangeSize="25"
+              DataControl="ApprovalSettingAMDataControl"
+              id="ApprovalFlowView1Iterator"/>
+    <searchRegion Binds="ApprovalFlowView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="ApprovalFlowView1Query"/>
+    <iterator Binds="ApprovalStepsView1" RangeSize="25"
+              DataControl="ApprovalSettingAMDataControl"
+              id="ApprovalStepsView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="ApprovalFlowView1Iterator" id="ApprovalFlowView1">
+      <nodeDefinition DefName="app.fpp.model.views.approvalsetting.ApprovalFlowView"
+                      Name="ApprovalFlowView10">
+        <AttrNames>
+          <Item Value="AprvlFlowNm"/>
+          <Item Value="Version"/>
+          <Item Value="Status"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="ApprovalFlowView1Iterator" id="AprvlCode">
+      <AttrNames>
+        <Item Value="AprvlCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ApprovalFlowView1Iterator" id="AprvlFlowNm">
+      <AttrNames>
+        <Item Value="AprvlFlowNm"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ApprovalFlowView1Iterator" id="Version">
+      <AttrNames>
+        <Item Value="Version"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ApprovalFlowView1Iterator" id="AprvlDescr">
+      <AttrNames>
+        <Item Value="AprvlDescr"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ApprovalFlowView1Iterator" StaticList="false"
+          Uses="LOV_Status" id="Status" DTSupportsMRU="false"/>
+    <action id="Commit" DataControl="ApprovalSettingAMDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action IterBinding="ApprovalFlowView1Iterator" id="CreateInsert"
+            InstanceName="ApprovalSettingAMDataControl.ApprovalFlowView1"
+            DataControl="ApprovalSettingAMDataControl"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="Rollback" DataControl="ApprovalSettingAMDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <tree IterBinding="ApprovalStepsView1Iterator" id="ApprovalStepsView1">
+      <nodeDefinition DefName="app.fpp.model.views.approvalsetting.ApprovalStepsView"
+                      Name="ApprovalStepsView10">
+        <AttrNames>
+          <Item Value="StepSequence"/>
+          <Item Value="RoleName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="ApprovalFlowView1Iterator" id="Execute"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues IterBinding="ApprovalStepsView1Iterator" id="StepSequence">
+      <AttrNames>
+        <Item Value="StepSequence"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ApprovalStepsView1Iterator" StaticList="false"
+          Uses="LOV_RoleName" id="RoleName" DTSupportsMRU="true"/>
+    <action IterBinding="ApprovalStepsView1Iterator" id="CreateInsert1"
+            InstanceName="ApprovalSettingAMDataControl.ApprovalStepsView1"
+            DataControl="ApprovalSettingAMDataControl"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="ApprovalStepsView1Iterator" id="Delete1"
+            InstanceName="ApprovalSettingAMDataControl.ApprovalStepsView1"
+            DataControl="ApprovalSettingAMDataControl"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action IterBinding="ApprovalStepsView1Iterator" id="Execute1"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+  </bindings>
+</pageDefinition>

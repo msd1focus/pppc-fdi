@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="AllRolesShuttleView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="AppRoles.ID, 
+       AppRoles.NAME, 
+       AppRoles.LABEL, 
+       AppRoles.ROLE_TYPE"
+  FromList="APP_ROLES AppRoles"
+  OrderBy="AppRoles.LABEL"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.masterdata.shuttle.AllRolesShuttleView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <EntityUsage
+    Name="AppRoles"
+    Entity="app.fpp.model.entities.useraccess.AppRoles"
+    ReadOnly="true"
+    DeleteParticipant="false"/>
+  <ViewAttribute
+    Name="Id"
+    IsUpdateable="while_insert"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="AppRoles"
+    AliasName="ID"/>
+  <ViewAttribute
+    Name="Name"
+    IsUnique="true"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Name"
+    EntityUsage="AppRoles"
+    AliasName="NAME"/>
+  <ViewAttribute
+    Name="Label"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Label"
+    EntityUsage="AppRoles"
+    AliasName="LABEL"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+  <ViewAttribute
+    Name="RoleType"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RoleType"
+    EntityUsage="AppRoles"
+    AliasName="ROLE_TYPE"/>
+</ViewObject>

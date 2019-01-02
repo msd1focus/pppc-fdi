@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="PromoCustxAreaView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="PromoCustxArea.PROMO_CUSTX_AREA_ID, 
+       PromoCustxArea.REGION_CODE, 
+       PromoCustxArea.REGION_DESC, 
+       PromoCustxArea.AREA_CODE, 
+       PromoCustxArea.AREA_DESC, 
+       PromoCustxArea.LOC_CODE, 
+       PromoCustxArea.LOC_DESC, 
+       PromoCustxArea.CUSTTYP_CODE, 
+       PromoCustxArea.CUSTTYP_DESC, 
+       PromoCustxArea.CUSTGRP_CODE, 
+       PromoCustxArea.CUSTGRP_DESC, 
+       PromoCustxArea.CUSTOMER_ID, 
+       PromoCustxArea.CUSTOMER_NAME, 
+       PromoCustxArea.CUSTOMER_NUMBER, 
+       PromoCustxArea.CUSTX_REG_FLG, 
+       PromoCustxArea.CUSTX_NREG_FLG, 
+       PromoCustxArea.CREATED_BY, 
+       PromoCustxArea.CREATED_ON, 
+       PromoCustxArea.PROMO_PRODUK_ID"
+  FromList="PROMO_CUSTX_AREA PromoCustxArea"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  OrderBy="PromoCustxArea.PROMO_CUSTX_AREA_ID">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+  </DesignTime>
+  <ViewAccessor
+    Name="UserAreaCustExclAreaLookup1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.custexcl.UserAreaCustExclAreaLookup">
+    <ViewCriteriaUsage
+      Name="UserAreaCustExclAreaLookupCriteria"
+      FullName="app.fpp.model.views.masterdata.lov.custexcl.UserAreaCustExclAreaLookup.UserAreaCustExclAreaLookupCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="promoCustxId">
+        <TransientExpression><![CDATA[PromoCustxAreaId]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="userName">
+        <TransientExpression><![CDATA[UserName]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="UserAreaCustExclDetailLookup1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.custexcl.UserAreaCustExclDetailLookup">
+    <ViewCriteriaUsage
+      Name="UserAreaCustExclDetailLookupCriteria"
+      FullName="app.fpp.model.views.masterdata.lov.custexcl.UserAreaCustExclDetailLookup.UserAreaCustExclDetailLookupCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="promoCustxId">
+        <TransientExpression><![CDATA[PromoCustxAreaId]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="userName">
+        <TransientExpression><![CDATA[UserName]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="UserAreaCustExclGroupLookup1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.custexcl.UserAreaCustExclGroupLookup">
+    <ViewCriteriaUsage
+      Name="UserAreaCustExclGroupLookupCriteria"
+      FullName="app.fpp.model.views.masterdata.lov.custexcl.UserAreaCustExclGroupLookup.UserAreaCustExclGroupLookupCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="promoCustxId">
+        <TransientExpression><![CDATA[PromoCustxAreaId]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="userName">
+        <TransientExpression><![CDATA[UserName]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="UserAreaCustExclLocationLookup1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.custexcl.UserAreaCustExclLocationLookup">
+    <ViewCriteriaUsage
+      Name="UserAreaCustLocationExclLookupCriteria"
+      FullName="app.fpp.model.views.masterdata.lov.custexcl.UserAreaCustExclLocationLookup.UserAreaCustLocationExclLookupCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="promoCustxId">
+        <TransientExpression><![CDATA[PromoCustxAreaId]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="userName">
+        <TransientExpression><![CDATA[UserName]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="UserAreaCustExclRegionLookup1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.custexcl.UserAreaCustExclRegionLookup">
+    <ViewCriteriaUsage
+      Name="UserAreaCustExclRegionLookupCriteria"
+      FullName="app.fpp.model.views.masterdata.lov.custexcl.UserAreaCustExclRegionLookup.UserAreaCustExclRegionLookupCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="promoCustxId">
+        <TransientExpression><![CDATA[PromoCustxAreaId]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="userName">
+        <TransientExpression><![CDATA[UserName]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="UserAreaCustExclTypeLookup1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.custexcl.UserAreaCustExclTypeLookup">
+    <ViewCriteriaUsage
+      Name="UserAreaCustExclTypeLookupCriteria"
+      FullName="app.fpp.model.views.masterdata.lov.custexcl.UserAreaCustExclTypeLookup.UserAreaCustExclTypeLookupCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="promoCustxId">
+        <TransientExpression><![CDATA[PromoCustxAreaId]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="userName">
+        <TransientExpression><![CDATA[UserName]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ListBinding
+    Name="LOV_RegionCode"
+    ListVOName="UserAreaCustExclRegionLookup1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_RegionCode_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="RegionCode"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="RegionCode"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="RegionCode"/>
+      <Item Value="RegionLabel"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="UserAreaCustExclRegionLookupCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_AreaCode"
+    ListVOName="UserAreaCustExclAreaLookup1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_AreaCode_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="AreaCode"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="AreaCode"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="AreaCode"/>
+      <Item Value="AreaLabel"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="UserAreaCustExclAreaLookupCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_LocCode"
+    ListVOName="UserAreaCustExclLocationLookup1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_LocCode_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="LocCode"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="LocCode"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="LocCode"/>
+      <Item Value="LocLabel"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="UserAreaCustLocationExclLookupCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CusttypCode"
+    ListVOName="UserAreaCustExclTypeLookup1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_CusttypCode_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CusttypCode"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="CustTypeCode"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="CustTypeCode"/>
+      <Item Value="CustTypeLabel"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="UserAreaCustExclTypeLookupCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CustgrpCode"
+    ListVOName="UserAreaCustExclGroupLookup1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_CustgrpCode_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CustgrpCode"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="CustGroupCode"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="CustGroupCode"/>
+      <Item Value="CustGroupLabel"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="UserAreaCustExclGroupLookupCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CustomerId"
+    ListVOName="UserAreaCustExclDetailLookup1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_CustomerId_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CustomerId"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="CustomerId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="CustomerFullName"/>
+      <Item Value="CustomerNumber"/>
+      <Item Value="CustomerName"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="UserAreaCustExclDetailLookupCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <EntityUsage
+    Name="PromoCustxArea"
+    Entity="app.fpp.model.entities.promoproposal.PromoCustxArea"/>
+  <ViewAttribute
+    Name="PromoCustxAreaId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PromoCustxAreaId"
+    EntityUsage="PromoCustxArea"
+    AliasName="PROMO_CUSTX_AREA_ID"
+    IsUpdateable="while_insert"/>
+  <ViewAttribute
+    Name="RegionCode"
+    PrecisionRule="true"
+    EntityAttrName="RegionCode"
+    EntityUsage="PromoCustxArea"
+    AliasName="REGION_CODE"
+    LOVName="LOV_RegionCode">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RegionDesc"
+    PrecisionRule="true"
+    EntityAttrName="RegionDesc"
+    EntityUsage="PromoCustxArea"
+    AliasName="REGION_DESC"/>
+  <ViewAttribute
+    Name="AreaCode"
+    PrecisionRule="true"
+    EntityAttrName="AreaCode"
+    EntityUsage="PromoCustxArea"
+    AliasName="AREA_CODE"
+    LOVName="LOV_AreaCode">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AreaDesc"
+    PrecisionRule="true"
+    EntityAttrName="AreaDesc"
+    EntityUsage="PromoCustxArea"
+    AliasName="AREA_DESC"/>
+  <ViewAttribute
+    Name="LocCode"
+    PrecisionRule="true"
+    EntityAttrName="LocCode"
+    EntityUsage="PromoCustxArea"
+    AliasName="LOC_CODE"
+    LOVName="LOV_LocCode">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LocDesc"
+    PrecisionRule="true"
+    EntityAttrName="LocDesc"
+    EntityUsage="PromoCustxArea"
+    AliasName="LOC_DESC"/>
+  <ViewAttribute
+    Name="CusttypCode"
+    PrecisionRule="true"
+    EntityAttrName="CusttypCode"
+    EntityUsage="PromoCustxArea"
+    AliasName="CUSTTYP_CODE"
+    LOVName="LOV_CusttypCode">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CusttypDesc"
+    PrecisionRule="true"
+    EntityAttrName="CusttypDesc"
+    EntityUsage="PromoCustxArea"
+    AliasName="CUSTTYP_DESC"/>
+  <ViewAttribute
+    Name="CustgrpCode"
+    PrecisionRule="true"
+    EntityAttrName="CustgrpCode"
+    EntityUsage="PromoCustxArea"
+    AliasName="CUSTGRP_CODE"
+    LOVName="LOV_CustgrpCode">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CustgrpDesc"
+    PrecisionRule="true"
+    EntityAttrName="CustgrpDesc"
+    EntityUsage="PromoCustxArea"
+    AliasName="CUSTGRP_DESC"/>
+  <ViewAttribute
+    Name="CustomerId"
+    PrecisionRule="true"
+    EntityAttrName="CustomerId"
+    EntityUsage="PromoCustxArea"
+    AliasName="CUSTOMER_ID"
+    LOVName="LOV_CustomerId">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CustomerName"
+    PrecisionRule="true"
+    EntityAttrName="CustomerName"
+    EntityUsage="PromoCustxArea"
+    AliasName="CUSTOMER_NAME"/>
+  <ViewAttribute
+    Name="CustomerNumber"
+    PrecisionRule="true"
+    EntityAttrName="CustomerNumber"
+    EntityUsage="PromoCustxArea"
+    AliasName="CUSTOMER_NUMBER"/>
+  <ViewAttribute
+    Name="CustxRegFlg"
+    PrecisionRule="true"
+    EntityAttrName="CustxRegFlg"
+    EntityUsage="PromoCustxArea"
+    AliasName="CUSTX_REG_FLG"/>
+  <ViewAttribute
+    Name="CustxNregFlg"
+    PrecisionRule="true"
+    EntityAttrName="CustxNregFlg"
+    EntityUsage="PromoCustxArea"
+    AliasName="CUSTX_NREG_FLG"/>
+  <ViewAttribute
+    Name="CreatedBy"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="PromoCustxArea"
+    AliasName="CREATED_BY"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="CreatedOn"
+    PrecisionRule="true"
+    EntityAttrName="CreatedOn"
+    EntityUsage="PromoCustxArea"
+    AliasName="CREATED_ON"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="PromoProdukId"
+    PrecisionRule="true"
+    EntityAttrName="PromoProdukId"
+    EntityUsage="PromoCustxArea"
+    AliasName="PROMO_PRODUK_ID"/>
+  <ViewAttribute
+    Name="UserName"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="USER_NAME"
+    SQLType="VARCHAR"
+    Precision="30">
+    <TransientExpression><![CDATA[adf.context.securityContext.userName]]></TransientExpression>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RowStatus"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ROW_STATUS"
+    SQLType="VARCHAR"
+    Precision="10">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (RegionCode == null && AreaCode == null && LocCode == null && CusttypCode == null && CustgrpCode == null && CustomerId == null) {
+return 'N';
+} else {
+return 'Y';
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="AreaCode"/>
+      <Item
+        Value="CustgrpCode"/>
+      <Item
+        Value="CustomerId"/>
+      <Item
+        Value="CusttypCode"/>
+      <Item
+        Value="LocCode"/>
+      <Item
+        Value="RegionCode"/>
+    </Dependencies>
+  </ViewAttribute>
+</ViewObject>

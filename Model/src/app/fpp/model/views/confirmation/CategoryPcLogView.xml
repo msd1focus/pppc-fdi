@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="CategoryPcLogView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="CategoryPcLog.CATEGORY_PC_LOG_ID, 
+       CategoryPcLog.NO_PC, 
+       CategoryPcLog.NO_PP, 
+       CategoryPcLog.CREATION_DATE, 
+       CategoryPcLog.CREATED_BY, 
+       (SELECT NVL(UA.FULL_NAME,  CategoryPcLog.CREATED_BY) FROM APP_USER_ACCESS UA WHERE UA.USER_NAME = CategoryPcLog.CREATED_BY) AS FULL_NAME"
+  FromList="CATEGORY_PC_LOG CategoryPcLog"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  RowClass="app.fpp.model.views.confirmation.CategoryPcLogViewRowImpl"
+  ComponentClass="app.fpp.model.views.confirmation.CategoryPcLogViewImpl"
+  OrderBy="CategoryPcLog.CREATION_DATE">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <EntityUsage
+    Name="CategoryPcLog"
+    Entity="app.fpp.model.entities.confirmation.CategoryPcLog"/>
+  <ViewAttribute
+    Name="CategoryPcLogId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CategoryPcLogId"
+    EntityUsage="CategoryPcLog"
+    AliasName="CATEGORY_PC_LOG_ID"
+    IsUpdateable="while_insert"/>
+  <ViewAttribute
+    Name="NoPc"
+    PrecisionRule="true"
+    EntityAttrName="NoPc"
+    EntityUsage="CategoryPcLog"
+    AliasName="NO_PC"/>
+  <ViewAttribute
+    Name="NoPp"
+    PrecisionRule="true"
+    EntityAttrName="NoPp"
+    EntityUsage="CategoryPcLog"
+    AliasName="NO_PP"/>
+  <ViewAttribute
+    Name="CreationDate"
+    PrecisionRule="true"
+    EntityAttrName="CreationDate"
+    EntityUsage="CategoryPcLog"
+    AliasName="CREATION_DATE"
+    IsUpdateable="false">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.confirmation.CategoryPcLogView.CreationDate_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.confirmation.CategoryPcLogView.CreationDate_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CreatedBy"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="CategoryPcLog"
+    AliasName="CREATED_BY"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="FullName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="FULL_NAME"
+    SQLType="VARCHAR"
+    Precision="255"
+    Expression="SELECT NVL(UA.FULL_NAME,  CategoryPcLog.CREATED_BY) FROM APP_USER_ACCESS UA WHERE UA.USER_NAME = CategoryPcLog.CREATED_BY">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="CREATED_BY"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

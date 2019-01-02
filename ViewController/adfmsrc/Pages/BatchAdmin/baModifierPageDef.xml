@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="baModifierPageDef"
+                Package="Pages.BatchAdmin">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="BatchModifierLogView1" RangeSize="25"
+              DataControl="MasterDataAMDataControl"
+              id="BatchModifierLogView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="BatchModifierLogView1Iterator" id="Status">
+      <AttrNames>
+        <Item Value="Status"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="BatchModifierLogView1Iterator" id="ExecDate">
+      <AttrNames>
+        <Item Value="ExecDate"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

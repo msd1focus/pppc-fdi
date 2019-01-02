@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="RealisasiItemPaket"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  DBObjectType="table"
+  DBObjectName="REALISASI_ITEM_PAKET"
+  AliasName="RealisasiItemPaket"
+  BindingStyle="OracleName"
+  UseGlueCode="false"
+  RowClass="app.fpp.model.entities.confirmation.RealisasiItemPaketImpl">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Init|Access"/>
+    <AttrArray Name="_publishEvents"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Attribute
+    Name="RealItemPaketId"
+    ColumnName="REAL_ITEM_PAKET_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.DBSequence"
+    ColumnType="NUMBER"
+    TableName="REALISASI_ITEM_PAKET"
+    PrimaryKey="true"
+    IsUpdateable="while_insert"
+    DefaultValue="@0"
+    Domain="oracle.jbo.domain.DBSequence"
+    RetrievedOnInsert="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="PromoProdukId"
+    IsNotNull="true"
+    ColumnName="PROMO_PRODUK_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="REALISASI_ITEM_PAKET">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="KdItemPaket"
+    IsNotNull="true"
+    Precision="40"
+    ColumnName="KD_ITEM_PAKET"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="REALISASI_ITEM_PAKET">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="KODE_ITEM_PAKET"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="Descr"
+    Precision="1000"
+    ColumnName="DESCR"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="REALISASI_ITEM_PAKET">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1000"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="DESCRIPTION"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <AccessorAttribute
+    Name="PromoProduk"
+    Association="app.fpp.model.entities.confirmation.RealisasiItemPaketPromoProdukFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.confirmation.RealisasiItemPaketPromoProdukFk1Assoc.PromoProduk"
+    AssociationOtherEnd="app.fpp.model.entities.confirmation.RealisasiItemPaketPromoProdukFk1Assoc.RealisasiItemPaket"
+    Type="app.fpp.model.entities.promoproposal.PromoProdukImpl"
+    IsUpdateable="true"/>
+  <Key
+    Name="RealisasiItemPaketPk"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="REALISASI_ITEM_PAKET_PK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.confirmation.RealisasiItemPaket.RealItemPaketId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0018469">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0018469"/>
+      <Attr Name="_checkCondition" Value='"REAL_ITEM_PAKET_ID" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes"/>
+  </Key>
+  <Key
+    Name="SysC0018470">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0018470"/>
+      <Attr Name="_checkCondition" Value='"PROMO_PRODUK_ID" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.confirmation.RealisasiItemPaket.PromoProdukId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0018471">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0018471"/>
+      <Attr Name="_checkCondition" Value='"KD_ITEM_PAKET" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.confirmation.RealisasiItemPaket.KdItemPaket"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="RealisasiItemPaketPromFk1">
+    <DesignTime>
+      <Attr Name="_isCascadeDelete" Value="true"/>
+      <Attr Name="_referencedKey" Value="PROMO_PRODUK_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="REALISASI_ITEM_PAKET_PROM_FK1"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.confirmation.RealisasiItemPaket.PromoProdukId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="fk_RealisasiItemPaket">
+    <DesignTime>
+      <Attr Name="_isCascadeDelete" Value="true"/>
+      <Attr Name="_referencedKey" Value="PROMO_PRODUK_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_REALISASI_ITEM_PAKET"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.confirmation.RealisasiItemPaket.PromoProdukId"/>
+    </AttrArray>
+  </Key>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</Entity>

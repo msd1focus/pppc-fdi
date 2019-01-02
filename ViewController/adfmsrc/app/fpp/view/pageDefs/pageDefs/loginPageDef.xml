@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="loginPageDef"
+                Package="app.fpp.view.pageDefs.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="Templates.FPPLoginPageDef" id="pageTemplateBinding"
+          Refresh="ifNeeded"/>
+  </executables>
+  <bindings>
+    <methodAction id="authenticateUser"
+                  InstanceName="SecurityAMDataControl.dataProvider"
+                  DataControl="SecurityAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="authenticateUser"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="userLogin" NDValue="#{Login.inputLogin.value}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="userPassword" NDValue="#{Login.inputPassword.value}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="setLoginToSession_DashboardAM"
+                  InstanceName="DashboardAMDataControl.dataProvider"
+                  DataControl="DashboardAMDataControl"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="setLoginToSession_DashboardAM"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="key" NDValue="UserId" NDType="java.lang.String"/>
+      <NamedData NDName="val" NDValue="#{UserData.userNameLogin}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="setLoginToSession_ApprovalAM"
+                  InstanceName="ApprovalAMDataControl.dataProvider"
+                  DataControl="ApprovalAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="setLoginToSession_ApprovalAM"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="key" NDValue="UserId" NDType="java.lang.String"/>
+      <NamedData NDName="val" NDValue="#{UserData.userNameLogin}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="setLoginToSession_ConfirmationAM"
+                  InstanceName="ConfirmationAMDataControl.dataProvider"
+                  DataControl="ConfirmationAMDataControl"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="setLoginToSession_ConfirmationAM"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="key" NDValue="UserId" NDType="java.lang.String"/>
+      <NamedData NDName="val" NDValue="#{UserData.userNameLogin}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="setLoginToSession_PromoProposalAM"
+                  InstanceName="PromoProposalAMDataControl.dataProvider"
+                  DataControl="PromoProposalAMDataControl"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="setLoginToSession_PromoProposalAM"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="key" NDValue="UserId" NDType="java.lang.String"/>
+      <NamedData NDName="val" NDValue="#{UserData.userNameLogin}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="setLoginToSession_ApprovalSettingAM"
+                  InstanceName="ApprovalSettingAMDataControl.dataProvider"
+                  DataControl="ApprovalSettingAMDataControl"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="setLoginToSession_ApprovalSettingAM"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="key" NDValue="UserId" NDType="java.lang.String"/>
+      <NamedData NDName="val" NDValue="#{UserData.userNameLogin}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="setLoginToSession_BudgetSettingAM"
+                  InstanceName="BudgetSettingAMDataControl.dataProvider"
+                  DataControl="BudgetSettingAMDataControl"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="setLoginToSession_BudgetSettingAM"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="key" NDValue="UserId" NDType="java.lang.String"/>
+      <NamedData NDName="val" NDValue="#{UserData.userNameLogin}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

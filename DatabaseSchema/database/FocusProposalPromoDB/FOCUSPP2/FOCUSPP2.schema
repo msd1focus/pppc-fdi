@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<schema xmlns="http://xmlns.oracle.com/jdeveloper/1111/offlinedb">
+  <ID class="oracle.javatools.db.IdentifierBasedID">
+    <identifier class="java.lang.String">c8fdeb62-5dbd-4df9-8f8f-358b04ba548e</identifier>
+  </ID>
+  <name>FOCUSPP2</name>
+</schema>

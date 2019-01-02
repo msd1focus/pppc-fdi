@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="DiscountView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="Discount.DISCOUNT_ID, 
+       Discount.PROMO_PRODUK_ID, 
+       Discount.TIPE_PERHITUNGAN, 
+       Discount.UOM, 
+       Discount.QTY_FROM, 
+       Discount.QTY_TO, 
+       Discount.TIPE_POTONGAN, 
+       Discount.DISC_NON_YEARLY, 
+       Discount.DISC_YEARLY, 
+       Discount.KELIPATAN"
+  FromList="DISCOUNT Discount"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  RowClass="app.fpp.model.views.promoproposal.DiscountViewRowImpl"
+  ComponentClass="app.fpp.model.views.promoproposal.DiscountViewImpl"
+  OrderBy="Discount.DISCOUNT_ID ASC">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <ViewAccessor
+    Name="LovTipePerhitungan"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_TIPE_PERHITUNGAN']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="LovTipePotongan"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_TIPE_POTONGAN']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ProductUomLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.ProductUomLov"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_TipePerhitungan"
+    ListVOName="LovTipePerhitungan"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_TipePerhitungan_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="TipePerhitungan"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_TipePotongan"
+    ListVOName="LovTipePotongan"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_TipePotongan_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="TipePotongan"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_Uom"
+    ListVOName="ProductUomLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_Uom_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Uom"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="UomCode"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="UomCode"/>
+      <Item Value="UnitOfMeasure"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <EntityUsage
+    Name="Discount"
+    Entity="app.fpp.model.entities.promoproposal.Discount"/>
+  <ViewAttribute
+    Name="DiscountId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="DiscountId"
+    EntityUsage="Discount"
+    AliasName="DISCOUNT_ID"
+    IsUpdateable="while_insert"/>
+  <ViewAttribute
+    Name="PromoProdukId"
+    PrecisionRule="true"
+    EntityAttrName="PromoProdukId"
+    EntityUsage="Discount"
+    AliasName="PROMO_PRODUK_ID"/>
+  <ViewAttribute
+    Name="TipePerhitungan"
+    PrecisionRule="true"
+    EntityAttrName="TipePerhitungan"
+    EntityUsage="Discount"
+    AliasName="TIPE_PERHITUNGAN"
+    DefaultValue="TDKKELIPATAN"
+    LOVName="LOV_TipePerhitungan">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Uom"
+    PrecisionRule="true"
+    EntityAttrName="Uom"
+    EntityUsage="Discount"
+    AliasName="UOM"
+    DefaultValue="Ctn"
+    LOVName="LOV_Uom">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="QtyFrom"
+    PrecisionRule="true"
+    EntityAttrName="QtyFrom"
+    EntityUsage="Discount"
+    AliasName="QTY_FROM"
+    DefaultValue="1"/>
+  <ViewAttribute
+    Name="QtyTo"
+    PrecisionRule="true"
+    EntityAttrName="QtyTo"
+    EntityUsage="Discount"
+    AliasName="QTY_TO"
+    DefaultValue="999999"/>
+  <ViewAttribute
+    Name="TipePotongan"
+    PrecisionRule="true"
+    EntityAttrName="TipePotongan"
+    EntityUsage="Discount"
+    AliasName="TIPE_POTONGAN"
+    LOVName="LOV_TipePotongan"
+    DefaultValue="AMOUNT">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DiscNonYearly"
+    PrecisionRule="true"
+    EntityAttrName="DiscNonYearly"
+    EntityUsage="Discount"
+    AliasName="DISC_NON_YEARLY">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.DiscountView.DiscNonYearly_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.DiscountView.DiscNonYearly_FMT_FORMAT"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DiscYearly"
+    PrecisionRule="true"
+    EntityAttrName="DiscYearly"
+    EntityUsage="Discount"
+    AliasName="DISC_YEARLY">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.promoproposal.DiscountView.DiscYearly_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.promoproposal.DiscountView.DiscYearly_FMT_FORMAT"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TipePerhitunganDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="TIPE_PERHITUNGAN_DESC"
+    SQLType="VARCHAR"
+    Precision="255"
+    IsSelected="false">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="app.fpp.model.entities.promoproposal.Discount.TipePerhitungan_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="SatuanPotonganDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="SATUAN_POTONGAN_DESC"
+    SQLType="VARCHAR"
+    Precision="255"
+    IsSelected="false">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SATUAN_POTONGAN"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TipePotonganDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="TIPE_POTONGAN_DESC"
+    SQLType="VARCHAR"
+    Precision="255"
+    IsSelected="false">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="TIPE_POTONGAN"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Kelipatan"
+    PrecisionRule="true"
+    EntityAttrName="Kelipatan"
+    EntityUsage="Discount"
+    AliasName="KELIPATAN"/>
+  <ViewAttribute
+    Name="CheckRowStatus"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

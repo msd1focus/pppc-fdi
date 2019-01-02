@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="pp_excl_prop_loc_pp_excl_prop_loc_SetCurrentRowWithKeyValuePageDef"
+                Package="app.fpp.view.pageDefs" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="ExclPropCustLocView1" RangeSize="25"
+              DataControl="PromoProposalAMDataControl"
+              id="ExclPropCustLocView1Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="ExclPropCustLocView1Iterator"
+            id="setCurrentRowWithKeyValue" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKeyValue">
+      <NamedData NDName="rowKey" NDValue="#{pageFlowScope.propId}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

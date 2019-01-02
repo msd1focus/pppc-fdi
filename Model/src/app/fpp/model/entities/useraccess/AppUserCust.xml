@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="AppUserCust"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  DBObjectType="table"
+  DBObjectName="APP_USER_CUST"
+  AliasName="AppUserCust"
+  BindingStyle="OracleName"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
+    <AttrArray Name="_publishEvents"/>
+  </DesignTime>
+  <Attribute
+    Name="UserName"
+    IsNotNull="true"
+    Precision="30"
+    ColumnName="USER_NAME"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="APP_USER_CUST"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="CustomerId"
+    IsNotNull="true"
+    Precision="15"
+    Scale="0"
+    ColumnName="CUSTOMER_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="APP_USER_CUST"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="16"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="AreaCode"
+    Precision="20"
+    ColumnName="AREA_CODE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="APP_USER_CUST">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="LocationCode"
+    Precision="20"
+    ColumnName="LOCATION_CODE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="APP_USER_CUST">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="RegionCode"
+    Precision="20"
+    ColumnName="REGION_CODE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="APP_USER_CUST">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="CustomerDesc"
+    Precision="250"
+    ColumnName="CUSTOMER_DESC"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="APP_USER_CUST">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="250"/>
+    </DesignTime>
+  </Attribute>
+  <AccessorAttribute
+    Name="AppUserAccess"
+    Association="app.fpp.model.entities.useraccess.AppUserCustAppUserAccessFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.useraccess.AppUserCustAppUserAccessFk1Assoc.AppUserAccess"
+    AssociationOtherEnd="app.fpp.model.entities.useraccess.AppUserCustAppUserAccessFk1Assoc.AppUserCust"
+    Type="app.fpp.model.entities.useraccess.AppUserAccessImpl"
+    IsUpdateable="true"/>
+  <Key
+    Name="AppUserCustPk"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="APP_USER_CUST_PK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.useraccess.AppUserCust.UserName"/>
+      <Item Value="app.fpp.model.entities.useraccess.AppUserCust.CustomerId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0016566">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0016566"/>
+      <Attr Name="_checkCondition" Value='"USER_NAME" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.useraccess.AppUserCust.UserName"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0016567">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0016567"/>
+      <Attr Name="_checkCondition" Value='"CUSTOMER_ID" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.useraccess.AppUserCust.CustomerId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="AppUserCustAppUserAcFk1">
+    <DesignTime>
+      <Attr Name="_isCascadeDelete" Value="true"/>
+      <Attr Name="_referencedKey" Value="APP_USER_ACCESS_UK1"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="APP_USER_CUST_APP_USER_AC_FK1"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.useraccess.AppUserCust.UserName"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="fk_AppUserCust">
+    <DesignTime>
+      <Attr Name="_isCascadeDelete" Value="true"/>
+      <Attr Name="_referencedKey" Value="APP_USER_ACCESS_UK1"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_APP_USER_CUST"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.useraccess.AppUserCust.UserName"/>
+    </AttrArray>
+  </Key>
+</Entity>

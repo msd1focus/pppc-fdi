@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="RunNumConfView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="RunNumber.RUN_NUM_TYPE, 
+       RunNumber.USER_NAME, 
+       RunNumber.RUN_YEAR, 
+       RunNumber.RUN_MONTH, 
+       RunNumber.VALUE"
+  FromList="RUN_NUMBER RunNumber"
+  Where="RunNumber.RUN_NUM_TYPE = 'CONF'
+AND RunNumber.USER_NAME = :userName
+AND RunNumber.RUN_YEAR = :runYear
+AND RunNumber.RUN_MONTH = :runMonth
+FOR UPDATE OF RunNumber.VALUE"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  RowClass="app.fpp.model.views.masterdata.runnumber.RunNumConfViewRowImpl"
+  ComponentClass="app.fpp.model.views.masterdata.runnumber.RunNumConfViewImpl"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.masterdata.runnumber.RunNumConfView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="userName"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="runYear"
+    Kind="where"
+    Type="oracle.jbo.domain.Number"/>
+  <Variable
+    Name="runMonth"
+    Kind="where"
+    Type="oracle.jbo.domain.Number"/>
+  <EntityUsage
+    Name="RunNumber"
+    Entity="app.fpp.model.entities.masterdata.RunNumber"/>
+  <ViewAttribute
+    Name="RunNumType"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RunNumType"
+    EntityUsage="RunNumber"
+    AliasName="RUN_NUM_TYPE"/>
+  <ViewAttribute
+    Name="UserName"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="UserName"
+    EntityUsage="RunNumber"
+    AliasName="USER_NAME"/>
+  <ViewAttribute
+    Name="RunYear"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RunYear"
+    EntityUsage="RunNumber"
+    AliasName="RUN_YEAR"/>
+  <ViewAttribute
+    Name="RunMonth"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RunMonth"
+    EntityUsage="RunNumber"
+    AliasName="RUN_MONTH"/>
+  <ViewAttribute
+    Name="Value"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Value"
+    EntityUsage="RunNumber"
+    AliasName="VALUE"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

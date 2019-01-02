@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="AppRolesView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="AppRoles.ID, 
+       AppRoles.NAME, 
+       AppRoles.DESCR, 
+       AppRoles.LABEL, 
+       AppRoles.ROLE_TYPE, 
+       AppRoles.FORWARD_FLG, 
+       AppRoles.ADDENDUM_AREA, 
+       AppRoles.PRINT_COUNT, 
+       AppRoles.UNAPPROVED, 
+       AppRoles.BUDGET_STATUS, 
+       AppRoles.APPROVAL_BUDGET"
+  FromList="APP_ROLES AppRoles"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  OrderBy="AppRoles.NAME">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+  </DesignTime>
+  <ViewAccessor
+    Name="LovRoleType"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_ROLE_TYPE']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="LovForwardFlg"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_USR_FWD_FLG']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="LovCopyPpArea"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_USR_COPY_PP_ADNDM']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="LovPrintCount"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_PRINT_COUNT']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="LovUnApprove"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_UNAPPROVE']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="LovBudgetStatus"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_BUDGET_STATUS']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="LovApprovalBudget"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_APRVL_BUDGET']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ListBinding
+    Name="LOV_RoleType"
+    ListVOName="LovRoleType"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_RoleType_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="RoleType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ForwardFlg"
+    ListVOName="LovForwardFlg"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_ForwardFlg_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ForwardFlg"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_AddendumArea"
+    ListVOName="LovCopyPpArea"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_AddendumArea_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="AddendumArea"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_PrintCount"
+    ListVOName="LovPrintCount"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_PrintCount_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="PrintCount"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_Unapproved"
+    ListVOName="LovUnApprove"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_Unapproved_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Unapproved"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_BudgetStatus"
+    ListVOName="LovBudgetStatus"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_BudgetStatus_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="BudgetStatus"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ApprovalBudget"
+    ListVOName="LovApprovalBudget"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_ApprovalBudget_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ApprovalBudget"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <EntityUsage
+    Name="AppRoles"
+    Entity="app.fpp.model.entities.useraccess.AppRoles"/>
+  <ViewAttribute
+    Name="Id"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="AppRoles"
+    AliasName="ID"
+    IsUpdateable="while_insert"/>
+  <ViewAttribute
+    Name="Name"
+    IsUnique="true"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Name"
+    EntityUsage="AppRoles"
+    AliasName="NAME"/>
+  <ViewAttribute
+    Name="Descr"
+    PrecisionRule="true"
+    EntityAttrName="Descr"
+    EntityUsage="AppRoles"
+    AliasName="DESCR"/>
+  <ViewAttribute
+    Name="Label"
+    PrecisionRule="true"
+    EntityAttrName="Label"
+    EntityUsage="AppRoles"
+    AliasName="LABEL"/>
+  <ViewAttribute
+    Name="RoleType"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RoleType"
+    EntityUsage="AppRoles"
+    AliasName="ROLE_TYPE"
+    LOVName="LOV_RoleType">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="ROLE_TYPE"/>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ForwardFlg"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ForwardFlg"
+    EntityUsage="AppRoles"
+    AliasName="FORWARD_FLG"
+    DefaultValue="N"
+    LOVName="LOV_ForwardFlg">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AddendumArea"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="AddendumArea"
+    EntityUsage="AppRoles"
+    AliasName="ADDENDUM_AREA"
+    LOVName="LOV_AddendumArea"
+    DefaultValue="N">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PrintCount"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PrintCount"
+    EntityUsage="AppRoles"
+    AliasName="PRINT_COUNT"
+    LOVName="LOV_PrintCount"
+    DefaultValue="N">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Unapproved"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Unapproved"
+    EntityUsage="AppRoles"
+    AliasName="UNAPPROVED"
+    LOVName="LOV_Unapproved"
+    DefaultValue="N">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BudgetStatus"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="BudgetStatus"
+    EntityUsage="AppRoles"
+    AliasName="BUDGET_STATUS"
+    LOVName="LOV_BudgetStatus"
+    DefaultValue="N">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ApprovalBudget"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ApprovalBudget"
+    EntityUsage="AppRoles"
+    AliasName="APPROVAL_BUDGET"
+    LOVName="LOV_ApprovalBudget"
+    DefaultValue="N">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewLinkAccessor
+    Name="AppRoleMenuItemsView"
+    ViewLink="app.fpp.model.views.useraccess.AppRoleMenuItemsAppRFk2Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

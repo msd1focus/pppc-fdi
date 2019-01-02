@@ -1,0 +1,152 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<table xmlns="http://xmlns.oracle.com/jdeveloper/1111/offlinedb">
+  <ID class="oracle.javatools.db.IdentifierBasedID">
+    <identifier class="java.lang.String">535a46c3-64a7-4d1c-8047-c4e1d627e6af</identifier>
+  </ID>
+  <name>PROMO_BONUS_VARIANT</name>
+  <columns>
+    <column>
+      <ID class="oracle.javatools.db.IdentifierBasedID">
+        <identifier class="java.lang.String">6a936c8d-6ff9-4c61-9a51-f30d2ec2670b</identifier>
+      </ID>
+      <name>PROMO_BONUS_ID</name>
+      <dataTypeUsage class="oracle.javatools.db.datatypes.PredefinedDataTypeUsage">
+        <ID class="oracle.javatools.db.IdentifierBasedID">
+          <identifier class="java.lang.String">09e4b713-5e4f-49d9-8682-b6a8113e9efb</identifier>
+        </ID>
+        <dataTypeID class="oracle.javatools.db.datatypes.DataTypeID">
+          <providerClass>oracle.javatools.db.ora.OracleDatabaseImpl</providerClass>
+          <typeName>NUMBER</typeName>
+        </dataTypeID>
+      </dataTypeUsage>
+      <notNull>true</notNull>
+    </column>
+    <column>
+      <ID class="oracle.javatools.db.IdentifierBasedID">
+        <identifier class="java.lang.String">27d61293-0bf7-4fcb-87b7-8604aab5a12b</identifier>
+      </ID>
+      <name>PROD_VARIANT</name>
+      <dataTypeUsage class="oracle.javatools.db.datatypes.PredefinedDataTypeUsage">
+        <ID class="oracle.javatools.db.IdentifierBasedID">
+          <identifier class="java.lang.String">2f8aa25a-1e23-4683-bcde-08d71c0ce610</identifier>
+        </ID>
+        <attributeValues>
+          <entry>
+            <key>size</key>
+            <value class="java.lang.Long">40</value>
+          </entry>
+          <entry>
+            <key>unit</key>
+            <value class="java.lang.String">BYTE</value>
+          </entry>
+        </attributeValues>
+        <dataTypeID class="oracle.javatools.db.datatypes.DataTypeID">
+          <providerClass>oracle.javatools.db.ora.Oracle9i</providerClass>
+          <typeName>VARCHAR2</typeName>
+        </dataTypeID>
+      </dataTypeUsage>
+      <notNull>true</notNull>
+    </column>
+    <column>
+      <ID class="oracle.javatools.db.IdentifierBasedID">
+        <identifier class="java.lang.String">29ee3ad2-fe93-4a40-9864-0e4475f32bbd</identifier>
+      </ID>
+      <name>VARIANT_DESC</name>
+      <dataTypeUsage class="oracle.javatools.db.datatypes.PredefinedDataTypeUsage">
+        <ID class="oracle.javatools.db.IdentifierBasedID">
+          <identifier class="java.lang.String">1a2c3d5c-5709-4f90-8e00-e52d68c70068</identifier>
+        </ID>
+        <attributeValues>
+          <entry>
+            <key>size</key>
+            <value class="java.lang.Long">255</value>
+          </entry>
+          <entry>
+            <key>unit</key>
+            <value class="java.lang.String">BYTE</value>
+          </entry>
+        </attributeValues>
+        <dataTypeID class="oracle.javatools.db.datatypes.DataTypeID">
+          <providerClass>oracle.javatools.db.ora.Oracle9i</providerClass>
+          <typeName>VARCHAR2</typeName>
+        </dataTypeID>
+      </dataTypeUsage>
+      <notNull>false</notNull>
+    </column>
+  </columns>
+  <constraints>
+    <constraint class="oracle.javatools.db.FKConstraint">
+      <ID class="oracle.javatools.db.IdentifierBasedID">
+        <identifier class="java.lang.String">e1b8622f-2254-4777-b6c7-6924b21b76de</identifier>
+      </ID>
+      <name>PROMO_BONUS_VARIANT_PROMO_FK1</name>
+      <columnIDs>
+        <columnID class="oracle.javatools.db.IdentifierBasedID">
+          <name>PROMO_BONUS_ID</name>
+          <identifier class="java.lang.String">6a936c8d-6ff9-4c61-9a51-f30d2ec2670b</identifier>
+          <parent class="oracle.javatools.db.IdentifierBasedID">
+            <name>PROMO_BONUS_VARIANT</name>
+            <identifier class="java.lang.String">535a46c3-64a7-4d1c-8047-c4e1d627e6af</identifier>
+            <schemaName>FOCUSPP</schemaName>
+            <type>TABLE</type>
+          </parent>
+          <type>COLUMN</type>
+        </columnID>
+      </columnIDs>
+      <deleteMode>1</deleteMode>
+      <enabled>true</enabled>
+      <referenceID class="oracle.javatools.db.IdentifierBasedID">
+        <name>PROMO_BONUS_PK</name>
+        <identifier class="java.lang.String">f5d82420-5a13-432d-a3c9-0a06899d8e48</identifier>
+        <parent class="oracle.javatools.db.IdentifierBasedID">
+          <name>PROMO_BONUS</name>
+          <identifier class="java.lang.String">59c25971-d7bd-4c34-84a1-768ad7e5c70f</identifier>
+          <schemaName>FOCUSPP</schemaName>
+          <type>TABLE</type>
+        </parent>
+        <schemaName>FOCUSPP</schemaName>
+        <type>CONSTRAINT</type>
+      </referenceID>
+    </constraint>
+    <constraint class="oracle.javatools.db.PKConstraint">
+      <ID class="oracle.javatools.db.IdentifierBasedID">
+        <identifier class="java.lang.String">ad2b8396-0b6e-4936-9b5a-17991f71d887</identifier>
+      </ID>
+      <name>PROMO_BONUS_VARIANT_PK</name>
+      <columnIDs>
+        <columnID class="oracle.javatools.db.IdentifierBasedID">
+          <name>PROMO_BONUS_ID</name>
+          <identifier class="java.lang.String">6a936c8d-6ff9-4c61-9a51-f30d2ec2670b</identifier>
+          <parent class="oracle.javatools.db.IdentifierBasedID">
+            <name>PROMO_BONUS_VARIANT</name>
+            <identifier class="java.lang.String">535a46c3-64a7-4d1c-8047-c4e1d627e6af</identifier>
+            <schemaName>FOCUSPP</schemaName>
+            <type>TABLE</type>
+          </parent>
+          <type>COLUMN</type>
+        </columnID>
+        <columnID class="oracle.javatools.db.IdentifierBasedID">
+          <name>PROD_VARIANT</name>
+          <identifier class="java.lang.String">27d61293-0bf7-4fcb-87b7-8604aab5a12b</identifier>
+          <parent class="oracle.javatools.db.IdentifierBasedID">
+            <name>PROMO_BONUS_VARIANT</name>
+            <identifier class="java.lang.String">535a46c3-64a7-4d1c-8047-c4e1d627e6af</identifier>
+            <schemaName>FOCUSPP</schemaName>
+            <type>TABLE</type>
+          </parent>
+          <type>COLUMN</type>
+        </columnID>
+      </columnIDs>
+      <enabled>true</enabled>
+    </constraint>
+  </constraints>
+  <properties>
+    <entry>
+      <key>TableType</key>
+      <value class="oracle.javatools.db.Table$TableType">NORMAL</value>
+    </entry>
+  </properties>
+  <schema>
+    <name>FOCUSPP</name>
+  </schema>
+</table>

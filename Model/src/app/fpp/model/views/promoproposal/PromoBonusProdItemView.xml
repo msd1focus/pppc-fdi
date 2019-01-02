@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="PromoBonusProdItemView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="PromoBonusProdItem.PROD_ITEM, 
+       PromoBonusProdItem.PROMO_BONUS_ID, 
+       PromoBonusProdItem.ITEM_DESC"
+  FromList="PROMO_BONUS_PROD_ITEM PromoBonusProdItem"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.promoproposal.PromoBonusProdItemView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <EntityUsage
+    Name="PromoBonusProdItem"
+    Entity="app.fpp.model.entities.promoproposal.PromoBonusProdItem"/>
+  <ViewAttribute
+    Name="ProdItem"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ProdItem"
+    EntityUsage="PromoBonusProdItem"
+    AliasName="PROD_ITEM"/>
+  <ViewAttribute
+    Name="PromoBonusId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PromoBonusId"
+    EntityUsage="PromoBonusProdItem"
+    AliasName="PROMO_BONUS_ID"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+  <ViewAttribute
+    Name="ItemDesc"
+    PrecisionRule="true"
+    EntityAttrName="ItemDesc"
+    EntityUsage="PromoBonusProdItem"
+    AliasName="ITEM_DESC"/>
+</ViewObject>

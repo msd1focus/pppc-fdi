@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="AppUserProdukCategoryView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="AppUserProdukCategory.USER_NAME, 
+       AppUserProdukCategory.PROD_CATEGORY, 
+       AppUserProdukCategory.CATEGORY_DESC"
+  FromList="APP_USER_PRODUK_CATEGORY AppUserProdukCategory"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+  </DesignTime>
+  <EntityUsage
+    Name="AppUserProdukCategory"
+    Entity="app.fpp.model.entities.useraccess.AppUserProdukCategory"/>
+  <ViewAttribute
+    Name="UserName"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="UserName"
+    EntityUsage="AppUserProdukCategory"
+    AliasName="USER_NAME"/>
+  <ViewAttribute
+    Name="ProdCategory"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ProdCategory"
+    EntityUsage="AppUserProdukCategory"
+    AliasName="PROD_CATEGORY"/>
+  <ViewAttribute
+    Name="CategoryDesc"
+    PrecisionRule="true"
+    EntityAttrName="CategoryDesc"
+    EntityUsage="AppUserProdukCategory"
+    AliasName="CATEGORY_DESC"/>
+</ViewObject>

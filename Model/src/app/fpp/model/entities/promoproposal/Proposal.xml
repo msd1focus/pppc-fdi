@@ -1,0 +1,1199 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Proposal"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  DBObjectType="table"
+  DBObjectName="PROPOSAL"
+  AliasName="Proposal"
+  BindingStyle="OracleName"
+  UseGlueCode="false"
+  RowClass="app.fpp.model.entities.promoproposal.ProposalImpl"
+  xmlns:validation="http://xmlns.oracle.com/adfm/validation">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Init|Access"/>
+    <AttrArray Name="_publishEvents"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Attribute
+    Name="ProposalId"
+    IsUpdateable="while_insert"
+    DefaultValue="@0"
+    ColumnName="PROPOSAL_ID"
+    SQLType="NUMERIC"
+    Domain="oracle.jbo.domain.DBSequence"
+    Type="oracle.jbo.domain.DBSequence"
+    ColumnType="NUMBER"
+    TableName="PROPOSAL"
+    PrimaryKey="true"
+    RetrievedOnInsert="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="CompanyId"
+    Precision="1"
+    ColumnName="COMPANY_ID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="COMPANY"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="ProposalNo"
+    IsUnique="true"
+    IsNotNull="true"
+    Precision="100"
+    ColumnName="PROPOSAL_NO"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="11"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="app.fpp.model.entities.promoproposal.Proposal.ProposalNo_LABEL"/>
+        <TOOLTIP
+          ResId="app.fpp.model.entities.promoproposal.Proposal.ProposalNo_TOOLTIP"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="ProposalDate"
+    IsUpdateable="while_insert"
+    ColumnName="PROPOSAL_DATE"
+    SQLType="TIMESTAMP"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="PROPOSAL"
+    HistoryColumn="DateHistory">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.entities.promoproposal.Proposal.ProposalDate_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.entities.promoproposal.Proposal.ProposalDate_FMT_FORMAT"/>
+        <LABEL
+          ResId="app.fpp.model.entities.promoproposal.Proposal.ProposalDate_LABEL"/>
+        <TOOLTIP
+          ResId="app.fpp.model.entities.promoproposal.Proposal.ProposalDate_TOOLTIP"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="PeriodeProgFrom"
+    ColumnName="PERIODE_PROG_FROM"
+    SQLType="TIMESTAMP"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="PROPOSAL"
+    IsNotNull="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="app.fpp.model.entities.promoproposal.Proposal.PeriodeProgFrom_LABEL"/>
+        <TOOLTIP
+          ResId="app.fpp.model.entities.promoproposal.Proposal.PeriodeProgFrom_TOOLTIP"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+    <validation:PreDefinedValidationBean
+      Name="PeriodeProgFrom_Rule_0"
+      ResId="app.fpp.model.entities.promoproposal.Proposal.PeriodeProgFrom_Rule_0"
+      ValName="Mandatory"
+      Subtype="MANDATORY"/>
+  </Attribute>
+  <Attribute
+    Name="PeriodeProgTo"
+    ColumnName="PERIODE_PROG_TO"
+    SQLType="TIMESTAMP"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="PROPOSAL"
+    IsNotNull="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="app.fpp.model.entities.promoproposal.Proposal.PeriodeProgTo_LABEL"/>
+        <TOOLTIP
+          ResId="app.fpp.model.entities.promoproposal.Proposal.PeriodeProgTo_TOOLTIP"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+    <validation:PreDefinedValidationBean
+      Name="PeriodeProgTo_Rule_0"
+      ResId="app.fpp.model.entities.promoproposal.Proposal.PeriodeProgTo_Rule_0"
+      ValName="Mandatory"
+      Subtype="MANDATORY"/>
+  </Attribute>
+  <Attribute
+    Name="ProgDays"
+    ColumnName="PROG_DAYS"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="app.fpp.model.entities.promoproposal.Proposal.ProgDays_LABEL"/>
+        <TOOLTIP
+          ResId="app.fpp.model.entities.promoproposal.Proposal.ProgDays_TOOLTIP"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="ProgPromo"
+    IsNotNull="true"
+    Precision="50"
+    ColumnName="PROG_PROMO"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="PROGRAM_PROMO"/>
+        <TOOLTIP
+          ResId="app.fpp.model.entities.promoproposal.Proposal.ProgPromo_TOOLTIP"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+    <validation:PreDefinedValidationBean
+      Name="ProgPromo_Rule_0"
+      ResId="app.fpp.model.entities.promoproposal.Proposal.ProgPromo_Rule_0"
+      ValName="Mandatory"
+      Subtype="MANDATORY"/>
+  </Attribute>
+  <Attribute
+    Name="ProposalType"
+    IsNotNull="true"
+    Precision="50"
+    ColumnName="PROPOSAL_TYPE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="PRODUCT_CATEGORY"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+        <AUTOSUBMIT
+          Value="true"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="DiscountType"
+    IsNotNull="true"
+    Precision="50"
+    ColumnName="DISCOUNT_TYPE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="app.fpp.model.entities.promoproposal.Proposal.DiscountType_LABEL"/>
+        <TOOLTIP
+          ResId="app.fpp.model.entities.promoproposal.Proposal.DiscountType_TOOLTIP"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+    <validation:PreDefinedValidationBean
+      Name="DiscountType_Rule_0"
+      ResId="app.fpp.model.entities.promoproposal.Proposal.DiscountType_Rule_0"
+      ValName="Mandatory"
+      Subtype="MANDATORY"/>
+  </Attribute>
+  <Attribute
+    Name="StdStm"
+    IsNotNull="true"
+    Precision="30"
+    ColumnName="STD_STM"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="3"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="app.fpp.model.entities.promoproposal.Proposal.StdStm_LABEL"/>
+        <TOOLTIP
+          ResId="MENGGUNAKAN_HISTORY_PENJUALAN_"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="MekanismePenagihan"
+    IsNotNull="true"
+    Precision="50"
+    ColumnName="MEKANISME_PENAGIHAN"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="app.fpp.model.entities.promoproposal.Proposal.MekanismePenagihan_LABEL"/>
+        <TOOLTIP
+          ResId="app.fpp.model.entities.promoproposal.Proposal.MekanismePenagihan_TOOLTIP"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="Status"
+    Precision="30"
+    ColumnName="STATUS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="STATUS"/>
+        <TOOLTIP
+          ResId="app.fpp.model.entities.promoproposal.Proposal.Status_TOOLTIP"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="Pemohon"
+    IsUpdateable="while_insert"
+    Precision="50"
+    ColumnName="PEMOHON"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL"
+    HistoryColumn="UserHistory">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="app.fpp.model.entities.promoproposal.Proposal.Pemohon_LABEL"/>
+        <TOOLTIP
+          ResId="app.fpp.model.entities.promoproposal.Proposal.Pemohon_TOOLTIP"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="Contact"
+    Precision="30"
+    ColumnName="CONTACT"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="app.fpp.model.entities.promoproposal.Proposal.Contact_LABEL"/>
+        <TOOLTIP
+          ResId="app.fpp.model.entities.promoproposal.Proposal.Contact_TOOLTIP"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="Currency"
+    IsNotNull="true"
+    Precision="15"
+    ColumnName="CURRENCY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="app.fpp.model.entities.promoproposal.Proposal.Currency_LABEL"/>
+        <TOOLTIP
+          ResId="app.fpp.model.entities.promoproposal.Proposal.Currency_TOOLTIP"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="KompensasiDiperoleh"
+    Precision="2000"
+    ColumnName="KOMPENSASI_DIPEROLEH"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="app.fpp.model.entities.promoproposal.Proposal.KompensasiDiperoleh_LABEL"/>
+        <TOOLTIP
+          ResId="app.fpp.model.entities.promoproposal.Proposal.KompensasiDiperoleh_TOOLTIP"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="ConfirmNo"
+    Precision="100"
+    ColumnName="CONFIRM_NO"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="10"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="CONFIRMATION_NO"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="PcType"
+    Precision="50"
+    ColumnName="PC_TYPE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="app.fpp.model.entities.promoproposal.Proposal.PcType_LABEL"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="AddendumKe"
+    Precision="15"
+    ColumnName="ADDENDUM_KE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="app.fpp.model.entities.promoproposal.Proposal.AddendumKe_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="CreatedBy"
+    IsUpdateable="while_insert"
+    Precision="30"
+    ColumnName="CREATED_BY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL"
+    HistoryColumn="UserHistory">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="CREATED_BY"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="CreationDate"
+    IsUpdateable="while_insert"
+    ColumnName="CREATION_DATE"
+    SQLType="TIMESTAMP"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="PROPOSAL"
+    HistoryColumn="DateHistory">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="CREATION_DATE"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="LastUpdatedBy"
+    Precision="30"
+    ColumnName="LAST_UPDATED_BY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL"
+    HistoryColumn="UserHistory">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="LAST_UPDATE_BY"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="LastUpdateDate"
+    ColumnName="LAST_UPDATE_DATE"
+    SQLType="TIMESTAMP"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="PROPOSAL"
+    HistoryColumn="DateHistory">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="LAST_UPDATE_DATE"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="CustRegFlag"
+    Precision="10"
+    ColumnName="CUST_REG_FLAG"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="CUSTOMER"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="Notes"
+    Precision="2000"
+    ColumnName="NOTES"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="2000"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="NOTES"/>
+        <TOOLTIP
+          ResId="INFORMASI_TAMBAHAN_TERKAIT_DEN"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="UserTypeCreator"
+    IsNotNull="true"
+    Precision="20"
+    ColumnName="USER_TYPE_CREATOR"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="ConfirmDate"
+    ColumnName="CONFIRM_DATE"
+    SQLType="TIMESTAMP"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.entities.promoproposal.Proposal.ConfirmDate_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.entities.promoproposal.Proposal.ConfirmDate_FMT_FORMAT"/>
+        <LABEL
+          ResId="TANGGAL_CONFIRMATION"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="PrCreated"
+    Precision="1"
+    ColumnName="PR_CREATED"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="CopySource"
+    Precision="100"
+    ColumnName="COPY_SOURCE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="COPY_SOURCE_DOC"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="ModifierType"
+    Precision="1"
+    ColumnName="MODIFIER_TYPE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="MODIFIER_TYPE"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="ArchieveFlag"
+    Precision="1"
+    ColumnName="ARCHIEVE_FLAG"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="ARCHIVE"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="BjpFlag"
+    Precision="1"
+    ColumnName="BJP_FLAG"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="BJP"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="PrRequestId"
+    ColumnName="PR_REQUEST_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="PR_REQUEST_ID"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="ModRequestId"
+    ColumnName="MOD_REQUEST_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="HistTranDtFrom"
+    ColumnName="HIST_TRAN_DT_FROM"
+    SQLType="TIMESTAMP"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="HistTranDtTo"
+    ColumnName="HIST_TRAN_DT_TO"
+    SQLType="TIMESTAMP"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="HistRemark"
+    Precision="2000"
+    ColumnName="HIST_REMARK"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="2000"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="CategoryPc"
+    Precision="5"
+    ColumnName="CATEGORY_PC"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="5"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="CATEGORY_PC"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="CustRegFlagLov"
+    Precision="10"
+    ColumnName="CUST_REG_FLAG_LOV"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="10"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="MixQtyPromo"
+    Precision="1"
+    ColumnName="MIX_QTY_PROMO"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="MIX_QTY_PROMO"/>
+      </SchemaBasedProperties>
+    </Properties>
+    <validation:PreDefinedValidationBean
+      Name="MixQtyPromo_Rule_0"
+      ResId="MIX_QTY_PROMO_HARUS_DIPILIH"
+      ValName="Mandatory"
+      Subtype="MANDATORY"/>
+  </Attribute>
+  <Attribute
+    Name="ReportRunNumber"
+    Precision="14"
+    ColumnName="REPORT_RUN_NUMBER"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="14"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="EbsModifierStatus"
+    Precision="20"
+    ColumnName="EBS_MODIFIER_STATUS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="EbsPrStatus"
+    Precision="20"
+    ColumnName="EBS_PR_STATUS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="PpProgFromOri"
+    ColumnName="PP_PROG_FROM_ORI"
+    SQLType="TIMESTAMP"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="PpProgToOri"
+    ColumnName="PP_PROG_TO_ORI"
+    SQLType="TIMESTAMP"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="PpnFlag"
+    IsNotNull="true"
+    Precision="10"
+    ColumnName="PPN_FLAG"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="PROPOSAL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="10"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="FLAG_PPN"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <AccessorAttribute
+    Name="Posting"
+    Association="app.fpp.model.entities.confirmation.PostingProposalFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.confirmation.PostingProposalFk1Assoc.Posting"
+    AssociationOtherEnd="app.fpp.model.entities.confirmation.PostingProposalFk1Assoc.Proposal"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="DocApproval"
+    Association="app.fpp.model.entities.approval.DocApprovalProposalFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.approval.DocApprovalProposalFk1Assoc.DocApproval"
+    AssociationOtherEnd="app.fpp.model.entities.approval.DocApprovalProposalFk1Assoc.Proposal"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="PromoProduk"
+    Association="app.fpp.model.entities.promoproposal.PromoProdukProposalFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.promoproposal.PromoProdukProposalFk1Assoc.PromoProduk"
+    AssociationOtherEnd="app.fpp.model.entities.promoproposal.PromoProdukProposalFk1Assoc.Proposal"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="PropRegion"
+    Association="app.fpp.model.entities.promoproposal.PropRegionProposalFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.promoproposal.PropRegionProposalFk1Assoc.PropRegion"
+    AssociationOtherEnd="app.fpp.model.entities.promoproposal.PropRegionProposalFk1Assoc.Proposal"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="PropRegionCustomer"
+    Association="app.fpp.model.entities.promoproposal.PropRegionCustomerProposalFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.promoproposal.PropRegionCustomerProposalFk1Assoc.PropRegionCustomer"
+    AssociationOtherEnd="app.fpp.model.entities.promoproposal.PropRegionCustomerProposalFk1Assoc.Proposal"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="PropRegionArea"
+    Association="app.fpp.model.entities.promoproposal.PropRegionAreaProposalFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.promoproposal.PropRegionAreaProposalFk1Assoc.PropRegionArea"
+    AssociationOtherEnd="app.fpp.model.entities.promoproposal.PropRegionAreaProposalFk1Assoc.Proposal"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="PropRegionLoc"
+    Association="app.fpp.model.entities.promoproposal.PropRegionLocProposalFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.promoproposal.PropRegionLocProposalFk1Assoc.PropRegionLoc"
+    AssociationOtherEnd="app.fpp.model.entities.promoproposal.PropRegionLocProposalFk1Assoc.Proposal"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="PropRegionCustGroup"
+    Association="app.fpp.model.entities.promoproposal.PropRegionCustGroupProposalFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.promoproposal.PropRegionCustGroupProposalFk1Assoc.PropRegionCustGroup"
+    AssociationOtherEnd="app.fpp.model.entities.promoproposal.PropRegionCustGroupProposalFk1Assoc.Proposal"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="UploadDownload"
+    Association="app.fpp.model.entities.promoproposal.UploadDownloadFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.promoproposal.UploadDownloadFk1Assoc.UploadDownload"
+    AssociationOtherEnd="app.fpp.model.entities.promoproposal.UploadDownloadFk1Assoc.Proposal"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="PropRegionCustType"
+    Association="app.fpp.model.entities.promoproposal.PropRegionCustTypeProposalFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.promoproposal.PropRegionCustTypeProposalFk1Assoc.PropRegionCustType"
+    AssociationOtherEnd="app.fpp.model.entities.promoproposal.PropRegionCustTypeProposalFk1Assoc.Proposal"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="CategoryPcLog"
+    Association="app.fpp.model.entities.confirmation.CategoryPcLogFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.confirmation.CategoryPcLogFk1Assoc.CategoryPcLog"
+    AssociationOtherEnd="app.fpp.model.entities.confirmation.CategoryPcLogFk1Assoc.Proposal"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="EmailNotifReceiver"
+    Association="app.fpp.model.entities.confirmation.notifikasi.EmailNotifReceiverProposalFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.confirmation.notifikasi.EmailNotifReceiverProposalFk1Assoc.EmailNotifReceiver"
+    AssociationOtherEnd="app.fpp.model.entities.confirmation.notifikasi.EmailNotifReceiverProposalFk1Assoc.Proposal"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="PromoCustomerArea"
+    Association="app.fpp.model.entities.promoproposal.PromoCustomerAreaProposalFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.promoproposal.PromoCustomerAreaProposalFk1Assoc.PromoCustomerArea"
+    AssociationOtherEnd="app.fpp.model.entities.promoproposal.PromoCustomerAreaProposalFk1Assoc.Proposal"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <Key
+    Name="ProposalCurrencyCheck">
+    <DesignTime>
+      <Attr Name="_isNotNull" Value="true"/>
+      <Attr Name="_DBObjectName" Value="PROPOSAL_CURRENCY_CHECK"/>
+      <Attr Name="_checkCondition" Value='"CURRENCY" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.promoproposal.Proposal.Currency"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="ProposalDiscountTypeCheck">
+    <DesignTime>
+      <Attr Name="_isNotNull" Value="true"/>
+      <Attr Name="_DBObjectName" Value="PROPOSAL_DISCOUNT_TYPE_CHECK"/>
+      <Attr Name="_checkCondition" Value='"DISCOUNT_TYPE" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.promoproposal.Proposal.DiscountType"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="ProposalMekanismePenagihanCheck">
+    <DesignTime>
+      <Attr Name="_isNotNull" Value="true"/>
+      <Attr Name="_DBObjectName" Value="PROPOSAL_MEKANISME_PENAGIHAN_C"/>
+      <Attr Name="_checkCondition" Value='"MEKANISME_PENAGIHAN" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.promoproposal.Proposal.MekanismePenagihan"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="ProposalModifierTypeCheck">
+    <DesignTime>
+      <Attr Name="_isNotNull" Value="true"/>
+      <Attr Name="_DBObjectName" Value="PROPOSAL_MODIFIER_TYPE_CHECK"/>
+      <Attr Name="_checkCondition" Value='"MODIFIER_TYPE" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes"/>
+  </Key>
+  <Key
+    Name="ProposalPeriodeProgFromCheck">
+    <DesignTime>
+      <Attr Name="_isNotNull" Value="true"/>
+      <Attr Name="_DBObjectName" Value="PROPOSAL_PERIODE_PROG_FROM_CHE"/>
+      <Attr Name="_checkCondition" Value='"PERIODE_PROG_FROM" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.promoproposal.Proposal.PeriodeProgFrom"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="ProposalPeriodeProgToCheck">
+    <DesignTime>
+      <Attr Name="_isNotNull" Value="true"/>
+      <Attr Name="_DBObjectName" Value="PROPOSAL_PERIODE_PROG_TO_CHECK"/>
+      <Attr Name="_checkCondition" Value='"PERIODE_PROG_TO" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.promoproposal.Proposal.PeriodeProgTo"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="ProposalPk"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="PROPOSAL_PK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.promoproposal.Proposal.ProposalId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="ProposalProgPromoCheck">
+    <DesignTime>
+      <Attr Name="_isNotNull" Value="true"/>
+      <Attr Name="_DBObjectName" Value="PROPOSAL_PROG_PROMO_CHECK"/>
+      <Attr Name="_checkCondition" Value='"PROG_PROMO" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.promoproposal.Proposal.ProgPromo"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="ProposalProposalTypeCheck">
+    <DesignTime>
+      <Attr Name="_isNotNull" Value="true"/>
+      <Attr Name="_DBObjectName" Value="PROPOSAL_PROPOSAL_TYPE_CHECK"/>
+      <Attr Name="_checkCondition" Value='"PROPOSAL_TYPE" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.promoproposal.Proposal.ProposalType"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="ProposalStdStmCheck">
+    <DesignTime>
+      <Attr Name="_isNotNull" Value="true"/>
+      <Attr Name="_DBObjectName" Value="PROPOSAL_STD_STM_CHECK"/>
+      <Attr Name="_checkCondition" Value='"STD_STM" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.promoproposal.Proposal.StdStm"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="ProposalUk1">
+    <DesignTime>
+      <Attr Name="_isUnique" Value="true"/>
+      <Attr Name="_DBObjectName" Value="PROPOSAL_UK1"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.promoproposal.Proposal.ProposalNo"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0012879">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012879"/>
+      <Attr Name="_checkCondition" Value='"PROPOSAL_ID" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes"/>
+  </Key>
+  <Key
+    Name="SysC0012880">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012880"/>
+      <Attr Name="_checkCondition" Value='"PROPOSAL_NO" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.promoproposal.Proposal.ProposalNo"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="fk_Proposal">
+    <DesignTime>
+      <Attr Name="_isCascadeDelete" Value="true"/>
+      <Attr Name="_referencedKey" Value="SYS_C0014110"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_PROPOSAL"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.promoproposal.Proposal.ProposalId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="fk_Proposal1">
+    <DesignTime>
+      <Attr Name="_isCascadeDelete" Value="true"/>
+      <Attr Name="_referencedKey" Value="SYS_C0014119"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_PROPOSAL1"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="app.fpp.model.entities.promoproposal.Proposal.ProposalId"/>
+    </AttrArray>
+  </Key>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</Entity>

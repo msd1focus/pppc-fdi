@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="pp_add_buy_item_pp_add_buy_item_SetCurrentRowWithKeyValuePageDef"
+                Package="app.fpp.view.pageDefs" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="AddBuyProdItemView1" RangeSize="25"
+              DataControl="PromoProposalAMDataControl"
+              id="AddBuyProdItemView1Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="AddBuyProdItemView1Iterator"
+            id="setCurrentRowWithKeyValue" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKeyValue">
+      <NamedData NDName="rowKey" NDValue="#{pageFlowScope.promoAddBuyId}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

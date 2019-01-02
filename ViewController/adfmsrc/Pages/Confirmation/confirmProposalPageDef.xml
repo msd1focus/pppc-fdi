@@ -1,0 +1,1089 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="confirmProposalPageDef"
+                Package="Pages.Confirmation">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator id="ProposalConfirmationView1Iterator" Binds="ProposalConfirmationView1"
+              DataControl="ConfirmationAMDataControl" RangeSize="25"/>
+    <iterator id="PromoProdukView1Iterator" Binds="PromoProdukView1"
+              DataControl="ConfirmationAMDataControl" RangeSize="25"/>
+    <iterator id="TargetView1Iterator" Binds="TargetView1"
+              DataControl="ConfirmationAMDataControl" RangeSize="25"/>
+    <iterator id="DiscountView1Iterator" Binds="DiscountView1"
+              DataControl="ConfirmationAMDataControl" RangeSize="25"/>
+    <iterator id="BiayaView1Iterator" Binds="BiayaView1"
+              DataControl="ConfirmationAMDataControl" RangeSize="25"/>
+    <iterator id="PromoBonusView1Iterator" Binds="PromoBonusView1"
+              DataControl="ConfirmationAMDataControl" RangeSize="25"/>
+    <iterator id="ProdukItemView1Iterator" Binds="ProdukItemView1"
+              DataControl="ConfirmationAMDataControl" RangeSize="25"/>
+    <iterator id="ProdukVariantView1Iterator" Binds="ProdukVariantView1"
+              DataControl="ConfirmationAMDataControl" RangeSize="25"/>
+    <iterator Binds="ProposalReadyConfirmAdendumView1" RangeSize="25"
+              DataControl="ConfirmationAMDataControl"
+              id="ProposalReadyConfirmAdendumView1Iterator"/>
+    <searchRegion Criteria="ProposalReadyConfirmViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="ProposalReadyConfirmAdendumView1Iterator"
+                  id="ProposalReadyConfirmAdendumViewCriteriaQuery"/>
+    <iterator Binds="ProdBudgetByCustView1" RangeSize="25"
+              DataControl="ConfirmationAMDataControl"
+              id="ProdBudgetByCustView1Iterator"/>
+    <iterator Binds="ProdBudgetByPostView1" RangeSize="25"
+              DataControl="ConfirmationAMDataControl"
+              id="ProdBudgetByPostView1Iterator"/>
+    <searchRegion Binds="ProposalConfirmationView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="ProposalConfirmationView11Query"/>
+    <iterator id="BudgetPostingView1Iterator" Binds="BudgetPostingView1"
+              DataControl="BudgetSettingAMDataControl" RangeSize="25"/>
+    <iterator id="BudgetCustomerView1Iterator" Binds="BudgetCustomerView1"
+              DataControl="BudgetSettingAMDataControl" RangeSize="25"/>
+    <iterator id="BudgetCustomerHeaderView1Iterator"
+              Binds="BudgetCustomerHeaderView1"
+              DataControl="BudgetSettingAMDataControl" RangeSize="25"/>
+    <iterator Binds="RealisasiItemPaketView1" RangeSize="25"
+              DataControl="ConfirmationAMDataControl"
+              id="RealisasiItemPaketView1Iterator"/>
+    <iterator Binds="KomBudgetPostLov1" RangeSize="25"
+              DataControl="ConfirmationAMDataControl"
+              id="KomBudgetPostLov1Iterator"/>
+    <searchRegion Criteria="KomBudgetPostLovCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="KomBudgetPostLov1Iterator"
+                  id="KomBudgetPostLovCriteriaQuery"/>
+    <iterator Binds="KomBudgetCustLov1" RangeSize="25"
+              DataControl="ConfirmationAMDataControl"
+              id="KomBudgetCustLov1Iterator"/>
+    <searchRegion Criteria="KomBudgetCustLovCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="KomBudgetCustLov1Iterator"
+                  id="KomBudgetCustLovCriteriaQuery"/>
+    <iterator Binds="CategoryPcLogView1" RangeSize="25"
+              DataControl="ConfirmationAMDataControl"
+              id="CategoryPcLogView1Iterator"/>
+    <iterator id="BucketView1Iterator" Binds="BucketView1"
+              DataControl="ConfirmationAMDataControl" RangeSize="25"/>
+    <iterator id="UploadDownloadView1Iterator" Binds="UploadDownloadView1"
+              DataControl="ConfirmationAMDataControl" RangeSize="25"/>
+    <iterator id="FcsModifierCeckBucketItemCategory1Iterator"
+              Binds="FcsModifierCeckBucketItemCategory1"
+              DataControl="ConfirmationAMDataControl" RangeSize="25"/>
+    <iterator id="CheckRealisasiSalesOrder1Iterator"
+              Binds="CheckRealisasiSalesOrder1"
+              DataControl="ConfirmationAMDataControl" RangeSize="25"/>
+    <iterator id="ProdBudgetByView1Iterator" Binds="ProdBudgetByView1"
+              DataControl="ConfirmationAMDataControl" RangeSize="25"/>
+    <iterator id="ProposalForAdendumView1Iterator"
+              Binds="ProposalForAdendumView1"
+              DataControl="ConfirmationAMDataControl" RangeSize="25"/>
+    <searchRegion id="ProposalForAdendumViewCriteriaQuery"
+                  Binds="ProposalForAdendumView1Iterator"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Criteria="ProposalForAdendumViewCriteria"/>
+    <iterator id="ProdRealSummaryView1Iterator" Binds="ProdRealSummaryView1"
+              DataControl="ConfirmationAMDataControl" RangeSize="25"/>
+    <iterator id="EmailNotifReceiverView1Iterator"
+              Binds="EmailNotifReceiverView1"
+              DataControl="ConfirmationAMDataControl" RangeSize="25"/>
+    <iterator id="checkEmailNotifReceiverView1Iterator"
+              Binds="checkEmailNotifReceiverView1"
+              DataControl="ConfirmationAMDataControl" RangeSize="25"/>
+    <iterator Binds="PromoCustomerAreaView1" RangeSize="25"
+              DataControl="ConfirmationAMDataControl"
+              id="PromoCustomerAreaView1Iterator"/>
+    <iterator Binds="PromoCustomerHoView1" RangeSize="25"
+              DataControl="ConfirmationAMDataControl"
+              id="PromoCustomerHoView1Iterator"/>
+    <iterator Binds="PromoCustxAreaView1" RangeSize="25"
+              DataControl="ConfirmationAMDataControl"
+              id="PromoCustxAreaView1Iterator"/>
+    <iterator Binds="PromoCustxHoView1" RangeSize="25"
+              DataControl="ConfirmationAMDataControl"
+              id="PromoCustxHoView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="ProposalConfirmationView1Iterator"
+          id="ProposalConfirmationView1">
+      <nodeDefinition DefName="app.fpp.model.views.confirmation.ProposalConfirmationView"
+                      Name="ProposalConfirmationView120">
+        <AttrNames>
+          <Item Value="ConfirmNo"/>
+          <Item Value="ConfirmDate"/>
+          <Item Value="AddendumKe"/>
+          <Item Value="ModifierType"/>
+          <Item Value="CanAddendum"/>
+          <Item Value="StatusPrEbs"/>
+          <Item Value="StatusGreen"/>
+          <Item Value="StatusRed"/>
+          <Item Value="StatusYellow"/>
+          <Item Value="StatusBlock"/>
+          <Item Value="ProposalNo"/>
+          <Item Value="Status"/>
+          <Item Value="StatusModEbs"/>
+          <Item Value="ModRequestId"/>
+          <Item Value="MekanismePenagihan"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="ProposalId">
+      <AttrNames>
+        <Item Value="ProposalId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="ConfirmNo">
+      <AttrNames>
+        <Item Value="ConfirmNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="AddendumKe">
+      <AttrNames>
+        <Item Value="AddendumKe"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="ConfirmDate">
+      <AttrNames>
+        <Item Value="ConfirmDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="ProposalNo">
+      <AttrNames>
+        <Item Value="ProposalNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="ProposalDate">
+      <AttrNames>
+        <Item Value="ProposalDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="Status1">
+      <AttrNames>
+        <Item Value="Status"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="PeriodeProgFrom">
+      <AttrNames>
+        <Item Value="PeriodeProgFrom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="PeriodeProgTo">
+      <AttrNames>
+        <Item Value="PeriodeProgTo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="KompensasiDiperoleh">
+      <AttrNames>
+        <Item Value="KompensasiDiperoleh"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator" id="Notes1">
+      <AttrNames>
+        <Item Value="Notes"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ProposalConfirmationView1Iterator" StaticList="false"
+          Uses="LOV_ProposalType" id="ProposalType1" DTSupportsMRU="false"/>
+    <list IterBinding="ProposalConfirmationView1Iterator" StaticList="false"
+          Uses="LOV_DiscountType" id="DiscountType" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="DiscountType1">
+      <AttrNames>
+        <Item Value="DiscountType"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ProposalConfirmationView1Iterator" StaticList="false"
+          Uses="LOV_MekanismePenagihan" id="MekanismePenagihan"
+          DTSupportsMRU="false"/>
+    <list IterBinding="ProposalConfirmationView1Iterator" StaticList="false"
+          Uses="LOV_Status" id="Status" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="ProgDaysCount">
+      <AttrNames>
+        <Item Value="ProgDaysCount"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ProposalConfirmationView1Iterator" StaticList="false"
+          Uses="LOV_StdStm" id="StdStm" DTSupportsMRU="false"/>
+    <list IterBinding="ProposalConfirmationView1Iterator" StaticList="false"
+          Uses="LOV_ProgPromo" id="ProgPromo" DTSupportsMRU="false"/>
+    <list IterBinding="ProposalConfirmationView1Iterator" StaticList="false"
+          Uses="LOV_Currency" id="Currency" DTSupportsMRU="false"/>
+    <list IterBinding="ProposalConfirmationView1Iterator" StaticList="false"
+          Uses="LOV_Pemohon" id="Pemohon" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator" id="CompanyId">
+      <AttrNames>
+        <Item Value="CompanyId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator" id="Contact">
+      <AttrNames>
+        <Item Value="Contact"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="ProposalType">
+      <AttrNames>
+        <Item Value="ProposalType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator" id="ProgDays">
+      <AttrNames>
+        <Item Value="ProgDays"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="UserTypeCreator">
+      <AttrNames>
+        <Item Value="UserTypeCreator"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="PrCreated">
+      <AttrNames>
+        <Item Value="PrCreated"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="PromoProdukView1Iterator" id="PromoProdukView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.PromoProdukView"
+                      Name="PromoProdukView10">
+        <AttrNames>
+          <Item Value="PromoProdukId"/>
+          <Item Value="ProductCategory"/>
+          <Item Value="ProductBrand"/>
+          <Item Value="ProductClass"/>
+          <Item Value="ProductExt"/>
+          <Item Value="ProductCategoryDesc"/>
+          <Item Value="ProductBrandDesc"/>
+          <Item Value="ProductClassDesc"/>
+          <Item Value="ProductExtDesc"/>
+          <Item Value="ProductPackDesc"/>
+          <Item Value="Descr"/>
+          <Item Value="ProductVariant"/>
+          <Item Value="Mekanisme"/>
+          <Item Value="ProductPack"/>
+          <Item Value="ProductItem"/>
+          <Item Value="ProductName"/>
+          <Item Value="KodePosting"/>
+          <Item Value="KodePostingDesc"/>
+          <Item Value="ItemExpense"/>
+          <Item Value="ItemExpenseDesc"/>
+          <Item Value="KodePostingMf"/>
+          <Item Value="KodePostingMfDesc"/>
+          <Item Value="DiscRasioTotal1"/>
+          <Item Value="BiaOntop"/>
+          <Item Value="BrgBonusOnTop"/>
+          <Item Value="DiscOnTop"/>
+          <Item Value="BrgBonusMf"/>
+          <Item Value="BiaMf"/>
+          <Item Value="BiaRasioMf"/>
+          <Item Value="BiaRasionOntop"/>
+          <Item Value="BiaRasioTotal"/>
+          <Item Value="BrgBonusRasioMf"/>
+          <Item Value="BrgBonusRasioOnTop"/>
+          <Item Value="BrgBonusRasioTotal"/>
+          <Item Value="DiscMf"/>
+          <Item Value="DiscRasioMf"/>
+          <Item Value="DiscRasioOnTop"/>
+          <Item Value="ProductApproval"/>
+          <Item Value="BudgetPercentTotal"/>
+          <Item Value="PaketFlag"/>
+          <Item Value="PpidRef"/>
+          <Item Value="CloseLineEbsDcv"/>
+          <Item Value="CloseLineEbsMod"/>
+          <Item Value="CloseLineEbsPb"/>
+          <Item Value="CloseLineEbsPr"/>
+          <Item Value="CloseFlag"/>
+          <Item Value="ProdukLineNum"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="PromoProdukView1Iterator" id="CreateInsertPromoProduk"
+            InstanceName="ConfirmationAMDataControl.PromoProdukView1"
+            DataControl="ConfirmationAMDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action IterBinding="PromoProdukView1Iterator" id="ExecutePromoProduct"
+            InstanceName="ConfirmationAMDataControl.PromoProdukView1"
+            DataControl="ConfirmationAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="ProductName">
+      <AttrNames>
+        <Item Value="ProductName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="ProductVariant">
+      <AttrNames>
+        <Item Value="ProductVariant"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TargetView1Iterator" id="Qty">
+      <AttrNames>
+        <Item Value="Qty"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TargetView1Iterator" id="Value">
+      <AttrNames>
+        <Item Value="Value"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TargetView1Iterator" id="PriceList">
+      <AttrNames>
+        <Item Value="PriceList"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="TargetView1Iterator" StaticList="false" Uses="LOV_Uom"
+          id="Uom" DTSupportsMRU="true"/>
+    <attributeValues IterBinding="TargetView1Iterator" id="Price">
+      <AttrNames>
+        <Item Value="Price"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="DiscountView1Iterator" id="CreateInsertDiscount"
+            InstanceName="ConfirmationAMDataControl.DiscountView1"
+            DataControl="ConfirmationAMDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action IterBinding="DiscountView1Iterator" id="DeleteDiscount"
+            InstanceName="ConfirmationAMDataControl.DiscountView1"
+            DataControl="ConfirmationAMDataControl" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <tree IterBinding="DiscountView1Iterator" id="DiscountView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.DiscountView"
+                      Name="DiscountView10">
+        <AttrNames>
+          <Item Value="DiscNonYearly"/>
+          <Item Value="DiscYearly"/>
+          <Item Value="QtyFrom"/>
+          <Item Value="QtyTo"/>
+          <Item Value="TipePerhitungan"/>
+          <Item Value="TipePotongan"/>
+          <Item Value="Uom"/>
+          <Item Value="TipePerhitunganDesc"/>
+          <Item Value="SatuanPotonganDesc"/>
+          <Item Value="TipePotonganDesc"/>
+          <Item Value="Kelipatan"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="PromoBonusView1Iterator" id="CreateInsertPromoBonus"
+            InstanceName="ConfirmationAMDataControl.PromoBonusView1"
+            DataControl="ConfirmationAMDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action IterBinding="PromoBonusView1Iterator" id="DeletePromoBonus"
+            InstanceName="ConfirmationAMDataControl.PromoBonusView1"
+            DataControl="ConfirmationAMDataControl" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <tree IterBinding="PromoBonusView1Iterator" id="PromoBonusView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.PromoBonusView"
+                      Name="PromoBonusView10">
+        <AttrNames>
+          <Item Value="PromoBonusId"/>
+          <Item Value="ProductBrand"/>
+          <Item Value="ProductBrandDesc"/>
+          <Item Value="ProductCategory"/>
+          <Item Value="ProductCategoryDesc"/>
+          <Item Value="ProductClass"/>
+          <Item Value="ProductClassDesc"/>
+          <Item Value="ProductExt"/>
+          <Item Value="ProductExtDesc"/>
+          <Item Value="ProductItemBonus"/>
+          <Item Value="ProductNameBonus"/>
+          <Item Value="ProductPack"/>
+          <Item Value="ProductPackDesc"/>
+          <Item Value="ProductVariantBonus"/>
+          <Item Value="QtyFrom"/>
+          <Item Value="TipePotongan"/>
+          <Item Value="Uom"/>
+          <Item Value="ValuePotongan"/>
+          <Item Value="UomDesc"/>
+          <Item Value="TipePotonganDesc"/>
+          <Item Value="InputPriceBy"/>
+          <Item Value="PromoProdukId"/>
+          <Item Value="PriceVal"/>
+          <Item Value="QtyMulPrice"/>
+          <Item Value="DiscNonYearly"/>
+          <Item Value="DiscYearly"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="BiayaView1Iterator" id="CreateInsertBiaya"
+            InstanceName="ConfirmationAMDataControl.BiayaView1"
+            DataControl="ConfirmationAMDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action IterBinding="BiayaView1Iterator" id="DeleteBiaya"
+            InstanceName="ConfirmationAMDataControl.BiayaView1"
+            DataControl="ConfirmationAMDataControl" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <tree IterBinding="BiayaView1Iterator" id="BiayaView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.BiayaView"
+                      Name="BiayaView10">
+        <AttrNames>
+          <Item Value="BiayaNonYearly"/>
+          <Item Value="BiayaYearly"/>
+          <Item Value="Descr"/>
+          <Item Value="BiayaTotAmt"/>
+          <Item Value="BiayaQty"/>
+          <Item Value="BiayaUom"/>
+          <Item Value="BiayaPrice"/>
+          <Item Value="BiayaId"/>
+          <Item Value="LovUomBasedItemExpense"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="TargetView1Iterator" id="CreateInsertTarget"
+            InstanceName="ConfirmationAMDataControl.TargetView1"
+            DataControl="ConfirmationAMDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <list IterBinding="TargetView1Iterator" StaticList="false"
+          Uses="LOV_PriceBased" id="PriceBased" DTSupportsMRU="true"/>
+    <tree IterBinding="ProposalReadyConfirmAdendumView1Iterator"
+          id="ProposalReadyConfirmAdendumView1">
+      <nodeDefinition DefName="app.fpp.model.views.confirmation.ProposalReadyConfirmAdendumView"
+                      Name="ProposalReadyConfirmAdendumView10">
+        <AttrNames>
+          <Item Value="ProposalNo"/>
+          <Item Value="Pemohon"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="Commit" DataControl="ConfirmationAMDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="ConfirmationAMDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <methodAction id="refreshReadyProposal"
+                  InstanceName="ConfirmationAMDataControl.dataProvider"
+                  DataControl="ConfirmationAMDataControl"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="refreshReadyProposal" IsViewObjectMethod="false"/>
+    <tree IterBinding="ProdBudgetByCustView1Iterator"
+          id="ProdBudgetByCustView1">
+      <nodeDefinition DefName="app.fpp.model.views.confirmation.ProdBudgetByCustView"
+                      Name="ProdBudgetByCustView10">
+        <AttrNames>
+          <Item Value="KombinasiBudget"/>
+          <Item Value="Amount"/>
+          <Item Value="Percentage"/>
+          <Item Value="BudgetPercent"/>
+          <Item Value="BudgetById"/>
+          <Item Value="BudgetCustId"/>
+          <Item Value="Value"/>
+          <Item Value="Status"/>
+          <Item Value="CheckRowStatus"/>
+          <Item Value="PromoProdukId"/>
+          <Item Value="FlagStatusOver"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="ProdBudgetByCustView1Iterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="ProdBudgetByCustView1Iterator" id="Delete"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <tree IterBinding="ProdBudgetByPostView1Iterator"
+          id="ProdBudgetByPostView1">
+      <nodeDefinition DefName="app.fpp.model.views.confirmation.ProdBudgetByPostView"
+                      Name="ProdBudgetByPostView10">
+        <AttrNames>
+          <Item Value="KombinasiBudget"/>
+          <Item Value="Amount"/>
+          <Item Value="Percentage"/>
+          <Item Value="BudgetPercent"/>
+          <Item Value="BudgetById"/>
+          <Item Value="BudgetCustId"/>
+          <Item Value="Status"/>
+          <Item Value="PromoProdukId"/>
+          <Item Value="CheckRowStatus"/>
+          <Item Value="FlagStatusOver"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="ProdBudgetByPostView1Iterator" id="CreateInsert1"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="ProdBudgetByPostView1Iterator" id="Delete1"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="CopySource">
+      <AttrNames>
+        <Item Value="CopySource"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="ProdBudgetByCustView1Iterator" id="ExecuteBudgetCust"
+            InstanceName="ConfirmationAMDataControl.ProdBudgetByCustView1"
+            DataControl="ConfirmationAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="ProdBudgetByPostView1Iterator" id="ExecuteBudgetPost"
+            InstanceName="ConfirmationAMDataControl.ProdBudgetByPostView1"
+            DataControl="ConfirmationAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <list IterBinding="ProposalConfirmationView1Iterator" StaticList="false"
+          Uses="LOV_BjpFlag" id="BjpFlag" DTSupportsMRU="false"/>
+    <list IterBinding="ProposalConfirmationView1Iterator" StaticList="false"
+          Uses="LOV_ArchieveFlag" id="ArchieveFlag" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="MekanismePenagihan1">
+      <AttrNames>
+        <Item Value="MekanismePenagihan"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="CanAddendum">
+      <AttrNames>
+        <Item Value="CanAddendum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="PrRequestId">
+      <AttrNames>
+        <Item Value="PrRequestId"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="ProposalConfirmationView1Iterator"
+            id="ExecuteProposalConf"
+            InstanceName="ConfirmationAMDataControl.ProposalConfirmationView1"
+            DataControl="ConfirmationAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="CustRegFlag">
+      <AttrNames>
+        <Item Value="CustRegFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="ModRequestId">
+      <AttrNames>
+        <Item Value="ModRequestId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TargetView1Iterator" id="AvgQty">
+      <AttrNames>
+        <Item Value="AvgQty"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="HistTranDtFrom">
+      <AttrNames>
+        <Item Value="HistTranDtFrom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="HistTranDtTo">
+      <AttrNames>
+        <Item Value="HistTranDtTo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="HistRemark">
+      <AttrNames>
+        <Item Value="HistRemark"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="BjpFlag1">
+      <AttrNames>
+        <Item Value="BjpFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="UploadDownloadView1Iterator" id="UploadDownloadView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.UploadDownloadView"
+                      Name="UploadDownloadView10">
+        <AttrNames>
+          <Item Value="ProposalId"/>
+          <Item Value="FileName"/>
+          <Item Value="Path"/>
+          <Item Value="ContentType"/>
+          <Item Value="Idfile"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <!--listOfValues StaticList="false" Uses="LOV_KombinasiBudget"
+                  IterBinding="ProdBudgetByPostView1Iterator"
+                  id="KombinasiBudget"/-->
+    <listOfValues StaticList="false"
+                  IterBinding="ProposalConfirmationView1Iterator"
+                  Uses="LOV_CategoryPc" id="CategoryPc"/>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="DiscOnTop">
+      <AttrNames>
+        <Item Value="DiscOnTop"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="DiscMf">
+      <AttrNames>
+        <Item Value="DiscMf"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="DiscRasioOnTop">
+      <AttrNames>
+        <Item Value="DiscRasioOnTop"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="DiscRasioMf">
+      <AttrNames>
+        <Item Value="DiscRasioMf"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator"
+                     id="DiscRasioTotal1">
+      <AttrNames>
+        <Item Value="DiscRasioTotal1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="BrgBonusOnTop">
+      <AttrNames>
+        <Item Value="BrgBonusOnTop"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="BrgBonusMf">
+      <AttrNames>
+        <Item Value="BrgBonusMf"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator"
+                     id="BrgBonusRasioOnTop">
+      <AttrNames>
+        <Item Value="BrgBonusRasioOnTop"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator"
+                     id="BrgBonusRasioMf">
+      <AttrNames>
+        <Item Value="BrgBonusRasioMf"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator"
+                     id="BrgBonusRasioTotal">
+      <AttrNames>
+        <Item Value="BrgBonusRasioTotal"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="BiaOntop">
+      <AttrNames>
+        <Item Value="BiaOntop"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="BiaMf">
+      <AttrNames>
+        <Item Value="BiaMf"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="BiaRasionOntop">
+      <AttrNames>
+        <Item Value="BiaRasionOntop"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="BiaRasioMf">
+      <AttrNames>
+        <Item Value="BiaRasioMf"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="BiaRasioTotal">
+      <AttrNames>
+        <Item Value="BiaRasioTotal"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ProposalConfirmationView1Iterator" StaticList="false"
+          Uses="LOV_MixQtyPromo" id="MixQtyPromo" DTSupportsMRU="true"/>
+    <action IterBinding="RealisasiItemPaketView1Iterator"
+            id="CreateInsertItemPaket"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="RealisasiItemPaketView1Iterator" id="DeleteItemPaket"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <tree IterBinding="RealisasiItemPaketView1Iterator"
+          id="RealisasiItemPaketView1">
+      <nodeDefinition DefName="app.fpp.model.views.confirmation.RealisasiItemPaketView"
+                      Name="RealisasiItemPaketView10">
+        <AttrNames>
+          <Item Value="KdItemPaket"/>
+          <Item Value="Descr"/>
+          <Item Value="KdItemPaketDesc"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <listOfValues StaticList="false" IterBinding="PromoProdukView1Iterator"
+                  Uses="LOV_BudgetBy" id="BudgetBy1"/>
+    <tree IterBinding="KomBudgetPostLov1Iterator" id="KomBudgetPostLov1">
+      <nodeDefinition DefName="app.fpp.model.views.masterdata.lov.confirmation.KomBudgetPostLov"
+                      Name="KomBudgetPostLov10">
+        <AttrNames>
+          <Item Value="BudgetCustHdrId"/>
+          <Item Value="CustomerId"/>
+          <Item Value="BudgetYear"/>
+          <Item Value="BudgetCustomerId"/>
+          <Item Value="KodePosting"/>
+          <Item Value="CombinationDescription"/>
+          <Item Value="CombinationCategory"/>
+          <Item Value="KombinasiCode"/>
+          <Item Value="BudgetType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="KomBudgetCustLov1Iterator" id="KomBudgetCustLov1">
+      <nodeDefinition DefName="app.fpp.model.views.masterdata.lov.confirmation.KomBudgetCustLov"
+                      Name="KomBudgetCustLov10">
+        <AttrNames>
+          <Item Value="BudgetCustHdrId"/>
+          <Item Value="CustomerId"/>
+          <Item Value="BudgetYear"/>
+          <Item Value="BudgetCustomerId"/>
+          <Item Value="KombinasiCode"/>
+          <Item Value="CombinationDescription"/>
+          <Item Value="CombinationCategory"/>
+          <Item Value="BudgetType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <!--action IterBinding="ProdBudgetByCustView1Iterator" id="Delete"
+            InstanceName="ConfirmationAMDataControl.ProdBudgetByCustView1"
+            DataControl="ConfirmationAMDataControl" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/-->
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="StatusPrEbs">
+      <AttrNames>
+        <Item Value="StatusPrEbs"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="CategoryPcLogView1Iterator" id="CategoryPcLogView1">
+      <nodeDefinition DefName="app.fpp.model.views.confirmation.CategoryPcLogView"
+                      Name="CategoryPcLogView10">
+        <AttrNames>
+          <Item Value="NoPc"/>
+          <Item Value="NoPp"/>
+          <Item Value="CreationDate"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="FullName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="CategoryPcLogView1Iterator" id="ExecuteCatPcRevLog"
+            InstanceName="ConfirmationAMDataControl.CategoryPcLogView1"
+            DataControl="ConfirmationAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="ProposalConfirmationView1Iterator"
+            id="ExecutePropConfirm"
+            InstanceName="ConfirmationAMDataControl.ProposalConfirmationView1"
+            DataControl="ConfirmationAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="CancelPcPr">
+      <AttrNames>
+        <Item Value="CancelPcPr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="CancelPcMod">
+      <AttrNames>
+        <Item Value="CancelPcMod"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="DcvFlag">
+      <AttrNames>
+        <Item Value="DcvFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="StatusPr">
+      <AttrNames>
+        <Item Value="StatusPr"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" Uses="LOV_KodePosting"
+                  IterBinding="PromoProdukView1Iterator" id="KodePosting"/>
+    <listOfValues StaticList="false" Uses="LOV_KodePostingMf"
+                  IterBinding="PromoProdukView1Iterator" id="KodePostingMf"/>
+    <listOfValues StaticList="false" Uses="LOV_ItemExpense"
+                  IterBinding="PromoProdukView1Iterator" id="ItemExpense"/>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="DcvPcPrFlag">
+      <AttrNames>
+        <Item Value="DcvPcPrFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ProposalConfirmationView1Iterator" StaticList="false"
+          Uses="LOV_DcvPcPrFlag" id="DcvPcPrFlag1" DTSupportsMRU="true"/>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="StatusGreen">
+      <AttrNames>
+        <Item Value="StatusGreen"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="StatusYellow">
+      <AttrNames>
+        <Item Value="StatusYellow"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="StatusRed">
+      <AttrNames>
+        <Item Value="StatusRed"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="StatusBlock">
+      <AttrNames>
+        <Item Value="StatusBlock"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="EbsModifierStatus">
+      <AttrNames>
+        <Item Value="EbsModifierStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="PromoProdukView1Iterator" id="PromoProdukView11">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.PromoProdukView"
+                      Name="PromoProdukView110">
+        <AttrNames>
+          <Item Value="ProductClassDesc"/>
+          <Item Value="ProductBrandDesc"/>
+          <Item Value="ProductExtDesc"/>
+          <Item Value="ProductPackDesc"/>
+          <Item Value="RealisasiGr"/>
+          <Item Value="ProductVariant"/>
+          <Item Value="ProductItem"/>
+          <Item Value="RealisasiGrMf"/>
+          <Item Value="RealisasiGrOnTop"/>
+          <Item Value="RealisasiModMf"/>
+          <Item Value="RealisasiModOnTop"/>
+          <Item Value="RealisasiDcvMf"/>
+          <Item Value="RealisasiDcvOnTop"/>
+          <Item Value="RealisasiGrByLine"/>
+          <Item Value="RealisasiGrMfByLine"/>
+          <Item Value="RealisasiGrOnTopByLine"/>
+          <Item Value="RealisasiGrSelisihByLine"/>
+          <Item Value="RealisasiGrPengurangMf"/>
+          <Item Value="RealisasiGrSelisihMfByLine"/>
+          <Item Value="RealisasiGrTotalByLine"/>
+          <Item Value="ProdukRowNum"/>
+          <Item Value="PromoProdukId"/>
+          <Item Value="RealisasiModMfPrev"/>
+          <Item Value="RealisasiModOnTopPrev"/>
+          <Item Value="PpidRef"/>
+          <Item Value="RealisasiPrmBrgMfByLine"/>
+          <Item Value="RealisasiPrmBrgOnTopByLine"/>
+          <Item Value="CloseLineEbsDcv"/>
+          <Item Value="CloseLineEbsMod"/>
+          <Item Value="CloseLineEbsPb"/>
+          <Item Value="CloseLineEbsPr"/>
+          <Item Value="CloseFlag"/>
+          <Item Value="ProdukLineNum"/>
+          <Item Value="CloseReason"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="IsReferenced">
+      <AttrNames>
+        <Item Value="IsReferenced"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="PromoIsRun">
+      <AttrNames>
+        <Item Value="PromoIsRun"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="StatusModEbs">
+      <AttrNames>
+        <Item Value="StatusModEbs"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="EbsPrStatus">
+      <AttrNames>
+        <Item Value="EbsPrStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator"
+                     id="RealisasiGrSelisihMfByLine">
+      <AttrNames>
+        <Item Value="RealisasiGrSelisihMfByLine"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator"
+                     id="RealisasiDcvSelisihMfByLine">
+      <AttrNames>
+        <Item Value="RealisasiDcvSelisihMfByLine"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="IsAddendumLast">
+      <AttrNames>
+        <Item Value="IsAddendumLast"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="IsAddendumLastTrx">
+      <AttrNames>
+        <Item Value="IsAddendumLastTrx"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator"
+                     id="ProductApproval">
+      <AttrNames>
+        <Item Value="ProductApproval"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="CanCreatePr">
+      <AttrNames>
+        <Item Value="CanCreatePr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="CanCreateMod">
+      <AttrNames>
+        <Item Value="CanCreateMod"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" Uses="LOV_KdItemPaket"
+                  IterBinding="RealisasiItemPaketView1Iterator"
+                  id="KdItemPaket"/>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="PreDcvFlag">
+      <AttrNames>
+        <Item Value="PreDcvFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="PrintCounter">
+      <AttrNames>
+        <Item Value="PrintCounter"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="HasAddendum">
+      <AttrNames>
+        <Item Value="HasAddendum"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="ProposalForAdendumView1Iterator"
+          id="ProposalForAdendumView1">
+      <nodeDefinition DefName="app.fpp.model.views.confirmation.ProposalForAdendumView"
+                      Name="ProposalForAdendumView10">
+        <AttrNames>
+          <Item Value="ProposalNo"/>
+          <Item Value="Pemohon"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <listOfValues StaticList="false"
+                  IterBinding="ProposalConfirmationView1Iterator"
+                  Uses="LOV_PpnFlag" id="PpnFlag"/>
+    <listOfValues StaticList="false" IterBinding="BiayaView1Iterator"
+                  Uses="LOV_BiayaUom" id="BiayaUom"/>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="RegCustFlag">
+      <AttrNames>
+        <Item Value="RegCustFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="ExclCustBy">
+      <AttrNames>
+        <Item Value="ExclCustBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="ModifierType">
+      <AttrNames>
+        <Item Value="ModifierType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalConfirmationView1Iterator"
+                     id="ClosedAllProduk">
+      <AttrNames>
+        <Item Value="ClosedAllProduk"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="PromoCustomerAreaView1Iterator"
+          id="PromoCustomerAreaView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.PromoCustomerAreaView"
+                      Name="PromoCustomerAreaView10">
+        <AttrNames>
+          <Item Value="RegionCode"/>
+          <Item Value="RegionDesc"/>
+          <Item Value="AreaCode"/>
+          <Item Value="AreaDesc"/>
+          <Item Value="LocCode"/>
+          <Item Value="LocDesc"/>
+          <Item Value="CusttypCode"/>
+          <Item Value="CusttypDesc"/>
+          <Item Value="CustgrpCode"/>
+          <Item Value="CustgrpDesc"/>
+          <Item Value="CustomerId"/>
+          <Item Value="CustomerName"/>
+          <Item Value="CustomerNumber"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="PromoCustomerHoView1Iterator" id="PromoCustomerHoView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.PromoCustomerHoView"
+                      Name="PromoCustomerHoView10">
+        <AttrNames>
+          <Item Value="RegionCode"/>
+          <Item Value="RegionDesc"/>
+          <Item Value="AreaCode"/>
+          <Item Value="AreaDesc"/>
+          <Item Value="LocCode"/>
+          <Item Value="LocDesc"/>
+          <Item Value="CusttypCode"/>
+          <Item Value="CusttypDesc"/>
+          <Item Value="CustgrpCode"/>
+          <Item Value="CustgrpDesc"/>
+          <Item Value="CustomerId"/>
+          <Item Value="CustomerName"/>
+          <Item Value="CustomerNumber"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="PromoCustxAreaView1Iterator" id="PromoCustxAreaView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.PromoCustxAreaView"
+                      Name="PromoCustxAreaView10">
+        <AttrNames>
+          <Item Value="RegionCode"/>
+          <Item Value="RegionDesc"/>
+          <Item Value="AreaCode"/>
+          <Item Value="AreaDesc"/>
+          <Item Value="LocCode"/>
+          <Item Value="LocDesc"/>
+          <Item Value="CusttypCode"/>
+          <Item Value="CusttypDesc"/>
+          <Item Value="CustgrpCode"/>
+          <Item Value="CustgrpDesc"/>
+          <Item Value="CustomerId"/>
+          <Item Value="CustomerName"/>
+          <Item Value="CustomerNumber"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="PromoCustxHoView1Iterator" id="PromoCustxHoView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.PromoCustxHoView"
+                      Name="PromoCustxHoView10">
+        <AttrNames>
+          <Item Value="RegionCode"/>
+          <Item Value="RegionDesc"/>
+          <Item Value="AreaCode"/>
+          <Item Value="AreaDesc"/>
+          <Item Value="LocCode"/>
+          <Item Value="LocDesc"/>
+          <Item Value="CusttypCode"/>
+          <Item Value="CusttypDesc"/>
+          <Item Value="CustgrpCode"/>
+          <Item Value="CustgrpDesc"/>
+          <Item Value="CustomerId"/>
+          <Item Value="CustomerName"/>
+          <Item Value="CustomerNumber"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

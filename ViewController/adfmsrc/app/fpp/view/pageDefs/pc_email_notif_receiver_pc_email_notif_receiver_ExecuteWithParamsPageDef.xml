@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="pc_email_notif_receiver_pc_email_notif_receiver_ExecuteWithParamsPageDef"
+                Package="app.fpp.view.pageDefs" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="EmailNotifReceiverView1" RangeSize="25"
+              DataControl="ConfirmationAMDataControl"
+              id="EmailNotifReceiverView1Iterator" Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="EmailNotifReceiverView1Iterator" id="ExecuteWithParams"
+            RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="propId" NDValue="#{pageFlowScope.propId}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

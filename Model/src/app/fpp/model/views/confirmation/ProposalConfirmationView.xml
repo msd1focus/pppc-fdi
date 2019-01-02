@@ -1,0 +1,1979 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ProposalConfirmationView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="Proposal.ADDENDUM_KE, 
+       Proposal.COMPANY_ID, 
+       Proposal.CONFIRM_NO, 
+       Proposal.CONTACT, 
+       Proposal.CREATED_BY, 
+       Proposal.CREATION_DATE, 
+       Proposal.CURRENCY, 
+       Proposal.CUST_REG_FLAG, 
+       Proposal.DISCOUNT_TYPE, 
+       Proposal.KOMPENSASI_DIPEROLEH, 
+       Proposal.LAST_UPDATE_DATE, 
+       Proposal.LAST_UPDATED_BY, 
+       Proposal.MEKANISME_PENAGIHAN, 
+       Proposal.NOTES, 
+       Proposal.PC_TYPE, 
+       Proposal.PEMOHON, 
+       Proposal.PERIODE_PROG_FROM, 
+       Proposal.PERIODE_PROG_TO, 
+       Proposal.PROG_DAYS, 
+       Proposal.PROG_PROMO, 
+       Proposal.PROPOSAL_DATE, 
+       Proposal.PROPOSAL_ID, 
+       Proposal.PROPOSAL_NO, 
+       Proposal.PROPOSAL_TYPE, 
+       Proposal.STATUS, 
+       Proposal.STD_STM, 
+       Proposal.USER_TYPE_CREATOR, 
+       Proposal.CONFIRM_DATE, 
+       Proposal.PR_CREATED, 
+       Proposal.COPY_SOURCE, 
+       Proposal.MODIFIER_TYPE, 
+       Proposal.BJP_FLAG, 
+       Proposal.ARCHIEVE_FLAG, 
+       Proposal.PR_REQUEST_ID, 
+       Proposal.MOD_REQUEST_ID, 
+       Proposal.HIST_REMARK, 
+       Proposal.HIST_TRAN_DT_FROM, 
+       Proposal.HIST_TRAN_DT_TO, 
+       Proposal.CATEGORY_PC, 
+       Proposal.MIX_QTY_PROMO, 
+       (PROPOSAL.EBS_PR_STATUS) AS STATUS_PR_EBS, 
+       (PROPOSAL.EBS_MODIFIER_STATUS) AS STATUS_MOD_EBS, 
+       (SELECT MAX(NVL(PROP.ADDENDUM_KE,'')) FROM PROPOSAL PROP WHERE PROP.STATUS &lt;> 'CANCELED' AND PROP.CONFIRM_NO = Proposal.CONFIRM_NO) AS ADDENDUM_LAST, 
+       (SELECT PROPOSAL1.EBS_DCV_STATUS             FROM PROPOSAL PROPOSAL1             WHERE PROPOSAL1.CONFIRM_NO = PROPOSAL.CONFIRM_NO             AND PROPOSAL1.EBS_DCV_STATUS IS NOT NULL             AND ROWNUM = 1) AS DCV_FLAG, 
+       (SELECT COUNT(RE.PROD_RIP_EXISTS) FROM (SELECT RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID, 1 AS PROD_RIP_EXISTS FROM REALISASI_ITEM_PAKET RIP, PROMO_PRODUK PP, PROPOSAL PROP WHERE RIP.PROMO_PRODUK_ID = PP.PROMO_PRODUK_ID AND PP.PROPOSAL_ID = PROP.PROPOSAL_ID GROUP BY RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID HAVING (COUNT(RIP.REAL_ITEM_PAKET_ID) > 0)) RE WHERE RE.PROPOSAL_ID = Proposal.PROPOSAL_ID) AS REALISASI_ITEM_PAKET_COUNT, 
+       Proposal.EBS_PR_STATUS, 
+       Proposal.EBS_MODIFIER_STATUS, 
+       (SELECT CASE WHEN (((Proposal.DISCOUNT_TYPE = 'POTONGAN' AND Proposal.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND Proposal.CONFIRM_NO &lt;> 'Auto Generated' AND Proposal.EBS_PR_STATUS = 'FINALLY CLOSED' AND Proposal.STATUS &lt;> 'CLOSED')  OR ( Proposal.DISCOUNT_TYPE = 'BIAYA' AND Proposal.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND Proposal.CONFIRM_NO &lt;> 'Auto Generated' AND Proposal.EBS_PR_STATUS = 'FINALLY CLOSED' AND Proposal.STATUS &lt;> 'CLOSED') OR (Proposal.DISCOUNT_TYPE = 'PROMOBARANG' AND Proposal.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND Proposal.CONFIRM_NO &lt;> 'Auto Generated' AND Proposal.EBS_PR_STATUS = 'FINALLY CLOSED' AND Proposal.STATUS &lt;> 'CLOSED') OR ((Proposal.DISCOUNT_TYPE = 'POTONGAN' AND Proposal.MEKANISME_PENAGIHAN = 'ONINVOICE' AND Proposal.CONFIRM_NO &lt;> 'Auto Generated' AND Proposal.EBS_MODIFIER_STATUS = 'INACTIVE' AND Proposal.STATUS &lt;> 'CLOSED') AND Proposal.STATUS &lt;> 'CANCELED'))) THEN 'Y' ELSE 'N' END AS YELLOW FROM Proposal PROP WHERE PROP.PROPOSAL_NO = Proposal.PROPOSAL_NO) AS STATUS_YELLOW_FILTER, 
+       (SELECT CASE WHEN (((Proposal.DISCOUNT_TYPE = 'POTONGAN' AND Proposal.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND Proposal.CONFIRM_NO &lt;> 'Auto Generated' AND (Proposal.EBS_PR_STATUS = 'IN PROCESS' OR Proposal.EBS_PR_STATUS IS NULL OR Proposal.EBS_PR_STATUS = 'APPROVED' OR Proposal.EBS_PR_STATUS = 'REJECTED' OR Proposal.EBS_PR_STATUS = 'CANCELLED')) OR (Proposal.DISCOUNT_TYPE = 'BIAYA' AND Proposal.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND Proposal.CONFIRM_NO &lt;> 'Auto Generated' AND (Proposal.EBS_PR_STATUS = 'IN PROCESS' OR Proposal.EBS_PR_STATUS = 'APPROVED' OR Proposal.EBS_PR_STATUS = 'REJECTED' OR Proposal.EBS_PR_STATUS = 'CANCELLED')) OR (Proposal.DISCOUNT_TYPE = 'PROMOBARANG' AND Proposal.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND Proposal.CONFIRM_NO &lt;> 'Auto Generated' AND (Proposal.EBS_PR_STATUS = 'IN PROCESS' OR Proposal.EBS_PR_STATUS IS NULL OR Proposal.EBS_PR_STATUS = 'APPROVED' OR Proposal.EBS_PR_STATUS = 'REJECTED' OR Proposal.EBS_PR_STATUS = 'CANCELLED')) OR (Proposal.DISCOUNT_TYPE = 'POTONGAN' AND Proposal.MEKANISME_PENAGIHAN = 'ONINVOICE' AND Proposal.CONFIRM_NO &lt;> 'Auto Generated' AND Proposal.EBS_MODIFIER_STATUS = 'ACTIVE') OR (Proposal.DISCOUNT_TYPE = 'PROMOBARANG' AND Proposal.MEKANISME_PENAGIHAN = 'ONINVOICE' AND Proposal.CATEGORY_PC IS NOT NULL AND ((SELECT COUNT(RE.PROD_RIP_EXISTS) FROM (SELECT RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID, 1 AS PROD_RIP_EXISTS FROM REALISASI_ITEM_PAKET RIP, PROMO_PRODUK PP, PROPOSAL PROP WHERE RIP.PROMO_PRODUK_ID = PP.PROMO_PRODUK_ID AND PP.PROPOSAL_ID = PROP.PROPOSAL_ID GROUP BY RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID HAVING (COUNT(RIP.REAL_ITEM_PAKET_ID) > 0)) RE WHERE RE.PROPOSAL_ID = Proposal.PROPOSAL_ID) = (SELECT COUNT(PP.PROMO_PRODUK_ID) FROM PROMO_PRODUK PP WHERE PP.PROPOSAL_ID = Proposal.PROPOSAL_ID)) AND ((SELECT COUNT(RE.PROD_RIP_EXISTS) FROM (SELECT RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID, 1 AS PROD_RIP_EXISTS FROM REALISASI_ITEM_PAKET RIP, PROMO_PRODUK PP, PROPOSAL PROP WHERE RIP.PROMO_PRODUK_ID = PP.PROMO_PRODUK_ID AND PP.PROPOSAL_ID = PROP.PROPOSAL_ID GROUP BY RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID HAVING (COUNT(RIP.REAL_ITEM_PAKET_ID) > 0)) RE WHERE RE.PROPOSAL_ID = Proposal.PROPOSAL_ID) > 0))) AND Proposal.STATUS = 'ACTIVE') THEN 'Y' ELSE 'N' END AS GREEN FROM Proposal PROP WHERE PROP.PROPOSAL_NO = Proposal.PROPOSAL_NO) AS STATUS_GREEN_FILTER, 
+       (SELECT CASE WHEN (((Proposal.DISCOUNT_TYPE = 'POTONGAN' AND Proposal.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND (Proposal.EBS_PR_STATUS = 'TRANSFERING' OR Proposal.EBS_PR_STATUS = 'ERROR')) OR (Proposal.DISCOUNT_TYPE = 'BIAYA' AND Proposal.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND (Proposal.EBS_PR_STATUS = 'TRANSFERING' OR Proposal.EBS_PR_STATUS IS NULL OR Proposal.EBS_PR_STATUS = 'ERROR')) OR (Proposal.DISCOUNT_TYPE = 'PROMOBARANG' AND Proposal.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND (Proposal.EBS_PR_STATUS = 'TRANSFERING' OR Proposal.EBS_PR_STATUS = 'ERROR')) OR   (Proposal.DISCOUNT_TYPE = 'POTONGAN' AND Proposal.MEKANISME_PENAGIHAN = 'ONINVOICE' AND (Proposal.EBS_MODIFIER_STATUS = 'TRANSFERING' OR Proposal.EBS_MODIFIER_STATUS IS NULL OR Proposal.EBS_MODIFIER_STATUS = 'ERROR')) OR (Proposal.DISCOUNT_TYPE = 'PROMOBARANG' AND Proposal.MEKANISME_PENAGIHAN = 'ONINVOICE' AND ((SELECT COUNT(RE.PROD_RIP_EXISTS) FROM (SELECT RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID, 1 AS PROD_RIP_EXISTS FROM REALISASI_ITEM_PAKET RIP, PROMO_PRODUK PP, PROPOSAL PROP WHERE RIP.PROMO_PRODUK_ID = PP.PROMO_PRODUK_ID AND PP.PROPOSAL_ID = PROP.PROPOSAL_ID GROUP BY RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID HAVING (COUNT(RIP.REAL_ITEM_PAKET_ID) > 0)) RE WHERE RE.PROPOSAL_ID = Proposal.PROPOSAL_ID) &lt;> (SELECT COUNT(PP.PROMO_PRODUK_ID) FROM PROMO_PRODUK PP WHERE PP.PROPOSAL_ID = Proposal.PROPOSAL_ID)) AND ((SELECT COUNT(RE.PROD_RIP_EXISTS) FROM (SELECT RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID, 1 AS PROD_RIP_EXISTS FROM REALISASI_ITEM_PAKET RIP, PROMO_PRODUK PP, PROPOSAL PROP WHERE RIP.PROMO_PRODUK_ID = PP.PROMO_PRODUK_ID AND PP.PROPOSAL_ID = PROP.PROPOSAL_ID GROUP BY RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID HAVING (COUNT(RIP.REAL_ITEM_PAKET_ID) > 0)) RE WHERE RE.PROPOSAL_ID = Proposal.PROPOSAL_ID) = 0)) OR Proposal.CONFIRM_NO = 'Auto Generated') AND Proposal.STATUS = 'ACTIVE') THEN 'Y' ELSE 'N' END AS RED FROM Proposal PROP WHERE PROP.PROPOSAL_NO = Proposal.PROPOSAL_NO) AS STATUS_RED_FILTER, 
+       (SELECT   CASE             WHEN (SELECT   PROP.STATUS                     FROM   PROPOSAL PROP                    WHERE   PROP.PROPOSAL_ID =                               (SELECT   MAX (PPMAX.PROPOSAL_ID)                                  FROM   PROPOSAL PPMAX                                 WHERE   PPMAX.COPY_SOURCE = Proposal.PROPOSAL_NO                                         AND ROWNUM = 1)) = 'CANCELED'             THEN                'N'             WHEN (SELECT   COUNT(PROP.STATUS)                     FROM   PROPOSAL PROP                    WHERE   PROP.PROPOSAL_ID =                               (SELECT   MAX (PPMAX.PROPOSAL_ID)                                  FROM   PROPOSAL PPMAX                                 WHERE   PPMAX.COPY_SOURCE = Proposal.PROPOSAL_NO AND PPMAX.STATUS = 'ACTIVE' AND ROWNUM = 1)) = 0             THEN                'N'             ELSE                'Y'          END             AS IS_REFERENCED   FROM   DUAL) AS IS_REFERENCED, 
+       (SELECT MAX(NVL(PROP.ADDENDUM_KE,0)) FROM PROPOSAL PROP WHERE PROP.CONFIRM_NO = Proposal.CONFIRM_NO) AS ADDENDUM_LAST_TRX, 
+       (PROPOSAL.EBS_DCV_STATUS) AS PRE_DCV_FLAG, 
+       (SELECT NVL(SUM(PPL.NUM_VIEW),0) FROM PRINT_PREV_LOG PPL WHERE PPL.PROPOSAL_ID = Proposal.PROPOSAL_ID) AS PRINT_COUNTER, 
+       Proposal.PPN_FLAG, 
+       (CASE WHEN (SELECT COUNT(1) FROM PROMO_PRODUK PP WHERE PP.PROPOSAL_ID = Proposal.PROPOSAL_ID) = (SELECT COUNT(1) FROM PROMO_PRODUK PR WHERE PR.PROPOSAL_ID = Proposal.PROPOSAL_ID AND PR.CLOSE_FLAG = 'Y') THEN 'Y' ELSE 'N' END) AS CLOSED_ALL_PRODUK, 
+       (SELECT COUNT(1) FROM PROMO_PRODUK PP WHERE PP.PROPOSAL_ID = Proposal.PROPOSAL_ID) AS PRODUK_TOTAL_COUNT"
+  FromList="PROPOSAL Proposal"
+  OrderBy="Proposal.LAST_UPDATE_DATE DESC"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  RowClass="app.fpp.model.views.confirmation.ProposalConfirmationViewRowImpl"
+  ComponentClass="app.fpp.model.views.confirmation.ProposalConfirmationViewImpl"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  Where="Proposal.CONFIRM_NO IS NOT NULL AND Proposal.STATUS IN ('ACTIVE', 'CANCELED', 'CLOSED')"
+  FetchMode="FETCH_AS_NEEDED"
+  AccessMode="RANGE_PAGING"
+  RangeSize="50">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.confirmation.ProposalConfirmationView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="statusPrEbs"
+    Kind="viewcriteria"
+    Type="java.lang.String"/>
+  <Variable
+    Name="statusModEbs"
+    Kind="viewcriteria"
+    Type="java.lang.String"/>
+  <ViewAccessor
+    Name="CurrencyLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['FNI_CURRENCY_CODE']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="DiscountTypeLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['FNI_DISCOUNT_TYPE']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="DokStatusLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['FNI_DOC_STATUS']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="MekPenagihanLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['FNI_TYPE_CLAIM']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="PcTypeLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['FNI_PC_TYPE']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ProgramPromoLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['FNI_PROG_PROMO']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ProposalTypeLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['FNI_PROPOSAL_TYPE']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="StdStmLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['FNI_STD_STM']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="UserAccessLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.useraccess.UserAccessLov"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="BjpFlagLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_BJP_FLAG']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ArchiveFlagLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_ARCHIVE_FLAG']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="RegionCustFlagLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_PROP_REG_CUS_FLG']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="CategoryPcLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_CATEGORY_PC']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="MixQtyPromoLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_MIX_QTY_PROMO_FLG']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="StatusDCVLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_MIX_QTY_PROMO_FLG']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="PpnFlagLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_PPN_FLAG']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ListBinding
+    Name="LOV_Currency"
+    ListVOName="CurrencyLov"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_Currency_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Currency"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_DiscountType"
+    ListVOName="DiscountTypeLov"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_DiscountType_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="DiscountType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_Status"
+    ListVOName="DokStatusLov"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_Status_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Status"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_MekanismePenagihan"
+    ListVOName="MekPenagihanLov"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_MekanismePenagihan_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="MekanismePenagihan"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_PcType"
+    ListVOName="PcTypeLov"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_PcType_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="PcType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProgPromo"
+    ListVOName="ProgramPromoLov"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_ProgPromo_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProgPromo"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProposalType"
+    ListVOName="ProposalTypeLov"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_ProposalType_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProposalType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_StdStm"
+    ListVOName="StdStmLov"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_StdStm_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="StdStm"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_Pemohon"
+    ListVOName="UserAccessLov"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_Pemohon_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Pemohon"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="UserName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="FullName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_BjpFlag"
+    ListVOName="BjpFlagLov"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_BjpFlag_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="BjpFlag"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ArchieveFlag"
+    ListVOName="ArchiveFlagLov"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_ArchieveFlag_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ArchieveFlag"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CustRegFlag"
+    ListVOName="RegionCustFlagLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_CustRegFlag_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CustRegFlag"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CategoryPc"
+    ListVOName="CategoryPcLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_CategoryPc_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CategoryPc"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_MixQtyPromo"
+    ListVOName="MixQtyPromoLov"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_MixQtyPromo_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="MixQtyPromo"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_DcvPcPrFlag"
+    ListVOName="StatusDCVLov"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="DcvPcPrFlag"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_PpnFlag"
+    ListVOName="PpnFlagLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_PpnFlag_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="PpnFlag"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <EntityUsage
+    Name="Proposal"
+    Entity="app.fpp.model.entities.promoproposal.Proposal"/>
+  <ViewAttribute
+    Name="AddendumKe"
+    PrecisionRule="true"
+    EntityAttrName="AddendumKe"
+    EntityUsage="Proposal"
+    AliasName="ADDENDUM_KE"/>
+  <ViewAttribute
+    Name="CompanyId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CompanyId"
+    EntityUsage="Proposal"
+    AliasName="COMPANY_ID"/>
+  <ViewAttribute
+    Name="ConfirmNo"
+    PrecisionRule="true"
+    EntityAttrName="ConfirmNo"
+    EntityUsage="Proposal"
+    AliasName="CONFIRM_NO"/>
+  <ViewAttribute
+    Name="Contact"
+    PrecisionRule="true"
+    EntityAttrName="Contact"
+    EntityUsage="Proposal"
+    AliasName="CONTACT"/>
+  <ViewAttribute
+    Name="CreatedBy"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="Proposal"
+    AliasName="CREATED_BY"/>
+  <ViewAttribute
+    Name="CreationDate"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="CreationDate"
+    EntityUsage="Proposal"
+    AliasName="CREATION_DATE"/>
+  <ViewAttribute
+    Name="Currency"
+    LOVName="LOV_Currency"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Currency"
+    EntityUsage="Proposal"
+    AliasName="CURRENCY">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CustRegFlag"
+    LOVName="LOV_CustRegFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CustRegFlag"
+    EntityUsage="Proposal"
+    AliasName="CUST_REG_FLAG">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DiscountType"
+    LOVName="LOV_DiscountType"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="DiscountType"
+    EntityUsage="Proposal"
+    AliasName="DISCOUNT_TYPE">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="KompensasiDiperoleh"
+    PrecisionRule="true"
+    EntityAttrName="KompensasiDiperoleh"
+    EntityUsage="Proposal"
+    AliasName="KOMPENSASI_DIPEROLEH"/>
+  <ViewAttribute
+    Name="LastUpdateDate"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdateDate"
+    EntityUsage="Proposal"
+    AliasName="LAST_UPDATE_DATE"/>
+  <ViewAttribute
+    Name="LastUpdatedBy"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedBy"
+    EntityUsage="Proposal"
+    AliasName="LAST_UPDATED_BY"/>
+  <ViewAttribute
+    Name="MekanismePenagihan"
+    LOVName="LOV_MekanismePenagihan"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="MekanismePenagihan"
+    EntityUsage="Proposal"
+    AliasName="MEKANISME_PENAGIHAN">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Notes"
+    PrecisionRule="true"
+    EntityAttrName="Notes"
+    EntityUsage="Proposal"
+    AliasName="NOTES"/>
+  <ViewAttribute
+    Name="PcType"
+    LOVName="LOV_PcType"
+    PrecisionRule="true"
+    EntityAttrName="PcType"
+    EntityUsage="Proposal"
+    AliasName="PC_TYPE">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Pemohon"
+    IsUpdateable="false"
+    LOVName="LOV_Pemohon"
+    PrecisionRule="true"
+    EntityAttrName="Pemohon"
+    EntityUsage="Proposal"
+    AliasName="PEMOHON">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PeriodeProgFrom"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PeriodeProgFrom"
+    EntityUsage="Proposal"
+    AliasName="PERIODE_PROG_FROM">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.confirmation.ProposalConfirmationView.PeriodeProgFrom_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.confirmation.ProposalConfirmationView.PeriodeProgFrom_FMT_FORMAT"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PeriodeProgTo"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PeriodeProgTo"
+    EntityUsage="Proposal"
+    AliasName="PERIODE_PROG_TO">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.confirmation.ProposalConfirmationView.PeriodeProgTo_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.confirmation.ProposalConfirmationView.PeriodeProgTo_FMT_FORMAT"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProgDays"
+    PrecisionRule="true"
+    EntityAttrName="ProgDays"
+    EntityUsage="Proposal"
+    AliasName="PROG_DAYS"/>
+  <ViewAttribute
+    Name="ProgPromo"
+    LOVName="LOV_ProgPromo"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ProgPromo"
+    EntityUsage="Proposal"
+    AliasName="PROG_PROMO">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProposalDate"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="ProposalDate"
+    EntityUsage="Proposal"
+    AliasName="PROPOSAL_DATE"/>
+  <ViewAttribute
+    Name="ProposalId"
+    IsUpdateable="while_insert"
+    PrecisionRule="true"
+    EntityAttrName="ProposalId"
+    EntityUsage="Proposal"
+    AliasName="PROPOSAL_ID"/>
+  <ViewAttribute
+    Name="ProposalNo"
+    IsUnique="true"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ProposalNo"
+    EntityUsage="Proposal"
+    AliasName="PROPOSAL_NO"/>
+  <ViewAttribute
+    Name="ProposalType"
+    LOVName="LOV_ProposalType"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ProposalType"
+    EntityUsage="Proposal"
+    AliasName="PROPOSAL_TYPE">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Status"
+    LOVName="LOV_Status"
+    PrecisionRule="true"
+    EntityAttrName="Status"
+    EntityUsage="Proposal"
+    AliasName="STATUS">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StdStm"
+    LOVName="LOV_StdStm"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="StdStm"
+    EntityUsage="Proposal"
+    AliasName="STD_STM">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="UserTypeCreator"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="UserTypeCreator"
+    EntityUsage="Proposal"
+    AliasName="USER_TYPE_CREATOR"/>
+  <ViewAttribute
+    Name="ConfirmDate"
+    PrecisionRule="true"
+    EntityAttrName="ConfirmDate"
+    EntityUsage="Proposal"
+    AliasName="CONFIRM_DATE">
+    <TransientExpression><![CDATA[adf.currentDateTime]]></TransientExpression>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.confirmation.ProposalConfirmationView.ConfirmDate_FMT_FORMAT"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProgDaysCount"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PROG_DAYS_COUNT"
+    SQLType="VARCHAR">
+    <TransientExpression><![CDATA[(PeriodeProgTo - PeriodeProgFrom) + 1]]></TransientExpression>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PrCreated"
+    PrecisionRule="true"
+    EntityAttrName="PrCreated"
+    EntityUsage="Proposal"
+    AliasName="PR_CREATED"/>
+  <ViewAttribute
+    Name="CopySource"
+    PrecisionRule="true"
+    EntityAttrName="CopySource"
+    EntityUsage="Proposal"
+    AliasName="COPY_SOURCE"/>
+  <ViewAttribute
+    Name="ModifierType"
+    PrecisionRule="true"
+    EntityAttrName="ModifierType"
+    EntityUsage="Proposal"
+    AliasName="MODIFIER_TYPE"/>
+  <ViewAttribute
+    Name="BjpFlag"
+    LOVName="LOV_BjpFlag"
+    PrecisionRule="true"
+    EntityAttrName="BjpFlag"
+    EntityUsage="Proposal"
+    AliasName="BJP_FLAG">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="radio"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ArchieveFlag"
+    LOVName="LOV_ArchieveFlag"
+    PrecisionRule="true"
+    EntityAttrName="ArchieveFlag"
+    EntityUsage="Proposal"
+    AliasName="ARCHIEVE_FLAG">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="radio"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CanAddendum"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CAN_ADDENDUM"
+    SQLType="VARCHAR">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (PromoIsRun == 'Y' && IsAddendumLast == 'Y') {
+if ((EbsPrStatus == 'CANCELLED' || EbsPrStatus == null || EbsPrStatus == 'ERROR' || EbsPrStatus == 'FINALLY CLOSED') && MekanismePenagihan == 'OFFINVOICE') {
+return 'Y';
+} else if ((EbsModifierStatus == 'ACTIVE' || EbsModifierStatus == null) && MekanismePenagihan == 'ONINVOICE') {
+return 'Y';
+} else {
+return 'N';
+}
+} else {
+return 'N';
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="EbsModifierStatus"/>
+      <Item
+        Value="EbsPrStatus"/>
+      <Item
+        Value="IsAddendumLast"/>
+      <Item
+        Value="MekanismePenagihan"/>
+      <Item
+        Value="PrCreated"/>
+      <Item
+        Value="PromoIsRun"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PrRequestId"
+    PrecisionRule="true"
+    EntityAttrName="PrRequestId"
+    EntityUsage="Proposal"
+    AliasName="PR_REQUEST_ID"/>
+  <ViewAttribute
+    Name="ModRequestId"
+    PrecisionRule="true"
+    EntityAttrName="ModRequestId"
+    EntityUsage="Proposal"
+    AliasName="MOD_REQUEST_ID">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="MODIFIER_REQUEST_ID"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="HistRemark"
+    PrecisionRule="true"
+    EntityAttrName="HistRemark"
+    EntityUsage="Proposal"
+    AliasName="HIST_REMARK">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="HISTORY_REMARK"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="HistTranDtFrom"
+    PrecisionRule="true"
+    EntityAttrName="HistTranDtFrom"
+    EntityUsage="Proposal"
+    AliasName="HIST_TRAN_DT_FROM">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.confirmation.ProposalConfirmationView.HistTranDtFrom_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.confirmation.ProposalConfirmationView.HistTranDtFrom_FMT_FORMAT"/>
+        <LABEL
+          ResId="HISTORY_TRANSAKSI_FROM"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="HistTranDtTo"
+    PrecisionRule="true"
+    EntityAttrName="HistTranDtTo"
+    EntityUsage="Proposal"
+    AliasName="HIST_TRAN_DT_TO">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.confirmation.ProposalConfirmationView.HistTranDtTo_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.confirmation.ProposalConfirmationView.HistTranDtTo_FMT_FORMAT"/>
+        <LABEL
+          ResId="HISTORY_TRANSAKSI_TO"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CategoryPc"
+    LOVName="LOV_CategoryPc"
+    PrecisionRule="true"
+    EntityAttrName="CategoryPc"
+    EntityUsage="Proposal"
+    AliasName="CATEGORY_PC">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="MixQtyPromo"
+    LOVName="LOV_MixQtyPromo"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="MixQtyPromo"
+    EntityUsage="Proposal"
+    AliasName="MIX_QTY_PROMO">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StatusPrEbs"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="STATUS_PR_EBS"
+    Expression="PROPOSAL.EBS_PR_STATUS"
+    SQLType="VARCHAR">
+    <TransientExpression><![CDATA[EbsPrStatus]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="EbsPrStatus"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="STATUS_PR_EBS"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StatusModEbs"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="STATUS_MOD_EBS"
+    Expression="PROPOSAL.EBS_MODIFIER_STATUS"
+    SQLType="VARCHAR">
+    <TransientExpression><![CDATA[EbsModifierStatus]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="EbsModifierStatus"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="STATUS_MODIFIER_EBS"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PromoIsRun"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PROMO_IS_RUN"
+    SQLType="VARCHAR">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (PeriodeProgFrom <= adf.currentDate && adf.currentDate <= PeriodeProgTo) {
+return 'Y';
+} else {
+return 'N';
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="PeriodeProgFrom"/>
+      <Item
+        Value="PeriodeProgTo"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CancelPcPr"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CANCEL_PC_PR"
+    SQLType="VARCHAR">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (PrCreated == null && PrRequestId == null) {
+return 'Y';
+} else if (PrCreated != null && PrRequestId != null && StatusPrEbs == 'FINALLY CLOSED') {
+return 'Y';
+} else if (PrCreated != null && PrRequestId != null && StatusPrEbs == 'ERROR') {
+return 'Y';
+} else {
+return 'N';
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="PrCreated"/>
+      <Item
+        Value="PrRequestId"/>
+      <Item
+        Value="StatusPrEbs"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CancelPcMod"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CANCEL_PC_MOD"
+    SQLType="VARCHAR">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (ModifierType == null && ModRequestId == null) {
+return 'Y';
+} else if (ModifierType != null && ModRequestId != null && StatusModEbs == 'INACTIVE') {
+return 'Y';
+} else {
+return 'N';
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="ModRequestId"/>
+      <Item
+        Value="ModifierType"/>
+      <Item
+        Value="StatusModEbs"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CanCreatePr"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CAN_CREATE_PR"
+    SQLType="VARCHAR">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (MekanismePenagihan == 'OFFINVOICE' && PrCreated == null && PrRequestId == null && Status != 'CANCELED') {
+return 'Y';
+} else if (MekanismePenagihan == 'OFFINVOICE' && PrCreated != null && PrRequestId != null && StatusPrEbs == 'ERROR' && Status != 'CANCELED') {
+return 'Y';
+} else if (MekanismePenagihan == 'OFFINVOICE' && PrCreated != null && PrRequestId != null && StatusPrEbs == 'FINALLY CLOSED' && Status != 'CANCELED') {
+return 'Y';
+} else {
+return 'N';
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="MekanismePenagihan"/>
+      <Item
+        Value="PrCreated"/>
+      <Item
+        Value="PrRequestId"/>
+      <Item
+        Value="Status"/>
+      <Item
+        Value="StatusPrEbs"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CanCreateMod"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CAN_CREATE_MOD"
+    SQLType="VARCHAR">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (MekanismePenagihan == 'ONINVOICE' && ModifierType == null && ModRequestId == null && DiscountType == 'POTONGAN' && Status != 'CANCELED') {
+return 'Y';
+} else if (MekanismePenagihan == 'ONINVOICE' && ModifierType != null && ModRequestId != null && StatusModEbs == 'INACTIVE' && DiscountType == 'POTONGAN' && Status != 'CANCELED') {
+return 'Y';
+} else {
+return 'N';
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="DiscountType"/>
+      <Item
+        Value="MekanismePenagihan"/>
+      <Item
+        Value="ModRequestId"/>
+      <Item
+        Value="ModifierType"/>
+      <Item
+        Value="Status"/>
+      <Item
+        Value="StatusModEbs"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AddendumLast"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="ADDENDUM_LAST"
+    Expression="SELECT MAX(NVL(PROP.ADDENDUM_KE,'')) FROM PROPOSAL PROP WHERE PROP.STATUS &lt;> 'CANCELED' AND PROP.CONFIRM_NO = Proposal.CONFIRM_NO"
+    SQLType="VARCHAR"
+    Precision="15"/>
+  <ViewAttribute
+    Name="IsAddendumLast"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="IS_ADDENDUM_LAST"
+    SQLType="VARCHAR">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (AddendumKe == AddendumLast) {
+   return 'Y';
+} else if( AddendumKe == null){
+   return 'Y';
+} else {
+return 'N';
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="AddendumKe"/>
+      <Item
+        Value="AddendumLast"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StatusPr"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="STATUS_PR"
+    SQLType="VARCHAR">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[StatusPrEbs]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="StatusPrEbs"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DcvFlag"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="10"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="DCV_FLAG"
+    Expression="SELECT PROPOSAL1.EBS_DCV_STATUS             FROM PROPOSAL PROPOSAL1             WHERE PROPOSAL1.CONFIRM_NO = PROPOSAL.CONFIRM_NO             AND PROPOSAL1.EBS_DCV_STATUS IS NOT NULL             AND ROWNUM = 1"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="RealisasiItemPaketCount"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REALISASI_ITEM_PAKET_COUNT"
+    Expression="SELECT COUNT(RE.PROD_RIP_EXISTS) FROM (SELECT RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID, 1 AS PROD_RIP_EXISTS FROM REALISASI_ITEM_PAKET RIP, PROMO_PRODUK PP, PROPOSAL PROP WHERE RIP.PROMO_PRODUK_ID = PP.PROMO_PRODUK_ID AND PP.PROPOSAL_ID = PROP.PROPOSAL_ID GROUP BY RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID HAVING (COUNT(RIP.REAL_ITEM_PAKET_ID) > 0)) RE WHERE RE.PROPOSAL_ID = Proposal.PROPOSAL_ID"
+    SQLType="NUMERIC"/>
+  <ViewAttribute
+    Name="DcvPcPrFlag"
+    IsUpdateable="false"
+    LOVName="LOV_DcvPcPrFlag"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="DCV_PC_PR_FLAG"
+    SQLType="VARCHAR">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if ((DcvFlag == 'DCV' && DiscountType == 'POTONGAN' && MekanismePenagihan == 'OFFINVOICE') || (DcvFlag == 'DCV' && DiscountType == 'PROMOBARANG' && MekanismePenagihan == 'OFFINVOICE')) {
+return 'Y';
+} else {
+return 'N';
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="DcvFlag"/>
+      <Item
+        Value="DiscountType"/>
+      <Item
+        Value="MekanismePenagihan"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="STATUS_DCV"/>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StatusGreen"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="STATUS_GREEN"
+    SQLType="VARCHAR">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (((DiscountType == 'POTONGAN' && MekanismePenagihan == 'OFFINVOICE' && ConfirmNo != 'Auto Generated' && (StatusPrEbs == 'IN PROCESS' || StatusPrEbs == null || StatusPrEbs == 'APPROVED' || StatusPrEbs == 'REJECTED' || StatusPrEbs == 'CANCELLED')) || 
+(DiscountType == 'BIAYA' && MekanismePenagihan == 'OFFINVOICE' && ConfirmNo != 'Auto Generated' && (StatusPrEbs == 'IN PROCESS' || StatusPrEbs == 'APPROVED' || StatusPrEbs == 'REJECTED' || StatusPrEbs == 'CANCELLED')) || 
+(DiscountType == 'PROMOBARANG' && MekanismePenagihan == 'OFFINVOICE' && ConfirmNo != 'Auto Generated' && (StatusPrEbs == 'IN PROCESS' || StatusPrEbs == null || StatusPrEbs == 'APPROVED' || StatusPrEbs == 'REJECTED' || StatusPrEbs == 'CANCELLED')) ||
+(DiscountType == 'POTONGAN' && MekanismePenagihan == 'ONINVOICE' && ConfirmNo != 'Auto Generated' && StatusModEbs == 'ACTIVE') || 
+(DiscountType == 'PROMOBARANG' && MekanismePenagihan == 'ONINVOICE' && ConfirmNo != 'Auto Generated' && RealisasiItemPaketCount == ProdukTotalCount && RealisasiItemPaketCount > 0)) && Status == 'ACTIVE') {
+return 'Y';
+} else {
+return 'N';
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="ConfirmNo"/>
+      <Item
+        Value="DiscountType"/>
+      <Item
+        Value="MekanismePenagihan"/>
+      <Item
+        Value="ProdukTotalCount"/>
+      <Item
+        Value="RealisasiItemPaketCount"/>
+      <Item
+        Value="Status"/>
+      <Item
+        Value="StatusModEbs"/>
+      <Item
+        Value="StatusPrEbs"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StatusYellow"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="STATUS_YELLOW"
+    SQLType="VARCHAR">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (((DiscountType == 'POTONGAN' && MekanismePenagihan == 'OFFINVOICE' && ConfirmNo != 'Auto Generated' && StatusPrEbs == 'FINALLY CLOSED' && Status != 'CLOSED') || 
+(DiscountType == 'BIAYA' && MekanismePenagihan == 'OFFINVOICE' && ConfirmNo != 'Auto Generated' && StatusPrEbs == 'FINALLY CLOSED' && Status != 'CLOSED') || 
+(DiscountType == 'PROMOBARANG' && MekanismePenagihan == 'OFFINVOICE' && ConfirmNo != 'Auto Generated' && StatusPrEbs == 'FINALLY CLOSED' && Status != 'CLOSED') ||
+(DiscountType == 'POTONGAN' && MekanismePenagihan == 'ONINVOICE' && ConfirmNo != 'Auto Generated' && StatusModEbs == 'INACTIVE' && Status != 'CLOSED')) && Status != 'CANCELED') {
+return 'Y';
+} else {
+return 'N';
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="ConfirmNo"/>
+      <Item
+        Value="DiscountType"/>
+      <Item
+        Value="MekanismePenagihan"/>
+      <Item
+        Value="Status"/>
+      <Item
+        Value="StatusModEbs"/>
+      <Item
+        Value="StatusPrEbs"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StatusRed"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="STATUS_RED"
+    SQLType="VARCHAR">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (((DiscountType == 'POTONGAN' && MekanismePenagihan == 'OFFINVOICE' && (StatusPrEbs == 'TRANSFERING' || StatusPrEbs == 'ERROR')) || 
+(DiscountType == 'BIAYA' && MekanismePenagihan == 'OFFINVOICE' && (StatusPrEbs == 'TRANSFERING' || StatusPrEbs == null || StatusPrEbs == 'ERROR')) || 
+(DiscountType == 'PROMOBARANG' && MekanismePenagihan == 'OFFINVOICE' && (StatusPrEbs == 'TRANSFERING' || StatusPrEbs == 'ERROR')) ||
+(DiscountType == 'POTONGAN' && MekanismePenagihan == 'ONINVOICE' && (StatusModEbs == null || StatusModEbs == 'TRANSFERING' || StatusModEbs == 'ERROR')) || 
+(DiscountType == 'PROMOBARANG' && MekanismePenagihan == 'ONINVOICE' && RealisasiItemPaketCount != ProdukTotalCount && RealisasiItemPaketCount == 0) || ConfirmNo == 'Auto Generated') && Status == 'ACTIVE') {
+return 'Y';
+} else {
+return 'N';
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="ConfirmNo"/>
+      <Item
+        Value="DiscountType"/>
+      <Item
+        Value="MekanismePenagihan"/>
+      <Item
+        Value="ProdukTotalCount"/>
+      <Item
+        Value="RealisasiItemPaketCount"/>
+      <Item
+        Value="Status"/>
+      <Item
+        Value="StatusModEbs"/>
+      <Item
+        Value="StatusPrEbs"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StatusBlock"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="STATUS_BLOCK"
+    SQLType="VARCHAR">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (Status == 'CANCELED') {
+return 'Y';
+} else {
+return 'N';
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="Status"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="EbsPrStatus"
+    PrecisionRule="true"
+    EntityAttrName="EbsPrStatus"
+    EntityUsage="Proposal"
+    AliasName="EBS_PR_STATUS"/>
+  <ViewAttribute
+    Name="EbsModifierStatus"
+    PrecisionRule="true"
+    EntityAttrName="EbsModifierStatus"
+    EntityUsage="Proposal"
+    AliasName="EBS_MODIFIER_STATUS"/>
+  <ViewAttribute
+    Name="StatusAddModPr"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if(StatusPrEbs == 'CANCELLED'){
+return 'Y';
+} else {
+return 'N';
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="StatusPrEbs"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StatusYellowFilter"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="STATUS_YELLOW_FILTER"
+    Expression="(SELECT CASE WHEN (((Proposal.DISCOUNT_TYPE = 'POTONGAN' AND Proposal.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND Proposal.CONFIRM_NO &lt;> 'Auto Generated' AND Proposal.EBS_PR_STATUS = 'FINALLY CLOSED' AND Proposal.STATUS &lt;> 'CLOSED')  OR ( Proposal.DISCOUNT_TYPE = 'BIAYA' AND Proposal.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND Proposal.CONFIRM_NO &lt;> 'Auto Generated' AND Proposal.EBS_PR_STATUS = 'FINALLY CLOSED' AND Proposal.STATUS &lt;> 'CLOSED') OR (Proposal.DISCOUNT_TYPE = 'PROMOBARANG' AND Proposal.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND Proposal.CONFIRM_NO &lt;> 'Auto Generated' AND Proposal.EBS_PR_STATUS = 'FINALLY CLOSED' AND Proposal.STATUS &lt;> 'CLOSED') OR ((Proposal.DISCOUNT_TYPE = 'POTONGAN' AND Proposal.MEKANISME_PENAGIHAN = 'ONINVOICE' AND Proposal.CONFIRM_NO &lt;> 'Auto Generated' AND Proposal.EBS_MODIFIER_STATUS = 'INACTIVE' AND Proposal.STATUS &lt;> 'CLOSED') AND Proposal.STATUS &lt;> 'CANCELED'))) THEN 'Y' ELSE 'N' END AS YELLOW FROM Proposal PROP WHERE PROP.PROPOSAL_NO = Proposal.PROPOSAL_NO)"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="StatusGreenFilter"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="STATUS_GREEN_FILTER"
+    Expression="(SELECT CASE WHEN (((Proposal.DISCOUNT_TYPE = 'POTONGAN' AND Proposal.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND Proposal.CONFIRM_NO &lt;> 'Auto Generated' AND (Proposal.EBS_PR_STATUS = 'IN PROCESS' OR Proposal.EBS_PR_STATUS IS NULL OR Proposal.EBS_PR_STATUS = 'APPROVED' OR Proposal.EBS_PR_STATUS = 'REJECTED' OR Proposal.EBS_PR_STATUS = 'CANCELLED')) OR (Proposal.DISCOUNT_TYPE = 'BIAYA' AND Proposal.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND Proposal.CONFIRM_NO &lt;> 'Auto Generated' AND (Proposal.EBS_PR_STATUS = 'IN PROCESS' OR Proposal.EBS_PR_STATUS = 'APPROVED' OR Proposal.EBS_PR_STATUS = 'REJECTED' OR Proposal.EBS_PR_STATUS = 'CANCELLED')) OR (Proposal.DISCOUNT_TYPE = 'PROMOBARANG' AND Proposal.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND Proposal.CONFIRM_NO &lt;> 'Auto Generated' AND (Proposal.EBS_PR_STATUS = 'IN PROCESS' OR Proposal.EBS_PR_STATUS IS NULL OR Proposal.EBS_PR_STATUS = 'APPROVED' OR Proposal.EBS_PR_STATUS = 'REJECTED' OR Proposal.EBS_PR_STATUS = 'CANCELLED')) OR (Proposal.DISCOUNT_TYPE = 'POTONGAN' AND Proposal.MEKANISME_PENAGIHAN = 'ONINVOICE' AND Proposal.CONFIRM_NO &lt;> 'Auto Generated' AND Proposal.EBS_MODIFIER_STATUS = 'ACTIVE') OR (Proposal.DISCOUNT_TYPE = 'PROMOBARANG' AND Proposal.MEKANISME_PENAGIHAN = 'ONINVOICE' AND Proposal.CATEGORY_PC IS NOT NULL AND ((SELECT COUNT(RE.PROD_RIP_EXISTS) FROM (SELECT RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID, 1 AS PROD_RIP_EXISTS FROM REALISASI_ITEM_PAKET RIP, PROMO_PRODUK PP, PROPOSAL PROP WHERE RIP.PROMO_PRODUK_ID = PP.PROMO_PRODUK_ID AND PP.PROPOSAL_ID = PROP.PROPOSAL_ID GROUP BY RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID HAVING (COUNT(RIP.REAL_ITEM_PAKET_ID) > 0)) RE WHERE RE.PROPOSAL_ID = Proposal.PROPOSAL_ID) = (SELECT COUNT(PP.PROMO_PRODUK_ID) FROM PROMO_PRODUK PP WHERE PP.PROPOSAL_ID = Proposal.PROPOSAL_ID)) AND ((SELECT COUNT(RE.PROD_RIP_EXISTS) FROM (SELECT RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID, 1 AS PROD_RIP_EXISTS FROM REALISASI_ITEM_PAKET RIP, PROMO_PRODUK PP, PROPOSAL PROP WHERE RIP.PROMO_PRODUK_ID = PP.PROMO_PRODUK_ID AND PP.PROPOSAL_ID = PROP.PROPOSAL_ID GROUP BY RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID HAVING (COUNT(RIP.REAL_ITEM_PAKET_ID) > 0)) RE WHERE RE.PROPOSAL_ID = Proposal.PROPOSAL_ID) > 0))) AND Proposal.STATUS = 'ACTIVE') THEN 'Y' ELSE 'N' END AS GREEN FROM Proposal PROP WHERE PROP.PROPOSAL_NO = Proposal.PROPOSAL_NO)"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="StatusRedFilter"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="STATUS_RED_FILTER"
+    Expression="(SELECT CASE WHEN (((Proposal.DISCOUNT_TYPE = 'POTONGAN' AND Proposal.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND (Proposal.EBS_PR_STATUS = 'TRANSFERING' OR Proposal.EBS_PR_STATUS = 'ERROR')) OR (Proposal.DISCOUNT_TYPE = 'BIAYA' AND Proposal.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND (Proposal.EBS_PR_STATUS = 'TRANSFERING' OR Proposal.EBS_PR_STATUS IS NULL OR Proposal.EBS_PR_STATUS = 'ERROR')) OR (Proposal.DISCOUNT_TYPE = 'PROMOBARANG' AND Proposal.MEKANISME_PENAGIHAN = 'OFFINVOICE' AND (Proposal.EBS_PR_STATUS = 'TRANSFERING' OR Proposal.EBS_PR_STATUS = 'ERROR')) OR   (Proposal.DISCOUNT_TYPE = 'POTONGAN' AND Proposal.MEKANISME_PENAGIHAN = 'ONINVOICE' AND (Proposal.EBS_MODIFIER_STATUS = 'TRANSFERING' OR Proposal.EBS_MODIFIER_STATUS IS NULL OR Proposal.EBS_MODIFIER_STATUS = 'ERROR')) OR (Proposal.DISCOUNT_TYPE = 'PROMOBARANG' AND Proposal.MEKANISME_PENAGIHAN = 'ONINVOICE' AND ((SELECT COUNT(RE.PROD_RIP_EXISTS) FROM (SELECT RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID, 1 AS PROD_RIP_EXISTS FROM REALISASI_ITEM_PAKET RIP, PROMO_PRODUK PP, PROPOSAL PROP WHERE RIP.PROMO_PRODUK_ID = PP.PROMO_PRODUK_ID AND PP.PROPOSAL_ID = PROP.PROPOSAL_ID GROUP BY RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID HAVING (COUNT(RIP.REAL_ITEM_PAKET_ID) > 0)) RE WHERE RE.PROPOSAL_ID = Proposal.PROPOSAL_ID) &lt;> (SELECT COUNT(PP.PROMO_PRODUK_ID) FROM PROMO_PRODUK PP WHERE PP.PROPOSAL_ID = Proposal.PROPOSAL_ID)) AND ((SELECT COUNT(RE.PROD_RIP_EXISTS) FROM (SELECT RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID, 1 AS PROD_RIP_EXISTS FROM REALISASI_ITEM_PAKET RIP, PROMO_PRODUK PP, PROPOSAL PROP WHERE RIP.PROMO_PRODUK_ID = PP.PROMO_PRODUK_ID AND PP.PROPOSAL_ID = PROP.PROPOSAL_ID GROUP BY RIP.PROMO_PRODUK_ID, PP.PROPOSAL_ID HAVING (COUNT(RIP.REAL_ITEM_PAKET_ID) > 0)) RE WHERE RE.PROPOSAL_ID = Proposal.PROPOSAL_ID) = 0)) OR Proposal.CONFIRM_NO = 'Auto Generated') AND Proposal.STATUS = 'ACTIVE') THEN 'Y' ELSE 'N' END AS RED FROM Proposal PROP WHERE PROP.PROPOSAL_NO = Proposal.PROPOSAL_NO)"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="IsReferenced"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="IS_REFERENCED"
+    Expression="SELECT   CASE             WHEN (SELECT   PROP.STATUS                     FROM   PROPOSAL PROP                    WHERE   PROP.PROPOSAL_ID =                               (SELECT   MAX (PPMAX.PROPOSAL_ID)                                  FROM   PROPOSAL PPMAX                                 WHERE   PPMAX.COPY_SOURCE = Proposal.PROPOSAL_NO                                         AND ROWNUM = 1)) = 'CANCELED'             THEN                'N'             WHEN (SELECT   COUNT(PROP.STATUS)                     FROM   PROPOSAL PROP                    WHERE   PROP.PROPOSAL_ID =                               (SELECT   MAX (PPMAX.PROPOSAL_ID)                                  FROM   PROPOSAL PPMAX                                 WHERE   PPMAX.COPY_SOURCE = Proposal.PROPOSAL_NO AND PPMAX.STATUS = 'ACTIVE' AND ROWNUM = 1)) = 0             THEN                'N'             ELSE                'Y'          END             AS IS_REFERENCED   FROM   DUAL"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="AddendumLastTrx"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ADDENDUM_LAST_TRX"
+    Expression="SELECT MAX(NVL(PROP.ADDENDUM_KE,0)) FROM PROPOSAL PROP WHERE PROP.CONFIRM_NO = Proposal.CONFIRM_NO"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="IsAddendumLastTrx"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="IS_ADDENDUM_LAST_TRX"
+    SQLType="VARCHAR">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (AddendumKe == AddendumLastTrx || AddendumKe == null) {
+   return 'Y';
+} else {
+return 'N';
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="AddendumKe"/>
+      <Item
+        Value="AddendumLastTrx"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PreDcvFlag"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="5"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PRE_DCV_FLAG"
+    Expression="PROPOSAL.EBS_DCV_STATUS"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="PrintCounter"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Long"
+    ColumnType="NUMBER"
+    AliasName="PRINT_COUNTER"
+    Expression="(SELECT NVL(SUM(PPL.NUM_VIEW),0) FROM PRINT_PREV_LOG PPL WHERE PPL.PROPOSAL_ID = Proposal.PROPOSAL_ID)"
+    SQLType="FLOAT"/>
+  <ViewAttribute
+    Name="HasAddendum"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="HAS_ADDENDUM"
+    SQLType="VARCHAR">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (AddendumLast == AddendumKe) {
+return 'N';
+} else {
+return 'Y';
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="AddendumKe"/>
+      <Item
+        Value="AddendumLast"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PpnFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PpnFlag"
+    EntityUsage="Proposal"
+    AliasName="PPN_FLAG"
+    LOVName="LOV_PpnFlag">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ClosedAllProduk"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CLOSED_ALL_PRODUK"
+    SQLType="VARCHAR"
+    Precision="1"
+    Expression="(CASE WHEN (SELECT COUNT(1) FROM PROMO_PRODUK PP WHERE PP.PROPOSAL_ID = Proposal.PROPOSAL_ID) = (SELECT COUNT(1) FROM PROMO_PRODUK PR WHERE PR.PROPOSAL_ID = Proposal.PROPOSAL_ID AND PR.CLOSE_FLAG = 'Y') THEN 'Y' ELSE 'N' END)"/>
+  <ViewAttribute
+    Name="ProdukTotalCount"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="PRODUK_TOTAL_COUNT"
+    SQLType="NUMERIC"
+    Expression="(SELECT COUNT(1) FROM PROMO_PRODUK PP WHERE PP.PROPOSAL_ID = Proposal.PROPOSAL_ID)"/>
+  <ViewCriteria
+    Name="PropConfirmCanceledVC"
+    ViewObjectName="app.fpp.model.views.confirmation.ProposalConfirmationView"
+    Conjunction="AND"
+    Mode="3">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="Never"/>
+        <Property
+          Name="autoExecute"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="false"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow154"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="StatusYellowFilter"
+        ViewAttribute="StatusYellowFilter"
+        Operator="="
+        Conjunction="AND"
+        Value="Y"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ViewCriteria
+    Name="PropConfirmNeedCreateVC"
+    ViewObjectName="app.fpp.model.views.confirmation.ProposalConfirmationView"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="Never"/>
+        <Property
+          Name="autoExecute"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="false"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow315"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="StatusRedFilter"
+        ViewAttribute="StatusRedFilter"
+        Operator="="
+        Conjunction="AND"
+        Value="Y"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ViewCriteria
+    Name="PropConfirmAllStatusVC"
+    ViewObjectName="app.fpp.model.views.confirmation.ProposalConfirmationView"
+    Conjunction="AND"
+    Mode="3">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="Never"/>
+        <Property
+          Name="autoExecute"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="false"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow40"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="StatusPrEbs"
+        ViewAttribute="StatusPrEbs"
+        Operator="CONTAINS"
+        Conjunction="AND"
+        Value=":statusPrEbs"
+        IsBindVarValue="true"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="StatusModEbs"
+        ViewAttribute="StatusModEbs"
+        Operator="CONTAINS"
+        Conjunction="OR"
+        Value=":statusModEbs"
+        IsBindVarValue="true"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ViewCriteria
+    Name="PropConfirmNewPcVC"
+    ViewObjectName="app.fpp.model.views.confirmation.ProposalConfirmationView"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="Never"/>
+        <Property
+          Name="autoExecute"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="false"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow257"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="StatusGreenFilter"
+        ViewAttribute="StatusGreenFilter"
+        Operator="="
+        Conjunction="AND"
+        Value="Y"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ViewCriteria
+    Name="PropConfirmStatusCanceledVC"
+    ViewObjectName="app.fpp.model.views.confirmation.ProposalConfirmationView"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="Never"/>
+        <Property
+          Name="autoExecute"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="false"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow45"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="Status"
+        ViewAttribute="Status"
+        Operator="="
+        Conjunction="AND"
+        Value="CANCELED"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ViewCriteria
+    Name="PropConfirmInitialVC"
+    ViewObjectName="app.fpp.model.views.confirmation.ProposalConfirmationView"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow82"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="ProposalId"
+        ViewAttribute="ProposalId"
+        Operator="ISBLANK"
+        Conjunction="AND"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ViewCriteria
+    Name="PropConfirmClosedVC"
+    ViewObjectName="app.fpp.model.views.confirmation.ProposalConfirmationView"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow45"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="Status"
+        ViewAttribute="Status"
+        Operator="="
+        Conjunction="AND"
+        Value="CLOSED"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ViewCriteria
+    Name="PropConfirmAutoGenVC"
+    ViewObjectName="app.fpp.model.views.confirmation.ProposalConfirmationView"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow46"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="ConfirmNo"
+        ViewAttribute="ConfirmNo"
+        Operator="="
+        Conjunction="AND"
+        Value="Auto Generated"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ViewLinkAccessor
+    Name="PostingView"
+    ViewLink="app.fpp.model.views.confirmation.PostingProposalProposalConfirmationFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="PromoProdukView"
+    ViewLink="app.fpp.model.views.confirmation.PromoProdukProposalConfirmationFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="CategoryPcLogView"
+    ViewLink="app.fpp.model.views.confirmation.CategoryPcLogProposalConfirmationFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="UploadDownloadView"
+    ViewLink="app.fpp.model.views.confirmation.UploadDownloadConfirmationFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="EmailNotifReceiverView"
+    ViewLink="app.fpp.model.views.confirmation.notifikasi.EmailNotifReceiverProposalViewLink"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="PromoCustomerAreaView"
+    ViewLink="app.fpp.model.views.confirmation.PromoCustomerAreaProposalConfirmationFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

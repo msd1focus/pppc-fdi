@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="ua_prod_add_pack_ua_prod_add_pack_SetCurrentRowWithKeyValuePageDef"
+                Package="app.fpp.view.pageDefs" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="AppUserProdukPackView1" RangeSize="25"
+              DataControl="UserAccessAMDataControl"
+              id="AppUserProdukPackView1Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="AppUserProdukPackView1Iterator"
+            id="setCurrentRowWithKeyValue" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKeyValue">
+      <NamedData NDName="rowKey" NDValue="#{pageFlowScope.userName}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

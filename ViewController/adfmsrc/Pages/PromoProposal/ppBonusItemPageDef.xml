@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="ppBonusItemPageDef"
+                Package="Pages.PromoProposal">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator id="PromoBonusProdItemView1Iterator"
+              Binds="PromoBonusProdItemView1"
+              DataControl="PromoProposalAMDataControl" RangeSize="-1"/>
+    <iterator id="AllProdukItemShuttleView1Iterator"
+              Binds="AllProdukItemShuttleView1"
+              DataControl="PromoProposalAMDataControl" RangeSize="-1"/>
+  </executables>
+  <bindings>
+    <action id="Commit" DataControl="PromoProposalAMDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="PromoProposalAMDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,383 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:c="http://java.sun.com/jsp/jstl/core">
+  <c:set var="viewcontrollerBundle"
+         value="#{adfBundle['app.fpp.view.ViewControllerBundle']}"/>
+  <af:panelSplitter id="ps2" orientation="vertical" splitterPosition="45"
+                    disabled="true">
+    <f:facet name="first">
+      <af:panelStretchLayout id="psl1" endWidth="311px"
+                             inlineStyle="border-bottom-width:1px; border-bottom-color:rgb(231,231,231); border-bottom-style:solid;"
+                             startWidth="350px">
+        <f:facet name="start">
+          <af:panelGroupLayout id="panelGroupLayout1"
+                               inlineStyle="padding-top:12px; padding-left:5px; color:rgb(28,65,126);"
+                               layout="vertical">
+            <af:outputText value="Approval Setting" id="outputText6"
+                           inlineStyle="font-weight:bold; font-size:18.0px;margin-left:16px;"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:panelStretchLayout>
+    </f:facet>
+    <f:facet name="second">
+      <af:panelSplitter id="panelSplitter1" splitterPosition="300">
+        <f:facet name="first">
+          <af:panelCollection id="pc2" styleClass="AFStretchWidth"
+                              featuresOff="detach viewMenu columnsMenuItem">
+            <f:facet name="toolbar">
+              <af:toolbar id="t2" visible="false">
+                <af:commandToolbarButton actionListener="#{bindings.Execute.execute}"
+                                         text="Refresh"
+                                         disabled="#{!bindings.Execute.enabled}"
+                                         id="ctb2"/>
+                <af:image source="/Images/v_spacer_toolbar.png" id="i2"/>
+                <af:commandToolbarButton text="Add Flow Approval"
+                                         id="ctb1">
+                  <af:showPopupBehavior popupId="p1" triggerType="action"/>
+                </af:commandToolbarButton>
+                <af:popup id="p1" contentDelivery="lazyUncached"
+                          autoCancel="disabled" childCreation="deferred"
+                          popupFetchListener="#{ApprovalSettingBean.addFlowApprovalPopup}"
+                          popupCanceledListener="#{ApprovalSettingBean.addFlowApprovalPopupCanceledListener}">
+                  <af:dialog id="d1" title="Add Flow Approval"
+                             dialogListener="#{ApprovalSettingBean.addFlowApprovalDialog}">
+                    <af:panelFormLayout id="pfl2">
+                      <af:inputText value="#{bindings.AprvlFlowNm.inputValue}"
+                                    label="#{bindings.AprvlFlowNm.hints.label}"
+                                    required="#{bindings.AprvlFlowNm.hints.mandatory}"
+                                    columns="#{bindings.AprvlFlowNm.hints.displayWidth}"
+                                    maximumLength="#{bindings.AprvlFlowNm.hints.precision}"
+                                    shortDesc="#{bindings.AprvlFlowNm.hints.tooltip}"
+                                    id="it5">
+                        <f:validator binding="#{bindings.AprvlFlowNm.validator}"/>
+                      </af:inputText>
+                      <af:inputText value="#{bindings.AprvlDescr.inputValue}"
+                                    label="#{bindings.AprvlDescr.hints.label}"
+                                    required="#{bindings.AprvlDescr.hints.mandatory}"
+                                    columns="#{bindings.AprvlDescr.hints.displayWidth}"
+                                    maximumLength="#{bindings.AprvlDescr.hints.precision}"
+                                    shortDesc="#{bindings.AprvlDescr.hints.tooltip}"
+                                    id="it6" rows="2">
+                        <f:validator binding="#{bindings.AprvlDescr.validator}"/>
+                      </af:inputText>
+                      <af:inputText value="#{bindings.Version.inputValue}"
+                                    label="#{bindings.Version.hints.label}"
+                                    required="#{bindings.Version.hints.mandatory}"
+                                    columns="#{bindings.Version.hints.displayWidth}"
+                                    maximumLength="#{bindings.Version.hints.precision}"
+                                    shortDesc="#{bindings.Version.hints.tooltip}"
+                                    id="it7">
+                        <f:validator binding="#{bindings.Version.validator}"/>
+                      </af:inputText>
+                      <af:selectOneChoice value="#{bindings.Status.inputValue}"
+                                          label="#{bindings.Status.label}"
+                                          required="#{bindings.Status.hints.mandatory}"
+                                          shortDesc="#{bindings.Status.hints.tooltip}"
+                                          id="soc2">
+                        <f:selectItems value="#{bindings.Status.items}"
+                                       id="si2"/>
+                      </af:selectOneChoice>
+                    </af:panelFormLayout>
+                  </af:dialog>
+                </af:popup>
+              </af:toolbar>
+            </f:facet>
+            <af:table value="#{bindings.ApprovalFlowView1.collectionModel}"
+                      var="row" rows="#{bindings.ApprovalFlowView1.rangeSize}"
+                      emptyText="#{bindings.ApprovalFlowView1.viewable ? 'Tidak ada data yang ditampilkan.' : 'Access Denied.'}"
+                      fetchSize="#{bindings.ApprovalFlowView1.rangeSize}"
+                      rowBandingInterval="0"
+                      filterModel="#{bindings.ApprovalFlowView1Query.queryDescriptor}"
+                      queryListener="#{bindings.ApprovalFlowView1Query.processQuery}"
+                      filterVisible="true" varStatus="vs"
+                      selectedRowKeys="#{bindings.ApprovalFlowView1.collectionModel.selectedRow}"
+                      selectionListener="#{bindings.ApprovalFlowView1.collectionModel.makeCurrent}"
+                      rowSelection="single" id="t1"
+                      columnStretching="column:c1"
+                      partialTriggers="::ctb2 ::d1 :::ctb3"
+                      binding="#{ApprovalSettingBean.tblFlowList}">
+              <af:column sortProperty="#{bindings.ApprovalFlowView1.hints.AprvlFlowNm.name}"
+                         filterable="true" sortable="false"
+                         headerText="#{bindings.ApprovalFlowView1.hints.AprvlFlowNm.label}"
+                         id="c1">
+                <af:panelGroupLayout id="pgl1" layout="horizontal">
+                  <af:spacer width="5" height="10" id="s8"/>
+                  <af:image source="#{row.Status == 'A' ? '/Images/active.png' : '/Images/disable.png'}" shortDesc="(A)"
+                            id="i1"/>
+                  <af:spacer width="5" height="10" id="s7"/>
+                  <af:outputText value="#{row.AprvlFlowNm}" id="ot1"
+                                 styleClass="padding:3px;"/>
+                </af:panelGroupLayout>
+              </af:column>
+              <af:column sortProperty="#{bindings.ApprovalFlowView1.hints.Version.name}"
+                         filterable="true" sortable="false"
+                         headerText="#{bindings.ApprovalFlowView1.hints.Version.label}"
+                         id="c2" width="50" align="center">
+                <af:outputText value="#{row.Version}" id="ot2"
+                               styleClass="padding:3px;"/>
+              </af:column>
+            </af:table>
+          </af:panelCollection>
+        </f:facet>
+        <f:facet name="second">
+          <af:panelSplitter id="ps1" orientation="vertical" disabled="true"
+                            splitterPosition="170">
+            <f:facet name="first">
+              <af:panelGroupLayout id="pgl8" layout="scroll"
+                                   partialTriggers="pc2:t1 pc2:d1">
+                <af:panelGroupLayout id="pgl31" layout="horizontal"
+                                     inlineStyle="margin-top:10px;"
+                                     visible="#{bindings.ApprovalFlowView1Iterator.estimatedRowCount == 0}">
+                  <af:outputText value="Tidak ada data yang ditampilkan."
+                                 id="outputText3"/>
+                </af:panelGroupLayout>
+                <af:spacer width="10" height="6" id="s29"/>
+                <af:panelHeader text=" " id="ph1">
+                  <f:facet name="toolbar">
+                    <af:toolbar id="t4">
+                      <af:commandToolbarButton text="Edit"
+                                               id="ctb3"
+                                               inlineStyle="margin-right:15px;">
+                        <af:showPopupBehavior popupId="p2"
+                                              triggerType="action"/>
+                      </af:commandToolbarButton>
+                      <af:popup id="p2" contentDelivery="lazyUncached">
+                        <af:dialog id="d2"
+                                   title="Edit #{bindings.AprvlCode.inputValue}"
+                                   dialogListener="#{ApprovalSettingBean.editFlowApprovalDialog}">
+                          <af:panelFormLayout id="pfl3"
+                                              partialTriggers="pc2:t1">
+                            <af:inputText value="#{bindings.AprvlFlowNm.inputValue}"
+                                          label="#{bindings.AprvlFlowNm.hints.label}"
+                                          required="#{bindings.AprvlFlowNm.hints.mandatory}"
+                                          columns="#{bindings.AprvlFlowNm.hints.displayWidth}"
+                                          maximumLength="#{bindings.AprvlFlowNm.hints.precision}"
+                                          shortDesc="#{bindings.AprvlFlowNm.hints.tooltip}"
+                                          id="it9" readOnly="true"
+                                          contentStyle="font-weight:bold;">
+                              <f:validator binding="#{bindings.AprvlFlowNm.validator}"/>
+                            </af:inputText>
+                            <af:spacer width="10" height="3" id="s5"/>
+                            <af:inputText value="#{bindings.Version.inputValue}"
+                                          label="#{bindings.Version.hints.label}"
+                                          required="#{bindings.Version.hints.mandatory}"
+                                          columns="#{bindings.Version.hints.displayWidth}"
+                                          maximumLength="#{bindings.Version.hints.precision}"
+                                          shortDesc="#{bindings.Version.hints.tooltip}"
+                                          id="it10" readOnly="true"
+                                          contentStyle="font-weight:bold;">
+                              <f:validator binding="#{bindings.Version.validator}"/>
+                            </af:inputText>
+                            <af:spacer width="10" height="5" id="s6"/>
+                            <af:inputText value="#{bindings.AprvlDescr.inputValue}"
+                                          label="#{bindings.AprvlDescr.hints.label}"
+                                          required="#{bindings.AprvlDescr.hints.mandatory}"
+                                          columns="#{bindings.AprvlDescr.hints.displayWidth}"
+                                          maximumLength="#{bindings.AprvlDescr.hints.precision}"
+                                          shortDesc="#{bindings.AprvlDescr.hints.tooltip}"
+                                          id="it8" rows="2">
+                              <f:validator binding="#{bindings.AprvlDescr.validator}"/>
+                            </af:inputText>
+                            <af:selectOneChoice value="#{bindings.Status.inputValue}"
+                                                label="#{bindings.Status.label}"
+                                                required="#{bindings.Status.hints.mandatory}"
+                                                shortDesc="#{bindings.Status.hints.tooltip}"
+                                                id="soc3">
+                              <f:selectItems value="#{bindings.Status.items}"
+                                             id="si3"/>
+                            </af:selectOneChoice>
+                          </af:panelFormLayout>
+                        </af:dialog>
+                      </af:popup>
+                    </af:toolbar>
+                  </f:facet>
+                  <af:panelFormLayout id="pfl1"
+                                      visible="#{bindings.ApprovalFlowView1Iterator.estimatedRowCount > 0}"
+                                      labelWidth="150" partialTriggers="d2">
+                    <af:inputText value="#{bindings.AprvlCode.inputValue}"
+                                  label="#{bindings.AprvlCode.hints.label}"
+                                  required="#{bindings.AprvlCode.hints.mandatory}"
+                                  columns="#{bindings.AprvlCode.hints.displayWidth}"
+                                  maximumLength="#{bindings.AprvlCode.hints.precision}"
+                                  shortDesc="#{bindings.AprvlCode.hints.tooltip}"
+                                  id="it4" readOnly="true"
+                                  contentStyle="font-weight:bold;">
+                      <f:validator binding="#{bindings.AprvlCode.validator}"/>
+                    </af:inputText>
+                    <af:spacer width="10" height="5" id="s1"/>
+                    <af:inputText value="#{bindings.AprvlFlowNm.inputValue}"
+                                  label="#{bindings.AprvlFlowNm.hints.label}"
+                                  required="#{bindings.AprvlFlowNm.hints.mandatory}"
+                                  columns="#{bindings.AprvlFlowNm.hints.displayWidth}"
+                                  maximumLength="#{bindings.AprvlFlowNm.hints.precision}"
+                                  shortDesc="#{bindings.AprvlFlowNm.hints.tooltip}"
+                                  id="it2" readOnly="true"
+                                  contentStyle="font-weight:bold;">
+                      <f:validator binding="#{bindings.AprvlFlowNm.validator}"/>
+                    </af:inputText>
+                    <af:spacer width="10" height="5" id="s2"/>
+                    <af:inputText value="#{bindings.Version.inputValue}"
+                                  label="#{bindings.Version.hints.label}"
+                                  required="#{bindings.Version.hints.mandatory}"
+                                  columns="#{bindings.Version.hints.displayWidth}"
+                                  maximumLength="#{bindings.Version.hints.precision}"
+                                  shortDesc="#{bindings.Version.hints.tooltip}"
+                                  id="it1" readOnly="true"
+                                  contentStyle="font-weight:bold;">
+                      <f:validator binding="#{bindings.Version.validator}"/>
+                    </af:inputText>
+                    <af:spacer width="10" height="5" id="s3"/>
+                    <af:inputText value="#{bindings.AprvlDescr.inputValue}"
+                                  label="#{bindings.AprvlDescr.hints.label}"
+                                  required="#{bindings.AprvlDescr.hints.mandatory}"
+                                  columns="#{bindings.AprvlDescr.hints.displayWidth}"
+                                  maximumLength="#{bindings.AprvlDescr.hints.precision}"
+                                  shortDesc="#{bindings.AprvlDescr.hints.tooltip}"
+                                  id="it3" readOnly="true"
+                                  contentStyle="font-weight:bold;">
+                      <f:validator binding="#{bindings.AprvlDescr.validator}"/>
+                    </af:inputText>
+                    <af:spacer width="10" height="5" id="s4"/>
+                    <af:selectOneChoice value="#{bindings.Status.inputValue}"
+                                        label="#{bindings.Status.label}"
+                                        required="#{bindings.Status.hints.mandatory}"
+                                        shortDesc="#{bindings.Status.hints.tooltip}"
+                                        id="soc1" readOnly="true"
+                                        contentStyle="#{bindings.Status.inputValue == 1 ? 'font-weight:bold; color:red;' : 'font-weight:bold;'}">
+                      <f:selectItems value="#{bindings.Status.items}" id="si1"/>
+                    </af:selectOneChoice>
+                  </af:panelFormLayout>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelTabbed id="pt1"
+                              inlineStyle="margin-right:5px; margin-bottom:3px;">
+                <af:showDetailItem text="#{bindings.AprvlFlowNm.inputValue} Step(s)" id="sdi1"
+                                   stretchChildren="first"
+                                   partialTriggers="pc2:t1">
+                  <af:panelCollection id="pc1"
+                                      featuresOff="detach viewMenu columnsMenuItem statusBar">
+                    <f:facet name="toolbar">
+                      <af:toolbar id="t5">
+                        <af:commandToolbarButton actionListener="#{bindings.Execute1.execute}"
+                                                 text="Refresh"
+                                                 disabled="#{!bindings.Execute1.enabled}"
+                                                 id="ctb6"/>
+                        <af:image source="/Images/v_spacer_toolbar.png"
+                                  id="i3"/>
+                        <af:commandToolbarButton text="Add Step"
+                                                 id="ctbInsert">
+                          <af:showPopupBehavior popupId="p3"
+                                                triggerType="action"/>
+                        </af:commandToolbarButton>
+                        <af:popup id="p3" contentDelivery="lazyUncached"
+                                    autoCancel="disabled" childCreation="deferred"
+                                  popupFetchListener="#{ApprovalSettingBean.addFlowStepPopup}"
+                                  popupCanceledListener="#{ApprovalSettingBean.addFlowStepPopupCanceledListener}">
+                          <af:dialog id="d3" title="Add Flow Step"
+                                     stretchChildren="none"
+                                     closeIconVisible="false"
+                                     dialogListener="#{ApprovalSettingBean.addFlowStepDialog}">
+                            <af:panelFormLayout id="pfl4">
+                              <af:inputText value="#{bindings.StepSequence.inputValue}"
+                                            label="#{bindings.StepSequence.hints.label}"
+                                            required="#{bindings.StepSequence.hints.mandatory}"
+                                            columns="#{bindings.StepSequence.hints.displayWidth}"
+                                            maximumLength="#{bindings.StepSequence.hints.precision}"
+                                            shortDesc="#{bindings.StepSequence.hints.tooltip}"
+                                            id="it12">
+                                <f:validator binding="#{bindings.StepSequence.validator}"/>
+                                <af:convertNumber groupingUsed="false"
+                                                  pattern="#{bindings.StepSequence.format}"/>
+                              </af:inputText>
+                              <af:selectOneChoice value="#{bindings.RoleName.inputValue}"
+                                                  label="#{bindings.RoleName.label}"
+                                                  required="#{bindings.RoleName.hints.mandatory}"
+                                                  shortDesc="#{bindings.RoleName.hints.tooltip}"
+                                                  id="soc4">
+                                <f:selectItems value="#{bindings.RoleName.items}"
+                                               id="si4"/>
+                              </af:selectOneChoice>
+                            </af:panelFormLayout>
+                          </af:dialog>
+                        </af:popup>
+                        <af:commandToolbarButton text="Edit Step"
+                                                 id="commandToolbarButton1">
+                          <af:showPopupBehavior popupId="p3"
+                                                triggerType="action"/>
+                        </af:commandToolbarButton>
+                        <af:commandToolbarButton text="Remove"
+                                                 id="ctb5">
+                          <af:showPopupBehavior popupId="p4"
+                                                triggerType="action"/>
+                        </af:commandToolbarButton>
+                        <af:popup id="p4" contentDelivery="lazyUncached">
+                          <af:dialog id="d4" title="Remove Flow Step"
+                                     dialogListener="#{ApprovalSettingBean.hapusFlowStepDialog}">
+                            <af:panelGroupLayout id="pgl2" layout="horizontal"
+                                                 partialTriggers="t3">
+                              <af:outputText value='Yakin akan menghapus step \"' id="ot5"/>
+                              <af:selectOneChoice value="#{bindings.RoleName.inputValue}"
+                                                  label="#{bindings.RoleName.label}"
+                                                  required="#{bindings.RoleName.hints.mandatory}"
+                                                  shortDesc="#{bindings.RoleName.hints.tooltip}"
+                                                  id="soc5" simple="true"
+                                                  readOnly="true">
+                                <f:selectItems value="#{bindings.RoleName.items}"
+                                               id="si5"/>
+                              </af:selectOneChoice>
+                              <af:outputText value='\" ?' id="ot6"/>
+                            </af:panelGroupLayout>
+                          </af:dialog>
+                        </af:popup>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table value="#{bindings.ApprovalStepsView1.collectionModel}"
+                              var="row"
+                              rows="#{bindings.ApprovalStepsView1.rangeSize}"
+                              emptyText="#{bindings.ApprovalStepsView1.viewable ? 'Tidak ada data yang ditampilkan.' : 'Access Denied.'}"
+                              fetchSize="#{bindings.ApprovalStepsView1.rangeSize}"
+                              rowBandingInterval="0"
+                              selectedRowKeys="#{bindings.ApprovalStepsView1.collectionModel.selectedRow}"
+                              selectionListener="#{bindings.ApprovalStepsView1.collectionModel.makeCurrent}"
+                              rowSelection="single" id="t3"
+                              partialTriggers=":::pc2:t1 ::d3 ::d4 ::ctb6"
+                              columnStretching="column:c4"
+                              styleClass="AFStretchWidth"
+                              binding="#{ApprovalSettingBean.tblFlowStep}">
+                      <af:column sortProperty="#{bindings.ApprovalStepsView1.hints.StepSequence.name}"
+                                 sortable="true"
+                                 headerText="#{viewcontrollerBundle.FLOW_SEQ}"
+                                 id="c3" align="center" width="80">
+                        <af:outputText value="#{row.StepSequence}" id="ot3">
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.ApprovalStepsView1.hints.StepSequence.format}"/>
+                        </af:outputText>
+                      </af:column>
+                      <af:column sortProperty="#{bindings.ApprovalStepsView1.hints.RoleName.name}"
+                                 sortable="true"
+                                 headerText="#{bindings.ApprovalStepsView1.hints.RoleName.label}"
+                                 id="c4">
+                        <af:selectOneChoice value="#{row.bindings.RoleName.inputValue}"
+                                            label="#{row.bindings.RoleName.label}"
+                                            required="#{bindings.ApprovalStepsView1.hints.RoleName.mandatory}"
+                                            shortDesc="#{bindings.ApprovalStepsView1.hints.RoleName.tooltip}"
+                                            id="soc6" readOnly="true">
+                          <f:selectItems value="#{row.bindings.RoleName.items}"
+                                         id="si6"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:showDetailItem>
+              </af:panelTabbed>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+      </af:panelSplitter>
+    </f:facet>
+  </af:panelSplitter>
+</jsp:root>

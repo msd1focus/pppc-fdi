@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="promoProposalPageDef"
+                Package="app.fpp.view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="Templates.FPPDashboardPageDef" id="pageTemplateBinding"
+          Refresh="ifNeeded"/>
+    <taskFlow id="promoproposal1"
+              taskFlowId="/WEB-INF/promo-proposal.xml#promo-proposal"
+              activation="deferred"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+  </executables>
+  <bindings/>
+</pageDefinition>

@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelSplitter id="ps2" orientation="vertical" splitterPosition="45"
+                    disabled="true">
+    <f:facet name="first">
+      <af:panelStretchLayout id="psl1" endWidth="311px"
+                             inlineStyle="border-bottom-width:1px; border-bottom-color:rgb(231,231,231); border-bottom-style:solid;"
+                             startWidth="380px">
+        <f:facet name="start">
+          <af:panelGroupLayout id="panelGroupLayout1"
+                               inlineStyle="padding-top:12px; padding-left:5px; color:rgb(28,65,126);"
+                               layout="vertical">
+            <af:outputText value="Report: Yearly Budget"
+                           id="outputText6"
+                           inlineStyle="font-weight:bold; font-size:18.0px;margin-left:16px;"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:panelStretchLayout>
+    </f:facet>
+    <f:facet name="second">
+      <af:panelTabbed id="pt1"
+                      inlineStyle="margin-left:10px;margin-bottom:10px;margin-right:10px;margin-top:5px;">
+        <af:showDetailItem text="Action" id="sdi1">
+          <af:panelGroupLayout id="pgl1" layout="vertical">
+            <af:panelGroupLayout id="panelGroupLayout8" layout="vertical"
+                                 inlineStyle="background-color:rgb(240,240,240);">
+              <af:spacer width="10" height="5" id="spacer18"/>
+              <af:panelGroupLayout id="panelGroupLayout10" layout="horizontal"
+                                   inlineStyle="padding-left:10px;">
+                <af:image shortDesc="Still Running" source="/afr/info.png"
+                          id="ai1"/>
+                <af:spacer width="10" height="10" id="spacer47"/>
+                <af:outputText value="Informasi" id="outputText11"
+                               inlineStyle="font-size:small; width:100px; font-weight:bold;"/>
+              </af:panelGroupLayout>
+              <af:spacer width="10" height="5" id="spacer48"/>
+              <af:panelGroupLayout id="panelGroupLayout11" layout="vertical"
+                                   inlineStyle="padding-left:12px;">
+                <af:outputFormatted value="Halaman generator untuk report yearly bugdet PPPC"
+                                    id="of1" inlineStyle="font-size:11.0px;"/>
+              </af:panelGroupLayout>
+              <af:spacer width="10" height="6" id="s1"/>
+            </af:panelGroupLayout>
+            <af:spacer width="10" height="10" id="s2"/>
+            <af:panelFormLayout id="pfl1" labelWidth="120">
+              <af:panelLabelAndMessage label="#{bindings.BudgetType.hints.label}" id="plam2">
+                <af:panelGroupLayout id="pgl4" layout="horizontal">
+                  <af:inputListOfValues id="budgetTypeId"
+                                        popupTitle="Search and Select: #{bindings.BudgetType.hints.label}"
+                                        value="#{bindings.BudgetType.inputValue}"
+                                        model="#{bindings.BudgetType.listOfValuesModel}"
+                                        required="#{bindings.BudgetType.hints.mandatory}"
+                                        columns="#{bindings.BudgetType.hints.displayWidth}"
+                                        shortDesc="#{bindings.BudgetType.hints.tooltip}"
+                                        editMode="select"
+                                        contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:200px; font-weight:bold;"
+                                        returnPopupListener="#{GenerateReportBean.BudgetTypeReturnPopupListener}"
+                                        binding="#{GenerateReportBean.budgetTypeILOV}">
+                    <f:validator binding="#{bindings.BudgetType.validator}"/>
+                  </af:inputListOfValues>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.BudgetYear.hints.label}" id="plam3">
+                <af:panelGroupLayout id="pgl5" layout="horizontal">
+                  <af:inputListOfValues id="budgetYearId"
+                                        popupTitle="Search and Select: #{bindings.BudgetYear.hints.label}"
+                                        value="#{bindings.BudgetYear.inputValue}"
+                                        model="#{bindings.BudgetYear.listOfValuesModel}"
+                                        required="#{bindings.BudgetYear.hints.mandatory}"
+                                        columns="#{bindings.BudgetYear.hints.displayWidth}"
+                                        shortDesc="#{bindings.BudgetYear.hints.tooltip}"
+                                        contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:200px; font-weight:bold;"
+                                        returnPopupListener="#{GenerateReportBean.BudgetYearReturnPopupListener}"
+                                        binding="#{GenerateReportBean.budgetYearILOV}">
+                    <f:validator binding="#{bindings.BudgetYear.validator}"/>
+                  </af:inputListOfValues>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.BudgetName.hints.label}" id="plam1">
+                <af:panelGroupLayout id="pgl3" layout="horizontal">
+                  <af:inputListOfValues id="budgetName1Id"
+                                        popupTitle="Search and Select: #{bindings.BudgetName1.hints.label}"
+                                        value="#{bindings.BudgetName1.inputValue}"
+                                        model="#{bindings.BudgetName1.listOfValuesModel}"
+                                        required="#{bindings.BudgetName1.hints.mandatory}"
+                                        columns="#{bindings.BudgetName1.hints.displayWidth}"
+                                        shortDesc="#{bindings.BudgetName1.hints.tooltip}"
+                                        partialTriggers="budgetTypeId budgetYearId sbc1"
+                                        contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:200px; font-weight:bold;"
+                                        disabled="#{bindings.BudgetNameAll.inputValue == true ? true : false}"
+                                        binding="#{GenerateReportBean.budgetNameLov}"
+                                        returnPopupListener="#{GenerateReportBean.BudgetNameReturnPopupListener}">
+                    <f:validator binding="#{bindings.BudgetName1.validator}"/>
+                  </af:inputListOfValues>
+                  <af:spacer width="10" height="10" id="s5"/>
+                  <af:selectBooleanCheckbox value="#{bindings.BudgetNameAll.inputValue}"
+                                            label="#{bindings.BudgetNameAll.label}"
+                                            shortDesc="#{bindings.BudgetNameAll.hints.tooltip}"
+                                            id="sbc1" simple="true"
+                                            autoSubmit="true"
+                                            partialTriggers="budgetName1Id"
+                                            valueChangeListener="#{GenerateReportBean.selectAllEvent}"
+                                            binding="#{GenerateReportBean.budgetNameSBC}"/>
+                  <af:outputText value="All" id="ot1"
+                                 inlineStyle="padding-left:5px;"/>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.Detail.hints.label}" id="plam4">
+                <af:panelGroupLayout id="pgl6" layout="horizontal">
+                  <af:inputListOfValues id="detailId"
+                                        popupTitle="Search and Select: #{bindings.Detail.hints.label}"
+                                        value="#{bindings.Detail.inputValue}"
+                                        model="#{bindings.Detail.listOfValuesModel}"
+                                        required="#{bindings.Detail.hints.mandatory}"
+                                        columns="#{bindings.Detail.hints.displayWidth}"
+                                        shortDesc="#{bindings.Detail.hints.tooltip}"
+                                        contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:200px; font-weight:bold;"
+                                        returnPopupListener="#{GenerateReportBean.DetailorSummaryReturnPopupListener}"
+                                        binding="#{GenerateReportBean.detailOrSummaryILOV}"
+                                        autoSubmit="true">
+                    <f:validator binding="#{bindings.Detail.validator}"/>
+                  </af:inputListOfValues>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage id="plam5"
+                                       label="#{bindings.Status.hints.label}">
+                  <af:panelGroupLayout id="pgl7" layout="horizontal">
+                  <af:spacer width="10" height="10" id="s6"/>
+                  <af:inputListOfValues id="statusId"
+                                          popupTitle="Search and Select: #{bindings.Status.hints.label}"
+                                          value="#{bindings.Status.inputValue}"
+                                          label="#{bindings.Status.hints.label}"
+                                          model="#{bindings.Status.listOfValuesModel}"
+                                          required="#{bindings.Status.hints.mandatory}"
+                                          columns="#{bindings.Status.hints.displayWidth}"
+                                          shortDesc="#{bindings.Status.hints.tooltip}"
+                                          simple="true" autoSubmit="true"
+                                          contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:200px; font-weight:bold;"
+                                          binding="#{GenerateReportBean.statusIpt}"
+                                          returnPopupListener="#{GenerateReportBean.statusLov}">
+                      <f:validator binding="#{bindings.Status.validator}"/>
+                    </af:inputListOfValues>
+                  </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+            </af:panelFormLayout>
+            <af:spacer width="10" height="10" id="spacer1"/>
+            <af:panelGroupLayout id="pgl2" layout="horizontal">
+              <af:spacer width="135" height="10" id="s3"/>
+              <af:goButton text="Generate Report" id="cbGenReport"
+                           inlineStyle="padding:10px;"
+                           targetFrame="_blank"
+                           binding="#{GenerateReportBean.genYearlyBudgetBtn}"/>
+            </af:panelGroupLayout>
+            <af:spacer width="10" height="10" id="s4"/>
+          </af:panelGroupLayout>
+        </af:showDetailItem>
+      </af:panelTabbed>
+    </f:facet>
+  </af:panelSplitter>
+</jsp:root>

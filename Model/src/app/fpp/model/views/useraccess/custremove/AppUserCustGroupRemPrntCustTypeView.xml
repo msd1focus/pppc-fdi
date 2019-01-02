@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="AppUserCustGroupRemPrntCustTypeView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  SelectList="AppUserCustType.CUST_TYPE, 
+       AppUserCustType.USER_NAME"
+  FromList="APP_USER_CUST_TYPE AppUserCustType"
+  Where="AppUserCustType.USER_NAME = :userName
+AND NOT EXISTS (
+        SELECT 1
+        FROM APPS.AR_CUSTOMERS AC, 
+             APP_USER_CUST_GROUP ACG
+        WHERE ACG.USER_NAME = :userName
+        AND AC.ATTRIBUTE8 = AppUserCustType.CUST_TYPE
+        AND AC.ATTRIBUTE1 = ACG.CUST_GROUP
+)"
+  RowClass="app.fpp.model.views.useraccess.custremove.AppUserCustGroupRemPrntCustTypeViewRowImpl"
+  ComponentClass="app.fpp.model.views.useraccess.custremove.AppUserCustGroupRemPrntCustTypeViewImpl">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.useraccess.custremove.AppUserCustGroupRemPrntCustTypeView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="userName"
+    Kind="where"
+    Type="java.lang.String"/>
+  <EntityUsage
+    Name="AppUserCustType"
+    Entity="app.fpp.model.entities.useraccess.AppUserCustType"/>
+  <ViewAttribute
+    Name="CustType"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CustType"
+    EntityUsage="AppUserCustType"
+    AliasName="CUST_TYPE"/>
+  <ViewAttribute
+    Name="UserName"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="UserName"
+    EntityUsage="AppUserCustType"
+    AliasName="USER_NAME"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

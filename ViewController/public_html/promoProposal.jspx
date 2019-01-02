@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view beforePhase="#{Menu.createMenus}">
+    <af:document id="d1" title="Focus PCPP | Promo Proposal">
+    <af:resource type="javascript">
+         function clearMessagesForComponent(evt){
+            var element = evt.getSource();
+            var val = element.getValue();
+            var cid = element.getClientId();
+            AdfPage.PAGE.clearAllMessages();
+            evt.cancel();
+        }
+        
+        function onPopupPreventModal(event) {                
+            var popup = event.getSource();               
+            popup.cancel = function(){}           
+        }
+        
+        function tableDoubleClick(evt){   
+            var table = evt.getSource();
+            AdfCustomEvent.queue(table, "TableDoubleClickEvent",{}, true);         
+            evt.cancel();
+        }
+    </af:resource>
+      <af:form id="f1">
+        <af:resource type="javascript" source="/js/test.js"/>
+        <af:pageTemplate viewId="/Templates/FPPDashboard.jspx"
+                         value="#{bindings.pageTemplateBinding}" id="pt1">
+          <f:facet name="mainWindow">
+            <af:region value="#{bindings.promoproposal1.regionModel}" id="r1"
+                       showDisclosure="false"/>
+          </f:facet>
+        </af:pageTemplate>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

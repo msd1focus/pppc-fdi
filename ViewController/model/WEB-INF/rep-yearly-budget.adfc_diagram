@@ -1,0 +1,26 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1"/>
+   <View
+      id="View2">
+      <property
+         name="activityId">repYearlyBudget</property>
+      <property
+         name="start">true</property>
+      <property
+         name="page">/Pages/Report/repYearlyBudget.jsff</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>repYearlyBudget&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="thumbnailExpanded">true</property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">218.94824</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">249.0</property>
+   </View>
+</SDM>

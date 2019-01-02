@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1" title="Email Notifikasi Receiver"
+                 inlineStyle="background-color:#f9f9f9;">
+      <af:form id="f1">
+        <af:panelGroupLayout id="pgl2" layout="vertical" halign="end">
+          <af:panelGroupLayout id="pgl3" valign="middle" halign="center"
+                               layout="horizontal"
+                               inlineStyle="margin-top:10px;">
+            <af:inputText label="Label 1" id="it1" simple="true"
+                          binding="#{PcEmailNotifReceiverBean.txt_newEmail}"
+                          contentStyle="width:185px;" autoSubmit="true">
+              <af:validateRegExp id="mailRegex"
+                                 messageDetailNoMatch="Format alamat email tidak valid."
+                                 pattern="^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"/>
+              <af:autoSuggestBehavior
+                                      suggestedItems="#{PcEmailNotifReceiverBean.getEmailSuggested}"/>
+            </af:inputText>
+            <af:spacer width="17" height="10" id="spacer1"/>
+            <af:commandButton text="Add" id="cb2" partialTriggers="t1"
+                              inlineStyle="padding-right:8px;padding-left:8px;padding-top:3px;padding-bottom:3px;"
+                              actionListener="#{PcEmailNotifReceiverBean.btn_addEmailToList}"
+                              partialSubmit="true"/>
+            <af:spacer width="3" height="30" id="s4"/>
+            <af:commandButton text="Send" id="commandButton1"
+                              partialTriggers="t1"
+                              inlineStyle="padding-right:8px;padding-left:8px;padding-top:3px;padding-bottom:3px;"
+                              disabled="#{bindings.EmailNotifReceiverView1.estimatedRowCount == 0}"
+                              actionListener="#{PcEmailNotifReceiverBean.sendEmailNotifBean}"/>
+            <af:spacer width="3" height="30" id="s2"/>
+            <af:commandButton text="Close" id="cb1"
+                              inlineStyle="padding-right:8px;padding-left:8px;padding-top:3px;padding-bottom:3px;"
+                              action="close" immediate="true"/>
+          </af:panelGroupLayout>
+        </af:panelGroupLayout>
+        <af:panelStretchLayout id="psl1" inlineStyle="height:100px;"
+                               dimensionsFrom="children" topHeight="200px">
+          <f:facet name="top">
+            <af:panelGroupLayout id="pgl1" halign="center" layout="vertical">
+              <af:messages id="m2"/>
+              <af:spacer width="10" height="20" id="s1"/>
+              <af:table value="#{bindings.EmailNotifReceiverView1.collectionModel}"
+                        var="row"
+                        rows="#{bindings.EmailNotifReceiverView1.rangeSize}"
+                        emptyText="#{bindings.EmailNotifReceiverView1.viewable ? 'Tidak ada data yang ditampilkan.' : 'Access Denied.'}"
+                        fetchSize="#{bindings.EmailNotifReceiverView1.rangeSize}"
+                        rowBandingInterval="0"
+                        selectedRowKeys="#{bindings.EmailNotifReceiverView1.collectionModel.selectedRow}"
+                        selectionListener="#{bindings.EmailNotifReceiverView1.collectionModel.makeCurrent}"
+                        rowSelection="single" id="t1"
+                        inlineStyle="height:170px;" width="355"
+                        horizontalGridVisible="false"
+                        verticalGridVisible="false"
+                        columnStretching="column:c1" partialTriggers="::cb2">
+                <af:column sortProperty="#{bindings.EmailNotifReceiverView1.hints.EmailAddress.name}"
+                           sortable="false"
+                           id="c1">
+                  <af:outputText value="#{row.EmailAddress}" id="ot1"
+                                 inlineStyle="padding-left:5px;"/>
+                </af:column>
+                <af:column id="c2" width="20" minimumWidth="20">
+                  <af:commandImageLink id="cil1"
+                                       icon="/Images/delete_doc.png"
+                                       actionListener="#{PcEmailNotifReceiverBean.btn_deleteRow}"
+                                       shortDesc="Delete" immediate="true"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+          </f:facet>
+        </af:panelStretchLayout>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

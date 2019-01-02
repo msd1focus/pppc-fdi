@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="pp-prod-add-item">
+    <default-activity id="__1">setKeyPromoProdukId</default-activity>
+    <input-parameter-definition id="__8">
+      <name id="__9">promoProdukId</name>
+      <value>#{pageFlowScope.promoProdukId}</value>
+      <class>oracle.jbo.domain.DBSequence</class>
+      <required/>
+    </input-parameter-definition>
+    <input-parameter-definition id="__11">
+      <name id="__10">prodName</name>
+      <value>#{pageFlowScope.prodName}</value>
+      <class>java.lang.String</class>
+      <required/>
+    </input-parameter-definition>
+    <input-parameter-definition id="__13">
+      <name id="__12">packCode</name>
+      <value>#{pageFlowScope.packCode}</value>
+      <class>java.lang.String</class>
+      <required/>
+    </input-parameter-definition>
+    <input-parameter-definition id="__37">
+      <name id="__36">categoryCode</name>
+      <value>#{pageFlowScope.categoryCode}</value>
+      <class>java.lang.String</class>
+      <required/>
+    </input-parameter-definition>
+    <input-parameter-definition id="__38">
+      <name id="__39">classCode</name>
+      <value>#{pageFlowScope.classCode}</value>
+      <class>java.lang.String</class>
+      <required/>
+    </input-parameter-definition>
+    <input-parameter-definition id="__40">
+      <name id="__41">brandCode</name>
+      <value>#{pageFlowScope.brandCode}</value>
+      <class>java.lang.String</class>
+      <required/>
+    </input-parameter-definition>
+    <input-parameter-definition id="__42">
+      <name id="__43">extCode</name>
+      <value>#{pageFlowScope.extCode}</value>
+      <class>java.lang.String</class>
+      <required/>
+    </input-parameter-definition>
+    <input-parameter-definition id="__21">
+      <name id="__20">userName</name>
+      <value>#{pageFlowScope.userName}</value>
+      <class>java.lang.String</class>
+      <required/>
+    </input-parameter-definition>
+    <managed-bean id="__14">
+      <managed-bean-name id="__17">PpProdAddItemBackingBean</managed-bean-name>
+      <managed-bean-class id="__16">app.fpp.bean.promoproposal.PpProdAddItemBackingBean</managed-bean-class>
+      <managed-bean-scope id="__15">backingBean</managed-bean-scope>
+    </managed-bean>
+    <view id="ppProdAddItem">
+      <page>/Pages/PromoProposal/ppProdAddItem.jspx</page>
+    </view>
+    <task-flow-return id="return">
+      <outcome id="__2">
+        <name>return</name>
+      </outcome>
+    </task-flow-return>
+    <method-call id="setKeyPromoProdukIdOld">
+      <method>#{bindings.setCurrentRowWithKeyValue.execute}</method>
+      <outcome id="__18">
+        <fixed-outcome>setCurrentRowWithKeyValue</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="setProdukItem">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__30">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="setKeyPromoProdukId">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__19">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__3">
+      <from-activity-id id="__4">ppProdAddItem</from-activity-id>
+      <control-flow-case id="__6">
+        <from-outcome id="__7">close</from-outcome>
+        <to-activity-id id="__5">return</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__31">
+      <from-activity-id id="__32">setProdukItem</from-activity-id>
+      <control-flow-case id="__33">
+        <from-outcome id="__34">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__35">ppProdAddItem</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__25">
+      <from-activity-id id="__26">setKeyPromoProdukIdOld</from-activity-id>
+      <control-flow-case id="__27">
+        <from-outcome id="__28">setCurrentRowWithKeyValue</from-outcome>
+        <to-activity-id id="__29">setProdukItem</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__44">
+      <from-activity-id id="__45">setKeyPromoProdukId</from-activity-id>
+      <control-flow-case id="__46">
+        <from-outcome id="__47">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__48">setProdukItem</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+  </task-flow-definition>
+</adfc-config>

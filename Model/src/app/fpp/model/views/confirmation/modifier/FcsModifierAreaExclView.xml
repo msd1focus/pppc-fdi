@@ -1,0 +1,1470 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="FcsModifierAreaExclView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  RowClass="app.fpp.model.views.confirmation.modifier.FcsModifierAreaExclViewRowImpl"
+  ComponentClass="app.fpp.model.views.confirmation.modifier.FcsModifierAreaExclViewImpl">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.confirmation.modifier.FcsModifierAreaExclView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="noConfirm"
+    Kind="where"
+    Type="java.lang.String"/>
+  <SQLQuery>
+    <![CDATA[SELECT DENSE_RANK () OVER (ORDER BY lala.no_confirm, lala.promo_produk_id,
+          lala.break_type,
+          lala.product_value,
+          lala.ket) AS line_num,
+         DENSE_RANK () OVER (ORDER BY lala.promo_produk_id, lala.product_attribute
+          ) AS product_id,
+            LALA."NO_CONFIRM",
+            LALA."CURRENCY",
+            LALA."START_DATE",
+            LALA."END_DATE",
+            LALA."ACTIVE",
+            LALA."AUTOMATIC",
+            LALA."LINE_LEVEL",
+            LALA."LINE_TYPE",
+            LALA."START_DATE_LINE",
+            LALA."END_DATE_LINE",
+            LALA."AUTOMATIC_LINE",
+            LALA."PRICING_PHASE",
+            LALA."BUCKET",
+            LALA."PRODUCT_ATTRIBUTE",
+            LALA."PRODUCT_VALUE",
+            LALA."VOLUME_TYPE",
+            LALA."BREAK_TYPE",
+            LALA."UOM",
+            LALA."VALUE_FROM",
+            LALA."VALUE_TO",
+            LALA."APPLICATION_METHOD",
+            LALA."VALUE",
+            LALA."GROUPING_NO",
+            LALA."QUALIFIER_CONTEXT",
+            LALA."QUALIFIER_ATTR",
+            LALA."OPERATOR_SIGN",
+            LALA."VALUE_QUALIFIER",
+            LALA."CONFIRM_NO_DEF",
+            LALA."PROMO_PRODUK_ID",
+            LALA."DISC_YEARLY",
+            LALA."KET"
+       FROM (  
+                -- MF QUERY
+                SELECT 
+                      (CASE
+                          WHEN PROP.ADDENDUM_KE IS NULL THEN PROP.CONFIRM_NO
+                          ELSE PROP.CONFIRM_NO || '-' || PROP.ADDENDUM_KE
+                      END) AS NO_CONFIRM,
+                      PROP.CURRENCY,
+                      PROP.PERIODE_PROG_FROM AS START_DATE,
+                      PROP.PERIODE_PROG_TO AS END_DATE,
+                      'Y' AS ACTIVE,
+                      'Y' AS AUTOMATIC,
+                      (CASE
+                          WHEN PROP.MIX_QTY_PROMO = 'N' THEN 'LINE'
+                          ELSE 'LINEGROUP'
+                       END)
+                         AS LINE_LEVEL,
+                      'Discount' AS LINE_TYPE,
+                      PROP.PERIODE_PROG_FROM AS START_DATE_LINE,
+                      PROP.PERIODE_PROG_TO AS END_DATE_LINE,
+                      'Y' AS AUTOMATIC_LINE,
+                      'All Lines Adjustment' AS PRICING_PHASE,
+                      PROD.KODE_POSTING AS BUCKET,
+                      (CASE
+                          WHEN PROD_VARIANT.VARIANT_DESC = 'ALL'
+                               AND PROD_ITEM IS NOT NULL
+                          THEN
+                             PROD_ITEM.PROD_ITEM
+                          ELSE
+                             (   PROD.PRODUCT_CATEGORY
+                              || '.'
+                              || PROD.PRODUCT_CLASS
+                              || '.'
+                              || PROD.PRODUCT_BRAND
+                              || '.'
+                              || PROD.PRODUCT_EXT
+                              || '.'
+                              || PROD.PRODUCT_PACK
+                              || '.'
+                              || PROD_VARIANT)
+                       END)
+                         AS PRODUCT_ATTRIBUTE,
+                      (CASE
+                          WHEN PROD_VARIANT.VARIANT_DESC = 'ALL'
+                               AND PROD_ITEM IS NOT NULL
+                          THEN
+                             PROD_ITEM.PROD_ITEM
+                          ELSE
+                             (   PROD.PRODUCT_CATEGORY
+                              || '.'
+                              || PROD.PRODUCT_CLASS
+                              || '.'
+                              || PROD.PRODUCT_BRAND
+                              || '.'
+                              || PROD.PRODUCT_EXT
+                              || '.'
+                              || PROD.PRODUCT_PACK
+                              || '.'
+                              || PROD_VARIANT)
+                       END)
+                         AS PRODUCT_VALUE,
+                      'Item Quantity' AS VOLUME_TYPE,
+                      (CASE
+                          WHEN DISC.TIPE_PERHITUNGAN = 'TDKKELIPATAN'
+                          THEN
+                             'Point'
+                          ELSE
+                             'Recurring'
+                       END)
+                         AS BREAK_TYPE,
+                      DISC.UOM AS UOM,
+                      DISC.QTY_FROM AS VALUE_FROM,
+                      NVL (DISC.QTY_TO, 999999) AS VALUE_TO,
+                      DISC.TIPE_POTONGAN AS APPLICATION_METHOD,
+                      DISC.DISC_YEARLY AS VALUE,
+                      2 AS LINE_NUM,
+                      -1 AS GROUPING_NO,
+                      'Customer' AS QUALIFIER_CONTEXT,
+                      REGION.KET AS QUALIFIER_ATTR,
+                      'NOT =' AS OPERATOR_SIGN,
+                      REGION.VALUE AS VALUE_QUALIFIER,
+                      PROP.CONFIRM_NO AS CONFIRM_NO_DEF,
+                      PROD.PROMO_PRODUK_ID,
+                      DISC.DISC_YEARLY,
+                      'MF' KET
+                 FROM PROPOSAL PROP,
+                      PROMO_PRODUK PROD,
+                      DISCOUNT DISC,
+                      PROMO_CUSTX_AREA PCTH,
+                      (
+                        SELECT REG.PROMO_PRODUK_ID,
+                            REG.REGION_CODE VALUE,
+                            REG.PROMO_CUSTX_AREA_ID,
+                            'FCS_REGION' KET
+                        FROM PROMO_CUSTX_AREA REG
+                        WHERE REG.REGION_CODE IS NOT NULL
+                        UNION
+                        SELECT AREA.PROMO_PRODUK_ID,
+                            AREA.AREA_CODE VALUE,
+                            AREA.PROMO_CUSTX_AREA_ID,
+                            'FCS_AREA' KET
+                        FROM PROMO_CUSTX_AREA AREA
+                        WHERE AREA.AREA_CODE IS NOT NULL
+                        UNION
+                        SELECT LOC.PROMO_PRODUK_ID,
+                            LOC.LOC_CODE VALUE,
+                            LOC.PROMO_CUSTX_AREA_ID,
+                            'FCS_LOCATION' KET
+                        FROM PROMO_CUSTX_AREA LOC
+                        WHERE  LOC.LOC_CODE IS NOT NULL
+                      ) REGION,
+                      PRODUK_VARIANT PROD_VARIANT,
+                      PRODUK_ITEM PROD_ITEM
+                WHERE     PROP.CONFIRM_NO IS NOT NULL
+                      AND PROD.PROPOSAL_ID = PROP.PROPOSAL_ID
+                      AND DISC.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND PCTH.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND REGION.PROMO_CUSTX_AREA_ID = PCTH.PROMO_CUSTX_AREA_ID
+                      AND DISC.DISC_YEARLY IS NOT NULL
+                      AND PROD_VARIANT.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND PROD_ITEM.PROMO_PRODUK_ID(+) = PROD.PROMO_PRODUK_ID
+                      AND PROP.USER_TYPE_CREATOR = 'AREA'
+                      AND DISC.DISC_YEARLY <> 0
+                      AND PROP.CONFIRM_NO = :noConfirm
+                      AND nvl(PROP.ADDENDUM_KE,0) =  nvl((SELECT MAX(TO_NUMBER(ADDENDUM_KE)) FROM PROPOSAL WHERE  CONFIRM_NO = :noConfirm),0)
+               UNION
+               SELECT 
+                      (CASE
+                          WHEN PROP.ADDENDUM_KE IS NULL THEN PROP.CONFIRM_NO
+                          ELSE PROP.CONFIRM_NO || '-' || PROP.ADDENDUM_KE
+                      END) AS NO_CONFIRM,
+                      PROP.CURRENCY,
+                      PROP.PERIODE_PROG_FROM AS START_DATE,
+                      PROP.PERIODE_PROG_TO AS END_DATE,
+                      'Y' AS ACTIVE,
+                      'Y' AS AUTOMATIC,
+                      (CASE
+                          WHEN PROP.MIX_QTY_PROMO = 'N' THEN 'LINE'
+                          ELSE 'LINEGROUP'
+                       END)
+                         AS LINE_LEVEL,
+                      'Discount' AS LINE_TYPE,
+                      PROP.PERIODE_PROG_FROM AS START_DATE_LINE,
+                      PROP.PERIODE_PROG_TO AS END_DATE_LINE,
+                      'Y' AS AUTOMATIC_LINE,
+                      'All Lines Adjustment' AS PRICING_PHASE,
+                      PROD.KODE_POSTING AS BUCKET,
+                      (CASE
+                          WHEN PROD_VARIANT.VARIANT_DESC = 'ALL'
+                               AND PROD_ITEM IS NOT NULL
+                          THEN
+                             PROD_ITEM.PROD_ITEM
+                          ELSE
+                             (   PROD.PRODUCT_CATEGORY
+                              || '.'
+                              || PROD.PRODUCT_CLASS
+                              || '.'
+                              || PROD.PRODUCT_BRAND
+                              || '.'
+                              || PROD.PRODUCT_EXT
+                              || '.'
+                              || PROD.PRODUCT_PACK
+                              || '.'
+                              || PROD_VARIANT)
+                       END)
+                         AS PRODUCT_ATTRIBUTE,
+                      (CASE
+                          WHEN PROD_VARIANT.VARIANT_DESC = 'ALL'
+                               AND PROD_ITEM IS NOT NULL
+                          THEN
+                             PROD_ITEM.PROD_ITEM
+                          ELSE
+                             (   PROD.PRODUCT_CATEGORY
+                              || '.'
+                              || PROD.PRODUCT_CLASS
+                              || '.'
+                              || PROD.PRODUCT_BRAND
+                              || '.'
+                              || PROD.PRODUCT_EXT
+                              || '.'
+                              || PROD.PRODUCT_PACK
+                              || '.'
+                              || PROD_VARIANT)
+                       END)
+                         AS PRODUCT_VALUE,
+                      'Item Quantity' AS VOLUME_TYPE,
+                      (CASE
+                          WHEN DISC.TIPE_PERHITUNGAN = 'TDKKELIPATAN'
+                          THEN
+                             'Point'
+                          ELSE
+                             'Recurring'
+                       END)
+                         AS BREAK_TYPE,
+                      DISC.UOM AS UOM,
+                      DISC.QTY_FROM AS VALUE_FROM,
+                      NVL (DISC.QTY_TO, 999999) AS VALUE_TO,
+                      DISC.TIPE_POTONGAN AS APPLICATION_METHOD,
+                      DISC.DISC_YEARLY AS VALUE,
+                      2 AS LINE_NUM,
+                      -1 AS GROUPING_NO,
+                      'Customer' AS QUALIFIER_CONTEXT,
+                      REGION.KET AS QUALIFIER_ATTR,
+                      'NOT =' AS OPERATOR_SIGN,
+                      TO_CHAR(REGION.VALUE) AS VALUE_QUALIFIER,
+                      PROP.CONFIRM_NO AS CONFIRM_NO_DEF,
+                      PROD.PROMO_PRODUK_ID,
+                      DISC.DISC_YEARLY,
+                      'MF' KET
+                 FROM PROPOSAL PROP,
+                      PROMO_PRODUK PROD,
+                      DISCOUNT DISC,
+                       PROMO_CUSTX_AREA PCTH,
+                      (
+                        SELECT CUST.PROMO_PRODUK_ID,
+                            CUST.CUSTOMER_ID VALUE,
+                            CUST.PROMO_CUSTX_AREA_ID,
+                            'SOLD_TO_ORG_ID' KET
+                        FROM PROMO_CUSTX_AREA CUST
+                        WHERE CUST.CUSTOMER_ID IS NOT NULL
+                      ) REGION,
+                      PRODUK_VARIANT PROD_VARIANT,
+                      PRODUK_ITEM PROD_ITEM
+                WHERE     PROP.CONFIRM_NO IS NOT NULL
+                      AND PROD.PROPOSAL_ID = PROP.PROPOSAL_ID
+                      AND DISC.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND PCTH.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND REGION.PROMO_CUSTX_AREA_ID = PCTH.PROMO_CUSTX_AREA_ID
+                      AND DISC.DISC_YEARLY IS NOT NULL
+                      AND PROD_VARIANT.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND PROD_ITEM.PROMO_PRODUK_ID(+) = PROD.PROMO_PRODUK_ID
+                      AND PROP.USER_TYPE_CREATOR = 'AREA'
+                      AND DISC.DISC_YEARLY <> 0
+                      AND PROP.CONFIRM_NO = :noConfirm
+                      AND nvl(PROP.ADDENDUM_KE,0) =  nvl((SELECT MAX(TO_NUMBER(ADDENDUM_KE)) FROM PROPOSAL WHERE  CONFIRM_NO = :noConfirm),0)
+               UNION
+               SELECT 
+                      (CASE
+                          WHEN PROP.ADDENDUM_KE IS NULL THEN PROP.CONFIRM_NO
+                          ELSE PROP.CONFIRM_NO || '-' || PROP.ADDENDUM_KE
+                      END) AS NO_CONFIRM,
+                      PROP.CURRENCY,
+                      PROP.PERIODE_PROG_FROM AS START_DATE,
+                      PROP.PERIODE_PROG_TO AS END_DATE,
+                      'Y' AS ACTIVE,
+                      'Y' AS AUTOMATIC,
+                      (CASE
+                          WHEN PROP.MIX_QTY_PROMO = 'N' THEN 'LINE'
+                          ELSE 'LINEGROUP'
+                       END)
+                         AS LINE_LEVEL,
+                      'Discount' AS LINE_TYPE,
+                      PROP.PERIODE_PROG_FROM AS START_DATE_LINE,
+                      PROP.PERIODE_PROG_TO AS END_DATE_LINE,
+                      'Y' AS AUTOMATIC_LINE,
+                      'All Lines Adjustment' AS PRICING_PHASE,
+                      PROD.KODE_POSTING AS BUCKET,
+                      (CASE
+                          WHEN PROD_VARIANT.VARIANT_DESC = 'ALL'
+                               AND PROD_ITEM IS NOT NULL
+                          THEN
+                             PROD_ITEM.PROD_ITEM
+                          ELSE
+                             (   PROD.PRODUCT_CATEGORY
+                              || '.'
+                              || PROD.PRODUCT_CLASS
+                              || '.'
+                              || PROD.PRODUCT_BRAND
+                              || '.'
+                              || PROD.PRODUCT_EXT
+                              || '.'
+                              || PROD.PRODUCT_PACK
+                              || '.'
+                              || PROD_VARIANT)
+                       END)
+                         AS PRODUCT_ATTRIBUTE,
+                      (CASE
+                          WHEN PROD_VARIANT.VARIANT_DESC = 'ALL'
+                               AND PROD_ITEM IS NOT NULL
+                          THEN
+                             PROD_ITEM.PROD_ITEM
+                          ELSE
+                             (   PROD.PRODUCT_CATEGORY
+                              || '.'
+                              || PROD.PRODUCT_CLASS
+                              || '.'
+                              || PROD.PRODUCT_BRAND
+                              || '.'
+                              || PROD.PRODUCT_EXT
+                              || '.'
+                              || PROD.PRODUCT_PACK
+                              || '.'
+                              || PROD_VARIANT)
+                       END)
+                         AS PRODUCT_VALUE,
+                      'Item Quantity' AS VOLUME_TYPE,
+                      (CASE
+                          WHEN DISC.TIPE_PERHITUNGAN = 'TDKKELIPATAN'
+                          THEN
+                             'Point'
+                          ELSE
+                             'Recurring'
+                       END)
+                         AS BREAK_TYPE,
+                      DISC.UOM AS UOM,
+                      DISC.QTY_FROM AS VALUE_FROM,
+                      NVL (DISC.QTY_TO, 999999) AS VALUE_TO,
+                      DISC.TIPE_POTONGAN AS APPLICATION_METHOD,
+                      DISC.DISC_YEARLY AS VALUE,
+                      2 AS LINE_NUM,
+                      -1 AS GROUPING_NO,
+                      'Customer' AS QUALIFIER_CONTEXT,
+                      REGION.KET AS QUALIFIER_ATTR,
+                      'NOT =' AS OPERATOR_SIGN,
+                      TO_CHAR(REGION.VALUE) AS VALUE_QUALIFIER,
+                      PROP.CONFIRM_NO AS CONFIRM_NO_DEF,
+                      PROD.PROMO_PRODUK_ID,
+                      DISC.DISC_YEARLY,
+                      'MF' KET
+                 FROM PROPOSAL PROP,
+                      PROMO_PRODUK PROD,
+                      DISCOUNT DISC,
+                      PROMO_CUSTX_AREA PCTH,
+                      (
+                        SELECT GRP.PROMO_PRODUK_ID,
+                            GRP.CUSTGRP_CODE VALUE,
+                            GRP.PROMO_CUSTX_AREA_ID,
+                            'FCS_CUST_GROUP' KET
+                        FROM PROMO_CUSTX_AREA GRP
+                        WHERE GRP.CUSTGRP_CODE IS NOT NULL
+                      ) REGION,
+                      PRODUK_VARIANT PROD_VARIANT,
+                      PRODUK_ITEM PROD_ITEM
+                WHERE     PROP.CONFIRM_NO IS NOT NULL
+                      AND PROD.PROPOSAL_ID = PROP.PROPOSAL_ID
+                      AND DISC.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND PCTH.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND REGION.PROMO_CUSTX_AREA_ID = PCTH.PROMO_CUSTX_AREA_ID
+                      AND DISC.DISC_YEARLY IS NOT NULL
+                      AND PROD_VARIANT.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND PROD_ITEM.PROMO_PRODUK_ID(+) = PROD.PROMO_PRODUK_ID
+                      AND PROP.USER_TYPE_CREATOR = 'AREA'
+                      AND DISC.DISC_YEARLY <> 0
+                      AND PROP.CONFIRM_NO = :noConfirm
+                      AND nvl(PROP.ADDENDUM_KE,0) =  nvl((SELECT MAX(TO_NUMBER(ADDENDUM_KE)) FROM PROPOSAL WHERE  CONFIRM_NO = :noConfirm),0)       
+               UNION
+               SELECT 
+                      (CASE
+                          WHEN PROP.ADDENDUM_KE IS NULL THEN PROP.CONFIRM_NO
+                          ELSE PROP.CONFIRM_NO || '-' || PROP.ADDENDUM_KE
+                      END) AS NO_CONFIRM,
+                      PROP.CURRENCY,
+                      PROP.PERIODE_PROG_FROM AS START_DATE,
+                      PROP.PERIODE_PROG_TO AS END_DATE,
+                      'Y' AS ACTIVE,
+                      'Y' AS AUTOMATIC,
+                      (CASE
+                          WHEN PROP.MIX_QTY_PROMO = 'N' THEN 'LINE'
+                          ELSE 'LINEGROUP'
+                       END)
+                         AS LINE_LEVEL,
+                      'Discount' AS LINE_TYPE,
+                      PROP.PERIODE_PROG_FROM AS START_DATE_LINE,
+                      PROP.PERIODE_PROG_TO AS END_DATE_LINE,
+                      'Y' AS AUTOMATIC_LINE,
+                      'All Lines Adjustment' AS PRICING_PHASE,
+                      PROD.KODE_POSTING AS BUCKET,
+                      (CASE
+                          WHEN PROD_VARIANT.VARIANT_DESC = 'ALL'
+                               AND PROD_ITEM IS NOT NULL
+                          THEN
+                             PROD_ITEM.PROD_ITEM
+                          ELSE
+                             (   PROD.PRODUCT_CATEGORY
+                              || '.'
+                              || PROD.PRODUCT_CLASS
+                              || '.'
+                              || PROD.PRODUCT_BRAND
+                              || '.'
+                              || PROD.PRODUCT_EXT
+                              || '.'
+                              || PROD.PRODUCT_PACK
+                              || '.'
+                              || PROD_VARIANT)
+                       END)
+                         AS PRODUCT_ATTRIBUTE,
+                      (CASE
+                          WHEN PROD_VARIANT.VARIANT_DESC = 'ALL'
+                               AND PROD_ITEM IS NOT NULL
+                          THEN
+                             PROD_ITEM.PROD_ITEM
+                          ELSE
+                             (   PROD.PRODUCT_CATEGORY
+                              || '.'
+                              || PROD.PRODUCT_CLASS
+                              || '.'
+                              || PROD.PRODUCT_BRAND
+                              || '.'
+                              || PROD.PRODUCT_EXT
+                              || '.'
+                              || PROD.PRODUCT_PACK
+                              || '.'
+                              || PROD_VARIANT)
+                       END)
+                         AS PRODUCT_VALUE,
+                      'Item Quantity' AS VOLUME_TYPE,
+                      (CASE
+                          WHEN DISC.TIPE_PERHITUNGAN = 'TDKKELIPATAN'
+                          THEN
+                             'Point'
+                          ELSE
+                             'Recurring'
+                       END)
+                         AS BREAK_TYPE,
+                      DISC.UOM AS UOM,
+                      DISC.QTY_FROM AS VALUE_FROM,
+                      NVL (DISC.QTY_TO, 999999) AS VALUE_TO,
+                      DISC.TIPE_POTONGAN AS APPLICATION_METHOD,
+                      DISC.DISC_YEARLY AS VALUE,
+                      2 AS LINE_NUM,
+                      -1 AS GROUPING_NO,
+                      'Customer' AS QUALIFIER_CONTEXT,
+                      REGION.KET AS QUALIFIER_ATTR,
+                      'NOT =' AS OPERATOR_SIGN,
+                      TO_CHAR(REGION.VALUE) AS VALUE_QUALIFIER,
+                      PROP.CONFIRM_NO AS CONFIRM_NO_DEF,
+                      PROD.PROMO_PRODUK_ID,
+                      DISC.DISC_YEARLY,
+                      'MF' KET
+                 FROM PROPOSAL PROP,
+                      PROMO_PRODUK PROD,
+                      DISCOUNT DISC,
+                      PROMO_CUSTX_AREA PCTH,
+                      (
+                        SELECT TYP.PROMO_PRODUK_ID,
+                            TYP.CUSTTYP_CODE VALUE,
+                            TYP.PROMO_CUSTX_AREA_ID,
+                            'FCS_CUST_TYPE' KET
+                        FROM PROMO_CUSTX_AREA TYP
+                        WHERE TYP.CUSTTYP_CODE IS NOT NULL
+                      ) REGION,
+                      PRODUK_VARIANT PROD_VARIANT,
+                      PRODUK_ITEM PROD_ITEM
+                WHERE     PROP.CONFIRM_NO IS NOT NULL
+                      AND PROD.PROPOSAL_ID = PROP.PROPOSAL_ID
+                      AND DISC.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND PCTH.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND REGION.PROMO_CUSTX_AREA_ID = PCTH.PROMO_CUSTX_AREA_ID
+                      AND DISC.DISC_YEARLY IS NOT NULL
+                      AND PROD_VARIANT.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND PROD_ITEM.PROMO_PRODUK_ID(+) = PROD.PROMO_PRODUK_ID
+                      AND PROP.USER_TYPE_CREATOR = 'AREA'
+                      AND DISC.DISC_YEARLY <> 0
+                      AND PROP.CONFIRM_NO = :noConfirm
+                      AND nvl(PROP.ADDENDUM_KE,0) =  nvl((SELECT MAX(TO_NUMBER(ADDENDUM_KE)) FROM PROPOSAL WHERE  CONFIRM_NO = :noConfirm),0)
+             -- OT QUERY 
+             UNION ALL
+               SELECT 
+                      (CASE
+                          WHEN PROP.ADDENDUM_KE IS NULL THEN PROP.CONFIRM_NO
+                          ELSE PROP.CONFIRM_NO || '-' || PROP.ADDENDUM_KE
+                      END) AS NO_CONFIRM,
+                      PROP.CURRENCY,
+                      PROP.PERIODE_PROG_FROM AS START_DATE,
+                      PROP.PERIODE_PROG_TO AS END_DATE,
+                      'Y' AS ACTIVE,
+                      'Y' AS AUTOMATIC,
+                      (CASE
+                          WHEN PROP.MIX_QTY_PROMO = 'N' THEN 'LINE'
+                          ELSE 'LINEGROUP'
+                      END) AS LINE_LEVEL,
+                      'Discount' AS LINE_TYPE,
+                      PROP.PERIODE_PROG_FROM AS START_DATE_LINE,
+                      PROP.PERIODE_PROG_TO AS END_DATE_LINE,
+                      'Y' AS AUTOMATIC_LINE,
+                      'All Lines Adjustment' AS PRICING_PHASE,
+                      PROD.KODE_POSTING AS BUCKET,
+                      (CASE
+                          WHEN PROD_VARIANT.VARIANT_DESC = 'ALL'
+                               AND PROD_ITEM IS NOT NULL
+                          THEN
+                             PROD_ITEM.PROD_ITEM
+                          ELSE
+                             (   PROD.PRODUCT_CATEGORY
+                              || '.'
+                              || PROD.PRODUCT_CLASS
+                              || '.'
+                              || PROD.PRODUCT_BRAND
+                              || '.'
+                              || PROD.PRODUCT_EXT
+                              || '.'
+                              || PROD.PRODUCT_PACK
+                              || '.'
+                              || PROD_VARIANT)
+                       END)
+                         AS PRODUCT_ATTRIBUTE,
+                      (CASE
+                          WHEN PROD_VARIANT.VARIANT_DESC = 'ALL'
+                               AND PROD_ITEM IS NOT NULL
+                          THEN
+                             PROD_ITEM.PROD_ITEM
+                          ELSE
+                             (   PROD.PRODUCT_CATEGORY
+                              || '.'
+                              || PROD.PRODUCT_CLASS
+                              || '.'
+                              || PROD.PRODUCT_BRAND
+                              || '.'
+                              || PROD.PRODUCT_EXT
+                              || '.'
+                              || PROD.PRODUCT_PACK
+                              || '.'
+                              || PROD_VARIANT)
+                       END)
+                         AS PRODUCT_VALUE,
+                      'Item Quantity' AS VOLUME_TYPE,
+                      (CASE
+                          WHEN DISC.TIPE_PERHITUNGAN = 'TDKKELIPATAN'
+                          THEN
+                             'Point'
+                          ELSE
+                             'Recurring'
+                       END)
+                         AS BREAK_TYPE,
+                      DISC.UOM AS UOM,
+                      DISC.QTY_FROM AS VALUE_FROM,
+                      NVL (DISC.QTY_TO, 999999) AS VALUE_TO,
+                      DISC.TIPE_POTONGAN AS APPLICATION_METHOD,
+                      DISC.DISC_NON_YEARLY AS VALUE,
+                      1 AS LINE_NUM,
+                      -1 AS GROUPING_NO,
+                      'Customer' AS QUALIFIER_CONTEXT,
+                      REGION.KET AS QUALIFIER_ATTR,
+                      'NOT =' AS OPERATOR_SIGN,
+                      TO_CHAR(REGION.VALUE) AS VALUE_QUALIFIER,
+                      PROP.CONFIRM_NO AS CONFIRM_NO_DEF,
+                      PROD.PROMO_PRODUK_ID,
+                      DISC.DISC_NON_YEARLY,
+                      'OT' KET
+                 FROM PROPOSAL PROP,
+                      PROMO_PRODUK PROD,
+                      DISCOUNT DISC,
+                      PROMO_CUSTX_AREA PCTH,
+                      (
+                        SELECT REG.PROMO_PRODUK_ID,
+                            REG.REGION_CODE VALUE,
+                            REG.PROMO_CUSTX_AREA_ID,
+                            'FCS_REGION' KET
+                        FROM PROMO_CUSTX_AREA REG
+                        WHERE REG.REGION_CODE IS NOT NULL
+                        UNION
+                        SELECT AREA.PROMO_PRODUK_ID,
+                            AREA.AREA_CODE VALUE,
+                             AREA.PROMO_CUSTX_AREA_ID,
+                            'FCS_AREA' KET
+                        FROM PROMO_CUSTX_AREA AREA
+                         WHERE AREA.REGION_CODE IS NOT NULL
+                        UNION
+                        SELECT LOC.PROMO_PRODUK_ID,
+                            LOC.LOC_CODE VALUE,
+                            LOC.PROMO_CUSTX_AREA_ID,
+                            'FCS_LOCATION' KET
+                        FROM PROMO_CUSTX_AREA LOC
+                        WHERE LOC.REGION_CODE IS NOT NULL
+                      ) REGION,
+                      PRODUK_VARIANT PROD_VARIANT,
+                      PRODUK_ITEM PROD_ITEM
+                WHERE     PROP.CONFIRM_NO IS NOT NULL
+                      AND PROD.PROPOSAL_ID = PROP.PROPOSAL_ID
+                      AND DISC.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND PCTH.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND REGION.PROMO_CUSTX_AREA_ID = PCTH.PROMO_CUSTX_AREA_ID
+                      AND DISC.DISC_NON_YEARLY IS NOT NULL
+                      AND PROD_VARIANT.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND PROD_ITEM.PROMO_PRODUK_ID(+) = PROD.PROMO_PRODUK_ID
+                      AND PROP.USER_TYPE_CREATOR = 'AREA'
+                      AND DISC.DISC_NON_YEARLY <> 0
+                      AND PROP.CONFIRM_NO = :noConfirm
+                      AND nvl(PROP.ADDENDUM_KE,0) =  nvl((SELECT MAX(TO_NUMBER(ADDENDUM_KE)) FROM PROPOSAL WHERE  CONFIRM_NO = :noConfirm),0)
+                UNION
+                SELECT 
+                      (CASE
+                          WHEN PROP.ADDENDUM_KE IS NULL THEN PROP.CONFIRM_NO
+                          ELSE PROP.CONFIRM_NO || '-' || PROP.ADDENDUM_KE
+                      END) AS NO_CONFIRM,
+                      PROP.CURRENCY,
+                      PROP.PERIODE_PROG_FROM AS START_DATE,
+                      PROP.PERIODE_PROG_TO AS END_DATE,
+                      'Y' AS ACTIVE,
+                      'Y' AS AUTOMATIC,
+                      (CASE
+                          WHEN PROP.MIX_QTY_PROMO = 'N' THEN 'LINE'
+                          ELSE 'LINEGROUP'
+                      END) AS LINE_LEVEL,
+                      'Discount' AS LINE_TYPE,
+                      PROP.PERIODE_PROG_FROM AS START_DATE_LINE,
+                      PROP.PERIODE_PROG_TO AS END_DATE_LINE,
+                      'Y' AS AUTOMATIC_LINE,
+                      'All Lines Adjustment' AS PRICING_PHASE,
+                      PROD.KODE_POSTING AS BUCKET,
+                      (CASE
+                          WHEN PROD_VARIANT.VARIANT_DESC = 'ALL'
+                               AND PROD_ITEM IS NOT NULL
+                          THEN
+                             PROD_ITEM.PROD_ITEM
+                          ELSE
+                             (   PROD.PRODUCT_CATEGORY
+                              || '.'
+                              || PROD.PRODUCT_CLASS
+                              || '.'
+                              || PROD.PRODUCT_BRAND
+                              || '.'
+                              || PROD.PRODUCT_EXT
+                              || '.'
+                              || PROD.PRODUCT_PACK
+                              || '.'
+                              || PROD_VARIANT)
+                       END)
+                         AS PRODUCT_ATTRIBUTE,
+                      (CASE
+                          WHEN PROD_VARIANT.VARIANT_DESC = 'ALL'
+                               AND PROD_ITEM IS NOT NULL
+                          THEN
+                             PROD_ITEM.PROD_ITEM
+                          ELSE
+                             (   PROD.PRODUCT_CATEGORY
+                              || '.'
+                              || PROD.PRODUCT_CLASS
+                              || '.'
+                              || PROD.PRODUCT_BRAND
+                              || '.'
+                              || PROD.PRODUCT_EXT
+                              || '.'
+                              || PROD.PRODUCT_PACK
+                              || '.'
+                              || PROD_VARIANT)
+                       END)
+                         AS PRODUCT_VALUE,
+                      'Item Quantity' AS VOLUME_TYPE,
+                      (CASE
+                          WHEN DISC.TIPE_PERHITUNGAN = 'TDKKELIPATAN'
+                          THEN
+                             'Point'
+                          ELSE
+                             'Recurring'
+                       END)
+                         AS BREAK_TYPE,
+                      DISC.UOM AS UOM,
+                      DISC.QTY_FROM AS VALUE_FROM,
+                      NVL (DISC.QTY_TO, 999999) AS VALUE_TO,
+                      DISC.TIPE_POTONGAN AS APPLICATION_METHOD,
+                      DISC.DISC_NON_YEARLY AS VALUE,
+                      1 AS LINE_NUM,
+                      -1 AS GROUPING_NO,
+                      'Customer' AS QUALIFIER_CONTEXT,
+                      REGION.KET AS QUALIFIER_ATTR,
+                      'NOT =' AS OPERATOR_SIGN,
+                      TO_CHAR(REGION.VALUE) AS VALUE_QUALIFIER,
+                      PROP.CONFIRM_NO AS CONFIRM_NO_DEF,
+                      PROD.PROMO_PRODUK_ID,
+                      DISC.DISC_NON_YEARLY,
+                      'OT' KET
+                 FROM PROPOSAL PROP,
+                      PROMO_PRODUK PROD,
+                      DISCOUNT DISC,
+                      PROMO_CUSTX_AREA PCTH,
+                      (
+                        SELECT CUST.PROMO_PRODUK_ID,
+                            CUST.CUSTOMER_ID VALUE,
+                            CUST.PROMO_CUSTX_AREA_ID,
+                            'SOLD_TO_ORG_ID' KET
+                        FROM PROMO_CUSTX_AREA CUST
+                         WHERE CUST.CUSTOMER_ID IS NOT NULL
+                      ) REGION,
+                      PRODUK_VARIANT PROD_VARIANT,
+                      PRODUK_ITEM PROD_ITEM
+                WHERE     PROP.CONFIRM_NO IS NOT NULL
+                      AND PROD.PROPOSAL_ID = PROP.PROPOSAL_ID
+                      AND DISC.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND PCTH.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND REGION.PROMO_CUSTX_AREA_ID = PCTH.PROMO_CUSTX_AREA_ID
+                      AND DISC.DISC_NON_YEARLY IS NOT NULL
+                      AND PROD_VARIANT.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND PROD_ITEM.PROMO_PRODUK_ID(+) = PROD.PROMO_PRODUK_ID
+                      AND PROP.USER_TYPE_CREATOR = 'AREA'
+                      AND DISC.DISC_NON_YEARLY <> 0
+                      AND PROP.CONFIRM_NO = :noConfirm
+                      AND nvl(PROP.ADDENDUM_KE,0) =  nvl((SELECT MAX(TO_NUMBER(ADDENDUM_KE)) FROM PROPOSAL WHERE  CONFIRM_NO = :noConfirm),0)
+                UNION
+                SELECT 
+                      (CASE
+                          WHEN PROP.ADDENDUM_KE IS NULL THEN PROP.CONFIRM_NO
+                          ELSE PROP.CONFIRM_NO || '-' || PROP.ADDENDUM_KE
+                      END) AS NO_CONFIRM,
+                      PROP.CURRENCY,
+                      PROP.PERIODE_PROG_FROM AS START_DATE,
+                      PROP.PERIODE_PROG_TO AS END_DATE,
+                      'Y' AS ACTIVE,
+                      'Y' AS AUTOMATIC,
+                      (CASE
+                          WHEN PROP.MIX_QTY_PROMO = 'N' THEN 'LINE'
+                          ELSE 'LINEGROUP'
+                      END) AS LINE_LEVEL,
+                      'Discount' AS LINE_TYPE,
+                      PROP.PERIODE_PROG_FROM AS START_DATE_LINE,
+                      PROP.PERIODE_PROG_TO AS END_DATE_LINE,
+                      'Y' AS AUTOMATIC_LINE,
+                      'All Lines Adjustment' AS PRICING_PHASE,
+                      PROD.KODE_POSTING AS BUCKET,
+                      (CASE
+                          WHEN PROD_VARIANT.VARIANT_DESC = 'ALL'
+                               AND PROD_ITEM IS NOT NULL
+                          THEN
+                             PROD_ITEM.PROD_ITEM
+                          ELSE
+                             (   PROD.PRODUCT_CATEGORY
+                              || '.'
+                              || PROD.PRODUCT_CLASS
+                              || '.'
+                              || PROD.PRODUCT_BRAND
+                              || '.'
+                              || PROD.PRODUCT_EXT
+                              || '.'
+                              || PROD.PRODUCT_PACK
+                              || '.'
+                              || PROD_VARIANT)
+                       END)
+                         AS PRODUCT_ATTRIBUTE,
+                      (CASE
+                          WHEN PROD_VARIANT.VARIANT_DESC = 'ALL'
+                               AND PROD_ITEM IS NOT NULL
+                          THEN
+                             PROD_ITEM.PROD_ITEM
+                          ELSE
+                             (   PROD.PRODUCT_CATEGORY
+                              || '.'
+                              || PROD.PRODUCT_CLASS
+                              || '.'
+                              || PROD.PRODUCT_BRAND
+                              || '.'
+                              || PROD.PRODUCT_EXT
+                              || '.'
+                              || PROD.PRODUCT_PACK
+                              || '.'
+                              || PROD_VARIANT)
+                       END)
+                         AS PRODUCT_VALUE,
+                      'Item Quantity' AS VOLUME_TYPE,
+                      (CASE
+                          WHEN DISC.TIPE_PERHITUNGAN = 'TDKKELIPATAN'
+                          THEN
+                             'Point'
+                          ELSE
+                             'Recurring'
+                       END)
+                         AS BREAK_TYPE,
+                      DISC.UOM AS UOM,
+                      DISC.QTY_FROM AS VALUE_FROM,
+                      NVL (DISC.QTY_TO, 999999) AS VALUE_TO,
+                      DISC.TIPE_POTONGAN AS APPLICATION_METHOD,
+                      DISC.DISC_NON_YEARLY AS VALUE,
+                      1 AS LINE_NUM,
+                      -1 AS GROUPING_NO,
+                      'Customer' AS QUALIFIER_CONTEXT,
+                      REGION.KET AS QUALIFIER_ATTR,
+                      'NOT =' AS OPERATOR_SIGN,
+                      TO_CHAR(REGION.VALUE) AS VALUE_QUALIFIER,
+                      PROP.CONFIRM_NO AS CONFIRM_NO_DEF,
+                      PROD.PROMO_PRODUK_ID,
+                      DISC.DISC_NON_YEARLY,
+                      'OT' KET
+                 FROM PROPOSAL PROP,
+                      PROMO_PRODUK PROD,
+                      DISCOUNT DISC,
+                      PROMO_CUSTX_AREA PCTH,
+                      (
+                        SELECT GRP.PROMO_PRODUK_ID,
+                            GRP.CUSTGRP_CODE VALUE,
+                            GRP.PROMO_CUSTX_AREA_ID,
+                            'FCS_CUST_GROUP' KET
+                        FROM PROMO_CUSTX_AREA GRP
+                        WHERE GRP.CUSTGRP_CODE IS NOT NULL
+                      ) REGION,
+                      PRODUK_VARIANT PROD_VARIANT,
+                      PRODUK_ITEM PROD_ITEM
+                WHERE     PROP.CONFIRM_NO IS NOT NULL
+                      AND PROD.PROPOSAL_ID = PROP.PROPOSAL_ID
+                      AND DISC.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND PCTH.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND REGION.PROMO_CUSTX_AREA_ID = PCTH.PROMO_CUSTX_AREA_ID
+                      AND DISC.DISC_NON_YEARLY IS NOT NULL
+                      AND PROD_VARIANT.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND PROD_ITEM.PROMO_PRODUK_ID(+) = PROD.PROMO_PRODUK_ID
+                      AND PROP.USER_TYPE_CREATOR = 'AREA'
+                      AND DISC.DISC_NON_YEARLY <> 0
+                      AND PROP.CONFIRM_NO = :noConfirm
+                      AND nvl(PROP.ADDENDUM_KE,0) =  nvl((SELECT MAX(TO_NUMBER(ADDENDUM_KE)) FROM PROPOSAL WHERE  CONFIRM_NO = :noConfirm),0)      
+                UNION
+                SELECT 
+                      (CASE
+                          WHEN PROP.ADDENDUM_KE IS NULL THEN PROP.CONFIRM_NO
+                          ELSE PROP.CONFIRM_NO || '-' || PROP.ADDENDUM_KE
+                      END) AS NO_CONFIRM,
+                      PROP.CURRENCY,
+                      PROP.PERIODE_PROG_FROM AS START_DATE,
+                      PROP.PERIODE_PROG_TO AS END_DATE,
+                      'Y' AS ACTIVE,
+                      'Y' AS AUTOMATIC,
+                      (CASE
+                          WHEN PROP.MIX_QTY_PROMO = 'N' THEN 'LINE'
+                          ELSE 'LINEGROUP'
+                      END) AS LINE_LEVEL,
+                      'Discount' AS LINE_TYPE,
+                      PROP.PERIODE_PROG_FROM AS START_DATE_LINE,
+                      PROP.PERIODE_PROG_TO AS END_DATE_LINE,
+                      'Y' AS AUTOMATIC_LINE,
+                      'All Lines Adjustment' AS PRICING_PHASE,
+                      PROD.KODE_POSTING AS BUCKET,
+                      (CASE
+                          WHEN PROD_VARIANT.VARIANT_DESC = 'ALL'
+                               AND PROD_ITEM IS NOT NULL
+                          THEN
+                             PROD_ITEM.PROD_ITEM
+                          ELSE
+                             (   PROD.PRODUCT_CATEGORY
+                              || '.'
+                              || PROD.PRODUCT_CLASS
+                              || '.'
+                              || PROD.PRODUCT_BRAND
+                              || '.'
+                              || PROD.PRODUCT_EXT
+                              || '.'
+                              || PROD.PRODUCT_PACK
+                              || '.'
+                              || PROD_VARIANT)
+                       END)
+                         AS PRODUCT_ATTRIBUTE,
+                      (CASE
+                          WHEN PROD_VARIANT.VARIANT_DESC = 'ALL'
+                               AND PROD_ITEM IS NOT NULL
+                          THEN
+                             PROD_ITEM.PROD_ITEM
+                          ELSE
+                             (   PROD.PRODUCT_CATEGORY
+                              || '.'
+                              || PROD.PRODUCT_CLASS
+                              || '.'
+                              || PROD.PRODUCT_BRAND
+                              || '.'
+                              || PROD.PRODUCT_EXT
+                              || '.'
+                              || PROD.PRODUCT_PACK
+                              || '.'
+                              || PROD_VARIANT)
+                       END)
+                         AS PRODUCT_VALUE,
+                      'Item Quantity' AS VOLUME_TYPE,
+                      (CASE
+                          WHEN DISC.TIPE_PERHITUNGAN = 'TDKKELIPATAN'
+                          THEN
+                             'Point'
+                          ELSE
+                             'Recurring'
+                       END)
+                         AS BREAK_TYPE,
+                      DISC.UOM AS UOM,
+                      DISC.QTY_FROM AS VALUE_FROM,
+                      NVL (DISC.QTY_TO, 999999) AS VALUE_TO,
+                      DISC.TIPE_POTONGAN AS APPLICATION_METHOD,
+                      DISC.DISC_NON_YEARLY AS VALUE,
+                      1 AS LINE_NUM,
+                      -1 AS GROUPING_NO,
+                      'Customer' AS QUALIFIER_CONTEXT,
+                      REGION.KET AS QUALIFIER_ATTR,
+                      'NOT =' AS OPERATOR_SIGN,
+                      TO_CHAR(REGION.VALUE) AS VALUE_QUALIFIER,
+                      PROP.CONFIRM_NO AS CONFIRM_NO_DEF,
+                      PROD.PROMO_PRODUK_ID,
+                      DISC.DISC_NON_YEARLY,
+                      'OT' KET
+                 FROM PROPOSAL PROP,
+                      PROMO_PRODUK PROD,
+                      DISCOUNT DISC,
+                       PROMO_CUSTX_AREA PCTH,
+                      (
+                        SELECT TYP.PROMO_PRODUK_ID,
+                            TYP.CUSTTYP_CODE VALUE,
+                            TYP.PROMO_CUSTX_AREA_ID,
+                            'FCS_CUST_TYPE' KET
+                        FROM PROMO_CUSTX_AREA TYP
+                        WHERE TYP.CUSTTYP_CODE IS NOT NULL
+                      ) REGION,
+                      PRODUK_VARIANT PROD_VARIANT,
+                      PRODUK_ITEM PROD_ITEM
+                WHERE     PROP.CONFIRM_NO IS NOT NULL
+                      AND PROD.PROPOSAL_ID = PROP.PROPOSAL_ID
+                      AND DISC.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND PCTH.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND REGION.PROMO_CUSTX_AREA_ID = PCTH.PROMO_CUSTX_AREA_ID
+                      AND DISC.DISC_NON_YEARLY IS NOT NULL
+                      AND PROD_VARIANT.PROMO_PRODUK_ID = PROD.PROMO_PRODUK_ID
+                      AND PROD_ITEM.PROMO_PRODUK_ID(+) = PROD.PROMO_PRODUK_ID
+                      AND PROP.USER_TYPE_CREATOR = 'AREA'
+                      AND DISC.DISC_NON_YEARLY <> 0
+                      AND PROP.CONFIRM_NO = :noConfirm
+                      AND nvl(PROP.ADDENDUM_KE,0) =  nvl((SELECT MAX(TO_NUMBER(ADDENDUM_KE)) FROM PROPOSAL WHERE  CONFIRM_NO = :noConfirm),0)
+   ) LALA
+   WHERE  LALA.VALUE_QUALIFIER IS NOT NULL
+   ORDER BY LALA.PROMO_PRODUK_ID ASC]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="LineNum"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="LINE_NUM"
+    Expression="LINE_NUM"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="PRODUCT_ID"
+    Expression="PRODUCT_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="NoConfirm"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="NO_CONFIRM"
+    Expression="NO_CONFIRM"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="116"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Currency"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="15"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CURRENCY"
+    Expression="CURRENCY"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="15"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StartDate"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="START_DATE"
+    Expression="START_DATE"
+    SQLType="DATE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="EndDate"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="END_DATE"
+    Expression="END_DATE"
+    SQLType="DATE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Active"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="ACTIVE"
+    Expression="ACTIVE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Automatic"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="AUTOMATIC"
+    Expression="AUTOMATIC"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LineLevel"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="4"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="LINE_LEVEL"
+    Expression="LINE_LEVEL"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="4"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LineType"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="8"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="LINE_TYPE"
+    Expression="LINE_TYPE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="8"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StartDateLine"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="START_DATE_LINE"
+    Expression="START_DATE_LINE"
+    SQLType="DATE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="EndDateLine"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="END_DATE_LINE"
+    Expression="END_DATE_LINE"
+    SQLType="DATE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AutomaticLine"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="AUTOMATIC_LINE"
+    Expression="AUTOMATIC_LINE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PricingPhase"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="PRICING_PHASE"
+    Expression="PRICING_PHASE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Bucket"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="BUCKET"
+    Expression="BUCKET"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductAttribute"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="245"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PRODUCT_ATTRIBUTE"
+    Expression="PRODUCT_ATTRIBUTE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="245"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductValue"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="245"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PRODUCT_VALUE"
+    Expression="PRODUCT_VALUE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="245"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="VolumeType"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="13"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="VOLUME_TYPE"
+    Expression="VOLUME_TYPE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="13"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BreakType"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="9"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="BREAK_TYPE"
+    Expression="BREAK_TYPE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="9"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Uom"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="15"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="UOM"
+    Expression="UOM"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="15"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ValueFrom"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="18"
+    Scale="2"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="VALUE_FROM"
+    Expression="VALUE_FROM"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ValueTo"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="VALUE_TO"
+    Expression="VALUE_TO"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ApplicationMethod"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="15"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="APPLICATION_METHOD"
+    Expression="APPLICATION_METHOD"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="15"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Value"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="VALUE"
+    Expression="VALUE"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="GroupingNo"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="GROUPING_NO"
+    Expression="GROUPING_NO"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="QualifierContext"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="8"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="QUALIFIER_CONTEXT"
+    Expression="QUALIFIER_CONTEXT"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="8"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="QualifierAttr"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="14"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="QUALIFIER_ATTR"
+    Expression="QUALIFIER_ATTR"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="14"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="OperatorSign"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="5"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="OPERATOR_SIGN"
+    Expression="OPERATOR_SIGN"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="5"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ValueQualifier"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VALUE_QUALIFIER"
+    Expression="VALUE_QUALIFIER"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ConfirmNoDef"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="100"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CONFIRM_NO_DEF"
+    Expression="CONFIRM_NO_DEF"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PromoProdukId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="PROMO_PRODUK_ID"
+    Expression="PROMO_PRODUK_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DiscYearly"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="18"
+    Scale="2"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="DISC_YEARLY"
+    Expression="DISC_YEARLY"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Ket"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="2"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="KET"
+    Expression="KET"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="2"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

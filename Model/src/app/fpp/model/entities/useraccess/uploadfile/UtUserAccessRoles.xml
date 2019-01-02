@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="UtUserAccessRoles"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  DBObjectType="table"
+  DBObjectName="UT_USER_ACCESS_ROLES"
+  AliasName="UtUserAccessRoles"
+  BindingStyle="OracleName"
+  UseGlueCode="false">
+  <DesignTime>
+    <AttrArray Name="_publishEvents"/>
+  </DesignTime>
+  <Attribute
+    Name="Role"
+    IsNotNull="true"
+    Precision="30"
+    ColumnName="ROLE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="UT_USER_ACCESS_ROLES"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="UserName"
+    IsNotNull="true"
+    Precision="30"
+    ColumnName="USER_NAME"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="UT_USER_ACCESS_ROLES"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </Attribute>
+  <AccessorAttribute
+    Name="UtUserAccess"
+    Association="app.fpp.model.entities.useraccess.uploadfile.UtUserAccessRolesUtUFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.useraccess.uploadfile.UtUserAccessRolesUtUFk1Assoc.UtUserAccess"
+    AssociationOtherEnd="app.fpp.model.entities.useraccess.uploadfile.UtUserAccessRolesUtUFk1Assoc.UtUserAccessRoles"
+    Type="oracle.jbo.server.EntityImpl"
+    IsUpdateable="true"/>
+  <Key
+    Name="SysC0012923">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012923"/>
+      <Attr Name="_checkCondition" Value='"ROLE" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.useraccess.uploadfile.UtUserAccessRoles.Role"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0012924">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0012924"/>
+      <Attr Name="_checkCondition" Value='"USER_NAME" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.useraccess.uploadfile.UtUserAccessRoles.UserName"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="UtUserAccessRolesPk"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="UT_USER_ACCESS_ROLES_PK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.useraccess.uploadfile.UtUserAccessRoles.Role"/>
+      <Item
+        Value="app.fpp.model.entities.useraccess.uploadfile.UtUserAccessRoles.UserName"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="UtUserAccessRolesUtUFk1">
+    <DesignTime>
+      <Attr Name="_isCascadeDelete" Value="true"/>
+      <Attr Name="_referencedKey" Value="UT_USER_ACCESS_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="UT_USER_ACCESS_ROLES_UT_U_FK1"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.useraccess.uploadfile.UtUserAccessRoles.UserName"/>
+    </AttrArray>
+  </Key>
+</Entity>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="AllKodePostingView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  RowClass="app.fpp.model.views.masterdata.ebs.AllKodePostingViewRowImpl"
+  ComponentClass="app.fpp.model.views.masterdata.ebs.AllKodePostingViewImpl">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.masterdata.ebs.AllKodePostingView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="kdPosting"
+    Kind="viewcriteria"
+    Type="java.lang.String">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="POSTING"/>
+        <DISPLAYWIDTH
+          Value="60"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Variable>
+  <Variable
+    Name="mekPen"
+    Kind="where"
+    Type="java.lang.String">
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYHINT
+          Value="Hide"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Variable>
+  <SQLQuery>
+    <![CDATA[SELECT KodePostingOT.ITEM, KodePostingOT.ITEM_DESCRIPTION, KodePostingOT.POSTING_SEARCH FROM
+(SELECT FcsViewItemMasterCategory.ITEM, 
+       (FcsViewItemMasterCategory.ITEM || ' - ' || FcsViewItemMasterCategory.ITEM_DESCRIPTION) AS ITEM_DESCRIPTION,
+       (FcsViewItemMasterCategory.ITEM || ' ' || FcsViewItemMasterCategory.ITEM_DESCRIPTION) AS POSTING_SEARCH,
+       'ONINVOICE' AS MEK_PEN
+FROM APPS.FCS_VIEW_ITEM_MASTER_CATEGORY FcsViewItemMasterCategory
+WHERE FcsViewItemMasterCategory.ITEM_TYPE = 'PST'
+AND FcsViewItemMasterCategory.BUCKET IS NOT NULL
+AND  NVL(SUBSTR(ITEM,-2), ITEM) ='OT'
+GROUP BY FcsViewItemMasterCategory.ITEM, FcsViewItemMasterCategory.ITEM_DESCRIPTION
+UNION ALL
+SELECT FcsViewItemMasterCategory.ITEM, 
+       (FcsViewItemMasterCategory.ITEM || ' - ' || FcsViewItemMasterCategory.ITEM_DESCRIPTION) AS ITEM_DESCRIPTION,
+       (FcsViewItemMasterCategory.ITEM || ' ' || FcsViewItemMasterCategory.ITEM_DESCRIPTION) AS POSTING_SEARCH,
+       'OFFINVOICE' AS MEK_PEN
+FROM APPS.FCS_VIEW_ITEM_MASTER_CATEGORY FcsViewItemMasterCategory
+WHERE FcsViewItemMasterCategory.ITEM_TYPE = 'PST'
+AND  NVL(SUBSTR(ITEM,-2), ITEM) ='OT'
+GROUP BY FcsViewItemMasterCategory.ITEM, FcsViewItemMasterCategory.ITEM_DESCRIPTION) KodePostingOT
+WHERE KodePostingOT.MEK_PEN = :mekPen
+ORDER BY "ITEM_DESCRIPTION"]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="Item"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ITEM"
+    Expression="ITEM"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="KODE"/>
+        <DISPLAYWIDTH
+          Value="13"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ItemDescription"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="240"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ITEM_DESCRIPTION"
+    Expression="ITEM_DESCRIPTION"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="NAME"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PostingSearch"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="POSTING_SEARCH"
+    SQLType="VARCHAR"
+    Precision="255"
+    Expression="SELECT 1 FROM DUAL">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="KODE_POSTING"/>
+        <DISPLAYWIDTH
+          Value="60"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewCriteria
+    Name="AllKodePostingViewCriteria"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.AllKodePostingView"
+    Conjunction="AND"
+    Mode="3">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="Never"/>
+        <Property
+          Name="autoExecute"
+          Value="true"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="false"/>
+        <Property
+          Name="showInList"
+          Value="false"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow6"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="PostingSearch"
+        ViewAttribute="PostingSearch"
+        Operator="CONTAINS"
+        Conjunction="OR"
+        Value=":kdPosting"
+        IsBindVarValue="true"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="Item"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

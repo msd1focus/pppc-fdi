@@ -1,0 +1,1252 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelSplitter id="ps2" orientation="vertical" splitterPosition="45"
+                    disabled="true">
+    <f:facet name="first">
+      <af:panelStretchLayout id="psl1" endWidth="311px"
+                             inlineStyle="border-bottom-width:1px; border-bottom-color:rgb(231,231,231); border-bottom-style:solid;"
+                             startWidth="350px">
+        <f:facet name="start">
+          <af:panelGroupLayout id="panelGroupLayout1"
+                               inlineStyle="padding-top:12px; padding-left:5px; color:rgb(28,65,126);"
+                               layout="vertical">
+            <af:outputText value="User Access: Manage User" id="outputText6"
+                           inlineStyle="font-weight:bold; font-size:18.0px;margin-left:16px;">
+                  
+            </af:outputText>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:panelStretchLayout>
+    </f:facet>
+    <f:facet name="second">
+      <af:panelSplitter id="panelSplitter1" splitterPosition="300"
+                        disabled="true">
+        <f:facet name="first">
+            <af:panelSplitter id="ps4" orientation="vertical"
+                              splitterPosition="85" disabled="true">
+              <f:facet name="first">
+                  <af:query id="qryId1" headerText="Search" disclosed="true" type="stretch"
+                            value="#{bindings.AppUserAccessViewCriteriaQuery.queryDescriptor}"
+                            saveQueryMode="hidden" modeChangeVisible="false" displayMode="compact"
+                            model="#{bindings.AppUserAccessViewCriteriaQuery.queryModel}"
+                            inlineStyle="margin-top:-20px; margin-right:0px;"
+                            queryListener="#{bindings.AppUserAccessViewCriteriaQuery.processQuery}"
+                            queryOperationListener="#{bindings.AppUserAccessViewCriteriaQuery.processQueryOperation}"
+                            resultComponentId="::pc2:t1"/>
+            </f:facet>
+              <f:facet name="second">
+                <af:panelCollection id="pc2" styleClass="AFStretchWidth"
+                                    featuresOff="detach viewMenu columnsMenuItem">
+                  <f:facet name="toolbar">
+                    <af:toolbar id="t2">
+                      <af:commandToolbarButton actionListener="#{bindings.Execute.execute}"
+                                               disabled="#{!bindings.Execute.enabled}"
+                                               id="ctb2"
+                                               icon="/Images/arrow_refresh_small.png"/>
+                      <af:image source="/Images/v_spacer_toolbar.png" id="i1"
+                                shortDesc=" "/>
+                      <af:commandToolbarButton text="Add" id="ctb1">
+                        <af:showPopupBehavior popupId="p1"
+                                              triggerType="action"/>
+                      </af:commandToolbarButton>
+                      <af:popup id="p1"
+                                popupFetchListener="#{UserAccessBean.addUserPopupFetchListener}"
+                                contentDelivery="lazyUncached"
+                                autoCancel="enabled" childCreation="immediate"
+                                popupCanceledListener="#{UserAccessBean.addUserPopupCanceledListener}">
+                        <af:dialog id="d1" closeIconVisible="false" resize="off"
+                                   stretchChildren="none" title="Add User"
+                                   dialogListener="#{UserAccessBean.addUserDialogListener}">
+                          <af:panelFormLayout id="pfl2" labelWidth="130"
+                                              inlineStyle="width:410px;">
+                            <af:group id="g1">
+                              <af:inputText value="#{bindings.UserName.inputValue}"
+                                            label="#{bindings.UserName.hints.label}"
+                                            required="#{bindings.UserName.hints.mandatory}"
+                                            columns="#{bindings.UserName.hints.displayWidth}"
+                                            maximumLength="#{bindings.UserName.hints.precision}"
+                                            shortDesc="#{bindings.UserName.hints.tooltip}"
+                                            id="it3">
+                                <f:validator binding="#{bindings.UserName.validator}"/>
+                              </af:inputText>
+                              <af:inputText value="#{bindings.UserInitial.inputValue}"
+                                            label="#{bindings.UserInitial.hints.label}"
+                                            required="#{bindings.UserInitial.hints.mandatory}"
+                                            columns="#{bindings.UserInitial.hints.displayWidth}"
+                                            maximumLength="#{bindings.UserInitial.hints.precision}"
+                                            shortDesc="#{bindings.UserInitial.hints.tooltip}"
+                                            id="it10">
+                                <f:validator binding="#{bindings.UserInitial.validator}"/>
+                              </af:inputText>
+                              <af:inputText value="#{bindings.FullName.inputValue}"
+                                            label="#{bindings.FullName.hints.label}"
+                                            required="#{bindings.FullName.hints.mandatory}"
+                                            columns="#{bindings.FullName.hints.displayWidth}"
+                                            maximumLength="#{bindings.FullName.hints.precision}"
+                                            shortDesc="#{bindings.FullName.hints.tooltip}"
+                                            id="it8">
+                                <f:validator binding="#{bindings.FullName.validator}"/>
+                              </af:inputText>
+                              <af:selectOneChoice value="#{bindings.CompanyId.inputValue}"
+                                                  label="#{bindings.CompanyId.label}"
+                                                  required="#{bindings.CompanyId.hints.mandatory}"
+                                                  shortDesc="#{bindings.CompanyId.hints.tooltip}"
+                                                  id="soc4">
+                                <f:selectItems value="#{bindings.CompanyId.items}"
+                                               id="si4"/>
+                              </af:selectOneChoice>
+                              <af:selectOneChoice value="#{bindings.UserType.inputValue}"
+                                                  label="#{bindings.UserType.label}"
+                                                  required="#{bindings.UserType.hints.mandatory}"
+                                                  shortDesc="#{bindings.UserType.hints.tooltip}"
+                                                  id="soc6">
+                                <f:selectItems value="#{bindings.UserType.items}"
+                                               id="si6"/>
+                              </af:selectOneChoice>
+                            </af:group>
+                            <af:inputText value="#{bindings.Password.inputValue}"
+                                          label="#{bindings.Password.hints.label}"
+                                          required="#{bindings.Password.hints.mandatory}"
+                                          columns="#{bindings.Password.hints.displayWidth}"
+                                          maximumLength="#{bindings.Password.hints.precision}"
+                                          shortDesc="#{bindings.Password.hints.tooltip}"
+                                          id="it1">
+                              <f:validator binding="#{bindings.Password.validator}"/>
+                            </af:inputText>
+                            <af:inputText label="Re-Type Password" id="it6"
+                                          showRequired="true"
+                                          contentStyle="width:255px;"/>
+                          </af:panelFormLayout>
+                        </af:dialog>
+                      </af:popup>
+                      <af:commandToolbarButton text="Remove" id="ctb4">
+                        <af:showPopupBehavior popupId="p2"
+                                              triggerType="action"/>
+                      </af:commandToolbarButton>
+                      <af:popup id="p2" contentDelivery="lazyUncached">
+                        <af:dialog id="d2" title="Remove User"
+                                   closeIconVisible="false" resize="off"
+                                   stretchChildren="none"
+                                   dialogListener="#{UserAccessBean.removeUserDialogListener}">
+                          <af:panelGroupLayout id="pgl5" layout="horizontal">
+                            <af:outputText value="Yakin akan menghapus user"
+                                           id="ot7"/>
+                            <af:spacer width="5" height="10" id="s11"/>
+                            <af:outputText value='"#{bindings.FullName.inputValue}'
+                                           id="ot2"/>
+                            <af:spacer width="5" height="10" id="s10"/>
+                            <af:outputText value='[#{bindings.UserName.inputValue}]" ?'
+                                           id="ot3"/>
+                          </af:panelGroupLayout>
+                        </af:dialog>
+                      </af:popup>
+                    </af:toolbar>
+                  </f:facet>
+                  <af:table value="#{bindings.AppUserAccessView1.collectionModel}"
+                            var="row"
+                            rows="#{bindings.AppUserAccessView1.rangeSize}"
+                            emptyText="#{bindings.AppUserAccessView1.viewable ? 'Tidak ada data yang ditampilkan.' : 'Access Denied.'}"
+                            fetchSize="#{bindings.AppUserAccessView1.rangeSize}"
+                            rowBandingInterval="0"
+                            filterModel="#{bindings.AppUserAccessView1Query.queryDescriptor}"
+                            queryListener="#{bindings.AppUserAccessView1Query.processQuery}"
+                            filterVisible="true" varStatus="vs"
+                            selectedRowKeys="#{bindings.AppUserAccessView1.collectionModel.selectedRow}"
+                            selectionListener="#{bindings.AppUserAccessView1.collectionModel.makeCurrent}"
+                            rowSelection="single" id="t1"
+                            partialTriggers="::ctb2 ::d1 ::d2 :::d4"
+                            columnStretching="last"
+                            binding="#{UserAccessBean.tblUserList}">
+                    <af:column sortProperty="#{bindings.AppUserAccessView1.hints.UserName.name}"
+                               filterable="false" sortable="true"
+                               headerText="#{bindings.AppUserAccessView1.hints.UserName.label}"
+                               id="c3">
+                      <af:panelBorderLayout id="pbl1"
+                                            inlineStyle="height:30px;">
+                        <f:facet name="start">
+                          <af:panelGroupLayout id="pgl3" layout="vertical"
+                                               inlineStyle="padding-top:2px; padding-left:5px;padding-bottom:2px;">
+                            <af:outputText value="#{row.FullName}" id="ot4"
+                                           inlineStyle="font-weight:bold;text-transform: uppercase;"/>
+                            <af:outputText value="Username: #{row.UserName}"
+                                           id="ot1"
+                                           inlineStyle="font-size:xx-small;padding-top:2px;"/>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="end">
+                          <af:panelGroupLayout id="pgl4" layout="horizontal"
+                                               inlineStyle="padding-top:8px;padding-right:5px;"
+                                               halign="right">
+                          <af:image source="#{row.SessionStatus == 0 ? '/Images/disable.png' : '/Images/active.png'}"
+                                    shortDesc="Active" id="image1"/>
+                          <af:spacer width="10" height="10" id="s17"/>
+                          <af:selectOneChoice value="#{row.bindings.CompanyId.inputValue}"
+                                                label="#{row.bindings.CompanyId.label}"
+                                                required="#{bindings.AppUserAccessView1.hints.CompanyId.mandatory}"
+                                                shortDesc="#{bindings.AppUserAccessView1.hints.CompanyId.tooltip}"
+                                                id="soc3" readOnly="true">
+                              <f:selectItems value="#{row.bindings.CompanyId.items}"
+                                             id="si3"/>
+                            </af:selectOneChoice>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                      </af:panelBorderLayout>
+                    </af:column>
+                  </af:table>
+                </af:panelCollection>
+              </f:facet>
+            </af:panelSplitter>
+        </f:facet>
+        <f:facet name="second">
+          <af:panelGroupLayout id="pgl8" layout="scroll"
+                               partialTriggers="pc2:t1 qryId1">
+            <af:panelGroupLayout id="pgl31" layout="horizontal"
+                                 inlineStyle="margin-top:10px;"
+                                 visible="#{bindings.AppUserAccessView1Iterator.estimatedRowCount == 0}">
+              <af:outputText value="Tidak ada data yang ditampilkan."
+                             id="outputText3"/>
+            </af:panelGroupLayout>
+            <af:panelHeader text=" " id="ph1"
+                            inlineStyle="padding-right:15px; padding-top:6px; height:500px;"
+                            visible="#{bindings.AppUserAccessView1Iterator.estimatedRowCount > 0}"
+                            type="default">
+              <f:facet name="toolbar">
+                <af:toolbar id="t3">
+                  <af:commandToolbarButton text="Reset Password" id="ctb3"
+                                           inlineStyle="padding:2px;">
+                    <af:showPopupBehavior popupId="p3" triggerType="action"/>
+                  </af:commandToolbarButton>
+                  <af:popup id="p3"
+                            popupFetchListener="#{UserAccessBean.resetPasswordPopupFetchListener}">
+                    <af:dialog id="d3"
+                               title="Reset Password: #{bindings.UserName.inputValue}"
+                               dialogListener="#{UserAccessBean.resetPasswordDialogListener}">
+                      <af:inputText value="#{bindings.Password.inputValue}"
+                                    label="#{bindings.Password.hints.label}"
+                                    required="#{bindings.Password.hints.mandatory}"
+                                    columns="#{bindings.Password.hints.displayWidth}"
+                                    maximumLength="#{bindings.Password.hints.precision}"
+                                    shortDesc="#{bindings.Password.hints.tooltip}"
+                                    id="it9"
+                                    binding="#{UserAccessBean.itUserPassword}"
+                                    visible="false">
+                        <f:validator binding="#{bindings.Password.validator}"/>
+                      </af:inputText>
+                      <af:panelGroupLayout id="pgl9"
+                                           inlineStyle="padding-top:5px;padding-bottom:10px;"
+                                           layout="vertical">
+                        <af:outputText value='Password user akan direset menjadi \"welcome1\"'
+                                       id="ot10"/>
+                      </af:panelGroupLayout>
+                    </af:dialog>
+                  </af:popup>
+                  <af:image source="/Images/v_spacer_toolbar.png" id="i2"
+                            shortDesc=" "/>
+                  <af:commandToolbarButton actionListener="#{bindings.Commit.execute}"
+                                           text="Save" id="ctb5"
+                                           inlineStyle="padding:2px;"/>
+                  <af:commandToolbarButton actionListener="#{bindings.Rollback.execute}"
+                                           text="Cancel" immediate="true"
+                                           id="commandToolbarButton1"
+                                           inlineStyle="padding:2px;">
+                    <af:resetActionListener/>
+                    <af:resetActionListener/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGroupLayout layout="scroll"
+                                   xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                                   id="pgl15">
+                <af:panelSplitter id="ps1" orientation="horizontal"
+                                  styleClass="AFStretchWidth"
+                                  splitterPosition="420" dimensionsFrom="auto"
+                                  disabled="true"
+                                  inlineStyle="padding-top:20px;padding-bottom:30px;"
+                                  binding="#{UserAccessBean.psUserData}">
+                  <f:facet name="first">
+                    <af:panelFormLayout id="pfl1" labelWidth="150"
+                                        partialTriggers="pc2:t1">
+                      <af:spacer width="10" height="10" id="s4"/>
+                      <af:panelLabelAndMessage label="#{bindings.UserName.hints.label}"
+                                               id="plam5">
+                        <af:panelGroupLayout id="pgl10" layout="horizontal">
+                          <af:inputText value="#{bindings.UserName.inputValue}"
+                                        label="#{bindings.UserName.hints.label}"
+                                        required="#{bindings.UserName.hints.mandatory}"
+                                        columns="#{bindings.UserName.hints.displayWidth}"
+                                        maximumLength="#{bindings.UserName.hints.precision}"
+                                        shortDesc="#{bindings.UserName.hints.tooltip}"
+                                        id="it4" readOnly="true"
+                                        contentStyle="font-weight:bold;"
+                                        simple="true">
+                            <f:validator binding="#{bindings.UserName.validator}"/>
+                          </af:inputText>
+                          <af:outputText value="," id="outputText1"/>
+                          <af:spacer width="10" height="10" id="spacer2"/>
+                          <af:inputText value="#{bindings.UserInitial.inputValue}"
+                                        label="#{bindings.UserInitial.hints.label}"
+                                        required="#{bindings.UserInitial.hints.mandatory}"
+                                        columns="#{bindings.UserInitial.hints.displayWidth}"
+                                        maximumLength="#{bindings.UserInitial.hints.precision}"
+                                        shortDesc="#{bindings.UserInitial.hints.tooltip}"
+                                        id="it11" readOnly="true"
+                                        contentStyle="font-weight:bold;">
+                            <f:validator binding="#{bindings.UserInitial.validator}"/>
+                          </af:inputText>
+                        </af:panelGroupLayout>
+                      </af:panelLabelAndMessage>
+                      <af:spacer width="10" height="9" id="s5"/>
+                      <af:panelLabelAndMessage label="#{bindings.CompanyId.label}"
+                                               id="plam7">
+                        <af:panelGroupLayout id="pgl11" layout="horizontal">
+                          <af:selectOneChoice value="#{bindings.CompanyId.inputValue}"
+                                              label="#{bindings.CompanyId.label}"
+                                              required="#{bindings.CompanyId.hints.mandatory}"
+                                              shortDesc="#{bindings.CompanyId.hints.tooltip}"
+                                              id="soc2" readOnly="true"
+                                              contentStyle="font-weight:bold;"
+                                              simple="true">
+                            <f:selectItems value="#{bindings.CompanyId.items}"
+                                           id="si2"/>
+                          </af:selectOneChoice>
+                          <af:outputText value="," id="outputText2"/>
+                          <af:spacer width="10" height="10" id="spacer3"/>
+                          <af:selectOneChoice value="#{bindings.UserType.inputValue}"
+                                              label="#{bindings.UserType.label}"
+                                              required="#{bindings.UserType.hints.mandatory}"
+                                              shortDesc="#{bindings.UserType.hints.tooltip}"
+                                              id="soc5" readOnly="true"
+                                              contentStyle="font-weight:bold;">
+                            <f:selectItems value="#{bindings.UserType.items}"
+                                           id="si5"/>
+                          </af:selectOneChoice>
+                          <af:outputText value="#{bindings.UserType1.inputValue}"
+                                         id="ot11" visible="false"/>
+                        </af:panelGroupLayout>
+                      </af:panelLabelAndMessage>
+                      <af:spacer width="10" height="7" id="s6"/>
+                      <af:inputText value="#{bindings.FullName.inputValue}"
+                                    label="#{bindings.FullName.hints.label}"
+                                    required="#{bindings.FullName.hints.mandatory}"
+                                    columns="#{bindings.FullName.hints.displayWidth}"
+                                    maximumLength="#{bindings.FullName.hints.precision}"
+                                    shortDesc="#{bindings.FullName.hints.tooltip}"
+                                    id="it5">
+                        <f:validator binding="#{bindings.FullName.validator}"/>
+                      </af:inputText>
+                      <af:spacer width="10" height="2" id="spacer4"/>
+                      <af:panelLabelAndMessage label="#{bindings.Title.label}" id="plam8">
+                        <af:panelGroupLayout id="pgl14" layout="horizontal">
+                          <af:selectOneChoice value="#{bindings.Title.inputValue}"
+                                              label="#{bindings.Title.label}"
+                                              required="#{bindings.Title.hints.mandatory}"
+                                              shortDesc="#{bindings.Title.hints.tooltip}"
+                                              id="soc1" simple="true">
+                            <f:selectItems value="#{bindings.Title.items}"
+                                           id="si1"/>
+                          </af:selectOneChoice>
+                          <af:inputText value="#{bindings.CustAuthFlag.inputValue}"
+                                        simple="true"
+                                        required="#{bindings.CustAuthFlag.hints.mandatory}"
+                                        columns="#{bindings.CustAuthFlag.hints.displayWidth}"
+                                        maximumLength="#{bindings.CustAuthFlag.hints.precision}"
+                                        shortDesc="#{bindings.CustAuthFlag.hints.tooltip}"
+                                        id="it12"
+                                        binding="#{UserAccessBean.itCustAuthFlag}"
+                                        visible="false">
+                            <f:validator binding="#{bindings.CustAuthFlag.validator}"/>
+                          </af:inputText>
+                        </af:panelGroupLayout>
+                      </af:panelLabelAndMessage>
+                      <af:spacer width="10" height="2" id="s7"/>
+                      <af:inputText value="#{bindings.ContactNo.inputValue}"
+                                    label="#{bindings.ContactNo.hints.label}"
+                                    required="#{bindings.ContactNo.hints.mandatory}"
+                                    columns="#{bindings.ContactNo.hints.displayWidth}"
+                                    maximumLength="#{bindings.ContactNo.hints.precision}"
+                                    shortDesc="#{bindings.ContactNo.hints.tooltip}"
+                                    id="it7">
+                        <f:validator binding="#{bindings.ContactNo.validator}"/>
+                      </af:inputText>
+                      <af:spacer width="10" height="2" id="s8"/>
+                      <af:selectOneChoice value="#{bindings.UserDivision.inputValue}"
+                                          label="#{bindings.UserDivision.label}"
+                                          required="#{bindings.UserDivision.hints.mandatory}"
+                                          shortDesc="#{bindings.UserDivision.hints.tooltip}"
+                                          id="soc7"
+                                          valueChangeListener="#{UserAccessBean.socUserDivisionValueChangeListener}"
+                                          autoSubmit="true"
+                                          binding="#{UserAccessBean.socUserDivision}">
+                        <f:selectItems value="#{bindings.UserDivision.items}"
+                                       id="si7"/>
+                      </af:selectOneChoice>
+                      <af:popup id="pUsrDivChg"
+                                binding="#{UserAccessBean.popupUserDivChange}">
+                        <af:dialog id="d5"
+                                   title="Warning: User Division Changed"
+                                   dialogListener="#{UserAccessBean.userDivisionChangedDialogListenerMethod}">
+                          <af:panelGroupLayout id="pgl16">
+                            <af:outputText value="Apakah anda yakin ingin mengganti user division?" id="ot29"/>
+                          </af:panelGroupLayout>
+                        </af:dialog>
+                      </af:popup>
+                      <af:spacer width="10" height="2" id="spacer5"/>
+                      <af:panelLabelAndMessage label="Login Period From"
+                                               id="plam2">
+                        <af:panelGroupLayout id="pgl2" layout="horizontal">
+                          <af:inputDate value="#{bindings.ActivePeriodFrom.inputValue}"
+                                        label="#{bindings.ActivePeriodFrom.hints.label}"
+                                        required="#{bindings.ActivePeriodFrom.hints.mandatory}"
+                                        shortDesc="#{bindings.ActivePeriodFrom.hints.tooltip}"
+                                        id="id3" simple="true"
+                                        contentStyle="width:85px;">
+                            <f:validator binding="#{bindings.ActivePeriodFrom.validator}"/>
+                            <af:convertDateTime pattern="#{bindings.ActivePeriodFrom.format}"/>
+                          </af:inputDate>
+                          <af:spacer width="10" height="10" id="s2"/>
+                          <af:outputText value="To" id="ot6"/>
+                          <af:spacer width="10" height="10" id="s3"/>
+                          <af:inputDate value="#{bindings.ActivePeriodTo.inputValue}"
+                                        label="#{bindings.ActivePeriodTo.hints.label}"
+                                        required="#{bindings.ActivePeriodTo.hints.mandatory}"
+                                        shortDesc="#{bindings.ActivePeriodTo.hints.tooltip}"
+                                        id="id2" simple="true"
+                                        contentStyle="width:85px;">
+                            <f:validator binding="#{bindings.ActivePeriodTo.validator}"/>
+                            <af:convertDateTime pattern="#{bindings.ActivePeriodTo.format}"/>
+                          </af:inputDate>
+                        </af:panelGroupLayout>
+                      </af:panelLabelAndMessage>
+                    </af:panelFormLayout>
+                  </f:facet>
+                  <f:facet name="second">
+                    <af:panelFormLayout id="pfl3" labelWidth="120">
+                      <af:spacer width="10" height="10" id="s15"/>
+                      <af:panelLabelAndMessage label="User Role" id="plam3"
+                                               labelStyle="vertical-align: top;padding-top:13px;">
+                        <af:panelGroupLayout id="pgl6" layout="horizontal"
+                                             valign="top">
+                          <af:table value="#{bindings.AppUserAccessRolesView1.collectionModel}"
+                                    var="row"
+                                    rows="#{bindings.AppUserAccessRolesView1.rangeSize}"
+                                    emptyText="#{bindings.AppUserAccessRolesView1.viewable ? 'Tidak ada data yang ditampilkan.' : 'Access Denied.'}"
+                                    fetchSize="#{bindings.AppUserAccessRolesView1.rangeSize}"
+                                    rowBandingInterval="0" id="t4"
+                                    inlineStyle="height:34px; width:348px; margin-left:3px;"
+                                    columnStretching="last"
+                                    binding="#{UserAccessBean.tblAssignedRole}">
+                            <af:column sortProperty="#{bindings.AppUserAccessRolesView1.hints.Label.name}"
+                                       sortable="false" id="c1">
+                              <af:outputText value="#{row.Label}" id="ot8"
+                                             inlineStyle="padding-left:5px;"/>
+                            </af:column>
+                          </af:table>
+                          <af:spacer width="10" height="10" id="s12"/>
+                          <af:panelGroupLayout id="pgl1" layout="vertical">
+                            <af:spacer width="10" height="3" id="s1"/>
+                            <af:commandButton id="cmdRole"
+                                              icon="/Images/edit_list.png"
+                                              inlineStyle="padding:5px;"
+                                              action="assignrole"
+                                              useWindow="true"
+                                              windowHeight="230"
+                                              windowWidth="500"
+                                              windowModalityType="applicationModal"
+                                              returnListener="#{UserAccessBean.windowRoleReturnListener}"
+                                              shortDesc=" "
+                                              windowEmbedStyle="window">
+                              <af:setPropertyListener from="#{bindings.UserName.inputValue}"
+                                                      to="#{pageFlowScope.userName}"
+                                                      type="action"/>
+                              <af:setPropertyListener from="#{bindings.FullName.inputValue}"
+                                                      to="#{pageFlowScope.fullName}"
+                                                      type="action"/>
+                              <af:setPropertyListener from="#{bindings.UserType1.inputValue}"
+                                                      to="#{pageFlowScope.userType}"
+                                                      type="action"/>
+                            </af:commandButton>
+                          </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                      </af:panelLabelAndMessage>
+                      <af:spacer width="10" height="5" id="spacer6"/>
+                      <af:panelLabelAndMessage label="#{bindings.DirectSpv.hints.label}"
+                                               id="plam1">
+                        <af:panelGroupLayout id="pgl7" layout="horizontal">
+                          <af:inputListOfValues id="directSpvId"
+                                                popupTitle="Search and Select: #{bindings.DirectSpv.hints.label}"
+                                                value="#{bindings.DirectSpv.inputValue}"
+                                                label="#{bindings.DirectSpv.hints.label}"
+                                                model="#{bindings.DirectSpv.listOfValuesModel}"
+                                                required="#{bindings.DirectSpv.hints.mandatory}"
+                                                columns="#{bindings.DirectSpv.hints.displayWidth}"
+                                                shortDesc="#{bindings.DirectSpv.hints.tooltip}"
+                                                contentStyle="padding:7px;border-color:rgb(201,202,204); border-style:solid; border-width:1.0px; width:70px; font-weight:bold;"
+                                                simple="true">
+                            <f:validator binding="#{bindings.DirectSpv.validator}"/>
+                          </af:inputListOfValues>
+                          <af:spacer width="10" height="10" id="s9"/>
+                          <af:outputText value="#{bindings.DirectSpvDesc.inputValue}"
+                                         id="ot15" partialTriggers="directSpvId"
+                                         inlineStyle="font-weight:bold;"/>
+                        </af:panelGroupLayout>
+                      </af:panelLabelAndMessage>
+                      <af:spacer width="10" height="5" id="spacer1"/>
+                      <af:panelLabelAndMessage label="#{bindings.Descr.hints.label}"
+                                               id="plam6"
+                                               labelStyle="vertical-align: top;padding-top:8px;">
+                        <af:inputText value="#{bindings.Descr.inputValue}"
+                                      label="#{bindings.Descr.hints.label}"
+                                      required="#{bindings.Descr.hints.mandatory}"
+                                      columns="#{bindings.Descr.hints.displayWidth}"
+                                      maximumLength="#{bindings.Descr.hints.precision}"
+                                      shortDesc="#{bindings.Descr.hints.tooltip}"
+                                      id="it2" rows="6" simple="true"
+                                      contentStyle="width:380px;">
+                          <f:validator binding="#{bindings.Descr.validator}"/>
+                        </af:inputText>
+                      </af:panelLabelAndMessage>
+                      <af:spacer width="10" height="5" id="spacer7"/>
+                      <af:panelLabelAndMessage label="Session" id="plam4">
+                        <af:panelGroupLayout id="pgl12" layout="horizontal">
+                          <af:spacer width="7" height="10" id="s16"/>
+                          <af:image source="#{bindings.SessionStatus.inputValue == 0 ? '/Images/disable.png' : '/Images/active.png'}"
+                                    shortDesc="Active" id="i4"
+                                    partialTriggers="d4"/>
+                          <af:outputText value="#{bindings.SessionStatus.inputValue == 0 ? 'IN ACTIVE' : 'ACTIVE'}"
+                                         id="ot17"
+                                         inlineStyle="padding-left:10px;font-weight:bold;"
+                                         partialTriggers="d4"/>
+                          <af:spacer width="7" height="24" id="s14"/>
+                          <af:image source="/Images/v_spacer_toolbar.png"
+                                    id="i3"
+                                    visible="#{bindings.SessionStatus.inputValue == 0 ? 'false' : 'true'}"
+                                    partialTriggers="d4"/>
+                          <af:spacer width="10" height="10" id="s13"/>
+                          <af:commandButton text="Clear Session" id="cb1"
+                                            disabled="#{bindings.SessionStatus.inputValue == 0 ? 'true' : 'false'}"
+                                            visible="#{bindings.SessionStatus.inputValue == 0 ? 'false' : 'true'}"
+                                            partialTriggers="d4">
+                            <af:showPopupBehavior popupId="p4"
+                                                  triggerType="action"/>
+                          </af:commandButton>
+                          <af:popup id="p4">
+                            <af:dialog id="d4" title="Hapus User Session Log"
+                                       dialogListener="#{UserAccessBean.sessionClearDialogListener}">
+                              <af:panelGroupLayout id="pgl13"
+                                                   layout="horizontal">
+                                <af:outputText value="Yakin akan menghapus sesi aktif dari user"
+                                               id="ot18"/>
+                                <af:spacer width="5" height="10" id="s19"/>
+                                <af:outputText value="#{bindings.UserName.inputValue}"
+                                               id="ot19"
+                                               inlineStyle="font-weight:bold;"/>
+                                <af:spacer width="5" height="10" id="s18"/>
+                                <af:outputText value="?" id="ot20"/>
+                              </af:panelGroupLayout>
+                            </af:dialog>
+                          </af:popup>
+                        </af:panelGroupLayout>
+                      </af:panelLabelAndMessage>
+                    </af:panelFormLayout>
+                  </f:facet>
+                </af:panelSplitter>
+                <af:panelBox id="pb1"
+                             text="Customer Authorization by Regional Level">
+                  <af:panelTabbed id="pt1" styleClass="AFStretchWidth"
+                                  inlineStyle="margin-top:5px;margin-left:4px;">
+                    <af:showDetailItem text="Region (#{bindings.AppUserRegionView1.estimatedRowCount})"
+                                       id="sdi1" stretchChildren="first"
+                                       binding="#{UserAccessBean.tabUserRegion}">
+                                       <!--icon="#{bindings.CustAuthFlag.inputValue == 'REGION' ? '/Images/bullet_star.png' : '' }"-->
+                      <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                                          featuresOff="detach viewMenu columnsMenuItem statusBar">
+                        <af:table value="#{bindings.AppUserRegionView1.collectionModel}"
+                                  var="row"
+                                  rows="#{bindings.AppUserRegionView1.rangeSize}"
+                                  emptyText="#{bindings.AppUserRegionView1.viewable ? 'Tidak ada data yang ditampilkan.' : 'Access Denied.'}"
+                                  fetchSize="#{bindings.AppUserRegionView1.rangeSize}"
+                                  rowBandingInterval="0" id="t5"
+                                  columnStretching="last"
+                                  binding="#{UserAccessBean.tblAssignedRegion}"
+                                  inlineStyle="border-left:none;border-right:none;">
+                          <af:column id="c8" width="6" minimumWidth="6"
+                                     rowHeader="true"/>
+                          <af:column sortProperty="#{bindings.AppUserRegionView1.hints.RegionLabel.name}"
+                                     sortable="false" id="c2">
+                            <af:outputText value="#{row.RegionCode} #{row.RegionLabel}"
+                                           id="ot9" inlineStyle="margin:10px;"/>
+                          </af:column>
+                        </af:table>
+                        <f:facet name="toolbar">
+                          <af:toolbar id="t6">
+                            <af:commandToolbarButton id="cmdRegion"
+                                                     action="assignregion"
+                                                     useWindow="true"
+                                                     windowHeight="230"
+                                                     windowWidth="500"
+                                                     windowModalityType="applicationModal"
+                                                     returnListener="#{UserAccessBean.windowRegionReturnListener}"
+                                                     shortDesc=" "
+                                                     windowEmbedStyle="window"
+                                                     icon="/Images/addrem.png"
+                                                     text="Add / Remove Region"
+                                                     hoverIcon="/Images/addrem.png"
+                                                     depressedIcon="/Images/addrem.png"
+                                                     disabledIcon="/Images/addrem_dis.png">
+                                                     <!--visible="#{bindings.CustAuthFlag.inputValue == 'REGION' or bindings.CustAuthFlag.inputValue == null ? 'true' : 'false' }"-->
+                              <af:setPropertyListener from="#{bindings.UserName.inputValue}"
+                                                      to="#{pageFlowScope.userName}"
+                                                      type="action"/>
+                              <af:setPropertyListener from="#{bindings.FullName.inputValue}"
+                                                      to="#{pageFlowScope.fullName}"
+                                                      type="action"/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                      </af:panelCollection>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Area (#{bindings.AppUserAreaView1.estimatedRowCount})"
+                                       id="sdi2" stretchChildren="first"
+                                       binding="#{UserAccessBean.tabUserArea}">
+                                       <!--icon="#{bindings.CustAuthFlag.inputValue == 'AREA' ? '/Images/bullet_star.png' : '' }"-->
+                      <af:panelCollection id="pcl2" styleClass="AFStretchWidth"
+                                          featuresOff="detach viewMenu columnsMenuItem statusBar">
+                        <f:facet name="toolbar">
+                          <af:toolbar id="toolbar1">
+                            <af:commandToolbarButton id="commandToolbarButton2"
+                                                     action="assignarea"
+                                                     useWindow="true"
+                                                     windowHeight="230"
+                                                     windowWidth="600"
+                                                     windowModalityType="applicationModal"
+                                                     returnListener="#{UserAccessBean.windowAreaReturnListener}"
+                                                     shortDesc=" "
+                                                     windowEmbedStyle="window"
+                                                     icon="/Images/addrem.png"
+                                                     text="Add / Remove Area"
+                                                     hoverIcon="/Images/addrem.png"
+                                                     depressedIcon="/Images/addrem.png"
+                                                     disabledIcon="/Images/addrem_dis.png">
+                                                     <!--visible="#{bindings.CustAuthFlag.inputValue == 'AREA' or bindings.CustAuthFlag.inputValue == null ? 'true' : 'false' }"-->
+                              <af:setPropertyListener from="#{bindings.UserName.inputValue}"
+                                                      to="#{pageFlowScope.userName}"
+                                                      type="action"/>
+                              <af:setPropertyListener from="#{bindings.FullName.inputValue}"
+                                                      to="#{pageFlowScope.fullName}"
+                                                      type="action"/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <af:table value="#{bindings.AppUserAreaView1.collectionModel}"
+                                  var="row"
+                                  rows="#{bindings.AppUserAreaView1.rangeSize}"
+                                  emptyText="#{bindings.AppUserAreaView1.viewable ? 'Tidak ada data yang ditampilkan.' : 'Access Denied.'}"
+                                  fetchSize="#{bindings.AppUserAreaView1.rangeSize}"
+                                  rowBandingInterval="0" id="t7"
+                                  columnStretching="last"
+                                  binding="#{UserAccessBean.tblAssignedArea}"
+                                  inlineStyle="border-left:none;border-right:none;">
+                          <af:column id="c9" width="6" minimumWidth="6"
+                                     rowHeader="true"/>
+                          <af:column sortProperty="#{bindings.AppUserAreaView1.hints.Description.name}"
+                                     sortable="false" id="c4">
+                            <af:outputText value="#{row.AreaCode} #{row.Description}"
+                                           id="ot5" inlineStyle="margin:10px;"/>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Location (#{bindings.AppUserLocView1.estimatedRowCount})"
+                                       id="sdi3" stretchChildren="first"
+                                       binding="#{UserAccessBean.tabUserLoc}">
+                                       <!--icon="#{bindings.CustAuthFlag.inputValue == 'LOCATION' ? '/Images/bullet_star.png' : '' }"-->
+                      <af:panelCollection id="pcl3" styleClass="AFStretchWidth"
+                                          featuresOff="detach viewMenu columnsMenuItem statusBar">
+                        <f:facet name="toolbar">
+                          <af:toolbar id="toolbar2">
+                            <af:commandToolbarButton id="commandToolbarButton3"
+                                                     action="assignloc"
+                                                     useWindow="true"
+                                                     windowHeight="230"
+                                                     windowWidth="500"
+                                                     windowModalityType="applicationModal"
+                                                     returnListener="#{UserAccessBean.windowLocationReturnListener}"
+                                                     shortDesc=" "
+                                                     windowEmbedStyle="window"
+                                                     icon="/Images/addrem.png"
+                                                     text="Add / Remove Location"
+                                                     hoverIcon="/Images/addrem.png"
+                                                     depressedIcon="/Images/addrem.png"
+                                                     disabledIcon="/Images/addrem_dis.png">
+                                                     <!--visible="#{bindings.CustAuthFlag.inputValue == 'LOCATION' or bindings.CustAuthFlag.inputValue == null ? 'true' : 'false' }"-->
+                              <af:setPropertyListener from="#{bindings.UserName.inputValue}"
+                                                      to="#{pageFlowScope.userName}"
+                                                      type="action"/>
+                              <af:setPropertyListener from="#{bindings.FullName.inputValue}"
+                                                      to="#{pageFlowScope.fullName}"
+                                                      type="action"/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <af:table value="#{bindings.AppUserLocView1.collectionModel}"
+                                  var="row"
+                                  rows="#{bindings.AppUserLocView1.rangeSize}"
+                                  emptyText="#{bindings.AppUserLocView1.viewable ? 'Tidak ada data yang ditampilkan.' : 'Access Denied.'}"
+                                  fetchSize="#{bindings.AppUserLocView1.rangeSize}"
+                                  rowBandingInterval="0" id="t8"
+                                  columnStretching="last"
+                                  binding="#{UserAccessBean.tblAssignedLoc}"
+                                  inlineStyle="border-left:none;border-right:none;">
+                          <af:column id="c10" width="6" minimumWidth="6"
+                                     rowHeader="true"/>
+                          <af:column sortProperty="#{bindings.AppUserLocView1.hints.LocationCode.name}"
+                                     sortable="false" id="c5">
+                            <af:outputText value="#{row.LocationCode} #{row.Description}"
+                                           id="ot12"
+                                           inlineStyle="margin:10px;"/>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </af:showDetailItem>
+                  </af:panelTabbed>
+                </af:panelBox>
+                <af:spacer width="10" height="20" id="spacer9"/>
+                <af:panelBox text="Customer Authorization by Non Regional Level" id="pb2">
+                  <af:panelTabbed id="pt2" styleClass="AFStretchWidth"
+                                  inlineStyle="margin-top:5px;margin-left:4px;">
+                    <af:showDetailItem text="Customer Type (#{bindings.AppUserCustTypeView1.estimatedRowCount})"
+                                       id="sdi6" stretchChildren="first"
+                                       binding="#{UserAccessBean.tabUserCustType}">
+                      <af:panelCollection id="pc4"
+                                          featuresOff="detach viewMenu columnsMenuItem statusBar">
+                        <f:facet name="toolbar">
+                          <af:toolbar id="t13">
+                            <af:commandToolbarButton id="commandToolbarButton5"
+                                                     action="assigncusttype"
+                                                     useWindow="true"
+                                                     windowHeight="220"
+                                                     windowWidth="500"
+                                                     windowModalityType="applicationModal"
+                                                     returnListener="#{UserAccessBean.windowCustTypeReturnListener}"
+                                                     shortDesc=" "
+                                                     windowEmbedStyle="window"
+                                                     icon="/Images/addrem.png"
+                                                     text="Add / Remove Customer Type"
+                                                     hoverIcon="/Images/addrem.png"
+                                                     depressedIcon="/Images/addrem.png"
+                                                     disabledIcon="/Images/addrem_dis.png"
+                                                     visible="#{bindings.CustAuthFlag.inputValue != null}">
+                              <af:setPropertyListener from="#{bindings.UserName.inputValue}"
+                                                      to="#{pageFlowScope.userName}"
+                                                      type="action"/>
+                              <af:setPropertyListener from="#{bindings.FullName.inputValue}"
+                                                      to="#{pageFlowScope.fullName}"
+                                                      type="action"/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.AppUserCustTypeView1.collectionModel}"
+                                  var="row"
+                                  rows="#{bindings.AppUserCustTypeView1.rangeSize}"
+                                  emptyText="#{bindings.AppUserCustTypeView1.viewable ? 'Tidak ada data yang ditampilkan.' : 'Access Denied.'}"
+                                  fetchSize="#{bindings.AppUserCustTypeView1.rangeSize}"
+                                  rowBandingInterval="0" id="t12"
+                                  columnStretching="column:c13"
+                                  binding="#{UserAccessBean.tblAssignedCustType}"
+                                  inlineStyle="border-left:none;border-right:none;">
+                          <af:column id="c14" width="6" minimumWidth="6"
+                                     rowHeader="true"/>
+                          <af:column sortProperty="#{bindings.AppUserCustTypeView1.hints.Description.name}"
+                                     sortable="false" id="c13">
+                            <af:outputText value="#{row.CustType} #{row.Description}"
+                                           id="ot16"
+                                           inlineStyle="margin:10px;"/>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Customer Group (#{bindings.AppUserCustGroupView1.estimatedRowCount})"
+                                       id="sdi5" stretchChildren="first"
+                                       binding="#{UserAccessBean.tabUserCustGroup}">
+                      <af:panelCollection id="pc3"
+                                          featuresOff="detach viewMenu columnsMenuItem statusBar"
+                                          styleClass="AFStretchWidth">
+                        <f:facet name="toolbar">
+                          <af:toolbar id="t10">
+                            <af:commandToolbarButton id="ctb6"
+                                                     action="assigncustgroup"
+                                                     useWindow="true"
+                                                     windowHeight="220"
+                                                     windowWidth="500"
+                                                     windowModalityType="applicationModal"
+                                                     returnListener="#{UserAccessBean.windowCustGroupReturnListener}"
+                                                     shortDesc=" "
+                                                     windowEmbedStyle="window"
+                                                     icon="/Images/addrem.png"
+                                                     text="Add / Remove Customer Group"
+                                                     hoverIcon="/Images/addrem.png"
+                                                     depressedIcon="/Images/addrem.png"
+                                                     disabledIcon="/Images/addrem_dis.png"
+                                                     visible="#{bindings.CustAuthFlag.inputValue != null}">
+                              <af:setPropertyListener from="#{bindings.UserName.inputValue}"
+                                                      to="#{pageFlowScope.userName}"
+                                                      type="action"/>
+                              <af:setPropertyListener from="#{bindings.FullName.inputValue}"
+                                                      to="#{pageFlowScope.fullName}"
+                                                      type="action"/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.AppUserCustGroupView1.collectionModel}"
+                                  var="row"
+                                  rows="#{bindings.AppUserCustGroupView1.rangeSize}"
+                                  emptyText="#{bindings.AppUserCustGroupView1.viewable ? 'Tidak ada data yang ditampilkan.' : 'Access Denied.'}"
+                                  fetchSize="#{bindings.AppUserCustGroupView1.rangeSize}"
+                                  rowBandingInterval="0" id="t11"
+                                  columnStretching="last"
+                                  binding="#{UserAccessBean.tblAssignedCustGroup}"
+                                  inlineStyle="border-left:none;border-right:none;">
+                          <af:column id="c11" width="6" minimumWidth="6"
+                                     rowHeader="true"/>
+                          <af:column sortProperty="#{bindings.AppUserCustGroupView1.hints.CustGroup.name}"
+                                     sortable="false" id="c7">
+                            <af:outputText value="#{row.CustGroup} #{row.Description}"
+                                           id="ot14"
+                                           inlineStyle="margin:10px;"/>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Customer (#{bindings.AppUserCustView1.estimatedRowCount})"
+                                       id="sdi4" stretchChildren="first"
+                                       binding="#{UserAccessBean.tabUserCust}">
+                      <af:panelCollection id="pcl4" styleClass="AFStretchWidth"
+                                          featuresOff="detach viewMenu columnsMenuItem statusBar">
+                        <f:facet name="toolbar">
+                          <af:toolbar id="toolbar3">
+                            <af:commandToolbarButton id="commandToolbarButton4"
+                                                     action="assigncust"
+                                                     useWindow="true"
+                                                     windowHeight="230"
+                                                     windowWidth="680"
+                                                     windowModalityType="applicationModal"
+                                                     returnListener="#{UserAccessBean.windowCustomerReturnListener}"
+                                                     shortDesc=" "
+                                                     windowEmbedStyle="window"
+                                                     icon="/Images/addrem.png"
+                                                     text="Add / Remove Customer"
+                                                     hoverIcon="/Images/addrem.png"
+                                                     depressedIcon="/Images/addrem.png"
+                                                     disabledIcon="/Images/addrem_dis.png"
+                                                     visible="#{bindings.CustAuthFlag.inputValue != null}">
+                              <af:setPropertyListener from="#{bindings.UserName.inputValue}"
+                                                      to="#{pageFlowScope.userName}"
+                                                      type="action"/>
+                              <af:setPropertyListener from="#{bindings.FullName.inputValue}"
+                                                      to="#{pageFlowScope.fullName}"
+                                                      type="action"/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <af:table value="#{bindings.AppUserCustView1.collectionModel}"
+                                  var="row"
+                                  rows="#{bindings.AppUserCustView1.rangeSize}"
+                                  emptyText="#{bindings.AppUserCustView1.viewable ? 'Tidak ada data yang ditampilkan.' : 'Access Denied.'}"
+                                  fetchSize="#{bindings.AppUserCustView1.rangeSize}"
+                                  rowBandingInterval="0" id="t9"
+                                  columnStretching="last"
+                                  binding="#{UserAccessBean.tblAssignedCust}"
+                                  inlineStyle="border-left:none;border-right:none;">
+                          <af:column id="c12" width="6" minimumWidth="6"
+                                     rowHeader="true"/>
+                          <af:column sortProperty="#{bindings.AppUserCustView1.hints.CustomerName.name}"
+                                     sortable="false" id="c6">
+                            <af:outputText value="#{row.CustomerName}" id="ot13"
+                                           inlineStyle="margin:10px;"/>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </af:showDetailItem>
+                  </af:panelTabbed>
+                </af:panelBox>
+                <af:spacer width="10" height="20" id="spacer8"/>
+                <af:panelBox text="Produk Authorization Level" id="pb3">
+                  <af:panelTabbed id="pt3" styleClass="AFStretchWidth"
+                                  inlineStyle="margin-top:5px;margin-left:4px;">
+                    <af:showDetailItem text="Category" id="sdi7"
+                                       stretchChildren="first"
+                                       binding="#{UserAccessBean.tabUserProdCategory}"
+                                       partialTriggers="d5">
+                      <!--af:panelCollection id="pc5"
+                                          featuresOff="detach viewMenu columnsMenuItem statusBar">
+                        <f:facet name="toolbar">
+                          <af:toolbar id="t21">
+                            <af:commandToolbarButton id="commandToolbarButton6"
+                                                     action="addprodcategory"
+                                                     useWindow="true"
+                                                     windowHeight="230"
+                                                     windowWidth="500"
+                                                     windowModalityType="applicationModal"
+                                                     returnListener="#{UserAccessBean.windowProdCategoryReturnListener}"
+                                                     shortDesc=" "
+                                                     windowEmbedStyle="window"
+                                                     icon="/Images/addrem.png"
+                                                     text="Add / Remove Produk Category"
+                                                     hoverIcon="/Images/addrem.png"
+                                                     depressedIcon="/Images/addrem.png"
+                                                     disabledIcon="/Images/addrem_dis.png">
+                              <af:setPropertyListener from="#{bindings.UserName.inputValue}"
+                                                      to="#{pageFlowScope.userName}"
+                                                      type="action"/>
+                              <af:setPropertyListener from="#{bindings.FullName.inputValue}"
+                                                      to="#{pageFlowScope.fullName}"
+                                                      type="action"/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet-->
+                        <af:table value="#{bindings.AppUserProdukCategoryView1.collectionModel}"
+                                  var="row"
+                                  rows="#{bindings.AppUserProdukCategoryView1.rangeSize}"
+                                  emptyText="#{bindings.AppUserProdukCategoryView1.viewable ? 'Semua category telah otomatis terpillih.' : 'Access Denied.'}"
+                                  fetchSize="#{bindings.AppUserProdukCategoryView1.rangeSize}"
+                                  rowBandingInterval="0" id="t14"
+                                  columnStretching="column:c15"
+                                  binding="#{UserAccessBean.tblProdCategory}">
+                          <af:column id="c28" width="6" minimumWidth="6"
+                                     rowHeader="true"/>
+                          <af:column sortProperty="#{bindings.AppUserProdukCategoryView1.hints.CategoryDesc.name}"
+                                     sortable="false"
+                                     id="c15">
+                            <af:outputText value="#{row.ProdCategory} - #{row.CategoryDesc}"
+                                           id="ot21"
+                                           inlineStyle="margin:10px;"/>
+                          </af:column>
+                        </af:table>
+                      <!--/af:panelCollection-->
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Class (#{bindings.AppUserProdukClassView1.estimatedRowCount == 0 ? 'All' : bindings.AppUserProdukClassView1.estimatedRowCount})" id="sdi8"
+                                       stretchChildren="first"
+                                       binding="#{UserAccessBean.tabUserProdClass}">
+                      <af:panelCollection id="pc6"
+                                          featuresOff="detach viewMenu columnsMenuItem statusBar">
+                        <f:facet name="toolbar">
+                          <af:toolbar id="toolbar4">
+                            <af:commandToolbarButton id="commandToolbarButton7"
+                                                     action="addprodclass"
+                                                     useWindow="true"
+                                                     windowHeight="230"
+                                                     windowWidth="500"
+                                                     windowModalityType="applicationModal"
+                                                     returnListener="#{UserAccessBean.windowProdClassReturnListener}"
+                                                     shortDesc=" "
+                                                     windowEmbedStyle="window"
+                                                     icon="/Images/addrem.png"
+                                                     text="Add / Remove Produk Class"
+                                                     hoverIcon="/Images/addrem.png"
+                                                     depressedIcon="/Images/addrem.png"
+                                                     disabledIcon="/Images/addrem_dis.png"
+                                                     disabled="#{bindings.AppUserProdukCategoryView1.estimatedRowCount &lt;= 0}">
+                              <af:setPropertyListener from="#{bindings.UserName.inputValue}"
+                                                      to="#{pageFlowScope.userName}"
+                                                      type="action"/>
+                              <af:setPropertyListener from="#{bindings.FullName.inputValue}"
+                                                      to="#{pageFlowScope.fullName}"
+                                                      type="action"/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.AppUserProdukClassView1.collectionModel}"
+                                  var="row"
+                                  rows="#{bindings.AppUserProdukClassView1.rangeSize}"
+                                  emptyText="#{bindings.AppUserProdukClassView1.viewable ? 'Semua class dan turunannya telah otomatis terpillih.' : 'Access Denied.'}"
+                                  fetchSize="#{bindings.AppUserProdukClassView1.rangeSize}"
+                                  rowBandingInterval="0" id="t15"
+                                  columnStretching="column:c16"
+                                  binding="#{UserAccessBean.tblProdClass}">
+                          <af:column id="c27" width="6" minimumWidth="6"
+                                     rowHeader="true"/>
+                          <af:column sortProperty="#{bindings.AppUserProdukClassView1.hints.ClassDesc.name}"
+                                     sortable="false"
+                                     id="c16">
+                            <af:outputText value="#{row.ProdClass} - #{row.ClassDesc}" id="ot22"
+                                           inlineStyle="margin:10px;"/>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Brand (#{bindings.AppUserProdukBrandView1.estimatedRowCount == 0 ? 'All' : bindings.AppUserProdukBrandView1.estimatedRowCount})" id="sdi9"
+                                       stretchChildren="first"
+                                       binding="#{UserAccessBean.tabUserProdBrand}">
+                      <af:panelCollection id="pc8"
+                                          featuresOff="detach viewMenu columnsMenuItem statusBar">
+                        <f:facet name="toolbar">
+                          <af:toolbar id="toolbar5">
+                            <af:commandToolbarButton id="commandToolbarButton8"
+                                                     action="addprodbrand"
+                                                     useWindow="true"
+                                                     windowHeight="230"
+                                                     windowWidth="500"
+                                                     windowModalityType="applicationModal"
+                                                     returnListener="#{UserAccessBean.windowProdBrandReturnListener}"
+                                                     shortDesc=" "
+                                                     windowEmbedStyle="window"
+                                                     icon="/Images/addrem.png"
+                                                     text="Add / Remove Produk Brand"
+                                                     hoverIcon="/Images/addrem.png"
+                                                     depressedIcon="/Images/addrem.png"
+                                                     disabledIcon="/Images/addrem_dis.png">
+                              <af:setPropertyListener from="#{bindings.UserName.inputValue}"
+                                                      to="#{pageFlowScope.userName}"
+                                                      type="action"/>
+                              <af:setPropertyListener from="#{bindings.FullName.inputValue}"
+                                                      to="#{pageFlowScope.fullName}"
+                                                      type="action"/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.AppUserProdukBrandView1.collectionModel}"
+                                  var="row"
+                                  rows="#{bindings.AppUserProdukBrandView1.rangeSize}"
+                                  emptyText="#{bindings.AppUserProdukBrandView1.viewable ? 'Semua brand dan turunannya telah otomatis terpillih.' : 'Access Denied.'}"
+                                  fetchSize="#{bindings.AppUserProdukBrandView1.rangeSize}"
+                                  rowBandingInterval="0" id="t16"
+                                  columnStretching="column:c17"
+                                  binding="#{UserAccessBean.tblProdBrand}">
+                          <af:column id="c26" rowHeader="true" width="6"
+                                     minimumWidth="6"/>
+                          <af:column sortProperty="#{bindings.AppUserProdukBrandView1.hints.BrandDesc.name}"
+                                     sortable="false"
+                                     id="c17">
+                            <af:outputText value="#{row.ProdBrand} - #{row.BrandDesc}" id="ot23"
+                                           inlineStyle="margin:10px;"/>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Extention (#{bindings.AppUserProdukExtView1.estimatedRowCount == 0 ? 'All' : bindings.AppUserProdukExtView1.estimatedRowCount})" id="sdi10"
+                                       stretchChildren="first"
+                                       binding="#{UserAccessBean.tabUserProdExt}">
+                      <af:panelCollection id="pc9"
+                                          featuresOff="detach viewMenu columnsMenuItem statusBar">
+                        <f:facet name="toolbar">
+                          <af:toolbar id="toolbar6">
+                            <af:commandToolbarButton id="commandToolbarButton9"
+                                                     action="addprodext"
+                                                     useWindow="true"
+                                                     windowHeight="230"
+                                                     windowWidth="500"
+                                                     windowModalityType="applicationModal"
+                                                     returnListener="#{UserAccessBean.windowProdExtReturnListener}"
+                                                     shortDesc=" "
+                                                     windowEmbedStyle="window"
+                                                     icon="/Images/addrem.png"
+                                                     text="Add / Remove Produk Extention"
+                                                     hoverIcon="/Images/addrem.png"
+                                                     depressedIcon="/Images/addrem.png"
+                                                     disabledIcon="/Images/addrem_dis.png">
+                              <af:setPropertyListener from="#{bindings.UserName.inputValue}"
+                                                      to="#{pageFlowScope.userName}"
+                                                      type="action"/>
+                              <af:setPropertyListener from="#{bindings.FullName.inputValue}"
+                                                      to="#{pageFlowScope.fullName}"
+                                                      type="action"/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.AppUserProdukExtView1.collectionModel}"
+                                  var="row"
+                                  rows="#{bindings.AppUserProdukExtView1.rangeSize}"
+                                  emptyText="#{bindings.AppUserProdukExtView1.viewable ? 'Semua extention dan turunannya telah otomatis terpillih.' : 'Access Denied.'}"
+                                  fetchSize="#{bindings.AppUserProdukExtView1.rangeSize}"
+                                  rowBandingInterval="0" id="t17"
+                                  columnStretching="column:c18"
+                                  binding="#{UserAccessBean.tblProdExt}">
+                          <af:column id="c25" width="6" minimumWidth="6"
+                                     rowHeader="true"/>
+                          <af:column sortProperty="#{bindings.AppUserProdukExtView1.hints.ExtDesc.name}"
+                                     sortable="false"
+                                     id="c18">
+                            <af:outputText value="#{row.ProdExt} - #{row.ExtDesc}" id="ot24"
+                                           inlineStyle="margin:10px;"/>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Packaging (#{bindings.AppUserProdukPackView1.estimatedRowCount == 0 ? 'All' : bindings.AppUserProdukPackView1.estimatedRowCount})" id="sdi11"
+                                       stretchChildren="first"
+                                       binding="#{UserAccessBean.tabUserProdPack}">
+                      <af:panelCollection id="pc10"
+                                          featuresOff="detach viewMenu columnsMenuItem statusBar">
+                        <f:facet name="toolbar">
+                          <af:toolbar id="toolbar7">
+                            <af:commandToolbarButton id="commandToolbarButton10"
+                                                     action="addprodpack"
+                                                     useWindow="true"
+                                                     windowHeight="230"
+                                                     windowWidth="500"
+                                                     windowModalityType="applicationModal"
+                                                     returnListener="#{UserAccessBean.windowProdPackReturnListener}"
+                                                     shortDesc=" "
+                                                     windowEmbedStyle="window"
+                                                     icon="/Images/addrem.png"
+                                                     text="Add / Remove Produk Packaging"
+                                                     hoverIcon="/Images/addrem.png"
+                                                     depressedIcon="/Images/addrem.png"
+                                                     disabledIcon="/Images/addrem_dis.png">
+                              <af:setPropertyListener from="#{bindings.UserName.inputValue}"
+                                                      to="#{pageFlowScope.userName}"
+                                                      type="action"/>
+                              <af:setPropertyListener from="#{bindings.FullName.inputValue}"
+                                                      to="#{pageFlowScope.fullName}"
+                                                      type="action"/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.AppUserProdukPackView1.collectionModel}"
+                                  var="row"
+                                  rows="#{bindings.AppUserProdukPackView1.rangeSize}"
+                                  emptyText="#{bindings.AppUserProdukPackView1.viewable ? 'Semua packaging dan turunannya telah otomatis terpillih.' : 'Access Denied.'}"
+                                  fetchSize="#{bindings.AppUserProdukPackView1.rangeSize}"
+                                  rowBandingInterval="0" id="t18"
+                                  columnStretching="column:c19"
+                                  binding="#{UserAccessBean.tblProdPack}">
+                          <af:column id="c24" width="6" minimumWidth="6"
+                                     rowHeader="true"/>
+                          <af:column sortProperty="#{bindings.AppUserProdukPackView1.hints.PackDesc.name}"
+                                     sortable="false"
+                                     id="c19">
+                            <af:outputText value="#{row.ProdPack} - #{row.PackDesc}" id="ot25"
+                                           inlineStyle="margin:10px;"/>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Variant (#{bindings.AppUserProdukVariantView1.estimatedRowCount == 0 ? 'All' : bindings.AppUserProdukVariantView1.estimatedRowCount})" id="sdi12"
+                                       stretchChildren="first"
+                                       binding="#{UserAccessBean.tabUserProdVariant}">
+                      <af:panelCollection id="pc11"
+                                          featuresOff="detach viewMenu columnsMenuItem statusBar">
+                        <f:facet name="toolbar">
+                          <af:toolbar id="toolbar8">
+                            <af:commandToolbarButton id="commandToolbarButton11"
+                                                     action="addprodvariant"
+                                                     useWindow="true"
+                                                     windowHeight="230"
+                                                     windowWidth="500"
+                                                     windowModalityType="applicationModal"
+                                                     returnListener="#{UserAccessBean.windowProdVariantReturnListener}"
+                                                     shortDesc=" "
+                                                     windowEmbedStyle="window"
+                                                     icon="/Images/addrem.png"
+                                                     text="Add / Remove Produk Variant"
+                                                     hoverIcon="/Images/addrem.png"
+                                                     depressedIcon="/Images/addrem.png"
+                                                     disabledIcon="/Images/addrem_dis.png">
+                              <af:setPropertyListener from="#{bindings.UserName.inputValue}"
+                                                      to="#{pageFlowScope.userName}"
+                                                      type="action"/>
+                              <af:setPropertyListener from="#{bindings.FullName.inputValue}"
+                                                      to="#{pageFlowScope.fullName}"
+                                                      type="action"/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.AppUserProdukVariantView1.collectionModel}"
+                                  var="row"
+                                  rows="#{bindings.AppUserProdukVariantView1.rangeSize}"
+                                  emptyText="#{bindings.AppUserProdukVariantView1.viewable ? 'Semua variant telah otomatis terpillih.' : 'Access Denied.'}"
+                                  fetchSize="#{bindings.AppUserProdukVariantView1.rangeSize}"
+                                  rowBandingInterval="0" id="t19"
+                                  columnStretching="column:c20"
+                                  binding="#{UserAccessBean.tblProdVariant}">
+                          <af:column id="c23" rowHeader="true" width="6"
+                                     minimumWidth="6"/>
+                          <af:column sortProperty="#{bindings.AppUserProdukVariantView1.hints.VariantDesc.name}"
+                                     sortable="false"
+                                     id="c20">
+                            <af:outputText value="#{row.ProdVariant} - #{row.VariantDesc}"
+                                           id="ot26"
+                                           inlineStyle="margin:10px;"/>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Product Item (#{bindings.AppUserProdukItemView1.estimatedRowCount == 0 ? 'All' : bindings.AppUserProdukItemView1.estimatedRowCount})" id="sdi13"
+                                       stretchChildren="first"
+                                       binding="#{UserAccessBean.tabUserProdItem}">
+                      <af:panelCollection id="pc12"
+                                          featuresOff="detach viewMenu columnsMenuItem statusBar">
+                        <f:facet name="toolbar">
+                          <af:toolbar id="toolbar9">
+                            <af:commandToolbarButton id="commandToolbarButton12"
+                                                     action="addproditem"
+                                                     useWindow="true"
+                                                     windowHeight="230"
+                                                     windowWidth="500"
+                                                     windowModalityType="applicationModal"
+                                                     returnListener="#{UserAccessBean.windowProdItemReturnListener}"
+                                                     shortDesc=" "
+                                                     windowEmbedStyle="window"
+                                                     icon="/Images/addrem.png"
+                                                     text="Add / Remove Produk Item"
+                                                     hoverIcon="/Images/addrem.png"
+                                                     depressedIcon="/Images/addrem.png"
+                                                     disabledIcon="/Images/addrem_dis.png"
+                                                     disabled="#{bindings.ItemCanAdd.inputValue == 'N'}">
+                              <af:setPropertyListener from="#{bindings.UserName.inputValue}"
+                                                      to="#{pageFlowScope.userName}"
+                                                      type="action"/>
+                              <af:setPropertyListener from="#{bindings.FullName.inputValue}"
+                                                      to="#{pageFlowScope.fullName}"
+                                                      type="action"/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.AppUserProdukItemView1.collectionModel}"
+                                  var="row"
+                                  rows="#{bindings.AppUserProdukItemView1.rangeSize}"
+                                  emptyText="#{bindings.AppUserProdukItemView1.viewable ? 'Semua item produk telah otomatis terpillih.' : 'Access Denied.'}"
+                                  fetchSize="#{bindings.AppUserProdukItemView1.rangeSize}"
+                                  rowBandingInterval="0" id="t20"
+                                  columnStretching="column:c21"
+                                  binding="#{UserAccessBean.tblProdItem}">
+                          <af:column id="c22" rowHeader="true" width="6"
+                                     minimumWidth="6"/>
+                          <af:column sortProperty="#{bindings.AppUserProdukItemView1.hints.ItemDesc.name}"
+                                     sortable="false"
+                                     id="c21">
+                            <af:outputText value="#{row.ProdItem} - #{row.ItemDesc}" id="ot27"
+                                           inlineStyle="margin:10px;"/>
+                          </af:column>
+                        </af:table>
+                        <f:facet name="secondaryToolbar">
+                          <af:toolbar id="t22">
+                            <af:outputText value="#{bindings.ItemCanAdd.inputValue}"
+                                           id="ot28"
+                                           binding="#{UserAccessBean.itItemCanAdd}"
+                                           visible="false"/>
+                          </af:toolbar>
+                        </f:facet>
+                      </af:panelCollection>
+                    </af:showDetailItem>
+                  </af:panelTabbed>
+                </af:panelBox>
+                <af:spacer width="10" height="20" id="s20"/>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:panelSplitter>
+    </f:facet>
+  </af:panelSplitter>
+</jsp:root>

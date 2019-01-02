@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1" title="Focus PCPP | PP History">
+    <af:resource type="javascript">
+        function tableDoubleClick(evt){   
+            var table = evt.getSource();
+            AdfCustomEvent.queue(table, "TableDoubleClickEvent",{}, true);         
+            evt.cancel();
+        }
+    </af:resource>
+      <af:form id="f1">
+        <af:pageTemplate viewId="/Templates/FPPDashboard.jspx"
+                         value="#{bindings.pageTemplateBinding}" id="pt1">
+          <f:facet name="topBar"/>
+          <f:facet name="mainWindow">
+            <af:region value="#{bindings.myapprovalhistory1.regionModel}"
+                       id="r1"/>
+          </f:facet>
+        </af:pageTemplate>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

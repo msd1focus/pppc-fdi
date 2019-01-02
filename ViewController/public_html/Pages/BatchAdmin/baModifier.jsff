@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelSplitter id="ps2" orientation="vertical" splitterPosition="45"
+                    disabled="true">
+    <f:facet name="first">
+      <af:panelStretchLayout id="psl1" endWidth="311px"
+                             inlineStyle="border-bottom-width:1px; border-bottom-color:rgb(231,231,231); border-bottom-style:solid;"
+                             startWidth="380px">
+        <f:facet name="start">
+          <af:panelGroupLayout id="panelGroupLayout1"
+                               inlineStyle="padding-top:12px; padding-left:5px; color:rgb(28,65,126);"
+                               layout="vertical">
+            <af:outputText value="Batch Admin: Realisasi Modifier" id="outputText6"
+                           inlineStyle="font-weight:bold; font-size:18.0px;margin-left:16px;"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:panelStretchLayout>
+    </f:facet>
+    <f:facet name="second">
+      <af:panelTabbed id="pt1"
+                      inlineStyle="margin-left:10px;margin-bottom:10px;margin-right:10px;margin-top:5px;">
+        <af:showDetailItem text="Action" id="sdi1">
+          <af:panelGroupLayout id="pgl1" layout="vertical">
+            <af:panelGroupLayout id="panelGroupLayout8" layout="vertical"
+                                 inlineStyle="background-color:rgb(240,240,240);">
+              <af:spacer width="10" height="5" id="spacer18"/>
+              <af:panelGroupLayout id="panelGroupLayout10" layout="horizontal"
+                                   inlineStyle="padding-left:10px;">
+                <af:image shortDesc="Still Running" source="/afr/info.png"
+                          id="ai1"/>
+                <af:spacer width="10" height="10" id="spacer47"/>
+                <af:outputText value="Informasi" id="outputText11"
+                               inlineStyle="font-size:small; width:100px; font-weight:bold;"/>
+              </af:panelGroupLayout>
+              <af:spacer width="10" height="5" id="spacer48"/>
+              <af:panelGroupLayout id="panelGroupLayout11" layout="vertical"
+                                   inlineStyle="padding-left:12px;">
+                <af:outputFormatted value="Kalkulasi realisasi modifier ini berfungsi untuk menghitung nilai amount over budget." id="of1"
+                                    inlineStyle="font-size:11.0px;"/>
+                <af:outputFormatted value='Secara default perhitungan ini dilakukan menggunakan batch yang waktunya telah ditentukan pada parameter &lt;b>"Batch_Sheduler_Run_Time"&lt;/b> yang dapat diubah melalui  menu &lt;b>"Master Data"&lt;/b>.'
+                                    id="outputFormatted1"
+                                    inlineStyle="font-size:11.0px;"/>
+                <af:outputFormatted value='Fitur execute manual realisasi modifier ini dipergunakan untuk menjalankan perhitungan nilai amount over budget diluar waktu batch yang telah ditentukan.'
+                                    id="outputFormatted2"
+                                    inlineStyle="font-size:11.0px;"/>
+              </af:panelGroupLayout>
+              <af:spacer width="10" height="6" id="s1"/>
+            </af:panelGroupLayout>
+            <af:spacer width="10" height="10" id="s2"/>
+            <af:panelGroupLayout id="pgl2" layout="horizontal">
+              <af:commandButton text="Kalkulasi Realisasi Modifier" id="cbCalc"
+                                inlineStyle="padding:20px;"
+                                actionListener="#{backingBeanScope.batchModifierBean.modifierBatch}"/>
+              <af:spacer width="10" height="10" id="s3"/>
+              <af:commandButton text="Reset"
+                                id="cbReset" inlineStyle="padding:20px;"
+                                disabled="#{bindings.Status.inputValue == 'INPROCESS' or bindings.Status.inputValue == '-'}"
+                                partialTriggers="cbCalc"
+                                actionListener="#{backingBeanScope.batchModifierBean.modifierReset}"/>
+            </af:panelGroupLayout>
+            <af:spacer width="10" height="10" id="s4"/>
+            <af:panelFormLayout id="pfl1" inlineStyle="font-weight:bold;"
+                                partialTriggers="cbCalc cbReset"
+                                binding="#{backingBeanScope.batchModifierBean.frmStatus}">
+              <af:panelLabelAndMessage label="#{bindings.Status.hints.label}"
+                                       id="plam1">
+                <af:outputText value="#{bindings.Status.inputValue}" id="ot2"/>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.ExecDate.hints.label}"
+                                       id="plam2">
+                <af:outputText value="#{bindings.Status.inputValue == '-' ? '-' :  bindings.ExecDate.inputValue}" id="ot1">
+                  <af:convertDateTime pattern="#{bindings.ExecDate.format}"/>
+                </af:outputText>
+              </af:panelLabelAndMessage>
+            </af:panelFormLayout>
+          </af:panelGroupLayout>
+        </af:showDetailItem>
+      </af:panelTabbed>
+    </f:facet>
+  </af:panelSplitter>
+</jsp:root>

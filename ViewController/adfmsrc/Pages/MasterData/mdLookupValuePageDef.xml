@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="mdLookupValuePageDef"
+                Package="Pages.MasterData">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="LookupCodeCRUDView1" RangeSize="25"
+              DataControl="MasterDataAMDataControl"
+              id="LookupCodeCRUDView1Iterator"/>
+    <searchRegion Binds="LookupCodeCRUDView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="LookupCodeCRUDView1Query"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="LookupCodeCRUDView1Iterator" id="LookupCodeCRUDView1">
+      <nodeDefinition DefName="app.fpp.model.views.masterdata.LookupCodeCRUDView"
+                      Name="LookupCodeCRUDView10">
+        <AttrNames>
+          <Item Value="Title"/>
+          <Item Value="Value"/>
+          <Item Value="Descr"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="LookupCodeCRUDView1Iterator" id="Execute"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues IterBinding="LookupCodeCRUDView1Iterator" id="Title">
+      <AttrNames>
+        <Item Value="Title"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="LookupCodeCRUDView1Iterator" id="Value">
+      <AttrNames>
+        <Item Value="Value"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="LookupCodeCRUDView1Iterator" id="Descr">
+      <AttrNames>
+        <Item Value="Descr"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" DataControl="MasterDataAMDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="MasterDataAMDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <action IterBinding="LookupCodeCRUDView1Iterator" id="CreateInsert"
+            InstanceName="MasterDataAMDataControl.LookupCodeCRUDView1"
+            DataControl="MasterDataAMDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action IterBinding="LookupCodeCRUDView1Iterator" id="Delete"
+            InstanceName="MasterDataAMDataControl.LookupCodeCRUDView1"
+            DataControl="MasterDataAMDataControl" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+  </bindings>
+</pageDefinition>

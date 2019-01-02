@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="AppUserCustTypeView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="AppUserCustType.USER_NAME, 
+       AppUserCustType.CUST_TYPE, 
+       FcsFlexValuesVl.DESCRIPTION, 
+       FcsFlexValuesVl.FLEX_VALUE_ID, 
+       AppUserCustType.CUST_TYPE_DESC"
+  FromList="APP_USER_CUST_TYPE AppUserCustType, APPS.FCS_FLEX_VALUES_VL FcsFlexValuesVl"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  Where="FcsFlexValuesVl.FLEX_VALUE = AppUserCustType.CUST_TYPE"
+  OrderBy="AppUserCustType.CUST_TYPE,FcsFlexValuesVl.DESCRIPTION">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+  </DesignTime>
+  <EntityUsage
+    Name="AppUserCustType"
+    Entity="app.fpp.model.entities.useraccess.AppUserCustType"/>
+  <EntityUsage
+    Name="FcsFlexValuesVl"
+    Entity="app.fpp.model.entities.masterdata.ebs.FcsFlexValuesVl"
+    SourceUsage="app.fpp.model.views.useraccess.AppUserCustTypeView.AppUserCustType"
+    ReadOnly="true"
+    Reference="true"
+    DeleteParticipant="false"/>
+  <ViewAttribute
+    Name="UserName"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="UserName"
+    EntityUsage="AppUserCustType"
+    AliasName="USER_NAME"/>
+  <ViewAttribute
+    Name="CustType"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CustType"
+    EntityUsage="AppUserCustType"
+    AliasName="CUST_TYPE"/>
+  <ViewAttribute
+    Name="Description"
+    PrecisionRule="true"
+    EntityAttrName="Description"
+    EntityUsage="FcsFlexValuesVl"
+    AliasName="DESCRIPTION"/>
+  <ViewAttribute
+    Name="FlexValueId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="FlexValueId"
+    EntityUsage="FcsFlexValuesVl"
+    AliasName="FLEX_VALUE_ID"/>
+  <ViewAttribute
+    Name="CustTypeDesc"
+    PrecisionRule="true"
+    EntityAttrName="CustTypeDesc"
+    EntityUsage="AppUserCustType"
+    AliasName="CUST_TYPE_DESC"/>
+</ViewObject>

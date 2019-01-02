@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ApprovalStepsView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="ApprovalSteps.ID_APRVL_STEP, 
+       ApprovalSteps.ID_APRVL_FLOW, 
+       ApprovalSteps.STEP_SEQUENCE, 
+       ApprovalSteps.ROLE_NAME"
+  FromList="APPROVAL_STEPS ApprovalSteps"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  OrderBy="ApprovalSteps.STEP_SEQUENCE">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+  </DesignTime>
+  <ViewAccessor
+    Name="RolesLov1"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.useraccess.RolesLov"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_RoleName"
+    ListVOName="RolesLov1"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="RoleName"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Name"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <EntityUsage
+    Name="ApprovalSteps"
+    Entity="app.fpp.model.entities.approvalsetting.ApprovalSteps"/>
+  <ViewAttribute
+    Name="IdAprvlStep"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="IdAprvlStep"
+    EntityUsage="ApprovalSteps"
+    AliasName="ID_APRVL_STEP"
+    IsUpdateable="while_insert"/>
+  <ViewAttribute
+    Name="IdAprvlFlow"
+    IsUnique="true"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="IdAprvlFlow"
+    EntityUsage="ApprovalSteps"
+    AliasName="ID_APRVL_FLOW"/>
+  <ViewAttribute
+    Name="StepSequence"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="StepSequence"
+    EntityUsage="ApprovalSteps"
+    AliasName="STEP_SEQUENCE">
+    <Dependencies>
+      <Item
+        Value="NextSeq"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RoleName"
+    IsUnique="true"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RoleName"
+    EntityUsage="ApprovalSteps"
+    AliasName="ROLE_NAME"
+    LOVName="LOV_RoleName">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+</ViewObject>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="AppUserProdukVariantView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="AppUserProdukVariant.PROD_VARIANT, 
+       AppUserProdukVariant.VARIANT_DESC, 
+       AppUserProdukVariant.USER_NAME, 
+       (SELECT CASE WHEN (SELECT COUNT(1) FROM APP_USER_PRODUK_VARIANT APVX WHERE APVX.USER_NAME = AppUserProdukVariant.USER_NAME) = 1 AND APV.PROD_VARIANT = 'ALL' THEN 'Y' ELSE 'N' END AS ITEM_CAN_ADD FROM APP_USER_PRODUK_VARIANT APV WHERE USER_NAME = AppUserProdukVariant.USER_NAME AND ROWNUM = 1 GROUP BY APV.PROD_VARIANT) AS ITEM_CAN_ADD"
+  FromList="APP_USER_PRODUK_VARIANT AppUserProdukVariant"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+  </DesignTime>
+  <EntityUsage
+    Name="AppUserProdukVariant"
+    Entity="app.fpp.model.entities.useraccess.AppUserProdukVariant"/>
+  <ViewAttribute
+    Name="ProdVariant"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ProdVariant"
+    EntityUsage="AppUserProdukVariant"
+    AliasName="PROD_VARIANT"/>
+  <ViewAttribute
+    Name="VariantDesc"
+    PrecisionRule="true"
+    EntityAttrName="VariantDesc"
+    EntityUsage="AppUserProdukVariant"
+    AliasName="VARIANT_DESC"/>
+  <ViewAttribute
+    Name="UserName"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="UserName"
+    EntityUsage="AppUserProdukVariant"
+    AliasName="USER_NAME"/>
+  <ViewAttribute
+    Name="ItemCanAdd"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ITEM_CAN_ADD"
+    SQLType="VARCHAR"
+    Precision="1"
+    Expression="SELECT CASE WHEN (SELECT COUNT(1) FROM APP_USER_PRODUK_VARIANT APVX WHERE APVX.USER_NAME = AppUserProdukVariant.USER_NAME) = 1 AND APV.PROD_VARIANT = 'ALL' THEN 'Y' ELSE 'N' END AS ITEM_CAN_ADD FROM APP_USER_PRODUK_VARIANT APV WHERE USER_NAME = AppUserProdukVariant.USER_NAME AND ROWNUM = 1 GROUP BY APV.PROD_VARIANT"/>
+</ViewObject>

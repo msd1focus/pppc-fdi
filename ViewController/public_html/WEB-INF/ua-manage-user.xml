@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="ua-manage-user">
+    <default-activity id="__1">manageUser</default-activity>
+    <managed-bean id="__4">
+      <managed-bean-name id="__3">UserAccessBean</managed-bean-name>
+      <managed-bean-class id="__2">app.fpp.bean.useraccess.UserAccessBean</managed-bean-class>
+      <managed-bean-scope id="__5">request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__7">
+      <managed-bean-name id="__6">AssignRoleUserBackingBean</managed-bean-name>
+      <managed-bean-class id="__9">app.fpp.bean.useraccess.AssignRoleUserBackingBean</managed-bean-class>
+      <managed-bean-scope id="__8">backingBean</managed-bean-scope>
+    </managed-bean>
+    <view id="manageUser">
+      <page>/Pages/UserAccess/manageUser.jsff</page>
+    </view>
+    <task-flow-call id="ua-assign-role">
+      <task-flow-reference>
+        <document>/WEB-INF/ua-assign-role.xml</document>
+        <id>ua-assign-role</id>
+      </task-flow-reference>
+      <input-parameter id="__22">
+        <name>userName</name>
+        <value>#{pageFlowScope.userName}</value>
+      </input-parameter>
+      <input-parameter id="__23">
+        <name>fullName</name>
+        <value>#{pageFlowScope.fullName}</value>
+      </input-parameter>
+      <input-parameter id="__24">
+        <name>userType</name>
+        <value>#{pageFlowScope.userType}</value>
+      </input-parameter>
+      <run-as-dialog>
+        <display-type id="__16">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="ua-assign-region">
+      <task-flow-reference>
+        <document>/WEB-INF/ua-assign-region.xml</document>
+        <id>ua-assign-region</id>
+      </task-flow-reference>
+      <input-parameter id="__14">
+        <name>userName</name>
+        <value>#{pageFlowScope.userName}</value>
+      </input-parameter>
+      <input-parameter id="__15">
+        <name>fullName</name>
+        <value>#{pageFlowScope.fullName}</value>
+      </input-parameter>
+      <return-value id="__98">
+        <name>actionReturn</name>
+        <value>#{pageFlowScope.actionReturn}</value>
+      </return-value>
+      <run-as-dialog>
+        <display-type id="__13">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="ua-assign-loc">
+      <task-flow-reference>
+        <document>/WEB-INF/ua-assign-loc.xml</document>
+        <id>ua-assign-loc</id>
+      </task-flow-reference>
+      <input-parameter id="__41">
+        <name>userName</name>
+        <value>#{pageFlowScope.userName}</value>
+      </input-parameter>
+      <input-parameter id="__42">
+        <name>fullName</name>
+        <value>#{pageFlowScope.fullName}</value>
+      </input-parameter>
+      <return-value id="__100">
+        <name>actionReturn</name>
+        <value>#{pageFlowScope.actionReturn}</value>
+      </return-value>
+      <run-as-dialog>
+        <display-type id="__36">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="ua-assign-area">
+      <task-flow-reference>
+        <document>/WEB-INF/ua-assign-area.xml</document>
+        <id>ua-assign-area</id>
+      </task-flow-reference>
+      <input-parameter id="__39">
+        <name>userName</name>
+        <value>#{pageFlowScope.userName}</value>
+      </input-parameter>
+      <input-parameter id="__40">
+        <name>fullName</name>
+        <value>#{pageFlowScope.fullName}</value>
+      </input-parameter>
+      <return-value id="__99">
+        <name>actionReturn</name>
+        <value>#{pageFlowScope.actionReturn}</value>
+      </return-value>
+      <run-as-dialog>
+        <display-type id="__35">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="ua-assign-cust">
+      <task-flow-reference>
+        <document>/WEB-INF/ua-assign-cust.xml</document>
+        <id>ua-assign-cust</id>
+      </task-flow-reference>
+      <input-parameter id="__37">
+        <name>userName</name>
+        <value>#{pageFlowScope.userName}</value>
+      </input-parameter>
+      <input-parameter id="__38">
+        <name>fullName</name>
+        <value>#{pageFlowScope.fullName}</value>
+      </input-parameter>
+      <return-value id="__102">
+        <name>actionReturn</name>
+        <value>#{pageFlowScope.actionReturn}</value>
+      </return-value>
+      <run-as-dialog>
+        <display-type id="__34">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="ua-assign-cust-group">
+      <task-flow-reference>
+        <document>/WEB-INF/ua-assign-cust-group.xml</document>
+        <id>ua-assign-cust-group</id>
+      </task-flow-reference>
+      <input-parameter id="__47">
+        <name>userName</name>
+        <value>#{pageFlowScope.userName}</value>
+      </input-parameter>
+      <input-parameter id="__48">
+        <name>fullName</name>
+        <value>#{pageFlowScope.fullName}</value>
+      </input-parameter>
+      <return-value id="__101">
+        <name>actionReturn</name>
+        <value>#{pageFlowScope.actionReturn}</value>
+      </return-value>
+      <run-as-dialog>
+        <display-type id="__46">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="ua-assign-cust-type">
+      <task-flow-reference>
+        <document>/WEB-INF/ua-assign-cust-type.xml</document>
+        <id>ua-assign-cust-type</id>
+      </task-flow-reference>
+      <input-parameter id="__53">
+        <name>userName</name>
+        <value>#{pageFlowScope.userName}</value>
+      </input-parameter>
+      <input-parameter id="__54">
+        <name>fullName</name>
+        <value>#{pageFlowScope.fullName}</value>
+      </input-parameter>
+      <return-value id="__97">
+        <name>actionReturn</name>
+        <value>#{pageFlowScope.actionReturn}</value>
+      </return-value>
+      <run-as-dialog>
+        <display-type id="__52">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="ua-prod-add-variant">
+      <task-flow-reference>
+        <document>/WEB-INF/ua-prod-add-variant.xml</document>
+        <id>ua-prod-add-variant</id>
+      </task-flow-reference>
+      <input-parameter id="__79">
+        <name>userName</name>
+        <value>#{pageFlowScope.userName}</value>
+      </input-parameter>
+      <input-parameter id="__80">
+        <name>fullName</name>
+        <value>#{pageFlowScope.fullName}</value>
+      </input-parameter>
+      <run-as-dialog>
+        <display-type id="__55">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="ua-prod-add-item">
+      <task-flow-reference>
+        <document>/WEB-INF/ua-prod-add-item.xml</document>
+        <id>ua-prod-add-item</id>
+      </task-flow-reference>
+      <input-parameter id="__77">
+        <name>userName</name>
+        <value>#{pageFlowScope.userName}</value>
+      </input-parameter>
+      <input-parameter id="__78">
+        <name>fullName</name>
+        <value>#{pageFlowScope.fullName}</value>
+      </input-parameter>
+      <run-as-dialog>
+        <display-type id="__56">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="ua-prod-add-category">
+      <task-flow-reference>
+        <document>/WEB-INF/ua-prod-add-category.xml</document>
+        <id>ua-prod-add-category</id>
+      </task-flow-reference>
+      <input-parameter id="__87">
+        <name>userName</name>
+        <value>#{pageFlowScope.userName}</value>
+      </input-parameter>
+      <input-parameter id="__88">
+        <name>fullName</name>
+        <value>#{pageFlowScope.fullName}</value>
+      </input-parameter>
+      <run-as-dialog>
+        <display-type id="__86">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="ua-prod-add-class">
+      <task-flow-reference>
+        <document>/WEB-INF/ua-prod-add-class.xml</document>
+        <id>ua-prod-add-class</id>
+      </task-flow-reference>
+      <input-parameter id="__89">
+        <name>userName</name>
+        <value>#{pageFlowScope.userName}</value>
+      </input-parameter>
+      <input-parameter id="__90">
+        <name>fullName</name>
+        <value>#{pageFlowScope.fullName}</value>
+      </input-parameter>
+      <run-as-dialog>
+        <display-type id="__85">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="ua-prod-add-brand">
+      <task-flow-reference>
+        <document>/WEB-INF/ua-prod-add-brand.xml</document>
+        <id>ua-prod-add-brand</id>
+      </task-flow-reference>
+      <input-parameter id="__91">
+        <name>userName</name>
+        <value>#{pageFlowScope.userName}</value>
+      </input-parameter>
+      <input-parameter id="__92">
+        <name>fullName</name>
+        <value>#{pageFlowScope.fullName}</value>
+      </input-parameter>
+      <run-as-dialog>
+        <display-type id="__84">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="ua-prod-add-ext">
+      <task-flow-reference>
+        <document>/WEB-INF/ua-prod-add-ext.xml</document>
+        <id>ua-prod-add-ext</id>
+      </task-flow-reference>
+      <input-parameter id="__93">
+        <name>userName</name>
+        <value>#{pageFlowScope.userName}</value>
+      </input-parameter>
+      <input-parameter id="__94">
+        <name>fullName</name>
+        <value>#{pageFlowScope.fullName}</value>
+      </input-parameter>
+      <run-as-dialog>
+        <display-type id="__83">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="ua-prod-add-pack">
+      <task-flow-reference>
+        <document>/WEB-INF/ua-prod-add-pack.xml</document>
+        <id>ua-prod-add-pack</id>
+      </task-flow-reference>
+      <input-parameter id="__95">
+        <name>userName</name>
+        <value>#{pageFlowScope.userName}</value>
+      </input-parameter>
+      <input-parameter id="__96">
+        <name>fullName</name>
+        <value>#{pageFlowScope.fullName}</value>
+      </input-parameter>
+      <run-as-dialog>
+        <display-type id="__82">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <control-flow-rule id="__17">
+      <from-activity-id id="__18">manageUser</from-activity-id>
+      <control-flow-case id="__20">
+        <from-outcome id="__21">assignrole</from-outcome>
+        <to-activity-id id="__19">ua-assign-role</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__10">
+        <from-outcome id="__12">assignregion</from-outcome>
+        <to-activity-id id="__11">ua-assign-region</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__26">
+        <from-outcome id="__27">assigncust</from-outcome>
+        <to-activity-id id="__25">ua-assign-cust</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__29">
+        <from-outcome id="__30">assignarea</from-outcome>
+        <to-activity-id id="__28">ua-assign-area</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__32">
+        <from-outcome id="__33">assignloc</from-outcome>
+        <to-activity-id id="__31">ua-assign-loc</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__43">
+        <from-outcome id="__45">assigncustgroup</from-outcome>
+        <to-activity-id id="__44">ua-assign-cust-group</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__50">
+        <from-outcome id="__51">assigncusttype</from-outcome>
+        <to-activity-id id="__49">ua-assign-cust-type</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__65">
+        <from-outcome id="__66">addprodvariant</from-outcome>
+        <to-activity-id id="__64">ua-prod-add-variant</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__75">
+        <from-outcome id="__76">addproditem</from-outcome>
+        <to-activity-id id="__74">ua-prod-add-item</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__58">
+        <from-outcome id="__59">addprodpack</from-outcome>
+        <to-activity-id id="__57">ua-prod-add-pack</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__61">
+        <from-outcome id="__62">addprodext</from-outcome>
+        <to-activity-id id="__60">ua-prod-add-ext</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__67">
+        <from-outcome id="__68">addprodbrand</from-outcome>
+        <to-activity-id id="__63">ua-prod-add-brand</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__69">
+        <from-outcome id="__71">addprodclass</from-outcome>
+        <to-activity-id id="__70">ua-prod-add-class</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__73">
+        <from-outcome id="__81">addprodcategory</from-outcome>
+        <to-activity-id id="__72">ua-prod-add-category</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

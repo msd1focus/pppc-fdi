@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="BudgetCustomerView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="BudgetCustomer.BUDGET_CUSTOMER_ID, 
+       BudgetCustomer.BUDGET_CATEGORY, 
+       BudgetCustomer.BUDGET_CLASS, 
+       BudgetCustomer.BUDGET_BRAND, 
+       BudgetCustomer.BUDGET_EXTENTION, 
+       BudgetCustomer.BUDGET_PACKAGING, 
+       BudgetCustomer.BUDGET_VARIANT, 
+       BudgetCustomer.YEARLY_BUDGET_AMOUNT, 
+       (SELECT ((NVL(SUM(BudgetCustTran.AMOUNT), 0) * NVL(SUM(BudgetCustTran.PERCENTAGE), 0)) / 100)  FROM BUDGET_CUST_TRAN BudgetCustTran WHERE BudgetCustTran.BUDGET_CUSTOMER_ID = BudgetCustomer.BUDGET_CUSTOMER_ID) AS YEARLY_BUDGET_USED, 
+       BudgetCustomer.STATUS, 
+       BudgetCustomer.CREATED_BY, 
+       BudgetCustomer.CREATION_DATE, 
+       BudgetCustomer.MODIFIED_BY, 
+       BudgetCustomer.MODIFIED_ON, 
+       (SELECT CASE WHEN COUNT(BUDGET_CUST_TRAN_ID) > 0  THEN 'T' ELSE 'F' END AS TRAN_ROW FROM BUDGET_CUST_TRAN BudgetCustTran WHERE BudgetCustTran.BUDGET_CUSTOMER_ID =  BudgetCustomer.BUDGET_CUSTOMER_ID) AS TRAN_ROW, 
+       BudgetCustomer.BUDGET_AS_TO_DATE, 
+       BudgetCustomer.BUDGET_AS_TO_DATE_USED, 
+       (select count(bct.budget_cust_tran_id) as budget_history_num from BUDGET_CUST_TRAN bct where bct.budget_customer_id = BudgetCustomer.BUDGET_CUSTOMER_ID AND bct.ACTION IN ( 'APPROVED', 'REJECTED')) AS BUDGET_HISTORY_NUM, 
+       (select count(bct.budget_cust_tran_id) as budget_history_num from BUDGET_CUST_TRAN bct where bct.budget_customer_id = BudgetCustomer.BUDGET_CUSTOMER_ID and bct.ACTION = 'SUBMIT') AS BUDGET_APPROVAL_NUM, 
+       BudgetCustomer.OVER_BUDGET, 
+       BudgetCustomer.BUDGET_CUSTOMER_IDREF, 
+       BudgetCustomer.BUDGET_CUST_HDR_ID"
+  FromList="BUDGET_CUSTOMER BudgetCustomer"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  RowClass="app.fpp.model.views.budgetsetting.BudgetCustomerViewRowImpl"
+  ComponentClass="app.fpp.model.views.budgetsetting.BudgetCustomerViewImpl"
+  OrderBy="BudgetCustomer.BUDGET_CUSTOMER_ID ASC">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <ViewAccessor
+    Name="BudgetCustTypeLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_BUD_CUST_TYPE']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="BudgetByCategoryLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.BudgetByCategoryLov"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="BudgetByClassLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.BudgetByClassLov">
+    <ViewCriteriaUsage
+      Name="BudgetByClassLovCriteria"
+      FullName="app.fpp.model.views.masterdata.ebs.BudgetByClassLov.BudgetByClassLovCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="setCategory">
+        <TransientExpression><![CDATA[BudgetCategory]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="BudgetByBrandLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.BudgetByBrandLov">
+    <ViewCriteriaUsage
+      Name="BudgetByBrandLovCriteria"
+      FullName="app.fpp.model.views.masterdata.ebs.BudgetByBrandLov.BudgetByBrandLovCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="setClass">
+        <TransientExpression><![CDATA[BudgetClass]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="BudgetByExtLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.BudgetByExtLov">
+    <ViewCriteriaUsage
+      Name="BudgetByExtLovCriteria"
+      FullName="app.fpp.model.views.masterdata.ebs.BudgetByExtLov.BudgetByExtLovCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="setBrand">
+        <TransientExpression><![CDATA[BudgetBrand]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="BudgetByPackagingLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.BudgetByPackagingLov">
+    <ViewCriteriaUsage
+      Name="BudgetByPackagingLovCriteria"
+      FullName="app.fpp.model.views.masterdata.ebs.BudgetByPackagingLov.BudgetByPackagingLovCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="setExt">
+        <TransientExpression><![CDATA[BudgetExtention]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="BudgetByVariantLov"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.BudgetByVariantLov">
+    <ViewCriteriaUsage
+      Name="BudgetByVariantLovCriteria"
+      FullName="app.fpp.model.views.masterdata.ebs.BudgetByVariantLov.BudgetByVariantLovCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="setPack">
+        <TransientExpression><![CDATA[BudgetPackaging]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="BudgetCustStatusLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_BUD_CUST_STATUS']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ListBinding
+    Name="LOV_BudgetCategory"
+    ListVOName="BudgetByCategoryLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_BudgetCategory_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="BudgetCategory"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetCategory"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetCategory"/>
+      <Item Value="SetCategoryDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="BudgetByCategoryLovCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_BudgetClass"
+    ListVOName="BudgetByClassLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_BudgetClass_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="BudgetClass"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetClass"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetClass"/>
+      <Item Value="SetClassDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="BudgetByClassLovCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_BudgetBrand"
+    ListVOName="BudgetByBrandLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_BudgetBrand_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="BudgetBrand"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetBrand"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetBrand"/>
+      <Item Value="SetBrandDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="BudgetByBrandLovCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_BudgetExtention"
+    ListVOName="BudgetByExtLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_BudgetExtention_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="BudgetExtention"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetExt"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetExt"/>
+      <Item Value="SetExtDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="BudgetByExtLovCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_BudgetPackaging"
+    ListVOName="BudgetByPackagingLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_BudgetPackaging_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="BudgetPackaging"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetPackaging"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetPackaging"/>
+      <Item Value="SetPackagingDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="BudgetByPackagingLovCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_BudgetVariant"
+    ListVOName="BudgetByVariantLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_BudgetVariant_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="BudgetVariant"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="SetVariant"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="SetVariant"/>
+      <Item Value="SetVariantDesc"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="BudgetByVariantLovCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_Status"
+    ListVOName="BudgetCustStatusLov"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_Status_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Status"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <EntityUsage
+    Name="BudgetCustomer"
+    Entity="app.fpp.model.entities.budgetsetting.BudgetCustomer"/>
+  <ViewAttribute
+    Name="BudgetCustomerId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="BudgetCustomerId"
+    EntityUsage="BudgetCustomer"
+    AliasName="BUDGET_CUSTOMER_ID"
+    IsUpdateable="while_insert"/>
+  <ViewAttribute
+    Name="BudgetCategory"
+    PrecisionRule="true"
+    EntityAttrName="BudgetCategory"
+    EntityUsage="BudgetCustomer"
+    AliasName="BUDGET_CATEGORY"
+    LOVName="LOV_BudgetCategory">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BudgetCategoryDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="BUDGET_CATEGORY_DESC"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="BudgetClass"
+    PrecisionRule="true"
+    EntityAttrName="BudgetClass"
+    EntityUsage="BudgetCustomer"
+    AliasName="BUDGET_CLASS"
+    LOVName="LOV_BudgetClass">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BudgetClassDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="BUDGET_CLASS_DESC"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="BudgetBrand"
+    PrecisionRule="true"
+    EntityAttrName="BudgetBrand"
+    EntityUsage="BudgetCustomer"
+    AliasName="BUDGET_BRAND"
+    LOVName="LOV_BudgetBrand">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BudgetBrandDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="BUDGET_BRAND_DESC"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="BudgetExtention"
+    PrecisionRule="true"
+    EntityAttrName="BudgetExtention"
+    EntityUsage="BudgetCustomer"
+    AliasName="BUDGET_EXTENTION"
+    LOVName="LOV_BudgetExtention">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BudgetExtentionDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="BUDGET_EXTENTION_DESC"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="BudgetPackaging"
+    PrecisionRule="true"
+    EntityAttrName="BudgetPackaging"
+    EntityUsage="BudgetCustomer"
+    AliasName="BUDGET_PACKAGING"
+    LOVName="LOV_BudgetPackaging">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BudgetPackagingDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="BUDGET_PACKAGING_DESC"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="BudgetVariant"
+    PrecisionRule="true"
+    EntityAttrName="BudgetVariant"
+    EntityUsage="BudgetCustomer"
+    AliasName="BUDGET_VARIANT"
+    LOVName="LOV_BudgetVariant">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BudgetVariantDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="BUDGET_VARIANT_DESC"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="YearlyBudgetAmount"
+    PrecisionRule="true"
+    EntityAttrName="YearlyBudgetAmount"
+    EntityUsage="BudgetCustomer"
+    AliasName="YEARLY_BUDGET_AMOUNT"
+    DefaultValue="0"/>
+  <ViewAttribute
+    Name="YearlyBudgetUsed"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="YEARLY_BUDGET_USED"
+    SQLType="NUMERIC"
+    Expression="SELECT ((NVL(SUM(BudgetCustTran.AMOUNT), 0) * NVL(SUM(BudgetCustTran.PERCENTAGE), 0)) / 100)  FROM BUDGET_CUST_TRAN BudgetCustTran WHERE BudgetCustTran.BUDGET_CUSTOMER_ID = BudgetCustomer.BUDGET_CUSTOMER_ID"/>
+  <ViewAttribute
+    Name="YearlyBudgetRemaining"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="YEARLY_BUDGET_REMAINING"
+    SQLType="NUMERIC"
+    IsSelected="false">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[(YearlyBudgetAmount - BudgetAsToDate)]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="BudgetAsToDate"/>
+      <Item
+        Value="YearlyBudgetAmount"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.budgetsetting.BudgetCustomerView.YearlyBudgetRemaining_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.budgetsetting.BudgetCustomerView.YearlyBudgetRemaining_FMT_FORMAT"/>
+        <LABEL
+          ResId="YEARLY_BUDGET_REMAINING"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Status"
+    PrecisionRule="true"
+    EntityAttrName="Status"
+    EntityUsage="BudgetCustomer"
+    AliasName="STATUS"
+    LOVName="LOV_Status"
+    DefaultValue="ACTIVE">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CreatedBy"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="BudgetCustomer"
+    AliasName="CREATED_BY"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="CreationDate"
+    PrecisionRule="true"
+    EntityAttrName="CreationDate"
+    EntityUsage="BudgetCustomer"
+    AliasName="CREATION_DATE"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="ModifiedBy"
+    PrecisionRule="true"
+    EntityAttrName="ModifiedBy"
+    EntityUsage="BudgetCustomer"
+    AliasName="MODIFIED_BY"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="ModifiedOn"
+    PrecisionRule="true"
+    EntityAttrName="ModifiedOn"
+    EntityUsage="BudgetCustomer"
+    AliasName="MODIFIED_ON"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="TranRow"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="NUMBER"
+    AliasName="TRAN_ROW"
+    SQLType="VARCHAR"
+    Expression="SELECT CASE WHEN COUNT(BUDGET_CUST_TRAN_ID) > 0  THEN 'T' ELSE 'F' END AS TRAN_ROW FROM BUDGET_CUST_TRAN BudgetCustTran WHERE BudgetCustTran.BUDGET_CUSTOMER_ID =  BudgetCustomer.BUDGET_CUSTOMER_ID"/>
+  <ViewAttribute
+    Name="BudgetAsToDate"
+    PrecisionRule="true"
+    EntityAttrName="BudgetAsToDate"
+    EntityUsage="BudgetCustomer"
+    AliasName="BUDGET_AS_TO_DATE"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.budgetsetting.BudgetCustomerView.BudgetAsToDate_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.budgetsetting.BudgetCustomerView.BudgetAsToDate_FMT_FORMAT"/>
+        <LABEL
+          ResId="app.fpp.model.views.budgetsetting.BudgetCustomerView.BudgetAsToDate_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BudgetAsToDateUsed"
+    PrecisionRule="true"
+    EntityAttrName="BudgetAsToDateUsed"
+    EntityUsage="BudgetCustomer"
+    AliasName="BUDGET_AS_TO_DATE_USED"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.budgetsetting.BudgetCustomerView.BudgetAsToDateUsed_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.budgetsetting.BudgetCustomerView.BudgetAsToDateUsed_FMT_FORMAT"/>
+        <LABEL
+          ResId="app.fpp.model.views.budgetsetting.BudgetCustomerView.BudgetAsToDateUsed_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BudgetAsToDateRemaining"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="VIEW_ATTR"
+    SQLType="NUMERIC"
+    IsUpdateable="false">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (BudgetAsToDate == null) {
+return 0 - BudgetAsToDateUsed;
+} else if(BudgetAsToDateUsed == null && OverBudget == null){
+return BudgetAsToDate;
+} else if (BudgetAsToDateUsed == null) {
+return BudgetAsToDate - OverBudget;
+}else if(OverBudget == null){
+return BudgetAsToDate - BudgetAsToDateUsed;
+}else {
+return BudgetAsToDate - (BudgetAsToDateUsed + OverBudget);
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="BudgetAsToDate"/>
+      <Item
+        Value="BudgetAsToDateUsed"/>
+      <Item
+        Value="OverBudget"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.budgetsetting.BudgetCustomerView.BudgetAsToDateRemaining_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.budgetsetting.BudgetCustomerView.BudgetAsToDateRemaining_FMT_FORMAT"/>
+        <LABEL
+          ResId="app.fpp.model.views.budgetsetting.BudgetCustomerView.BudgetAsToDateRemaining_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CheckRowStatus"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    AliasName="VIEW_ATTR"
+    SQLType="NUMERIC"/>
+  <ViewAttribute
+    Name="BudgetHistoryNum"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Long"
+    ColumnType="NUMBER"
+    AliasName="BUDGET_HISTORY_NUM"
+    SQLType="FLOAT"
+    Expression="(select count(bct.budget_cust_tran_id) as budget_history_num from BUDGET_CUST_TRAN bct where bct.budget_customer_id = BudgetCustomer.BUDGET_CUSTOMER_ID AND bct.ACTION IN ( 'APPROVED', 'REJECTED'))"/>
+<ViewAttribute
+    Name="PercentAsToDateVsYearly"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="VIEW_ATTR"
+    SQLType="NUMERIC">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (BudgetAsToDate != null && YearlyBudgetAmount != null && YearlyBudgetAmount > 0) {
+return ((BudgetAsToDate / YearlyBudgetAmount) * 100);
+} else {
+return 0;
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="BudgetAsToDate"/>
+      <Item
+        Value="YearlyBudgetAmount"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.budgetsetting.BudgetCustomerView.PercentAsToDateVsYearly_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.budgetsetting.BudgetCustomerView.PercentAsToDateVsYearly_FMT_FORMAT"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>  
+<ViewAttribute
+    Name="BudgetApprovalNum"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Long"
+    ColumnType="VARCHAR2"
+    AliasName="BUDGET_APPROVAL_NUM"
+    SQLType="FLOAT"
+    Precision="255"
+    Expression="(select count(bct.budget_cust_tran_id) as budget_history_num from BUDGET_CUST_TRAN bct where bct.budget_customer_id = BudgetCustomer.BUDGET_CUSTOMER_ID and bct.ACTION = 'SUBMIT')"/>
+  <ViewAttribute
+    Name="OverBudget"
+    PrecisionRule="true"
+    EntityAttrName="OverBudget"
+    EntityUsage="BudgetCustomer"
+    AliasName="OVER_BUDGET"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.budgetsetting.BudgetCustomerView.OverBudget_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.budgetsetting.BudgetCustomerView.OverBudget_FMT_FORMAT"/>
+        <LABEL
+          ResId="app.fpp.model.views.budgetsetting.BudgetCustomerView.OverBudget_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BudgetCustomerIdref"
+    PrecisionRule="true"
+    EntityAttrName="BudgetCustomerIdref"
+    EntityUsage="BudgetCustomer"
+    AliasName="BUDGET_CUSTOMER_IDREF"/>
+  <ViewAttribute
+    Name="BudgetCustHdrId"
+    PrecisionRule="true"
+    EntityAttrName="BudgetCustHdrId"
+    EntityUsage="BudgetCustomer"
+    AliasName="BUDGET_CUST_HDR_ID"/>
+  <ViewLinkAccessor
+    Name="BudgetCustTranView"
+    ViewLink="app.fpp.model.views.budgetsetting.BudgetCustTranBudgetCustomerFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="BudgetCustTranHistoryView"
+    ViewLink="app.fpp.model.views.budgetsetting.BudgetCustTranHistoryBudgetCustomerFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="BudgetCustTranApproval"
+    ViewLink="app.fpp.model.views.budgetsetting.BudgetCustTranApprovalBudgetCustomerFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="BudgetCustomerInsertTran"
+    ViewLink="app.fpp.model.views.budgetsetting.BudgetCustomerInsertTranViewFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

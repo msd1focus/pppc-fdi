@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="UploadDownload"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  DBObjectType="table"
+  DBObjectName="UPLOAD_DOWNLOAD"
+  AliasName="UploadDownload"
+  BindingStyle="OracleName"
+  UseGlueCode="false">
+  <DesignTime>
+    <AttrArray Name="_publishEvents"/>
+  </DesignTime>
+  <Attribute
+    Name="ProposalId"
+    IsNotNull="true"
+    ColumnName="PROPOSAL_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="UPLOAD_DOWNLOAD"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Idfile"
+    ColumnName="IDFILE"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.DBSequence"
+    ColumnType="NUMBER"
+    TableName="UPLOAD_DOWNLOAD"
+    IsUpdateable="while_insert"
+    DefaultValue="@0"
+    Domain="oracle.jbo.domain.DBSequence"
+    PrimaryKey="true"
+    RetrievedOnInsert="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="FileName"
+    IsNotNull="true"
+    Precision="500"
+    ColumnName="FILE_NAME"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="UPLOAD_DOWNLOAD">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="500"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Path"
+    Precision="500"
+    ColumnName="PATH"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="UPLOAD_DOWNLOAD">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="500"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="ContentType"
+    Precision="500"
+    ColumnName="CONTENT_TYPE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="UPLOAD_DOWNLOAD">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="500"/>
+    </DesignTime>
+  </Attribute>
+  <AccessorAttribute
+    Name="Proposal"
+    Association="app.fpp.model.entities.promoproposal.UploadDownloadFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.promoproposal.UploadDownloadFk1Assoc.Proposal"
+    AssociationOtherEnd="app.fpp.model.entities.promoproposal.UploadDownloadFk1Assoc.UploadDownload"
+    Type="app.fpp.model.entities.promoproposal.ProposalImpl"
+    IsUpdateable="true"/>
+  <Key
+    Name="SysC0018725">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0018725"/>
+      <Attr Name="_checkCondition" Value='"PROPOSAL_ID" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.promoproposal.UploadDownload.ProposalId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0018726">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0018726"/>
+      <Attr Name="_checkCondition" Value='"FILE_NAME" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.promoproposal.UploadDownload.FileName"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="UploadDownloadPk"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="UPLOAD_DOWNLOAD_PK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.promoproposal.UploadDownload.ProposalId"/>
+      <Item Value="app.fpp.model.entities.promoproposal.UploadDownload.Idfile"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="UploadDownloadProposalFk1">
+    <DesignTime>
+      <Attr Name="_isCascadeDelete" Value="true"/>
+      <Attr Name="_referencedKey" Value="PROPOSAL_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="UPLOAD_DOWNLOAD_PROPOSAL_FK1"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.promoproposal.UploadDownload.ProposalId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="fk_UploadDownload">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="PROPOSAL_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_UPLOAD_DOWNLOAD"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.promoproposal.UploadDownload.ProposalId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="fk_UploadDownload1">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="PROPOSAL_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_UPLOAD_DOWNLOAD1"/>
+      <Attr Name="_isCascadeDelete" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="app.fpp.model.entities.promoproposal.UploadDownload.ProposalId"/>
+    </AttrArray>
+  </Key>
+</Entity>

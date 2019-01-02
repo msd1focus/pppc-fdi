@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="pa_add_buy_item_pa_add_buy_item_ExecuteWithParamsPageDef"
+                Package="app.fpp.view.pageDefs" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="AllProdukItemShuttleView1" RangeSize="25"
+              DataControl="ApprovalAMDataControl"
+              id="AllProdukItemShuttleView1Iterator" Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="AllProdukItemShuttleView1Iterator"
+            id="ExecuteWithParams" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="setPack" NDValue="#{pageFlowScope.packCode}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

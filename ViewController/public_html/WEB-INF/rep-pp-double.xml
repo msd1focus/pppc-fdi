@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="rep-promo-double">
+    <default-activity id="__1">CreateInsert</default-activity>
+    <managed-bean id="__4">
+      <managed-bean-name id="__5">GenerateReportBean</managed-bean-name>
+      <managed-bean-class id="__3">app.fpp.bean.reports.GenerateReportBean</managed-bean-class>
+      <managed-bean-scope id="__2">request</managed-bean-scope>
+    </managed-bean>
+    <view id="repPromoDouble">
+      <page>/Pages/Report/repPromoDouble.jsff</page>
+    </view>
+    <method-call id="CreateInsert">
+      <method>#{bindings.CreateInsert.execute}</method>
+      <outcome id="__6">
+        <fixed-outcome>CreateInsert</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__7">
+      <from-activity-id id="__8">CreateInsert</from-activity-id>
+      <control-flow-case id="__11">
+        <from-outcome id="__10">CreateInsert</from-outcome>
+        <to-activity-id id="__9">repPromoDouble</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

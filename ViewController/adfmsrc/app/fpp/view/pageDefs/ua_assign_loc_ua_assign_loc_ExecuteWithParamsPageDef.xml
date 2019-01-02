@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="ua_assign_loc_ua_assign_loc_ExecuteWithParamsPageDef"
+                Package="app.fpp.view.pageDefs" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="AllUserMgmtLocationShuttleView1" RangeSize="25"
+              DataControl="UserAccessAMDataControl"
+              id="AllUserMgmtLocationShuttleView1Iterator" Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="AllUserMgmtLocationShuttleView1Iterator"
+            id="ExecuteWithParams" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="userName" NDValue="#{pageFlowScope.userName}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

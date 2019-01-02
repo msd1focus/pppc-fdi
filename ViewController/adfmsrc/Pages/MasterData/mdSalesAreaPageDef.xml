@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="mdSalesAreaPageDef"
+                Package="Pages.MasterData">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="SalesRegionView1" RangeSize="25"
+              DataControl="MasterDataAMDataControl"
+              id="SalesRegionView1Iterator"/>
+  </executables>
+  <bindings>
+    <action id="Commit" DataControl="MasterDataAMDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="MasterDataAMDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <action IterBinding="SalesRegionView1Iterator" id="CreateInsert"
+            InstanceName="MasterDataAMDataControl.SalesRegionView1"
+            DataControl="MasterDataAMDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+  </bindings>
+</pageDefinition>

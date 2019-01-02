@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="promo_proposal_promo_proposal_ExecuteWithParamsPageDef"
+                Package="app.fpp.view.pageDefs" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="ProposalView1" RangeSize="25"
+              DataControl="PromoProposalAMDataControl"
+              id="ProposalView1Iterator" Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="ProposalView1Iterator" id="ExecuteWithParams"
+            RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="compId" NDValue="#{UserData.companyId}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="usrName" NDValue="#{UserData.userNameLogin}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

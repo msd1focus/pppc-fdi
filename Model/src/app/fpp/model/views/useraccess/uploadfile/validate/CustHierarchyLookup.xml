@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="CustHierarchyLookup"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  RowClass="app.fpp.model.views.useraccess.uploadfile.validate.CustHierarchyLookupRowImpl"
+  ComponentClass="app.fpp.model.views.useraccess.uploadfile.validate.CustHierarchyLookupImpl"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.useraccess.uploadfile.validate.CustHierarchyLookup_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="custReg"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="custArea"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="custLoc"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="custType"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="custGroup"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="custId"
+    Kind="where"
+    Type="java.lang.String"/>
+  <SQLQuery>
+    <![CDATA[SELECT CH."CUST_REGION", CH."CUST_AREA", CH."CUST_LOC", CH."CUST_TYPE", CH."CUST_GROUP", CH."CUST_ID"  FROM (
+SELECT CASE WHEN (:custReg IS NOT NULL OR :custArea IS NOT NULL OR :custLoc IS NOT NULL OR :custType IS NOT NULL OR :custGroup IS NOT NULL OR :custId IS NOT NULL) THEN AC.ATTRIBUTE3 ELSE NULL END AS CUST_REGION, 
+     CASE WHEN (:custArea IS NOT NULL OR :custLoc IS NOT NULL OR :custType IS NOT NULL OR :custGroup IS NOT NULL OR :custId IS NOT NULL) THEN AC.ATTRIBUTE4 ELSE NULL END AS CUST_AREA, 
+     CASE WHEN (:custLoc IS NOT NULL OR :custType IS NOT NULL OR :custGroup IS NOT NULL OR :custId IS NOT NULL) THEN AC.ATTRIBUTE5 ELSE NULL END AS CUST_LOC, 
+     CASE WHEN (:custType IS NOT NULL OR :custGroup IS NOT NULL OR :custId IS NOT NULL) THEN AC.ATTRIBUTE8 ELSE NULL END AS CUST_TYPE, 
+     CASE WHEN (:custGroup IS NOT NULL OR :custId IS NOT NULL) THEN AC.ATTRIBUTE1 ELSE NULL END AS CUST_GROUP,
+     CASE WHEN (:custId IS NOT NULL) THEN AC.CUSTOMER_ID ELSE NULL END AS CUST_ID
+FROM APPS.AR_CUSTOMERS AC
+WHERE AC.ATTRIBUTE3 = :custReg
+OR AC.ATTRIBUTE4 = :custArea
+OR AC.ATTRIBUTE5 = :custLoc
+OR AC.ATTRIBUTE8 = :custType
+OR AC.ATTRIBUTE1 = :custGroup
+OR AC.CUSTOMER_ID = :custId
+) CH
+GROUP BY CH."CUST_REGION", CH."CUST_AREA", CH."CUST_LOC", CH."CUST_TYPE", CH."CUST_GROUP", CH."CUST_ID"]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="CustRegion"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CUST_REGION"
+    Expression="CUST_REGION"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CustArea"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="150"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CUST_AREA"
+    Expression="CUST_AREA"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CustLoc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="150"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CUST_LOC"
+    Expression="CUST_LOC"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CustType"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="150"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CUST_TYPE"
+    Expression="CUST_TYPE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CustGroup"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="150"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CUST_GROUP"
+    Expression="CUST_GROUP"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CustId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="CUST_ID"
+    Expression="CUST_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

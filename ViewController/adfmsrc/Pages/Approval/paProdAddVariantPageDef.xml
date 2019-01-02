@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="paProdAddVariantPageDef"
+                Package="Pages.Approval">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator id="ProdukVariantView1Iterator" Binds="ProdukVariantView1"
+              DataControl="ApprovalAMDataControl" RangeSize="-1"/>
+    <iterator id="AllProdukVariantShuttleView1Iterator"
+              Binds="AllProdukVariantShuttleView1"
+              DataControl="ApprovalAMDataControl" RangeSize="-1"/>
+  </executables>
+  <bindings>
+    <action id="Commit" DataControl="ApprovalAMDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="ApprovalAMDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+  </bindings>
+</pageDefinition>

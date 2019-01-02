@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="AppRoleMenuItemsView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="AppRoleMenuItems.ROL_ID, 
+       AppRoleMenuItems.MIT_ID, 
+       AppMenuItems.LABEL, 
+       AppMenuItems.ID"
+  FromList="APP_ROLE_MENU_ITEMS AppRoleMenuItems, APP_MENU_ITEMS AppMenuItems"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  Where="AppRoleMenuItems.MIT_ID = AppMenuItems.ID"
+  OrderBy="AppMenuItems.LABEL">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+  </DesignTime>
+  <EntityUsage
+    Name="AppRoleMenuItems"
+    Entity="app.fpp.model.entities.useraccess.AppRoleMenuItems"/>
+  <EntityUsage
+    Name="AppMenuItems"
+    Entity="app.fpp.model.entities.useraccess.AppMenuItems"
+    Association="app.fpp.model.entities.useraccess.AppRoleMenuItemsAppMFk1Assoc"
+    AssociationEnd="app.fpp.model.entities.useraccess.AppRoleMenuItemsAppMFk1Assoc.AppMenuItems"
+    SourceUsage="app.fpp.model.views.useraccess.AppRoleMenuItemsView.AppRoleMenuItems"
+    ReadOnly="true"
+    Reference="true"
+    DeleteParticipant="false"
+    JoinType="INNER JOIN">
+    <DesignTime>
+      <AttrArray Name="_srcAttributes">
+        <Item Value="app.fpp.model.entities.useraccess.AppRoleMenuItems.MitId"/>
+      </AttrArray>
+      <AttrArray Name="_dstAttributes">
+        <Item Value="app.fpp.model.entities.useraccess.AppMenuItems.Id"/>
+      </AttrArray>
+    </DesignTime>
+  </EntityUsage>
+  <ViewAttribute
+    Name="RolId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RolId"
+    EntityUsage="AppRoleMenuItems"
+    AliasName="ROL_ID"/>
+  <ViewAttribute
+    Name="MitId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="MitId"
+    EntityUsage="AppRoleMenuItems"
+    AliasName="MIT_ID"/>
+  <ViewAttribute
+    Name="Label"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Label"
+    EntityUsage="AppMenuItems"
+    AliasName="LABEL"/>
+  <ViewAttribute
+    Name="Id"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="AppMenuItems"
+    AliasName="ID"/>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="RolId"/>
+    <Item Value="MitId"/>
+  </AttrArray>
+</ViewObject>

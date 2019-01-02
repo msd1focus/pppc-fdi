@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="BugdetCustomerNameLov"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.masterdata.lov.budgetseting.BugdetCustomerNameLov_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="BudType"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="BudYear"
+    Kind="where"
+    Type="java.lang.String"/>
+  <SQLQuery>
+    <![CDATA[SELECT BudgetCustHdr.BUDGET_CUST_HDR_ID, 
+       BudgetCustHdr.CUSTOMER_ID ||
+       BudgetCustHdr.KODE_POSTING as code, 
+       BudgetCustHdr.BUDGET_TYPE, 
+       BudgetCustHdr.BUDGET_YEAR,
+       a.CG_LABEL ||
+       bb.ITEM_DESCRIPTION  as description
+FROM BUDGET_CUST_HDR BudgetCustHdr left join (SELECT FVD.FLEX_VALUE_ID, 
+FVD.FLEX_VALUE, 
+FVD.DESCRIPTION, (FVD.DESCRIPTION) AS CG_LABEL
+FROM APPS.FCS_FLEX_VALUES_DETIL_VL FVD
+WHERE FVD.FLEX_VALUE_SET_NAME = 'FCSAR_CUSTOMER_GROUP'
+ORDER BY "CG_LABEL")a
+on
+BudgetCustHdr.CUSTOMER_ID = a.FLEX_VALUE
+left join
+(SELECT  aa.ITEM, aa.ITEM_DESCRIPTION from (select KodePostingMF.ITEM, KodePostingMF.ITEM_DESCRIPTION, KodePostingMF.POSTING_SEARCH FROM
+(SELECT FcsViewItemMasterCategory.ITEM, 
+       (FcsViewItemMasterCategory.ITEM_DESCRIPTION) AS ITEM_DESCRIPTION,
+       (FcsViewItemMasterCategory.ITEM || ' ' || FcsViewItemMasterCategory.ITEM_DESCRIPTION) AS POSTING_SEARCH,
+       'ONINVOICE' AS MEK_PEN
+FROM APPS.FCS_VIEW_ITEM_MASTER_CATEGORY FcsViewItemMasterCategory
+WHERE FcsViewItemMasterCategory.ITEM_TYPE = 'PST'
+AND FcsViewItemMasterCategory.BUCKET IS NOT NULL
+AND  NVL(SUBSTR(ITEM,-2), ITEM) ='MF'
+GROUP BY FcsViewItemMasterCategory.ITEM, FcsViewItemMasterCategory.ITEM_DESCRIPTION
+UNION ALL
+SELECT FcsViewItemMasterCategory.ITEM, 
+       (FcsViewItemMasterCategory.ITEM_DESCRIPTION) AS ITEM_DESCRIPTION,
+       (FcsViewItemMasterCategory.ITEM || ' ' || FcsViewItemMasterCategory.ITEM_DESCRIPTION) AS POSTING_SEARCH,
+       'OFFINVOICE' AS MEK_PEN
+FROM APPS.FCS_VIEW_ITEM_MASTER_CATEGORY FcsViewItemMasterCategory
+WHERE FcsViewItemMasterCategory.ITEM_TYPE = 'PST'
+AND  NVL(SUBSTR(ITEM,-2), ITEM) ='MF'
+GROUP BY FcsViewItemMasterCategory.ITEM, FcsViewItemMasterCategory.ITEM_DESCRIPTION) KodePostingMF
+ORDER BY "ITEM_DESCRIPTION") aa
+group by  aa.ITEM, aa.ITEM_DESCRIPTION)bb
+on
+BudgetCustHdr.KODE_POSTING = bb.ITEM
+where BudgetCustHdr.BUDGET_TYPE =: BudType
+  And     BudgetCustHdr.BUDGET_YEAR =: BudYear]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="BudgetCustHdrId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="BUDGET_CUST_HDR_ID"
+    Expression="BUDGET_CUST_HDR_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Code"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="80"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CODE"
+    Expression="CODE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="80"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BudgetType"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="BUDGET_TYPE"
+    Expression="BUDGET_TYPE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BudgetYear"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="4"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="BUDGET_YEAR"
+    Expression="BUDGET_YEAR"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="4"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Description"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="676"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="DESCRIPTION"
+    Expression="DESCRIPTION"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="676"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

@@ -1,0 +1,886 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="formProposalPageDef"
+                Package="Pages.PromoProposal">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables">
+      <variableUsage DataControl="PromoProposalAMDataControl"
+                     Binds="LookupCodeView1.variablesMap.luTitle"
+                     Name="ExecuteWithParams_luTitle" IsQueriable="false"/>
+    </variableIterator>
+    <iterator Binds="ProposalView1" RangeSize="25"
+              DataControl="PromoProposalAMDataControl"
+              id="ProposalView1Iterator"/>
+    <searchRegion Binds="ProposalView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="ProposalView1Query"/>
+    <iterator Binds="TargetView1" RangeSize="-1"
+              DataControl="PromoProposalAMDataControl"
+              id="TargetView1Iterator" ChangeEventPolicy="ppr"/>
+    <iterator Binds="DiscountView1" RangeSize="-1"
+              DataControl="PromoProposalAMDataControl"
+              id="DiscountView1Iterator" ChangeEventPolicy="ppr"/>
+    <iterator Binds="BiayaView1" RangeSize="-1"
+              DataControl="PromoProposalAMDataControl" id="BiayaView1Iterator"
+              ChangeEventPolicy="ppr"/>
+    <iterator id="ProdukItemView1Iterator" Binds="ProdukItemView1"
+              DataControl="PromoProposalAMDataControl" RangeSize="-1"/>
+    <iterator id="ProdukVariantView1Iterator" Binds="ProdukVariantView1"
+              DataControl="PromoProposalAMDataControl" RangeSize="-1"/>
+    <iterator Binds="PromoProdukView1" RangeSize="-1"
+              DataControl="PromoProposalAMDataControl"
+              id="PromoProdukView1Iterator" RenderHint="background"/>
+    <iterator Binds="PromoBonusView1" RangeSize="-1"
+              DataControl="PromoProposalAMDataControl"
+              id="PromoBonusView1Iterator" ChangeEventPolicy="ppr"/>
+    <iterator id="PromoBonusVariantView1Iterator" Binds="PromoBonusVariantView1"
+              DataControl="PromoProposalAMDataControl" RangeSize="-1"/>
+    <iterator id="PromoBonusProdItemView1Iterator"
+              Binds="PromoBonusProdItemView1"
+              DataControl="PromoProposalAMDataControl" RangeSize="-1"/>
+    <searchRegion Criteria="FcsPppcPriceListViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="FcsPppcPriceListView1Iterator"
+                  id="FcsPppcPriceListViewCriteriaQuery"/>
+    <iterator Binds="FcsPppcPriceListView1" RangeSize="-1"
+              DataControl="PromoProposalAMDataControl"
+              id="FcsPppcPriceListView1Iterator"/>
+    <searchRegion Binds="FcsPppcPriceListView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="FcsPppcPriceListView1Query" Refresh="deferred"/>
+    <iterator Binds="DocApprovalView1" RangeSize="-1"
+              DataControl="PromoProposalAMDataControl"
+              id="DocApprovalView1Iterator"/>
+    <iterator id="UploadDownloadView1Iterator" Binds="UploadDownloadView1"
+              DataControl="PromoProposalAMDataControl" RangeSize="25"/>
+    <iterator id="ProposalForAddendumLov1Iterator"
+              Binds="ProposalForAddendumLov1"
+              DataControl="PromoProposalAMDataControl" RangeSize="25"/>
+    <iterator Binds="ProposalCopyDummyColumnView1" RangeSize="25"
+              DataControl="PromoProposalAMDataControl"
+              id="ProposalCopyDummyColumnView1Iterator"/>
+    <iterator Binds="AuditPpBiayaView1" RangeSize="-1"
+              DataControl="PromoProposalAMDataControl"
+              id="AuditPpBiayaView1Iterator"/>
+    <iterator Binds="AuditPpPotonganView1" RangeSize="-1"
+              DataControl="PromoProposalAMDataControl"
+              id="AuditPpPotonganView1Iterator"/>
+    <iterator Binds="AuditPpPromoBarangView1" RangeSize="-1"
+              DataControl="PromoProposalAMDataControl"
+              id="AuditPpPromoBarangView1Iterator"/>
+    <iterator id="DocApprovalWithParamView1Iterator"
+              Binds="DocApprovalWithParamView1"
+              DataControl="PromoProposalAMDataControl" RangeSize="-1"/>
+    <iterator Binds="PromoCustomerHoView1" RangeSize="25"
+              DataControl="PromoProposalAMDataControl"
+              id="PromoCustomerHoView1Iterator"/>
+    <iterator Binds="PromoCustomerAreaView1" RangeSize="25"
+              DataControl="PromoProposalAMDataControl"
+              id="PromoCustomerAreaView1Iterator"/>
+    <iterator Binds="PromoCustxHoView1" RangeSize="25"
+              DataControl="PromoProposalAMDataControl"
+              id="PromoCustxHoView1Iterator"/>
+    <iterator Binds="PromoCustxAreaView1" RangeSize="25"
+              DataControl="PromoProposalAMDataControl"
+              id="PromoCustxAreaView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="ProposalView1Iterator" id="ProposalView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.ProposalView"
+                      Name="ProposalView10">
+        <AttrNames>
+          <Item Value="ProposalNo"/>
+          <Item Value="ConfirmNo"/>
+          <Item Value="ProposalDate"/>
+          <Item Value="Status"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="ProposalView1Iterator" id="ProposalId">
+      <AttrNames>
+        <Item Value="ProposalId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalView1Iterator" id="ProposalNo">
+      <AttrNames>
+        <Item Value="ProposalNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalView1Iterator" id="ProposalDate">
+      <AttrNames>
+        <Item Value="ProposalDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalView1Iterator" id="PeriodeProgFrom">
+      <AttrNames>
+        <Item Value="PeriodeProgFrom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalView1Iterator" id="PeriodeProgTo">
+      <AttrNames>
+        <Item Value="PeriodeProgTo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalView1Iterator"
+                     id="KompensasiDiperoleh">
+      <AttrNames>
+        <Item Value="KompensasiDiperoleh"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalView1Iterator" id="Notes1">
+      <AttrNames>
+        <Item Value="Notes"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ProposalView1Iterator" StaticList="false"
+          Uses="LOV_DiscountType" id="DiscountType" DTSupportsMRU="true"/>
+    <attributeValues IterBinding="ProposalView1Iterator" id="DiscountType1">
+      <AttrNames>
+        <Item Value="DiscountType"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ProposalView1Iterator" StaticList="false"
+          Uses="LOV_MekanismePenagihan" id="MekanismePenagihan"
+          DTSupportsMRU="true"/>
+    <list IterBinding="ProposalView1Iterator" StaticList="false"
+          Uses="LOV_StdStm" id="StdStm" DTSupportsMRU="true"/>
+    <list IterBinding="ProposalView1Iterator" StaticList="false"
+          Uses="LOV_ProgPromo" id="ProgPromo" DTSupportsMRU="true"/>
+    <list IterBinding="ProposalView1Iterator" StaticList="false"
+          Uses="LOV_Currency" id="Currency" DTSupportsMRU="true"/>
+    <list IterBinding="ProposalView1Iterator" StaticList="false"
+          Uses="LOV_Pemohon" id="Pemohon" DTSupportsMRU="true"/>
+    <attributeValues IterBinding="ProposalView1Iterator" id="ContactNo">
+      <AttrNames>
+        <Item Value="ContactNo"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="PromoProdukView1Iterator"
+                  Uses="LOV_ProductCategory" id="ProductCategory"/>
+    <attributeValues IterBinding="ProposalView1Iterator" id="CompanyId">
+      <AttrNames>
+        <Item Value="CompanyId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalView1Iterator" id="Contact">
+      <AttrNames>
+        <Item Value="Contact"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalView1Iterator" id="Status">
+      <AttrNames>
+        <Item Value="Status"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="ProposalView1Iterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <attributeValues IterBinding="ProposalView1Iterator" id="CanEdit">
+      <AttrNames>
+        <Item Value="CanEdit"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" DataControl="PromoProposalAMDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <methodAction id="addDocApproval"
+                  InstanceName="PromoProposalAMDataControl.dataProvider"
+                  DataControl="PromoProposalAMDataControl"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="addDocApproval" IsViewObjectMethod="false">
+      <NamedData NDName="propId" NDValue="#{bindings.ProposalId.inputValue}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="docNo" NDValue="#{bindings.ProposalNo.inputValue}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="docStatus" NDValue="#{'INPROCESS'}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="promoDtFrom"
+                 NDValue="#{bindings.PeriodeProgFrom.inputValue}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="promoDtTo"
+                 NDValue="#{bindings.PeriodeProgTo.inputValue}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="docRegion" NDValue="#{''}" NDType="java.lang.String"/>
+      <NamedData NDName="roleName" NDValue="#{UserData.userRole}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="userNm" NDValue="#{securityContext.userName}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="aprvlFlowNm"
+                 NDValue="#{(bindings.ProposalType1.inputValue == 'FOOD' and UserData.userType == 'HO') ? 'PROPOSAL FOOD HO' : (bindings.ProposalType1.inputValue == 'FOOD' and UserData.userType == 'AREA') ? 'PROPOSAL FOOD' : (bindings.ProposalType1.inputValue == 'NONFOOD' and UserData.userType == 'HO') ? 'PROPOSAL NON FOOD HO' : 'PROPOSAL NON FOOD'}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="propDt" NDValue="#{bindings.ProposalDate.inputValue}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="cancelDocPp"
+                  InstanceName="PromoProposalAMDataControl.dataProvider"
+                  DataControl="PromoProposalAMDataControl"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="cancelDocPp" IsViewObjectMethod="false">
+      <NamedData NDName="propId" NDValue="#{bindings.ProposalId.inputValue}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="docNo" NDValue="#{bindings.ProposalNo.inputValue}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="docStatus" NDValue="#{bindings.Status1.inputValue}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="promoDtFrom"
+                 NDValue="#{bindings.PeriodeProgFrom.inputValue}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="promoDtTo"
+                 NDValue="#{bindings.PeriodeProgTo.inputValue}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="docRegion" NDValue="#{''}" NDType="java.lang.String"/>
+      <NamedData NDName="usrRole" NDValue="#{UserData.userRole}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="userNm" NDValue="#{securityContext.userName}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="aprvlCodeRun" NDValue="" NDType="java.lang.String"/>
+      <NamedData NDName="idDocAprvl" NDValue="" NDType="java.lang.String"/>
+      <NamedData NDName="cancelReason"
+                 NDValue="#{'Dibatalkan oleh '}  #{UserData.fullName}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="usrAction" NDValue="#{'CANCELED'}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="propDt" NDValue="#{bindings.ProposalDate.inputValue}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <action IterBinding="PromoProdukView1Iterator" id="ExecutePromoProduct"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <action IterBinding="PromoProdukView1Iterator" id="CreateInsertPromoProduk"
+            InstanceName="PromoProposalAMDataControl.PromoProdukView1"
+            DataControl="PromoProposalAMDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <methodAction IterBinding="PromoProdukView1Iterator" id="removeCanceledRow"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="removeCanceledRow" IsViewObjectMethod="true"
+                  DataControl="PromoProposalAMDataControl"
+                  InstanceName="PromoProposalAMDataControl.PromoProdukView1"/>
+    <tree IterBinding="PromoProdukView1Iterator" id="PromoProdukView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.PromoProdukView"
+                      Name="PromoProdukView10">
+        <AttrNames>
+          <Item Value="PromoProdukId"/>
+          <Item Value="ProductCategory"/>
+          <Item Value="ProductCategoryDesc"/>
+          <Item Value="ProductClass"/>
+          <Item Value="ProductClassDesc"/>
+          <Item Value="ProductBrand"/>
+          <Item Value="ProductBrandDesc"/>
+          <Item Value="ProductExt"/>
+          <Item Value="ProductExtDesc"/>
+          <Item Value="ProductPack"/>
+          <Item Value="ProductPackDesc"/>
+          <Item Value="Descr"/>
+          <Item Value="Mekanisme"/>
+          <Item Value="ProductName"/>
+          <Item Value="ProductVariant"/>
+          <Item Value="ProductItem"/>
+          <Item Value="ValidComb"/>
+          <Item Value="ProductApproval"/>
+          <Item Value="CheckRowStatus"/>
+          <Item Value="PpidChar"/>
+          <Item Value="PaketFlag"/>
+          <Item Value="PaketFlagDesc"/>
+          <Item Value="ProductCategoryVal"/>
+          <Item Value="ProductClassVal"/>
+          <Item Value="ProductBrandVal"/>
+          <Item Value="ProductExtVal"/>
+          <Item Value="ProductPackVal"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="TargetView1Iterator" id="CreateInsertTarget"
+            InstanceName="PromoProposalAMDataControl.TargetView1"
+            DataControl="PromoProposalAMDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="PromoProdukId">
+      <AttrNames>
+        <Item Value="PromoProdukId"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="PromoProdukView1Iterator"
+                  Uses="LOV_ProductClass" id="ProductClass"/>
+    <listOfValues StaticList="false" IterBinding="PromoProdukView1Iterator"
+                  Uses="LOV_ProductBrand" id="ProductBrand"/>
+    <listOfValues StaticList="false" IterBinding="PromoProdukView1Iterator"
+                  Uses="LOV_ProductExt" id="ProductExt"/>
+    <listOfValues StaticList="false" IterBinding="PromoProdukView1Iterator"
+                  Uses="LOV_ProductPack" id="ProductPack"/>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="ProductName">
+      <AttrNames>
+        <Item Value="ProductName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="ProductVariant">
+      <AttrNames>
+        <Item Value="ProductVariant"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TargetView1Iterator" id="Price">
+      <AttrNames>
+        <Item Value="Price"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TargetView1Iterator" id="Qty">
+      <AttrNames>
+        <Item Value="Qty"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="TargetView1Iterator"
+                  Uses="LOV_PriceBased" id="PriceBased1"/>
+    <attributeValues IterBinding="TargetView1Iterator" id="PriceList">
+      <AttrNames>
+        <Item Value="PriceList"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TargetView1Iterator" id="Value">
+      <AttrNames>
+        <Item Value="Value"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="TargetView1Iterator"
+                  Uses="LOV_Uom" id="Uom1"/>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="RegCustFlag1">
+      <AttrNames>
+        <Item Value="RegCustFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="DiscountView1Iterator" id="CreateInsert2"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="DiscountView1Iterator" id="DeleteDiskon"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <tree IterBinding="BiayaView1Iterator" id="BiayaView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.BiayaView"
+                      Name="BiayaView10">
+        <AttrNames>
+          <Item Value="Descr"/>
+          <Item Value="BiayaNonYearly"/>
+          <Item Value="BiayaYearly"/>
+          <Item Value="BiayaQty"/>
+          <Item Value="BiayaUom"/>
+          <Item Value="BiayaPrice"/>
+          <Item Value="BiayaTotAmt"/>
+          <Item Value="BiayaId"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="BiayaView1Iterator" id="CreateInsert3"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="BiayaView1Iterator" id="Delete1"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <tree IterBinding="PromoBonusView1Iterator" id="PromoBonusView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.PromoBonusView"
+                      Name="PromoBonusView10">
+        <AttrNames>
+          <Item Value="ProductCategory"/>
+          <Item Value="ProductBrand"/>
+          <Item Value="ProductClass"/>
+          <Item Value="ProductExt"/>
+          <Item Value="ProductPack"/>
+          <Item Value="Uom"/>
+          <Item Value="QtyFrom"/>
+          <Item Value="TipePotongan"/>
+          <Item Value="ValuePotongan"/>
+          <Item Value="ProductCategoryDesc"/>
+          <Item Value="ProductClassDesc"/>
+          <Item Value="PromoBonusId"/>
+          <Item Value="ProductPackDesc"/>
+          <Item Value="ProductExtDesc"/>
+          <Item Value="ProductBrandDesc"/>
+          <Item Value="ProductItemBonus"/>
+          <Item Value="ProductVariantBonus"/>
+          <Item Value="ProductNameBonus"/>
+          <Item Value="DiscNonYearly"/>
+          <Item Value="DiscYearly"/>
+          <Item Value="InputPriceBy"/>
+          <Item Value="PriceVal"/>
+          <Item Value="QtyMulPrice"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="PromoBonusView1Iterator" id="CreateInsert5"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="PromoBonusView1Iterator" id="Delete3"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action IterBinding="PromoBonusView1Iterator" id="ExecutePromoBonus"
+            InstanceName="PromoProposalAMDataControl.PromoBonusView1"
+            DataControl="PromoProposalAMDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues IterBinding="ProposalView1Iterator" id="CopySource">
+      <AttrNames>
+        <Item Value="CopySource"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="DiscountView1Iterator" id="DiscountView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.DiscountView"
+                      Name="DiscountView10">
+        <AttrNames>
+          <Item Value="TipePerhitungan"/>
+          <Item Value="Uom"/>
+          <Item Value="QtyFrom"/>
+          <Item Value="QtyTo"/>
+          <Item Value="TipePotongan"/>
+          <Item Value="DiscNonYearly"/>
+          <Item Value="DiscYearly"/>
+          <Item Value="Kelipatan"/>
+          <Item Value="DiscountId"/>
+          <Item Value="CheckRowStatus"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="TargetView1Iterator" id="AvgQty">
+      <AttrNames>
+        <Item Value="AvgQty"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalView1Iterator" id="HistTranDtFrom">
+      <AttrNames>
+        <Item Value="HistTranDtFrom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalView1Iterator" id="HistTranDtTo">
+      <AttrNames>
+        <Item Value="HistTranDtTo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalView1Iterator" id="HistRemark">
+      <AttrNames>
+        <Item Value="HistRemark"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="FcsPppcPriceListView1Iterator"
+          id="FcsPppcPriceListView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.pricelist.FcsPppcPriceListView"
+                      Name="FcsPppcPriceListView10">
+        <AttrNames>
+          <Item Value="PriceName"/>
+          <Item Value="PriceCategory"/>
+          <Item Value="TypeCustomer"/>
+          <Item Value="Price"/>
+          <Item Value="PriceCategoryDesc"/>
+          <Item Value="PriceDesc"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="FcsPppcPriceListView1Iterator" id="ExecutePriceList"
+            InstanceName="PromoProposalAMDataControl.FcsPppcPriceListView1"
+            DataControl="PromoProposalAMDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="userName" NDValue="#{UserData.userNameLogin}"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues IterBinding="PromoProdukView1Iterator"
+                     id="ProductCombination">
+      <AttrNames>
+        <Item Value="ProductCombination"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" Uses="LOV_ProductCategory"
+                  IterBinding="PromoBonusView1Iterator" id="ProductCategory1"/>
+    <listOfValues StaticList="false" Uses="LOV_ProductClass"
+                  IterBinding="PromoBonusView1Iterator" id="ProductClass1"/>
+    <listOfValues StaticList="false" Uses="LOV_ProductBrand"
+                  IterBinding="PromoBonusView1Iterator" id="ProductBrand1"/>
+    <listOfValues StaticList="false" Uses="LOV_ProductExt"
+                  IterBinding="PromoBonusView1Iterator" id="ProductExt1"/>
+    <listOfValues StaticList="false" Uses="LOV_ProductPack"
+                  IterBinding="PromoBonusView1Iterator" id="ProductPack1"/>
+    <listOfValues StaticList="false" IterBinding="PromoProdukView1Iterator"
+                  Uses="LOV_ExclCustBy" id="ExclCustBy"/>
+    <list IterBinding="ProposalView1Iterator" StaticList="false"
+          Uses="LOV_ProposalType" id="ProposalType" DTSupportsMRU="true"/>
+    <action IterBinding="PromoProdukView1Iterator" id="DeleteProduk"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="ProductVarCode">
+      <AttrNames>
+        <Item Value="ProductVarCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator"
+                     id="ProductItemCode">
+      <AttrNames>
+        <Item Value="ProductItemCode"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="DocApprovalWithParamView1Iterator" id="DocApprovalWithParamView1">
+      <nodeDefinition DefName="app.fpp.model.views.approval.DocApprovalWithParamView"
+                      Name="DocApprovalWithParamView10">
+        <AttrNames>
+          <Item Value="Action"/>
+          <Item Value="ActionDate"/>
+          <Item Value="ActionBy"/>
+          <Item Value="Reason"/>
+          <Item Value="ActionTo"/>
+          <Item Value="FullName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="DocApprovalView1Iterator" id="ExecuteAprvlHist"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues IterBinding="ProposalView1Iterator" id="UserTypeCreator">
+      <AttrNames>
+        <Item Value="UserTypeCreator"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="DiscOnTop">
+      <AttrNames>
+        <Item Value="DiscOnTop"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="DiscMf">
+      <AttrNames>
+        <Item Value="DiscMf"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="DiscRasioOnTop">
+      <AttrNames>
+        <Item Value="DiscRasioOnTop"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="DiscRasioMf">
+      <AttrNames>
+        <Item Value="DiscRasioMf"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator"
+                     id="DiscRasioTotal1">
+      <AttrNames>
+        <Item Value="DiscRasioTotal1"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" Uses="LOV_InputPriceBy"
+                  IterBinding="PromoBonusView1Iterator" id="InputPriceBy"/>
+<attributeValues IterBinding="ProposalView1Iterator"
+                     id="CustRegFlagSwitcher">
+      <AttrNames>
+        <Item Value="CustRegFlagSwitcher"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="BrgBonusOnTop">
+      <AttrNames>
+        <Item Value="BrgBonusOnTop"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="BrgBonusMf">
+      <AttrNames>
+        <Item Value="BrgBonusMf"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator"
+                     id="BrgBonusRasioOnTop">
+      <AttrNames>
+        <Item Value="BrgBonusRasioOnTop"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator"
+                     id="BrgBonusRasioMf">
+      <AttrNames>
+        <Item Value="BrgBonusRasioMf"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator"
+                     id="BrgBonusRasioTotal">
+      <AttrNames>
+        <Item Value="BrgBonusRasioTotal"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalView1Iterator" id="ConfirmNo">
+      <AttrNames>
+        <Item Value="ConfirmNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="BiaOntop">
+      <AttrNames>
+        <Item Value="BiaOntop"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="BiaMf">
+      <AttrNames>
+        <Item Value="BiaMf"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="BiaRasionOntop">
+      <AttrNames>
+        <Item Value="BiaRasionOntop"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="BiaRasioMf">
+      <AttrNames>
+        <Item Value="BiaRasioMf"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="BiaRasioTotal">
+      <AttrNames>
+        <Item Value="BiaRasioTotal"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Rollback" DataControl="PromoProposalAMDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <attributeValues IterBinding="ProposalView1Iterator" id="ProgDays">
+      <AttrNames>
+        <Item Value="ProgDays"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalView1Iterator" id="ProgDays1">
+      <AttrNames>
+        <Item Value="ProgDays"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ProposalView1Iterator" StaticList="false"
+          Uses="LOV_MixQtyPromo" id="MixQtyPromo" DTSupportsMRU="true"/>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="ProductExt2">
+      <AttrNames>
+        <Item Value="ProductExt"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" Uses="LOV_TipePerhitungan"
+                  IterBinding="DiscountView1Iterator" id="TipePerhitungan"/>
+    <listOfValues StaticList="false" Uses="LOV_Uom"
+                  IterBinding="DiscountView1Iterator" id="Uom"/>
+    <listOfValues StaticList="false" Uses="LOV_TipePotongan"
+                  IterBinding="DiscountView1Iterator" id="TipePotongan"/>
+    <listOfValues StaticList="false" Uses="LOV_Uom"
+                  IterBinding="PromoBonusView1Iterator" id="UomPromoBonus"/>
+    <methodAction IterBinding="ProposalView1Iterator" id="rollbackPartial"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="rollbackPartial" IsViewObjectMethod="true"
+                  DataControl="PromoProposalAMDataControl"
+                  InstanceName="PromoProposalAMDataControl.ProposalView1"/>
+    <listOfValues StaticList="false"
+                  IterBinding="ProposalCopyDummyColumnView1Iterator"
+                  Uses="LOV_ProposalAddendum" id="ProposalAddendum"/>
+    <action IterBinding="ProposalCopyDummyColumnView1Iterator"
+            id="CreateInsertCopyDummy"
+            InstanceName="PromoProposalAMDataControl.ProposalCopyDummyColumnView1"
+            DataControl="PromoProposalAMDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="RealisasiGr">
+      <AttrNames>
+        <Item Value="RealisasiGr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="DcvFlag">
+      <AttrNames>
+        <Item Value="DcvFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="PpidRef">
+      <AttrNames>
+        <Item Value="PpidRef"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalView1Iterator" id="ProposalType1">
+      <AttrNames>
+        <Item Value="ProposalType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalView1Iterator" id="PrintCounter">
+      <AttrNames>
+        <Item Value="PrintCounter"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" Uses="LOV_PaketFlag"
+                  IterBinding="PromoProdukView1Iterator" id="PaketFlag"/>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="PaketFlag1">
+      <AttrNames>
+        <Item Value="PaketFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="updateTargetUom"
+                  InstanceName="PromoProposalAMDataControl.dataProvider"
+                  DataControl="PromoProposalAMDataControl"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="updateTargetUom" IsViewObjectMethod="false">
+      <NamedData NDName="ppid" NDType="java.lang.String"/>
+      <NamedData NDName="uomTarget" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="ProposalView1Iterator"
+                     id="MekanismePenagihan1">
+      <AttrNames>
+        <Item Value="MekanismePenagihan"/>
+      </AttrNames>
+    </attributeValues>
+    <pivotTable IterBinding="AuditPpBiayaView1Iterator" id="AuditPpBiayaView1"
+                xmlns="http://xmlns.oracle.com/adfm/dvt">
+      <pivotTableDataMap>
+        <columns>
+          <data aggregateDuplicates="true" defaultAggregateType="SUM">
+            <item label="__NO_LABEL" value="FieldValue"/>
+          </data>
+          <item value="TaskRole"/>
+          <item value="FullName"/>
+        </columns>
+        <rows>
+          <item value="FieldName"/>
+        </rows>
+        <pages/>
+      </pivotTableDataMap>
+    </pivotTable>
+    <pivotTable IterBinding="AuditPpPotonganView1Iterator"
+                id="AuditPpPotonganView1"
+                xmlns="http://xmlns.oracle.com/adfm/dvt">
+      <pivotTableDataMap>
+        <columns>
+          <data aggregateDuplicates="true" defaultAggregateType="SUM">
+            <item label="__NO_LABEL" value="FieldValue"/>
+          </data>
+          <item value="TaskRole"/>
+          <item value="FullName"/>
+          <item value="PotonganLine"/>
+        </columns>
+        <rows>
+          <item value="FieldName"/>
+        </rows>
+        <pages/>
+      </pivotTableDataMap>
+    </pivotTable>
+    <pivotTable IterBinding="AuditPpPromoBarangView1Iterator"
+                id="AuditPpPromoBarangView1"
+                xmlns="http://xmlns.oracle.com/adfm/dvt">
+      <pivotTableDataMap>
+        <columns>
+          <data aggregateDuplicates="true" defaultAggregateType="SUM">
+            <item label="__NO_LABEL" value="FieldValue"/>
+          </data>
+          <item value="TaskRole"/>
+          <item value="FullName"/>
+          <item value="BarangPromoLine"/>
+        </columns>
+        <rows>
+          <item value="FieldName"/>
+        </rows>
+        <pages/>
+      </pivotTableDataMap>
+    </pivotTable>
+    <attributeValues IterBinding="ProposalView1Iterator" id="PpnFlag">
+      <AttrNames>
+        <Item Value="PpnFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="ProdukLineNum">
+      <AttrNames>
+        <Item Value="ProdukLineNum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PromoProdukView1Iterator" id="ExclCustBy1">
+      <AttrNames>
+        <Item Value="ExclCustBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ProposalView1Iterator" id="CustRegFlag">
+      <AttrNames>
+        <Item Value="CustRegFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="PromoBonusView1Iterator" id="DeleteBrgBonus"
+            InstanceName="PromoProposalAMDataControl.PromoBonusView1"
+            DataControl="PromoProposalAMDataControl" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <action IterBinding="DocApprovalWithParamView1Iterator"
+            id="RefreshApprovalHistory"
+            InstanceName="PromoProposalAMDataControl.DocApprovalWithParamView1"
+            DataControl="PromoProposalAMDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="propId" NDValue="#{bindings.ProposalId.inputValue}"
+                 NDType="java.lang.String"/>
+    </action>
+    <tree IterBinding="PromoCustomerHoView1Iterator" id="PromoCustomerHoView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.PromoCustomerHoView"
+                      Name="PromoCustomerHoView10">
+        <AttrNames>
+          <Item Value="RegionCode"/>
+          <Item Value="AreaCode"/>
+          <Item Value="LocCode"/>
+          <Item Value="CusttypCode"/>
+          <Item Value="CustgrpCode"/>
+          <Item Value="CustomerId"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedOn"/>
+          <Item Value="UserName"/>
+          <Item Value="PromoProdukId"/>
+          <Item Value="RegionDesc"/>
+          <Item Value="AreaDesc"/>
+          <Item Value="LocDesc"/>
+          <Item Value="CusttypDesc"/>
+          <Item Value="CustgrpDesc"/>
+          <Item Value="CustomerName"/>
+          <Item Value="CustNregFlg"/>
+          <Item Value="CustRegFlg"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="PromoCustomerAreaView1Iterator"
+          id="PromoCustomerAreaView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.PromoCustomerAreaView"
+                      Name="PromoCustomerAreaView10">
+        <AttrNames>
+          <Item Value="ProposalId"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="RegionCode"/>
+          <Item Value="RegionDesc"/>
+          <Item Value="AreaCode"/>
+          <Item Value="AreaDesc"/>
+          <Item Value="LocCode"/>
+          <Item Value="LocDesc"/>
+          <Item Value="CusttypCode"/>
+          <Item Value="CusttypDesc"/>
+          <Item Value="CustgrpCode"/>
+          <Item Value="CustgrpDesc"/>
+          <Item Value="CustomerId"/>
+          <Item Value="CustomerName"/>
+          <Item Value="UserName"/>
+          <Item Value="CustRegFlg"/>
+          <Item Value="CustNregFlg"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="PromoCustxHoView1Iterator" id="PromoCustxHoView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.PromoCustxHoView"
+                      Name="PromoCustxHoView10">
+        <AttrNames>
+          <Item Value="PromoCustxHoId"/>
+          <Item Value="UserName"/>
+          <Item Value="RegionCode"/>
+          <Item Value="RegionDesc"/>
+          <Item Value="AreaCode"/>
+          <Item Value="AreaDesc"/>
+          <Item Value="LocCode"/>
+          <Item Value="LocDesc"/>
+          <Item Value="CusttypCode"/>
+          <Item Value="CusttypDesc"/>
+          <Item Value="CustgrpCode"/>
+          <Item Value="CustgrpDesc"/>
+          <Item Value="CustomerId"/>
+          <Item Value="CustomerName"/>
+          <Item Value="CustxNregFlg"/>
+          <Item Value="CustxRegFlg"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="PromoCustxAreaView1Iterator" id="PromoCustxAreaView1">
+      <nodeDefinition DefName="app.fpp.model.views.promoproposal.PromoCustxAreaView"
+                      Name="PromoCustxAreaView10">
+        <AttrNames>
+          <Item Value="PromoCustxAreaId"/>
+          <Item Value="UserName"/>
+          <Item Value="RegionCode"/>
+          <Item Value="RegionDesc"/>
+          <Item Value="AreaCode"/>
+          <Item Value="AreaDesc"/>
+          <Item Value="LocCode"/>
+          <Item Value="LocDesc"/>
+          <Item Value="CusttypCode"/>
+          <Item Value="CusttypDesc"/>
+          <Item Value="CustgrpCode"/>
+          <Item Value="CustgrpDesc"/>
+          <Item Value="CustomerId"/>
+          <Item Value="CustomerName"/>
+          <Item Value="CustxNregFlg"/>
+          <Item Value="CustxRegFlg"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+  <ResourceBundle>
+    <PropertiesBundle xmlns="http://xmlns.oracle.com/adfm/resourcebundle"
+                      PropertiesFile="app.fpp.view.ViewControllerBundle"/>
+  </ResourceBundle>
+</pageDefinition>

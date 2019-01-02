@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="BudgetPostTranView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="BudgetPostTran.BUDGET_POST_TRAN_ID, 
+       BudgetPostTran.BUDGET_POSTING_ID, 
+       BudgetPostTran.BUDGET_TYPE, 
+       BudgetPostTran.BUDGET_DATE, 
+       BudgetPostTran.AMOUNT, 
+       BudgetPostTran.BUDGET_AS_TO_DATE, 
+       BudgetPostTran.CREATED_BY, 
+       BudgetPostTran.CREATION_DATE, 
+       BudgetPostTran.MODIFIED_BY, 
+       BudgetPostTran.MODIFIED_DATE"
+  FromList="BUDGET_POST_TRAN BudgetPostTran"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  OrderBy="BudgetPostTran.BUDGET_POST_TRAN_ID ASC">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+  </DesignTime>
+  <ViewAccessor
+    Name="BudgetPostTranTypeLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_BUD_POST_TYPE']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ListBinding
+    Name="LOV_BudgetType"
+    ListVOName="BudgetPostTranTypeLov"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_BudgetType_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="BudgetType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Descr"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <EntityUsage
+    Name="BudgetPostTran"
+    Entity="app.fpp.model.entities.budgetsetting.BudgetPostTran"/>
+  <ViewAttribute
+    Name="BudgetPostTranId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="BudgetPostTranId"
+    EntityUsage="BudgetPostTran"
+    AliasName="BUDGET_POST_TRAN_ID"
+    IsUpdateable="while_insert"/>
+  <ViewAttribute
+    Name="BudgetPostingId"
+    PrecisionRule="true"
+    EntityAttrName="BudgetPostingId"
+    EntityUsage="BudgetPostTran"
+    AliasName="BUDGET_POSTING_ID"/>
+  <ViewAttribute
+    Name="BudgetType"
+    PrecisionRule="true"
+    EntityAttrName="BudgetType"
+    EntityUsage="BudgetPostTran"
+    AliasName="BUDGET_TYPE"
+    LOVName="LOV_BudgetType"
+    DefaultValue="ADJUSTMENT">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BudgetDate"
+    PrecisionRule="true"
+    EntityAttrName="BudgetDate"
+    EntityUsage="BudgetPostTran"
+    AliasName="BUDGET_DATE">
+    <TransientExpression><![CDATA[adf.currentDate]]></TransientExpression>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Amount"
+    PrecisionRule="true"
+    EntityAttrName="Amount"
+    EntityUsage="BudgetPostTran"
+    AliasName="AMOUNT"/>
+  <ViewAttribute
+    Name="BudgetAsToDate"
+    PrecisionRule="true"
+    EntityAttrName="BudgetAsToDate"
+    EntityUsage="BudgetPostTran"
+    AliasName="BUDGET_AS_TO_DATE">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.budgetsetting.BudgetPostTranView.BudgetAsToDate_FMT_FORMAT"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CreatedBy"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="BudgetPostTran"
+    AliasName="CREATED_BY"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="CreationDate"
+    PrecisionRule="true"
+    EntityAttrName="CreationDate"
+    EntityUsage="BudgetPostTran"
+    AliasName="CREATION_DATE"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="ModifiedBy"
+    PrecisionRule="true"
+    EntityAttrName="ModifiedBy"
+    EntityUsage="BudgetPostTran"
+    AliasName="MODIFIED_BY"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="ModifiedDate"
+    PrecisionRule="true"
+    EntityAttrName="ModifiedDate"
+    EntityUsage="BudgetPostTran"
+    AliasName="MODIFIED_DATE"
+    IsUpdateable="false"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="BudgetPostingView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="BudgetPosting.BUDGET_POSTING_ID, 
+       BudgetPosting.KODE_POSTING, 
+       BudgetPosting.BUDGET_YEAR, 
+       BudgetPosting.YEARLY_BUDGET_AMOUNT, 
+       (SELECT NVL(SUM(BudgetPostTran.AMOUNT), 0) AS BUD_USED FROM BUDGET_POST_TRAN BudgetPostTran WHERE BudgetPostTran.BUDGET_POSTING_ID = BudgetPosting.BUDGET_POSTING_ID) AS YEARLY_BUDGET_USED, 
+       BudgetPosting.CREATED_BY, 
+       BudgetPosting.CREATION_DATE, 
+       BudgetPosting.MODIFIED_BY, 
+       BudgetPosting.MODIFIED_ON, 
+       BudgetPosting.YEARLY_BUDGET_CALC"
+  FromList="BUDGET_POSTING BudgetPosting"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <ViewAccessor
+    Name="BudgetPostTypeLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.LookupCodeView">
+    <ParameterMap>
+      <PIMap Variable="luTitle">
+        <TransientExpression><![CDATA['APP_BUD_POST_TYPE']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="BudgetPostingYearLov"
+    ViewObjectName="app.fpp.model.views.masterdata.lov.budgetseting.BudgetPostingYearLov"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="AllKodePostingView1"
+    ViewObjectName="app.fpp.model.views.masterdata.ebs.AllKodePostingView"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_BudgetYear"
+    ListVOName="BudgetPostingYearLov"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_BudgetYear_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="BudgetYear"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="BudgetYear"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="BudgetYear"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="hide"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_KodePosting"
+    ListVOName="AllKodePostingView1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_KodePosting_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="KodePosting"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Item"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Item"/>
+      <Item Value="ItemDescription"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="AllKodePostingViewCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <EntityUsage
+    Name="BudgetPosting"
+    Entity="app.fpp.model.entities.budgetsetting.BudgetPosting"/>
+  <ViewAttribute
+    Name="BudgetPostingId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="BudgetPostingId"
+    EntityUsage="BudgetPosting"
+    AliasName="BUDGET_POSTING_ID"
+    IsUpdateable="while_insert"/>
+  <ViewAttribute
+    Name="KodePosting"
+    PrecisionRule="true"
+    EntityAttrName="KodePosting"
+    EntityUsage="BudgetPosting"
+    AliasName="KODE_POSTING"
+    LOVName="LOV_KodePosting">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="KodePostingDesc"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="KODE_POSTING_DESC"
+    SQLType="VARCHAR"
+    Precision="255"/>
+  <ViewAttribute
+    Name="BudgetYear"
+    PrecisionRule="true"
+    EntityAttrName="BudgetYear"
+    EntityUsage="BudgetPosting"
+    AliasName="BUDGET_YEAR"
+    LOVName="LOV_BudgetYear">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="YearlyBudgetAmount"
+    PrecisionRule="true"
+    EntityAttrName="YearlyBudgetAmount"
+    EntityUsage="BudgetPosting"
+    AliasName="YEARLY_BUDGET_AMOUNT"
+    DefaultValue="0"/>
+  <ViewAttribute
+    Name="YearlyBudgetUsed"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="YEARLY_BUDGET_USED"
+    SQLType="NUMERIC"
+    Expression="SELECT NVL(SUM(BudgetPostTran.AMOUNT), 0) AS BUD_USED FROM BUDGET_POST_TRAN BudgetPostTran WHERE BudgetPostTran.BUDGET_POSTING_ID = BudgetPosting.BUDGET_POSTING_ID"/>
+  <ViewAttribute
+    Name="YearlyBudgetRemaining"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="YEARLY_BUDGET_REMAINING"
+    SQLType="NUMERIC"
+    IsSelected="false">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (YearlyBudgetAmount == null && YearlyBudgetUsed != null) {
+return 0 - YearlyBudgetUsed;
+} else if (YearlyBudgetAmount != null && YearlyBudgetUsed == null) {
+return YearlyBudgetAmount;
+} else {
+return YearlyBudgetAmount + YearlyBudgetUsed;
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="YearlyBudgetAmount"/>
+      <Item
+        Value="YearlyBudgetUsed"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.budgetsetting.BudgetPostingView.YearlyBudgetRemaining_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.budgetsetting.BudgetPostingView.YearlyBudgetRemaining_FMT_FORMAT"/>
+        <LABEL
+          ResId="YEARLY_BUDGET_REMAINING"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CreatedBy"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="BudgetPosting"
+    AliasName="CREATED_BY"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="CreationDate"
+    PrecisionRule="true"
+    EntityAttrName="CreationDate"
+    EntityUsage="BudgetPosting"
+    AliasName="CREATION_DATE"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="ModifiedBy"
+    PrecisionRule="true"
+    EntityAttrName="ModifiedBy"
+    EntityUsage="BudgetPosting"
+    AliasName="MODIFIED_BY"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="ModifiedOn"
+    PrecisionRule="true"
+    EntityAttrName="ModifiedOn"
+    EntityUsage="BudgetPosting"
+    AliasName="MODIFIED_ON"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="YearlyBudgetAmountSum"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="VIEW_ATTR"
+    SQLType="NUMERIC">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if (YearlyBudgetAmount == null && YearlyBudgetUsed != null) {
+return 0 - YearlyBudgetUsed;
+} else if (YearlyBudgetAmount != null && YearlyBudgetUsed == null) {
+return YearlyBudgetAmount;
+} else {
+return YearlyBudgetAmount + YearlyBudgetUsed;
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="YearlyBudgetAmount"/>
+      <Item
+        Value="YearlyBudgetUsed"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.budgetsetting.BudgetPostingView.YearlyBudgetAmountSum_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.budgetsetting.BudgetPostingView.YearlyBudgetAmountSum_FMT_FORMAT"/>
+        <LABEL
+          ResId="app.fpp.model.views.budgetsetting.BudgetPostingView.YearlyBudgetAmountSum_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="YearlyBudgetCalc"
+    PrecisionRule="true"
+    EntityAttrName="YearlyBudgetCalc"
+    EntityUsage="BudgetPosting"
+    AliasName="YEARLY_BUDGET_CALC"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="app.fpp.model.views.budgetsetting.BudgetPostingView.YearlyBudgetCalc_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="app.fpp.model.views.budgetsetting.BudgetPostingView.YearlyBudgetCalc_FMT_FORMAT"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewLinkAccessor
+    Name="BudgetPostTranView"
+    ViewLink="app.fpp.model.views.budgetsetting.BudgetPostTranBudgetPostingFk1Link"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

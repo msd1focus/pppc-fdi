@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="proposal-confirm">
+    <default-activity id="__1">confirmProposal</default-activity>
+    <managed-bean id="__3">
+      <managed-bean-name id="__2">ConfirmationPromoBean</managed-bean-name>
+      <managed-bean-class id="__4">app.fpp.bean.confirmation.ConfirmationPromoBean</managed-bean-class>
+      <managed-bean-scope id="__5">request</managed-bean-scope>
+    </managed-bean>
+    <view id="confirmProposal">
+      <page>/Pages/Confirmation/confirmProposal.jsff</page>
+    </view>
+    <task-flow-call id="pc-email-notif-receiver">
+      <task-flow-reference>
+        <document>/WEB-INF/pc-email-notif-receiver.xml</document>
+        <id>pc-email-notif-receiver</id>
+      </task-flow-reference>
+      <input-parameter id="__6">
+        <name>propId</name>
+        <value>#{pageFlowScope.propId}</value>
+      </input-parameter>
+      <run-as-dialog>
+        <display-type id="__12">
+          <inline-popup/>
+        </display-type>
+      </run-as-dialog>
+    </task-flow-call>
+    <control-flow-rule id="__13">
+      <from-activity-id id="__14">confirmProposal</from-activity-id>
+      <control-flow-case id="__16">
+        <from-outcome id="__17">emailnotif</from-outcome>
+        <to-activity-id id="__15">pc-email-notif-receiver</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

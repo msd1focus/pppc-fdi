@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="AppUserCustRemPrntRegionView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  SelectList="AppUserRegion.REGION_CODE, 
+       AppUserRegion.USER_NAME"
+  FromList="APP_USER_REGION AppUserRegion"
+  Where="AppUserRegion.USER_NAME = :userName
+AND NOT EXISTS (
+        SELECT 1
+        FROM APPS.AR_CUSTOMERS AC, 
+             APP_USER_AREA AUA,
+             APP_USER_LOC AUL,
+             APP_USER_CUST_TYPE ACT,
+             APP_USER_CUST_GROUP ACG,
+             APP_USER_CUST AUS
+        WHERE AUS.USER_NAME = :userName
+        AND AC.ATTRIBUTE3 = AppUserRegion.REGION_CODE
+        AND AC.ATTRIBUTE4 = AUA.AREA_CODE(+)
+        AND AC.ATTRIBUTE5 = AUL.LOCATION_CODE(+)
+        AND AC.ATTRIBUTE8 = ACT.CUST_TYPE(+)
+        AND AC.ATTRIBUTE1 = ACG.CUST_GROUP(+)
+        AND AC.CUSTOMER_ID = AUS.CUSTOMER_ID
+)"
+  RowClass="app.fpp.model.views.useraccess.custremove.AppUserCustRemPrntRegionViewRowImpl"
+  ComponentClass="app.fpp.model.views.useraccess.custremove.AppUserCustRemPrntRegionViewImpl">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="app.fpp.model.views.useraccess.custremove.AppUserCustRemPrntRegionView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="userName"
+    Kind="where"
+    Type="java.lang.String"/>
+  <EntityUsage
+    Name="AppUserRegion"
+    Entity="app.fpp.model.entities.useraccess.AppUserRegion"/>
+  <ViewAttribute
+    Name="RegionCode"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RegionCode"
+    EntityUsage="AppUserRegion"
+    AliasName="REGION_CODE"/>
+  <ViewAttribute
+    Name="UserName"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="UserName"
+    EntityUsage="AppUserRegion"
+    AliasName="USER_NAME"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="app.fpp.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

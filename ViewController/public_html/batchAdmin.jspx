@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view beforePhase="#{Menu.createMenus}">
+    <af:document id="d1" title="Focus PCPP | Batch Admin">
+      <af:form id="f1">
+        <af:pageTemplate viewId="/Templates/FPPDashboard.jspx"
+                         value="#{bindings.pageTemplateBinding}" id="pt1">
+          <f:facet name="leftBar">
+            <af:panelGroupLayout id="pgl1" layout="vertical"
+                                 styleClass="AFStretchWidth" halign="center">
+              <af:spacer width="10" height="20" id="s1"/>
+              <af:commandImageLink id="cil3" partialSubmit="true"
+                                   icon="/Images/batch_modifier_dis.png"
+                                   disabled="#{viewScope.BatchAdminMenuLeftManagedBean.currentTF == 'main'}"
+                                   hoverIcon="/Images/batch_modifier_hov.png"
+                                   depressedIcon="/Images/batch_modifier_hov.png"
+                                   disabledIcon="/Images/batch_modifier.png"
+                                   partialTriggers="commandImageLink1">
+                <af:setPropertyListener from="main"
+                                        to="#{viewScope.BatchAdminMenuLeftManagedBean.currentTF}"
+                                        type="action"/>
+              </af:commandImageLink>
+              <af:spacer width="10" height="15" id="s2"/>
+              <af:commandImageLink id="commandImageLink1" partialSubmit="true"
+                                   icon="/Images/batch_promo_barang_dis.png"
+                                   hoverIcon="/Images/batch_promo_barang_hov.png"
+                                   disabled="#{viewScope.BatchAdminMenuLeftManagedBean.currentTF == 'batchpb'}"
+                                   depressedIcon="/Images/batch_promo_barang_hov.png"
+                                   disabledIcon="/Images/batch_promo_barang.png"
+                                   partialTriggers="cil3" rendered="true">
+                <af:setPropertyListener from="batchpb"
+                                        to="#{viewScope.BatchAdminMenuLeftManagedBean.currentTF}"
+                                        type="action"/>
+              </af:commandImageLink>
+              <af:spacer width="10" height="15" id="spacer1"/>
+            </af:panelGroupLayout>
+          </f:facet>
+          <f:facet name="mainWindow">
+            <af:region value="#{bindings.dynamicRegion1.regionModel}" id="r1"
+                       showDisclosure="false"/>
+          </f:facet>
+        </af:pageTemplate>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>
